@@ -58,7 +58,7 @@ export class OrderItem {
     productId: number,
     product: Product,
     quantity: number,
-    price: number
+    price: number,
   ) {
     this.id = id;
     this.orderId = orderId;

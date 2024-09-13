@@ -1,10 +1,9 @@
-import { Address } from "../entities/address.entity";
+import { Address } from '../entities/address.entity';
 
 /**
  * Interface defining the contract for Address repository operations.
  */
 export interface IAddressRepository {
-  
   /**
    * Creates a new address entry.
    * @param address - The address entity to be created.
@@ -76,5 +75,4 @@ export interface IAddressRepository {
    * @returns A promise that resolves to an array of addresses with the specified postal code.
    */
   getByPostalCode(postalCode: string): Promise<Address[]>;
-
 }

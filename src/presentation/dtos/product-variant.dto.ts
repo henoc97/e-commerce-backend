@@ -52,7 +52,7 @@ export class ProductVariantDTO {
     productId: number,
     product: ProductDTO,
     name: string,
-    value: string
+    value: string,
   ) {
     this.id = id;
     this.productId = productId;

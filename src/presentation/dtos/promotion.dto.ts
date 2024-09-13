@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsNumber, IsEnum, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsNumber,
+  IsEnum,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductDTO } from './product.dto';
 import { DiscountType } from 'src/domain/enums/discount-type.enum';
@@ -93,7 +100,7 @@ export class PromotionDTO {
     productId: number,
     product: ProductDTO,
     createdAt: Date = new Date(),
-    updatedAt: Date = new Date()
+    updatedAt: Date = new Date(),
   ) {
     this.id = id;
     this.name = name;

@@ -1,10 +1,9 @@
-import { UserProfile } from "../entities/user-profile.entity";
+import { UserProfile } from '../entities/user-profile.entity';
 
 /**
  * Interface for managing user profile operations, including CRUD and business logic.
  */
 export interface IUserProfileRepository {
-
   /**
    * Creates a new user profile.
    * @param profile - The user profile entity to be created.
@@ -64,14 +63,6 @@ export interface IUserProfileRepository {
    * @returns The updated UserProfile entity.
    */
   updateGender(userId: number, gender: string): Promise<UserProfile>;
-
-  /**
-   * Updates multiple fields of a user profile.
-   * @param userId - The ID of the profile to update.
-   * @param updates - Object with the fields to update.
-   * @returns The updated UserProfile entity.
-   */
-  updateFields(userId: number, updates: Partial<UserProfile>): Promise<UserProfile>;
 
   /**
    * Retrieves all user profiles with a specific gender.

@@ -42,7 +42,7 @@ export class ProductVariant {
     productId: number,
     product: Product,
     name: string,
-    value: string
+    value: string,
   ) {
     this.id = id;
     this.productId = productId;

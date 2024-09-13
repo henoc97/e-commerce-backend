@@ -1,10 +1,9 @@
-import { AuditLog } from "../entities/audit-log.entity";
+import { AuditLog } from '../entities/audit-log.entity';
 
 /**
  * Interface defining operations for managing audit logs.
  */
 export interface IAuditLogRepository {
-  
   /**
    * Records a new audit log entry.
    * @param log - The audit log entry to be recorded.

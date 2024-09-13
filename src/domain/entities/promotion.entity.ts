@@ -82,7 +82,7 @@ export class Promotion {
     productId: number,
     product: Product,
     createdAt: Date = new Date(),
-    updatedAt: Date = new Date()
+    updatedAt: Date = new Date(),
   ) {
     this.id = id;
     this.name = name;

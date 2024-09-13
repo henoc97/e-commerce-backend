@@ -1,10 +1,9 @@
-import { SubSite } from "../entities/subsite.entity";
+import { SubSite } from '../entities/subsite.entity';
 
 /**
  * Interface for handling business rules and CRUD operations related to subsites.
  */
 export interface ISubSiteRepository {
-  
   /**
    * Creates a new subsite.
    * @param subSite - The SubSite entity to be created.

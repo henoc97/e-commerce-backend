@@ -1,4 +1,12 @@
-import { IsInt, IsNotEmpty, IsString, IsObject, IsEnum, IsOptional, IsDate } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  IsObject,
+  IsEnum,
+  IsOptional,
+  IsDate,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
 
@@ -63,7 +71,6 @@ export class AuditLogDTO {
    * Constructs a new AuditLogDTO instance.
    * @param id - Unique identifier for the audit log entry.
    * @param userId - Unique identifier of the user who performed the action.
-   * @param user - The user who performed the action.
    * @param action - The type of action performed by the user.
    * @param entity - The entity affected by the action.
    * @param entityId - The unique identifier of the entity affected by the action.
@@ -77,7 +84,7 @@ export class AuditLogDTO {
     entity: string,
     entityId: number,
     changes: any,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.userId = userId;

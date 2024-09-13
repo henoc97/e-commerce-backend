@@ -1,11 +1,10 @@
-import { Marketplace } from "../entities/marketplace.entity";
-import { Shop } from "../entities/shop.entity";
+import { Marketplace } from '../entities/marketplace.entity';
+import { Shop } from '../entities/shop.entity';
 
 /**
  * Interface for managing marketplace operations and business rules.
  */
 export interface IMarketplaceRepository {
-
   /**
    * Creates and stores a new Marketplace.
    * @param marketplace - The Marketplace entity to create.
@@ -63,14 +62,6 @@ export interface IMarketplaceRepository {
    * @throws Error if disassociation fails.
    */
   removeShop(marketplaceId: number, shopId: number): Promise<Marketplace>;
-
-  /**
-   * Validates Marketplace data for creation or update.
-   * @param marketplace - The Marketplace entity to validate.
-   * @returns A promise that resolves to true if the data is valid, otherwise false.
-   * @throws Error if validation fails.
-   */
-  validate(marketplace: Marketplace): Promise<boolean>;
 
   /**
    * Retrieves all shops within a Marketplace.

@@ -68,12 +68,12 @@ export class AuditLog {
   constructor(
     id: number,
     userId: number,
-    user: User,
     action: AuditLogAction,
     entity: string,
     entityId: number,
     changes: any,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
+    user?: User,
   ) {
     this.id = id;
     this.userId = userId;

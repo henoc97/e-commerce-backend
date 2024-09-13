@@ -39,11 +39,7 @@ export class CartDTO {
    * @param user - The User who owns the Cart.
    * @param items - Items in the Cart (optional).
    */
-  constructor(
-    userId: number,
-    items?: CartItemDTO[],
-    id?: number
-  ) {
+  constructor(userId: number, items?: CartItemDTO[], id?: number) {
     this.id = id;
     this.userId = userId;
     this.items = items;

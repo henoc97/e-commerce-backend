@@ -70,7 +70,7 @@ export class Subscription {
     description?: string,
     vendors: Vendor[] = [],
     createdAt: Date = new Date(),
-    updatedAt: Date = new Date()
+    updatedAt: Date = new Date(),
   ) {
     this.id = id;
     this.name = name;

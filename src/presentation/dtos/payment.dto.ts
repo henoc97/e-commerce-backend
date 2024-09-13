@@ -1,6 +1,14 @@
-import { IsInt, IsNumber, IsString, IsOptional, IsEnum, IsDate, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsNumber,
+  IsString,
+  IsOptional,
+  IsEnum,
+  IsDate,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { OrderDTO } from './order.dto'; 
+import { OrderDTO } from './order.dto';
 import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
 
 /**
@@ -89,7 +97,7 @@ export class PaymentDTO {
     amount: number,
     providerId?: string,
     metadata?: any,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.orderId = orderId;

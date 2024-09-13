@@ -25,11 +25,7 @@ export class NewsletterSubscription {
    * @param email - Email address of the subscriber.
    * @param subscribedAt - (Optional) Date and time of subscription creation.
    */
-  constructor(
-    id: number,
-    email: string,
-    subscribedAt: Date = new Date()
-  ) {
+  constructor(id: number, email: string, subscribedAt: Date = new Date()) {
     this.id = id;
     this.email = email;
     this.subscribedAt = subscribedAt;

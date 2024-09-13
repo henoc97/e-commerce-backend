@@ -1,11 +1,10 @@
-import { Category } from "../entities/category.entity";
-import { Product } from "../entities/product.entity";
+import { Category } from '../entities/category.entity';
+import { Product } from '../entities/product.entity';
 
 /**
  * Interface for managing categories with business rules.
  */
 export interface ICategoryRepository {
-
   /**
    * Creates and stores a new Category.
    * @param category - The Category entity to create.

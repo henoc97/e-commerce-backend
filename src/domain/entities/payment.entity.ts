@@ -75,7 +75,7 @@ export class Payment {
     amount: number,
     providerId?: string,
     metadata?: any,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.orderId = orderId;

@@ -1,11 +1,10 @@
-import { Ticket } from "../entities/ticket.entity";
-import { TicketStatus } from "../enums/ticket-status.enum";
+import { Ticket } from '../entities/ticket.entity';
+import { TicketStatus } from '../enums/ticket-status.enum';
 
 /**
  * Interface for handling support ticket operations, including CRUD and business logic.
  */
 export interface ITicketRepository {
-
   /**
    * Creates a new support ticket.
    * @param ticket - The Ticket entity to be created.

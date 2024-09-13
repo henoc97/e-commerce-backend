@@ -57,7 +57,7 @@ export class UserActivity {
     user: User,
     action: UserActivityAction,
     productId?: number,
-    timestamp: Date = new Date()
+    timestamp: Date = new Date(),
   ) {
     this.id = id;
     this.userId = userId;

@@ -1,4 +1,10 @@
-import { IsInt, IsString, IsOptional, IsObject, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsObject,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { UserDTO } from './user.dto';
 
@@ -65,7 +71,7 @@ export class SubSiteDTO {
     userId: number,
     user: UserDTO,
     config: any,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.title = title;

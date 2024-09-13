@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsNumber, IsEnum, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsNumber,
+  IsEnum,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { OrderDTO } from './order.dto';
 import { RefundStatus } from 'src/domain/enums/refund-status.enum';
@@ -71,7 +78,7 @@ export class RefundDTO {
     reason: string,
     amount: number,
     status: RefundStatus,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.orderId = orderId;

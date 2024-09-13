@@ -1,4 +1,12 @@
-import { IsInt, IsNumber, IsOptional, IsEnum, IsString, IsDate, ValidateNested, IsArray } from 'class-validator';
+import {
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsEnum,
+  IsString,
+  IsDate,
+  ValidateNested,
+} from 'class-validator';
 import { OrderItemDTO } from './order-item.dto';
 import { Type } from 'class-transformer';
 import { UserDTO } from './user.dto';
@@ -152,7 +160,7 @@ export class OrderDTO {
     user?: UserDTO,
     shop?: ShopDTO,
     payments?: PaymentDTO[],
-    refunds?: RefundDTO[]
+    refunds?: RefundDTO[],
   ) {
     this.userId = userId;
     this.shopId = shopId;

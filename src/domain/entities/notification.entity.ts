@@ -1,5 +1,5 @@
-import { NotificationType } from "../enums/notification-type.enum";
-import { User } from "./user.entity";
+import { NotificationType } from '../enums/notification-type.enum';
+import { User } from './user.entity';
 
 /**
  * Represents a notification for a user.
@@ -52,7 +52,7 @@ export class Notification {
     user: User,
     type: NotificationType,
     content: string,
-    sentAt: Date = new Date()
+    sentAt: Date = new Date(),
   ) {
     this.id = id;
     this.userId = userId;

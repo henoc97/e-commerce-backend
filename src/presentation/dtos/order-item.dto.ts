@@ -2,7 +2,6 @@ import { IsInt, IsNumber, IsOptional } from 'class-validator';
 import { OrderDTO } from './order.dto';
 import { ProductDTO } from './product.dto';
 
-
 /**
  * Data Transfer Object for OrderItem.
  * Used for validating and transforming data in API requests and responses.
@@ -75,7 +74,7 @@ export class OrderItemDTO {
     price: number,
     id?: number,
     order?: OrderDTO,
-    product?: ProductDTO
+    product?: ProductDTO,
   ) {
     this.id = id;
     this.orderId = orderId;

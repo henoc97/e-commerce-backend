@@ -1,4 +1,10 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ShopDTO } from './shop.dto';
 
@@ -52,7 +58,7 @@ export class MarketplaceDTO {
     name: string,
     description?: string,
     shops?: ShopDTO[],
-    id?: number
+    id?: number,
   ) {
     this.id = id;
     this.name = name;

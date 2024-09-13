@@ -1,5 +1,4 @@
 import { IsInt, IsNotEmpty, IsPositive, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
 
 /**
  * Data Transfer Object for CartItem.
@@ -37,21 +36,20 @@ export class CartItemDTO {
   @IsNotEmpty()
   quantity: number;
 
-    
-    /**
-     * Creates a new CartItemDTO instance.
-     * @param id - Unique identifier for the CartItem.
-     * @param cartId - Unique identifier for the Cart to which this item belongs.
-     * @param cart - The Cart to which this item belongs.
-     * @param productId - Unique identifier for the Product associated with this CartItem.
-     * @param product - The Product associated with this CartItem.
-     * @param quantity - Quantity of the Product in the CartItem.
-     */
+  /**
+   * Creates a new CartItemDTO instance.
+   * @param id - Unique identifier for the CartItem.
+   * @param cartId - Unique identifier for the Cart to which this item belongs.
+   * @param cart - The Cart to which this item belongs.
+   * @param productId - Unique identifier for the Product associated with this CartItem.
+   * @param product - The Product associated with this CartItem.
+   * @param quantity - Quantity of the Product in the CartItem.
+   */
   constructor(
     cartId: number,
     productId: number,
     quantity: number,
-    id?: number
+    id?: number,
   ) {
     this.id = id;
     this.cartId = cartId;

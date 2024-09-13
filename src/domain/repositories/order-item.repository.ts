@@ -1,11 +1,10 @@
-import { OrderItem } from "../entities/order-item.enttity";
+import { OrderItem } from '../entities/order-item.enttity';
 
 /**
  * Repository interface for managing OrderItems.
  * Defines CRUD operations and additional functionalities related to OrderItems.
  */
 export interface IOrderItemRepository {
-  
   /**
    * Creates a new OrderItem.
    * @param item - The OrderItem entity to create.

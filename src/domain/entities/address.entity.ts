@@ -46,25 +46,25 @@ export class Address {
 
   /**
    * Constructs an Address instance.
-   * 
+   *
    * @param id - Unique identifier for the address.
    * @param userId - Foreign key referring to the User.
-   * @param user - The User object associated with this address.
    * @param street - Street address.
    * @param city - City where the address is located.
    * @param state - State or region where the address is located.
    * @param postalCode - Postal code for the address.
    * @param country - Country where the address is located.
+   * @param user - The User object associated with this address.
    */
   constructor(
     id: number,
     userId: number,
-    user: User,
     street: string,
     city: string,
     state: string,
     postalCode: string,
-    country: string
+    country: string,
+    user?: User,
   ) {
     this.id = id;
     this.userId = userId;

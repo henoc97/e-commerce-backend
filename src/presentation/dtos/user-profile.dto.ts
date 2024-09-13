@@ -1,4 +1,11 @@
-import { IsInt, IsOptional, IsString, IsDate, IsPhoneNumber, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  IsDate,
+  IsPhoneNumber,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { UserDTO } from './user.dto';
 
@@ -63,7 +70,7 @@ export class UserProfileDTO {
     user: UserDTO,
     phone?: string,
     birthday?: Date,
-    gender?: string
+    gender?: string,
   ) {
     this.id = id;
     this.userId = userId;

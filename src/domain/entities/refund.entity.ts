@@ -62,7 +62,7 @@ export class Refund {
     reason: string,
     amount: number,
     status: RefundStatus,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.orderId = orderId;

@@ -1,10 +1,9 @@
-import { CartItem } from "../entities/cart-item.entity";
+import { CartItem } from '../entities/cart-item.entity';
 
 /**
  * Interface for managing cart items with business rules.
  */
 export interface ICartItemRepository {
-  
   /**
    * Creates and stores a new CartItem.
    * @param item - The CartItem entity to be created.
@@ -53,7 +52,10 @@ export interface ICartItemRepository {
    * @returns A promise that resolves to the CartItem if found, otherwise null.
    * @throws Error if the retrieval fails.
    */
-  getByProductAndCart(productId: number, cartId: number): Promise<CartItem | null>;
+  getByProductAndCart(
+    productId: number,
+    cartId: number,
+  ): Promise<CartItem | null>;
 
   /**
    * Updates the quantity of a CartItem.

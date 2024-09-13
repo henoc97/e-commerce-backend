@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsOptional, IsNumber, IsArray, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsOptional,
+  IsNumber,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { VendorDTO } from './vendor.dto';
 
@@ -46,7 +53,7 @@ export class SubscriptionDTO {
    * Represents vendors that have subscribed to this plan.
    */
   @IsOptional()
-  @ValidateNested({each: true})
+  @ValidateNested({ each: true })
   @Type(() => VendorDTO)
   vendors?: VendorDTO[];
 
@@ -81,7 +88,7 @@ export class SubscriptionDTO {
     description?: string,
     vendors: VendorDTO[] = [],
     createdAt: Date = new Date(),
-    updatedAt: Date = new Date()
+    updatedAt: Date = new Date(),
   ) {
     this.id = id;
     this.name = name;

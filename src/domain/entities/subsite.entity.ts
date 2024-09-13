@@ -56,7 +56,7 @@ export class SubSite {
     userId: number,
     user: User,
     config: any,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.title = title;

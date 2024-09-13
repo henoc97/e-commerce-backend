@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsOptional, IsUrl, IsArray, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsOptional,
+  IsUrl,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductDTO } from './product.dto';
 import { OrderDTO } from './order.dto';
@@ -53,7 +60,7 @@ export class ShopDTO {
    * Optional array of products available in the shop.
    */
   @IsOptional()
-  @ValidateNested({each: true})
+  @ValidateNested({ each: true })
   @Type(() => ProductDTO)
   products?: ProductDTO[];
 
@@ -61,7 +68,7 @@ export class ShopDTO {
    * Optional array of orders associated with the shop.
    */
   @IsOptional()
-  @ValidateNested({each: true})
+  @ValidateNested({ each: true })
   @Type(() => OrderDTO)
   orders?: OrderDTO[];
 
@@ -69,7 +76,7 @@ export class ShopDTO {
    * Optional array of categories associated with the shop.
    */
   @IsOptional()
-  @ValidateNested({each: true})
+  @ValidateNested({ each: true })
   @Type(() => CategoryDTO)
   categories?: CategoryDTO[];
 
@@ -129,7 +136,7 @@ export class ShopDTO {
     updatedAt: Date = new Date(),
     description?: string,
     Marketplace?: MarketplaceDTO,
-    marketplaceId?: number
+    marketplaceId?: number,
   ) {
     this.id = id;
     this.name = name;

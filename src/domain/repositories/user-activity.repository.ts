@@ -1,4 +1,4 @@
-import { UserActivity } from "../entities/user-activity.entity";
+import { UserActivity } from '../entities/user-activity.entity';
 
 /**
  * Defines the contract for managing user activities.

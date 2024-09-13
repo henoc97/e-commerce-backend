@@ -1,4 +1,10 @@
-import { IsInt, IsString, IsEnum, IsOptional, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsEnum,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
 import { UserDTO } from './user.dto';
@@ -77,7 +83,7 @@ export class TicketDTO {
     description: string,
     status: TicketStatus,
     createdAt: Date = new Date(),
-    updatedAt: Date = new Date()
+    updatedAt: Date = new Date(),
   ) {
     this.id = id;
     this.userId = userId;

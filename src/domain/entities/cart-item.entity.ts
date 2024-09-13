@@ -51,7 +51,7 @@ export class CartItem {
     cart: Cart,
     productId: number,
     product: Product,
-    quantity: number
+    quantity: number,
   ) {
     this.id = id;
     this.cartId = cartId;

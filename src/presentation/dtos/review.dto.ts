@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsNumber, IsOptional, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsNumber,
+  IsOptional,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductDTO } from './product.dto';
 import { UserDTO } from './user.dto';
@@ -26,16 +33,16 @@ export class ReviewDTO {
   @ValidateNested()
   @Type(() => ProductDTO)
   product: ProductDTO;
-  
+
   /**
    * Unique identifier for the user who wrote the review.
-  */
- @IsInt()
- userId: number;
- 
- /**
-  * The user who wrote the review.
- */
+   */
+  @IsInt()
+  userId: number;
+
+  /**
+   * The user who wrote the review.
+   */
   @ValidateNested()
   @Type(() => UserDTO)
   user: UserDTO;
@@ -78,7 +85,7 @@ export class ReviewDTO {
     user: UserDTO,
     rating: number,
     comment?: string,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.productId = productId;

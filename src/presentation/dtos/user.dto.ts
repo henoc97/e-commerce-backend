@@ -1,4 +1,12 @@
-import { IsInt, IsString, IsOptional, IsEmail, IsEnum, IsArray, IsDate, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsOptional,
+  IsEmail,
+  IsEnum,
+  IsDate,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { UserProfileDTO } from './user-profile.dto';
 import { AddressDTO } from './address.dto';
@@ -184,7 +192,7 @@ export class UserDTO {
     ticket?: TicketDTO[],
     SubSite?: SubSiteDTO[],
     userActivity?: UserActivityDTO[],
-    auditLog?: AuditLogDTO[]
+    auditLog?: AuditLogDTO[],
   ) {
     this.id = id;
     this.email = email;

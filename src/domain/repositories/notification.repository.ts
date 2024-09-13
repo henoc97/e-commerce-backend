@@ -1,11 +1,11 @@
-import { NotificationType } from "../enums/notification-type.enum";
+import { NotificationType } from '../enums/notification-type.enum';
+import { Notification } from '../../domain/entities/notification.entity';
 
 /**
  * Repository interface for managing notifications.
  * Defines CRUD operations and additional business-specific functionalities for notifications.
  */
 export interface INotificationRepository {
-  
   /**
    * Creates a new notification.
    * @param notification - The notification entity to create.

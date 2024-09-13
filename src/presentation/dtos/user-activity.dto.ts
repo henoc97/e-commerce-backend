@@ -1,4 +1,10 @@
-import { IsInt, IsEnum, IsOptional, IsDateString, ValidateNested } from 'class-validator';
+import {
+  IsInt,
+  IsEnum,
+  IsOptional,
+  IsDateString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { UserDTO } from './user.dto';
 import { UserActivityAction } from 'src/domain/enums/user-activity-action.enum';
@@ -63,7 +69,7 @@ export class UserActivityDTO {
     user: UserDTO,
     action: UserActivityAction,
     productId?: number,
-    timestamp: Date = new Date()
+    timestamp: Date = new Date(),
   ) {
     this.id = id;
     this.userId = userId;

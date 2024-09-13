@@ -1,4 +1,10 @@
-import { IsInt, IsString, IsEnum, IsDateString, IsOptional } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsEnum,
+  IsDateString,
+  IsOptional,
+} from 'class-validator';
 import { NotificationType } from 'src/domain/enums/notification-type.enum';
 
 /**
@@ -57,7 +63,7 @@ export class NotificationDTO {
     type: NotificationType,
     content: string,
     sentAt?: Date,
-    id?: number
+    id?: number,
   ) {
     this.id = id;
     this.userId = userId;

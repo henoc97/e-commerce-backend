@@ -40,12 +40,7 @@ export class ProductImageDTO {
    * @param product - The Product entity associated with the image.
    * @param url - The URL of the product image.
    */
-  constructor(
-    id: number,
-    productId: number,
-    product: ProductDTO,
-    url: string
-  ) {
+  constructor(id: number, productId: number, product: ProductDTO, url: string) {
     this.id = id;
     this.productId = productId;
     this.product = product;

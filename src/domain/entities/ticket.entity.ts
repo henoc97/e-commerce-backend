@@ -67,7 +67,7 @@ export class Ticket {
     description: string,
     status: TicketStatus,
     createdAt: Date = new Date(),
-    updatedAt: Date = new Date()
+    updatedAt: Date = new Date(),
   ) {
     this.id = id;
     this.userId = userId;

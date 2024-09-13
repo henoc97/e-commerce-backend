@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsOptional, IsNumber, IsArray, ValidateNested, IsDateString } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsOptional,
+  IsNumber,
+  ValidateNested,
+  IsDateString,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { CategoryDTO } from './category.dto';
 import { ProductImageDTO } from './product-image.dto';
@@ -146,7 +153,7 @@ export class ProductDTO {
   @ValidateNested({ each: true })
   @Type(() => ReviewDTO)
   Review?: ReviewDTO[];
-  
+
   /**
    * Creates a new ProductDTO instance.
    * @param id - Unique identifier for the Product.
@@ -188,7 +195,7 @@ export class ProductDTO {
     Review: ReviewDTO[] = [],
     description?: string,
     vendor?: VendorDTO,
-    vendorId?: number
+    vendorId?: number,
   ) {
     this.id = id;
     this.name = name;

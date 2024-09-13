@@ -1,11 +1,10 @@
-import { CartItem } from "../entities/cart-item.entity";
-import { Cart } from "../entities/cart.entity";
+import { CartItem } from '../entities/cart-item.entity';
+import { Cart } from '../entities/cart.entity';
 
 /**
  * Interface for managing carts with business rules.
  */
 export interface ICartRepository {
-  
   /**
    * Creates and stores a new Cart.
    * @param cart - The Cart entity to create.

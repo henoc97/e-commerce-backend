@@ -1,11 +1,10 @@
-import { NewsletterSubscription } from "../entities/newsletter-subscription.entity";
+import { NewsletterSubscription } from '../entities/newsletter-subscription.entity';
 
 /**
  * Repository interface for managing newsletter subscriptions.
  * Defines operations for CRUD and business-specific functionalities related to subscriptions.
  */
 export interface INewsletterSubscriptionRepository {
-
   /**
    * Creates a new newsletter subscription.
    * @param subscription - The subscription entity to create.
@@ -29,7 +28,10 @@ export interface INewsletterSubscriptionRepository {
    * @returns A promise that resolves to the updated NewsletterSubscription.
    * @throws Error if update fails.
    */
-  update(id: number, updates: Partial<NewsletterSubscription>): Promise<NewsletterSubscription>;
+  update(
+    id: number,
+    updates: Partial<NewsletterSubscription>,
+  ): Promise<NewsletterSubscription>;
 
   /**
    * Deletes a subscription by its unique ID.
@@ -69,7 +71,10 @@ export interface INewsletterSubscriptionRepository {
    * @returns A promise that resolves to an array of NewsletterSubscription entities created within the date range.
    * @throws Error if retrieval fails.
    */
-  getByDateRange(startDate: Date, endDate: Date): Promise<NewsletterSubscription[]>;
+  getByDateRange(
+    startDate: Date,
+    endDate: Date,
+  ): Promise<NewsletterSubscription[]>;
 
   /**
    * Counts the total number of subscriptions.

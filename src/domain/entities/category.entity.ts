@@ -65,7 +65,7 @@ export class Category {
     children: Category[] = [],
     products: Product[] = [],
     Shop?: Shop,
-    shopId?: number
+    shopId?: number,
   ) {
     this.id = id;
     this.name = name;

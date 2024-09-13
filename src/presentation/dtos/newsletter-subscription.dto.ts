@@ -1,4 +1,10 @@
-import { IsEmail, IsInt, IsOptional, IsString, IsDateString } from 'class-validator';
+import {
+  IsEmail,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsDateString,
+} from 'class-validator';
 
 /**
  * Data Transfer Object for NewsletterSubscription.
@@ -36,11 +42,7 @@ export class NewsletterSubscriptionDTO {
    * @param subscribedAt - (Optional) Date and time of subscription creation.
    * @param id - Unique identifier for the subscription (optional).
    */
-  constructor(
-    email: string,
-    subscribedAt?: Date,
-    id?: number
-  ) {
+  constructor(email: string, subscribedAt?: Date, id?: number) {
     this.id = id;
     this.email = email;
     this.subscribedAt = subscribedAt;

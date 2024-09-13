@@ -1,4 +1,4 @@
-import { IsInt, IsString, IsOptional, IsArray, ValidateNested } from 'class-validator';
+import { IsInt, IsString, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductDTO } from './product.dto';
 import { ShopDTO } from './shop.dto';
@@ -85,7 +85,7 @@ export class VendorDTO {
     products?: ProductDTO[],
     subscription?: SubscriptionDTO,
     subscriptionId?: number,
-    Shop?: ShopDTO
+    Shop?: ShopDTO,
   ) {
     this.id = id;
     this.userId = userId;

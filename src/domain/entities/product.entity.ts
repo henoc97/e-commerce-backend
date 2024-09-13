@@ -73,7 +73,7 @@ export class Product {
     Review: Review[] = [],
     description?: string,
     vendor?: Vendor,
-    vendorId?: number
+    vendorId?: number,
   ) {
     this.id = id;
     this.name = name;

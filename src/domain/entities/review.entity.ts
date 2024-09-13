@@ -66,7 +66,7 @@ export class Review {
     user: User,
     rating: number,
     comment?: string,
-    createdAt: Date = new Date()
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.productId = productId;

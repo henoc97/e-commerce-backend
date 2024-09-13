@@ -40,7 +40,7 @@ export class Marketplace {
     id: number,
     name: string,
     description?: string,
-    shops: Shop[] = []
+    shops: Shop[] = [],
   ) {
     this.id = id;
     this.name = name;

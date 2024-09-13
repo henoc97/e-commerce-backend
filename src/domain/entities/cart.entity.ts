@@ -33,12 +33,7 @@ export class Cart {
    * @param user - The User who owns the Cart.
    * @param items - Items in the Cart (optional).
    */
-  constructor(
-    id: number,
-    userId: number,
-    user: User,
-    items: CartItem[] = []
-  ) {
+  constructor(id: number, userId: number, user: User, items: CartItem[] = []) {
     this.id = id;
     this.userId = userId;
     this.user = user;

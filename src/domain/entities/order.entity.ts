@@ -1,6 +1,6 @@
 import { User } from './user.entity';
 import { Shop } from './shop.entity';
-import { OrderStatus } from '../enums/order-status.enum'; 
+import { OrderStatus } from '../enums/order-status.enum';
 import { OrderItem } from './order-item.enttity';
 import { Payment } from './payment.entity';
 import { Refund } from './refund.entity';
@@ -111,7 +111,7 @@ export class Order {
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
     Payment?: Payment[],
-    Refund?: Refund[]
+    Refund?: Refund[],
   ) {
     this.id = id;
     this.userId = userId;

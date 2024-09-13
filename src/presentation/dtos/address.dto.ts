@@ -1,4 +1,10 @@
-import { IsInt, IsNotEmpty, IsString, IsPostalCode, IsOptional } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  IsPostalCode,
+  IsOptional,
+} from 'class-validator';
 
 /**
  * Data Transfer Object for Address.
@@ -56,10 +62,9 @@ export class AddressDTO {
 
   /**
    * Constructs an AddressDTO instance.
-   * 
+   *
    * @param id - Unique identifier for the address.
    * @param userId - Foreign key referring to the User.
-   * @param user - The User object associated with this address.
    * @param street - Street address.
    * @param city - City where the address is located.
    * @param state - State or region where the address is located.
@@ -73,7 +78,7 @@ export class AddressDTO {
     city: string,
     state: string,
     postalCode: string,
-    country: string
+    country: string,
   ) {
     this.id = id;
     this.userId = userId;
