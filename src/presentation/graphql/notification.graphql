@@ -1,0 +1,115 @@
+# notification.graphql
+
+"""
+Represents a notification for a user.
+Stores details about the notification type, content, and when it was sent.
+"""
+type Notification {
+  """
+  Unique identifier for the notification.
+  """
+  id: ID!
+
+  """
+  Unique identifier for the user who will receive the notification.
+  """
+  userId: ID!
+
+  """
+  The user associated with the notification.
+  """
+  user: User!
+
+  """
+  The type of the notification (e.g., INFO, WARNING, etc).
+  """
+  type: NotificationType!
+
+  """
+  The content of the notification.
+  """
+  content: String!
+
+  """
+  The date and time when the notification was sent.
+  """
+  sentAt: String!
+}
+
+"""
+Represents the different types of notifications available.
+"""
+enum NotificationType {
+  PROMOTION
+  ORDER_UPDATE
+  INFO
+  WARNING
+}
+
+"""
+Queries related to Notifications.
+"""
+type Query {
+  """
+  Retrieves a list of all notifications.
+  """
+  notifications: [Notification!]!
+
+  """
+  Retrieves a single notification by its ID.
+  """
+  notification(id: ID!): Notification
+
+  """
+  Retrieves notifications for a specific user by user ID.
+  """
+  notificationsByUser(userId: ID!): [Notification!]!
+}
+
+"""
+Mutations related to Notifications.
+"""
+type Mutation {
+  """
+  Creates a new Notification.
+  """
+  createNotification(
+    userId: ID!
+    type: NotificationType!
+    content: String!
+  ): Notification!
+
+  """
+  Updates an existing Notification by its ID.
+  """
+  updateNotification(
+    id: ID!
+    type: NotificationType
+    content: String
+  ): Notification!
+
+  """
+  Deletes a Notification by its ID.
+  """
+  deleteNotification(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Notifications.
+"""
+input NotificationInput {
+  """
+  Unique identifier for the user receiving the notification.
+  """
+  userId: ID!
+
+  """
+  The type of the notification.
+  """
+  type: NotificationType!
+
+  """
+  The content of the notification.
+  """
+  content: String!
+}

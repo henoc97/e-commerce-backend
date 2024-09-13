@@ -1,0 +1,116 @@
+# userActivity.graphql
+
+"""
+Represents a record of user activity within the system.
+"""
+type UserActivity {
+  """
+  Unique identifier for the user activity record.
+  """
+  id: ID!
+
+  """
+  Unique identifier for the user who performed the activity.
+  """
+  userId: ID!
+
+  """
+  The user who performed the activity.
+  """
+  user: User!
+
+  """
+  Type of action performed by the user.
+  """
+  action: UserActivityAction!
+
+  """
+  Optional product ID related to the activity.
+  """
+  productId: Int
+
+  """
+  The date and time when the activity was performed.
+  """
+  timestamp: String!
+}
+
+"""
+Enum for user activity actions.
+"""
+enum UserActivityAction {
+  LOGIN
+  VIEW_PRODUCT
+  PURCHASE
+  LOGOUT
+  ADD_TO_CART
+  REMOVE_FROM_CART
+  SEARCH
+  OTHER
+}
+
+"""
+Queries related to UserActivities.
+"""
+type Query {
+  """
+  Retrieves a list of all user activities.
+  """
+  userActivities: [UserActivity!]!
+
+  """
+  Retrieves a single user activity by its ID.
+  """
+  userActivity(id: ID!): UserActivity
+
+  """
+  Retrieves all activities performed by a specific user.
+  """
+  activitiesByUser(userId: ID!): [UserActivity!]!
+
+  """
+  Retrieves all activities related to a specific product.
+  """
+  activitiesByProduct(productId: ID!): [UserActivity!]!
+
+  """
+  Retrieves activities performed within a specified date range.
+  """
+  activitiesByDateRange(startDate: String!, endDate: String!): [UserActivity!]!
+}
+
+"""
+Mutations related to UserActivities.
+"""
+type Mutation {
+  """
+  Creates a new user activity record.
+  """
+  createUserActivity(
+    userId: ID!
+    action: UserActivityAction!
+    productId: Int
+  ): UserActivity!
+
+  """
+  Updates an existing user activity record by its ID.
+  """
+  updateUserActivity(
+    id: ID!
+    action: UserActivityAction
+    productId: Int
+  ): UserActivity!
+
+  """
+  Deletes a user activity record by its ID.
+  """
+  deleteUserActivity(id: ID!): Boolean!
+
+  """
+  Updates the action of an existing user activity record.
+  """
+  updateUserActivityAction(
+    id: ID!
+    action: UserActivityAction!
+  ): UserActivity!
+}

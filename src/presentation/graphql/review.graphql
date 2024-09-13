@@ -1,0 +1,126 @@
+# review.graphql
+
+"""
+Represents a review for a product.
+"""
+type Review {
+  """
+  Unique identifier for the Review.
+  """
+  id: ID!
+
+  """
+  Unique identifier for the Product associated with this review.
+  """
+  productId: ID!
+
+  """
+  The Product that this review is associated with.
+  """
+  product: Product!
+
+  """
+  Unique identifier for the User who wrote the review.
+  """
+  userId: ID!
+
+  """
+  The User who wrote the review.
+  """
+  user: User!
+
+  """
+  The rating given in the review, usually on a scale from 1 to 5.
+  """
+  rating: Int!
+
+  """
+  Optional comment provided by the user.
+  """
+  comment: String
+
+  """
+  The date and time when the review was created.
+  Automatically set to the current date and time when a Review is created.
+  """
+  createdAt: String!
+}
+
+"""
+Queries related to Reviews.
+"""
+type Query {
+  """
+  Retrieves a list of all reviews.
+  """
+  reviews: [Review!]!
+
+  """
+  Retrieves a single review by its ID.
+  """
+  review(id: ID!): Review
+
+  """
+  Retrieves reviews for a specific product by its ID.
+  """
+  reviewsByProduct(productId: ID!): [Review!]!
+
+  """
+  Retrieves reviews written by a specific user by their ID.
+  """
+  reviewsByUser(userId: ID!): [Review!]!
+}
+
+"""
+Mutations related to Reviews.
+"""
+type Mutation {
+  """
+  Creates a new review.
+  """
+  createReview(
+    productId: ID!
+    userId: ID!
+    rating: Int!
+    comment: String
+  ): Review!
+
+  """
+  Updates an existing review by its ID.
+  """
+  updateReview(
+    id: ID!
+    rating: Int
+    comment: String
+  ): Review!
+
+  """
+  Deletes a review by its ID.
+  """
+  deleteReview(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Reviews.
+"""
+input ReviewInput {
+  """
+  Unique identifier for the Product.
+  """
+  productId: ID!
+
+  """
+  Unique identifier for the User.
+  """
+  userId: ID!
+
+  """
+  The rating given in the review.
+  """
+  rating: Int!
+
+  """
+  Optional comment provided by the user.
+  """
+  comment: String
+}

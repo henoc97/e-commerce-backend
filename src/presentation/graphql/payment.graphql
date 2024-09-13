@@ -1,0 +1,176 @@
+# order.graphql
+
+"""
+Represents an order placed by a user in a shop.
+Contains information about the order items, status, total amount, and related payment and refund details.
+"""
+type Order {
+  """
+  Unique identifier for the Order.
+  """
+  id: ID!
+
+  """
+  Unique identifier for the User who placed the order.
+  """
+  userId: ID!
+
+  """
+  The User who placed the order.
+  """
+  user: User!
+
+  """
+  Unique identifier for the Shop where the order was placed.
+  """
+  shopId: ID!
+
+  """
+  The Shop where the order was placed.
+  """
+  shop: Shop!
+
+  """
+  List of items included in the Order.
+  """
+  items: [OrderItem!]!
+
+  """
+  Status of the Order (e.g., Pending, Shipped, Delivered).
+  """
+  status: OrderStatus!
+
+  """
+  Total amount for the Order.
+  """
+  totalAmount: Float!
+
+  """
+  Unique identifier for the Payment associated with the Order.
+  """
+  paymentId: String
+
+  """
+  Tracking number for the Order shipment.
+  """
+  trackingNumber: String
+
+  """
+  Date and time when the Order was created.
+  """
+  createdAt: String!
+
+  """
+  Date and time when the Order was last updated.
+  """
+  updatedAt: String!
+
+  """
+  List of Payments associated with the Order.
+  """
+  payments: [Payment!]!
+
+  """
+  List of Refunds associated with the Order.
+  """
+  refunds: [Refund!]!
+}
+
+"""
+Queries related to Orders.
+"""
+type Query {
+  """
+  Retrieves a list of all Orders.
+  """
+  orders: [Order!]!
+
+  """
+  Retrieves a single Order by its ID.
+  """
+  order(id: ID!): Order
+
+  """
+  Retrieves Orders for a specific User by user ID.
+  """
+  ordersByUser(userId: ID!): [Order!]!
+
+  """
+  Retrieves Orders for a specific Shop by shop ID.
+  """
+  ordersByShop(shopId: ID!): [Order!]!
+
+  """
+  Retrieves Orders with a specific status.
+  """
+  ordersByStatus(status: OrderStatus!): [Order!]!
+}
+
+"""
+Mutations related to Orders.
+"""
+type Mutation {
+  """
+  Creates a new Order.
+  """
+  createOrder(
+    input: OrderInput!
+  ): Order!
+
+  """
+  Updates an existing Order by its ID.
+  """
+  updateOrder(
+    id: ID!
+    items: [OrderItemInput!]
+    status: OrderStatus
+    totalAmount: Float
+    paymentId: String
+    trackingNumber: String
+  ): Order!
+
+  """
+  Deletes an Order by its ID.
+  """
+  deleteOrder(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Orders.
+"""
+input OrderInput {
+  """
+  Unique identifier for the User who placed the order.
+  """
+  userId: ID!
+
+  """
+  Unique identifier for the Shop where the order was placed.
+  """
+  shopId: ID!
+
+  """
+  List of items included in the Order.
+  """
+  items: [OrderItemInput!]!
+
+  """
+  Status of the Order.
+  """
+  status: OrderStatus!
+
+  """
+  Total amount for the Order.
+  """
+  totalAmount: Float!
+
+  """
+  Unique identifier for the Payment associated with the Order.
+  """
+  paymentId: String
+
+  """
+  Tracking number for the Order shipment.
+  """
+  trackingNumber: String
+}

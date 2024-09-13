@@ -1,0 +1,224 @@
+# product.graphql
+
+"""
+Represents a product entity in the system.
+"""
+type Product {
+  """
+  Unique identifier for the product.
+  """
+  id: ID!
+
+  """
+  Name of the product.
+  """
+  name: String!
+
+  """
+  Description of the product.
+  """
+  description: String
+
+  """
+  Price of the product.
+  """
+  price: Float!
+
+  """
+  List of promotions associated with the product.
+  """
+  promotions: [Promotion!]!
+
+  """
+  Category to which the product belongs.
+  """
+  category: Category!
+
+  """
+  ID of the category to which the product belongs.
+  """
+  categoryId: ID!
+
+  """
+  List of images associated with the product.
+  """
+  images: [ProductImage!]!
+
+  """
+  List of variants for the product.
+  """
+  variants: [ProductVariant!]!
+
+  """
+  Stock quantity of the product.
+  """
+  stock: Int!
+
+  """
+  Vendor associated with the product.
+  """
+  vendor: Vendor
+
+  """
+  ID of the vendor associated with the product.
+  """
+  vendorId: ID
+
+  """
+  Shop where the product is listed.
+  """
+  shop: Shop!
+
+  """
+  ID of the shop where the product is listed.
+  """
+  shopId: ID!
+
+  """
+  Date and time when the product was created.
+  """
+  createdAt: String!
+
+  """
+  Date and time when the product was last updated.
+  """
+  updatedAt: String!
+
+  """
+  List of cart items associated with the product.
+  """
+  cartItems: [CartItem!]!
+
+  """
+  List of order items associated with the product.
+  """
+  orderItems: [OrderItem!]!
+
+  """
+  List of reviews for the product.
+  """
+  reviews: [Review!]!
+}
+
+"""
+Queries related to Products.
+"""
+type Query {
+  """
+  Retrieves a list of all products.
+  """
+  products: [Product!]!
+
+  """
+  Retrieves a single product by its ID.
+  """
+  product(id: ID!): Product
+
+  """
+  Retrieves products by category ID.
+  """
+  productsByCategory(categoryId: ID!): [Product!]!
+
+  """
+  Retrieves products by vendor ID.
+  """
+  productsByVendor(vendorId: ID!): [Product!]!
+
+  """
+  Retrieves products in a shop by shop ID.
+  """
+  productsByShop(shopId: ID!): [Product!]!
+
+  """
+  Retrieves products with a price range.
+  """
+  productsByPriceRange(minPrice: Float, maxPrice: Float): [Product!]!
+
+  """
+  Searches for products by name.
+  """
+  searchProducts(name: String!): [Product!]!
+}
+
+"""
+Mutations related to Products.
+"""
+type Mutation {
+  """
+  Creates a new product.
+  """
+  createProduct(
+    input: ProductInput!
+  ): Product!
+
+  """
+  Updates an existing product by its ID.
+  """
+  updateProduct(
+    id: ID!
+    name: String
+    description: String
+    price: Float
+    categoryId: ID
+    images: [ID!]
+    variants: [ID!]
+    stock: Int
+    vendorId: ID
+    shopId: ID
+  ): Product!
+
+  """
+  Deletes a product by its ID.
+  """
+  deleteProduct(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Products.
+"""
+input ProductInput {
+  """
+  Name of the product.
+  """
+  name: String!
+
+  """
+  Description of the product.
+  """
+  description: String
+
+  """
+  Price of the product.
+  """
+  price: Float!
+
+  """
+  ID of the category to which the product belongs.
+  """
+  categoryId: ID!
+
+  """
+  List of image IDs associated with the product.
+  """
+  images: [ID!]
+
+  """
+  List of variant IDs for the product.
+  """
+  variants: [ID!]
+
+  """
+  Stock quantity of the product.
+  """
+  stock: Int!
+
+  """
+  ID of the vendor associated with the product.
+  """
+  vendorId: ID
+
+  """
+  ID of the shop where the product is listed.
+  """
+  shopId: ID!
+}

@@ -1,0 +1,99 @@
+# product-variant.graphql
+
+"""
+Represents a variant of a product, such as different sizes or colors.
+"""
+type ProductVariant {
+  """
+  Unique identifier for the ProductVariant.
+  """
+  id: ID!
+
+  """
+  Unique identifier for the Product this variant belongs to.
+  """
+  productId: ID!
+
+  """
+  The Product this variant belongs to.
+  """
+  product: Product!
+
+  """
+  Name of the variant, such as 'Size' or 'Color'.
+  """
+  name: String!
+
+  """
+  Value of the variant, such as 'Large' or 'Red'.
+  """
+  value: String!
+}
+
+"""
+Queries related to ProductVariants.
+"""
+type Query {
+  """
+  Retrieves a list of all ProductVariants.
+  """
+  productVariants: [ProductVariant!]!
+
+  """
+  Retrieves a single ProductVariant by its ID.
+  """
+  productVariant(id: ID!): ProductVariant
+
+  """
+  Retrieves variants for a specific Product by product ID.
+  """
+  productVariantsByProduct(productId: ID!): [ProductVariant!]!
+}
+
+"""
+Mutations related to ProductVariants.
+"""
+type Mutation {
+  """
+  Creates a new ProductVariant.
+  """
+  createProductVariant(
+    productId: ID!
+    name: String!
+    value: String!
+  ): ProductVariant!
+
+  """
+  Updates an existing ProductVariant by its ID.
+  """
+  updateProductVariant(
+    id: ID!
+    name: String
+    value: String
+  ): ProductVariant!
+
+  """
+  Deletes a ProductVariant by its ID.
+  """
+  deleteProductVariant(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating ProductVariants.
+"""
+input ProductVariantInput {
+  """
+  Unique identifier for the Product this variant belongs to.
+  """
+  productId: ID!
+
+  """
+  Name of the variant.
+  """
+  name: String!
+
+  """
+  Value of the variant.
+  """
+  value: String!
+}

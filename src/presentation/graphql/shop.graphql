@@ -1,0 +1,154 @@
+# shop.graphql
+
+"""
+Represents a shop entity in the system.
+"""
+type Shop {
+  """
+  Unique identifier for the Shop.
+  """
+  id: ID!
+
+  """
+  The name of the shop.
+  """
+  name: String!
+
+  """
+  The URL of the shop's website.
+  """
+  url: String!
+
+  """
+  Optional description of the shop.
+  """
+  description: String
+
+  """
+  The vendor associated with the shop.
+  """
+  vendor: Vendor!
+
+  """
+  Unique identifier for the vendor associated with the shop.
+  """
+  vendorId: ID!
+
+  """
+  List of products available in the shop.
+  """
+  products: [Product!]!
+
+  """
+  List of orders associated with the shop.
+  """
+  orders: [Order!]!
+
+  """
+  List of categories associated with the shop.
+  """
+  categories: [Category!]!
+
+  """
+  The date and time when the shop was created.
+  """
+  createdAt: String!
+
+  """
+  The date and time when the shop was last updated.
+  """
+  updatedAt: String!
+
+  """
+  Optional marketplace where the shop is listed.
+  """
+  marketplace: Marketplace
+
+  """
+  Optional ID of the marketplace where the shop is listed.
+  """
+  marketplaceId: ID
+}
+
+"""
+Queries related to Shops.
+"""
+type Query {
+  """
+  Retrieves a list of all shops.
+  """
+  shops: [Shop!]!
+
+  """
+  Retrieves a single shop by its ID.
+  """
+  shop(id: ID!): Shop
+
+  """
+  Retrieves shops by a specific vendor's ID.
+  """
+  shopsByVendor(vendorId: ID!): [Shop!]!
+
+  """
+  Retrieves shops listed on a specific marketplace by its ID.
+  """
+  shopsByMarketplace(marketplaceId: ID!): [Shop!]!
+}
+
+"""
+Mutations related to Shops.
+"""
+type Mutation {
+  """
+  Creates a new shop.
+  """
+  createShop(
+    input: ShopInput!
+  ): Shop!
+
+  """
+  Updates an existing shop by its ID.
+  """
+  updateShop(
+    id: ID!
+    name: String
+    url: String
+    description: String
+    marketplaceId: ID
+  ): Shop!
+
+  """
+  Deletes a shop by its ID.
+  """
+  deleteShop(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Shops.
+"""
+input ShopInput {
+  """
+  The name of the shop.
+  """
+  name: String!
+
+  """
+  The URL of the shop's website.
+  """
+  url: String!
+
+  """
+  Optional description of the shop.
+  """
+  description: String
+
+  """
+  Unique identifier for the vendor associated with the shop.
+  """
+  vendorId: ID!
+
+  """
+  Optional ID of the marketplace where the shop is listed.
+  """
+  marketplaceId: ID
+}

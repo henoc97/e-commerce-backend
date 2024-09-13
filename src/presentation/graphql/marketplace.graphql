@@ -1,0 +1,84 @@
+# marketplace.graphql
+
+"""
+Represents a marketplace in the system.
+A marketplace consists of multiple shops and may have a description.
+"""
+type Marketplace {
+  """
+  Unique identifier for the marketplace.
+  """
+  id: ID!
+
+  """
+  Name of the marketplace.
+  """
+  name: String!
+
+  """
+  Description of the marketplace.
+  """
+  description: String
+
+  """
+  List of shops within the marketplace.
+  """
+  shops: [Shop!]!
+}
+
+"""
+Queries related to Marketplaces.
+"""
+type Query {
+  """
+  Retrieves a list of all marketplaces.
+  """
+  marketplaces: [Marketplace!]!
+
+  """
+  Retrieves a single marketplace by its ID.
+  """
+  marketplace(id: ID!): Marketplace
+}
+
+"""
+Mutations related to Marketplaces.
+"""
+type Mutation {
+  """
+  Creates a new Marketplace.
+  """
+  createMarketplace(
+    name: String!,
+    description: String
+  ): Marketplace!
+
+  """
+  Updates an existing Marketplace.
+  """
+  updateMarketplace(
+    id: ID!,
+    name: String,
+    description: String
+  ): Marketplace!
+
+  """
+  Deletes a Marketplace by its ID.
+  """
+  deleteMarketplace(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Marketplaces.
+"""
+input MarketplaceInput {
+  """
+  Name of the Marketplace.
+  """
+  name: String!
+
+  """
+  Description of the Marketplace.
+  """
+  description: String
+}

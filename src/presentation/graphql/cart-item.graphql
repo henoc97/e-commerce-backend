@@ -1,0 +1,83 @@
+"""
+Represents an item in a shopping cart.
+Each CartItem links a specific product with a quantity to a cart.
+"""
+type CartItem {
+  """
+  Unique identifier for the CartItem.
+  """
+  id: Int!
+
+  """
+  The cart to which this item belongs.
+  """
+  cart: Cart!
+
+  """
+  The product associated with this CartItem.
+  """
+  product: Product!
+
+  """
+  Quantity of the product in the cart.
+  """
+  quantity: Int!
+}
+
+"""
+Input type for creating a new CartItem.
+"""
+input CreateCartItemInput {
+  cartId: Int!
+  productId: Int!
+  quantity: Int!
+}
+
+"""
+Input type for updating the quantity of a CartItem.
+"""
+input UpdateCartItemQuantityInput {
+  id: Int!
+  quantity: Int!
+}
+
+"""
+Queries for retrieving CartItem data.
+"""
+type Query {
+  """
+  Get a CartItem by its unique identifier.
+  """
+  cartItem(id: Int!): CartItem
+
+  """
+  Get all CartItems in a specific cart.
+  """
+  cartItemsByCart(cartId: Int!): [CartItem!]!
+
+  """
+  Get all CartItems for a specific product.
+  Useful for checking how many times a product has been added to various carts.
+  """
+  cartItemsByProduct(productId: Int!): [CartItem!]!
+}
+
+"""
+Mutations for creating, updating, and deleting CartItem entries.
+"""
+type Mutation {
+  """
+  Create a new CartItem by linking a product to a cart with a specified quantity.
+  """
+  createCartItem(input: CreateCartItemInput!): CartItem!
+
+  """
+  Update the quantity of an existing CartItem.
+  """
+  updateCartItemQuantity(input: UpdateCartItemQuantityInput!): CartItem!
+
+  """
+  Remove a CartItem from the cart by its ID.
+  """
+  deleteCartItem(id: Int!): Boolean!
+}

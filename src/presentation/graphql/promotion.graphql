@@ -1,0 +1,154 @@
+# promotion.graphql
+
+"""
+Represents a promotional offer for a product.
+"""
+type Promotion {
+  """
+  Unique identifier for the promotion.
+  """
+  id: ID!
+
+  """
+  Name of the promotion (e.g., "Summer Sale", "Black Friday Discount").
+  """
+  name: String!
+
+  """
+  The amount or percentage of the discount applied.
+  """
+  discountValue: Float!
+
+  """
+  Type of discount applied (e.g., FLAT_AMOUNT, PERCENTAGE).
+  """
+  discountType: DiscountType!
+
+  """
+  The date when the promotion starts.
+  """
+  startDate: String!
+
+  """
+  The date when the promotion ends.
+  """
+  endDate: String!
+
+  """
+  Unique identifier for the product that the promotion applies to.
+  """
+  productId: ID!
+
+  """
+  The product associated with the promotion.
+  """
+  product: Product!
+
+  """
+  The date and time when the promotion was created.
+  """
+  createdAt: String!
+
+  """
+  The date and time when the promotion was last updated.
+  """
+  updatedAt: String!
+}
+
+"""
+Enum representing different types of discounts.
+"""
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+"""
+Queries related to Promotions.
+"""
+type Query {
+  """
+  Retrieves a list of all promotions.
+  """
+  promotions: [Promotion!]!
+
+  """
+  Retrieves a single promotion by its ID.
+  """
+  promotion(id: ID!): Promotion
+
+  """
+  Retrieves promotions for a specific product by its ID.
+  """
+  promotionsByProduct(productId: ID!): [Promotion!]!
+
+  """
+  Retrieves active promotions for a specific product.
+  """
+  activePromotionsByProduct(productId: ID!): [Promotion!]!
+}
+
+"""
+Mutations related to Promotions.
+"""
+type Mutation {
+  """
+  Creates a new promotion.
+  """
+  createPromotion(
+    input: PromotionInput!
+  ): Promotion!
+
+  """
+  Updates an existing promotion by its ID.
+  """
+  updatePromotion(
+    id: ID!
+    name: String
+    discountValue: Float
+    discountType: DiscountType
+    startDate: String
+    endDate: String
+    productId: ID
+  ): Promotion!
+
+  """
+  Deletes a promotion by its ID.
+  """
+  deletePromotion(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Promotions.
+"""
+input PromotionInput {
+  """
+  Name of the promotion.
+  """
+  name: String!
+
+  """
+  The amount or percentage of the discount.
+  """
+  discountValue: Float!
+
+  """
+  The type of discount.
+  """
+  discountType: DiscountType!
+
+  """
+  The start date of the promotion.
+  """
+  startDate: String!
+
+  """
+  The end date of the promotion.
+  """
+  endDate: String!
+
+  """
+  Unique identifier for the product that the promotion applies to.
+  """
+  productId: ID!
+}

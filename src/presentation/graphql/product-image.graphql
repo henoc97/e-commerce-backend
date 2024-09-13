@@ -1,0 +1,86 @@
+# product-image.graphql
+
+"""
+Represents an image associated with a product.
+"""
+type ProductImage {
+  """
+  Unique identifier for the product image.
+  """
+  id: ID!
+
+  """
+  Unique identifier for the Product to which this image belongs.
+  """
+  productId: ID!
+
+  """
+  The Product entity associated with this image.
+  """
+  product: Product!
+
+  """
+  URL where the image is located.
+  """
+  url: String!
+}
+
+"""
+Queries related to ProductImages.
+"""
+type Query {
+  """
+  Retrieves a list of all ProductImages.
+  """
+  productImages: [ProductImage!]!
+
+  """
+  Retrieves a single ProductImage by its ID.
+  """
+  productImage(id: ID!): ProductImage
+
+  """
+  Retrieves images for a specific Product by product ID.
+  """
+  productImagesByProduct(productId: ID!): [ProductImage!]!
+}
+
+"""
+Mutations related to ProductImages.
+"""
+type Mutation {
+  """
+  Creates a new ProductImage.
+  """
+  createProductImage(
+    input: ProductImageInput!
+  ): ProductImage!
+
+  """
+  Updates an existing ProductImage by its ID.
+  """
+  updateProductImage(
+    id: ID!
+    url: String
+  ): ProductImage!
+
+  """
+  Deletes a ProductImage by its ID.
+  """
+  deleteProductImage(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating ProductImages.
+"""
+input ProductImageInput {
+  """
+  Unique identifier for the Product to which this image belongs.
+  """
+  productId: ID!
+
+  """
+  URL where the image is located.
+  """
+  url: String!
+}

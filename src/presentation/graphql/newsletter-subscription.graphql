@@ -1,0 +1,77 @@
+# newsletterSubscription.graphql
+
+"""
+Represents a subscription to a newsletter.
+Stores details about the subscriber's email and the subscription date.
+"""
+type NewsletterSubscription {
+  """
+  Unique identifier for the subscription.
+  """
+  id: ID!
+
+  """
+  Email address of the subscriber.
+  """
+  email: String!
+
+  """
+  The date and time when the subscription was created.
+  """
+  subscribedAt: String!
+}
+
+"""
+Queries related to Newsletter Subscriptions.
+"""
+type Query {
+  """
+  Retrieves a list of all newsletter subscriptions.
+  """
+  newsletterSubscriptions: [NewsletterSubscription!]!
+
+  """
+  Retrieves a single newsletter subscription by its ID.
+  """
+  newsletterSubscription(id: ID!): NewsletterSubscription
+
+  """
+  Retrieves newsletter subscriptions by email address.
+  """
+  newsletterSubscriptionsByEmail(email: String!): [NewsletterSubscription!]!
+}
+
+"""
+Mutations related to Newsletter Subscriptions.
+"""
+type Mutation {
+  """
+  Creates a new NewsletterSubscription.
+  """
+  createNewsletterSubscription(
+    email: String!
+  ): NewsletterSubscription!
+
+  """
+  Updates an existing NewsletterSubscription by its ID.
+  """
+  updateNewsletterSubscription(
+    id: ID!,
+    email: String
+  ): NewsletterSubscription!
+
+  """
+  Deletes a NewsletterSubscription by its ID.
+  """
+  deleteNewsletterSubscription(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Newsletter Subscriptions.
+"""
+input NewsletterSubscriptionInput {
+  """
+  Email address of the subscriber.
+  """
+  email: String!
+}

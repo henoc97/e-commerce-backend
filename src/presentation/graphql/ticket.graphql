@@ -1,0 +1,118 @@
+# ticket.graphql
+
+"""
+Represents a support ticket created by a user.
+"""
+type Ticket {
+  """
+  Unique identifier for the ticket.
+  """
+  id: ID!
+
+  """
+  Unique identifier for the user who created the ticket.
+  """
+  userId: ID!
+
+  """
+  The user associated with the ticket.
+  """
+  user: User!
+
+  """
+  The subject of the ticket.
+  """
+  subject: String!
+
+  """
+  Detailed description of the issue or request.
+  """
+  description: String!
+
+  """
+  The current status of the ticket (e.g., OPEN, IN_PROGRESS, CLOSED).
+  """
+  status: TicketStatus!
+
+  """
+  The date and time when the ticket was created.
+  """
+  createdAt: String!
+
+  """
+  The date and time when the ticket was last updated.
+  """
+  updatedAt: String!
+}
+
+"""
+Enum for ticket statuses.
+"""
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+}
+
+"""
+Queries related to Tickets.
+"""
+type Query {
+  """
+  Retrieves a list of all tickets.
+  """
+  tickets: [Ticket!]!
+
+  """
+  Retrieves a single ticket by its ID.
+  """
+  ticket(id: ID!): Ticket
+
+  """
+  Retrieves all tickets created by a specific user.
+  """
+  ticketsByUser(userId: ID!): [Ticket!]!
+
+  """
+  Retrieves all tickets with a specific status.
+  """
+  ticketsByStatus(status: TicketStatus!): [Ticket!]!
+}
+
+"""
+Mutations related to Tickets.
+"""
+type Mutation {
+  """
+  Creates a new ticket.
+  """
+  createTicket(
+    userId: ID!
+    subject: String!
+    description: String!
+    status: TicketStatus!
+  ): Ticket!
+
+  """
+  Updates an existing ticket by its ID.
+  """
+  updateTicket(
+    id: ID!
+    subject: String
+    description: String
+    status: TicketStatus
+  ): Ticket!
+
+  """
+  Deletes a ticket by its ID.
+  """
+  deleteTicket(id: ID!): Boolean!
+
+  """
+  Updates the status of an existing ticket.
+  """
+  updateTicketStatus(
+    id: ID!
+    status: TicketStatus!
+  ): Ticket!
+}

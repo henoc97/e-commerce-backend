@@ -1,6 +1,9 @@
 name: CI
 
-on: [push]
+on: 
+  push:
+    branches:
+      - main  # Assure-toi que tu pousses vers la branche 'main'
 
 jobs:
   build:
@@ -8,9 +11,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      name: Checkout code
+
     - name: Install dependencies
       run: npm install
+      # Ajoute des logs ou des messages pour vérifier si l'étape est atteinte
+      continue-on-error: false  # Arrête le workflow en cas d'échec
+
     - name: Run lint
       run: npm run lint
+      continue-on-error: false
+
     - name: Run tests
       run: npm run test
+      continue-on-error: false

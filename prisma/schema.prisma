@@ -46,6 +46,8 @@ enum PaymentStatus {
 enum NotificationType {
   PROMOTION
   ORDER_UPDATE
+  INFO
+  WARNING
 }
 
 enum TicketStatus {
@@ -61,8 +63,14 @@ enum RefundStatus {
 }
 
 enum UserActivityAction {
-  VIEWED_PRODUCT
-  ADDED_TO_CART
+  LOGIN
+  VIEW_PRODUCT
+  PURCHASE
+  LOGOUT
+  ADD_TO_CART
+  REMOVE_FROM_CART
+  SEARCH
+  OTHER
 }
 
 enum AuditLogAction {

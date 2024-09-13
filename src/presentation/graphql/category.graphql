@@ -1,0 +1,111 @@
+# category.graphql
+
+"""
+Represents a category for organizing products.
+Categories can have parent and child categories.
+"""
+type Category {
+  """
+  Unique identifier for the Category.
+  """
+  id: ID!
+
+  """
+  Name of the Category.
+  """
+  name: String!
+
+  """
+  The parent category of this category, if any.
+  """
+  parent: Category
+
+  """
+  ID of the parent Category.
+  """
+  parentId: Int
+
+  """
+  Child categories of this category.
+  """
+  children: [Category!]!
+
+  """
+  Products associated with this Category.
+  """
+  products: [Product!]!
+
+  """
+  The Shop this category belongs to, if any.
+  """
+  shop: Shop
+
+  """
+  ID of the Shop this category belongs to.
+  """
+  shopId: Int
+}
+
+"""
+Queries related to Categories.
+"""
+type Query {
+  """
+  Retrieves a list of all categories.
+  """
+  categories: [Category!]!
+
+  """
+  Retrieves a single category by its ID.
+  """
+  category(id: ID!): Category
+}
+
+"""
+Mutations related to Categories.
+"""
+type Mutation {
+  """
+  Creates a new Category.
+  """
+  createCategory(
+    name: String!,
+    parentId: Int,
+    shopId: Int
+  ): Category!
+
+  """
+  Updates an existing Category.
+  """
+  updateCategory(
+    id: ID!,
+    name: String,
+    parentId: Int,
+    shopId: Int
+  ): Category!
+
+  """
+  Deletes a Category by its ID.
+  """
+  deleteCategory(id: ID!): Boolean!
+}
+
+"""
+Input type for creating and updating Categories.
+"""
+input CategoryInput {
+  """
+  Name of the Category.
+  """
+  name: String!
+
+  """
+  ID of the parent Category, if any.
+  """
+  parentId: Int
+
+  """
+  ID of the Shop this category belongs to, if any.
+  """
+  shopId: Int
+}
