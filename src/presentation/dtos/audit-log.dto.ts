@@ -6,9 +6,11 @@ import {
   IsEnum,
   IsOptional,
   IsDate,
+  ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
+import { UserDTO } from './user.dto';
 
 /**
  * Data Transfer Object for AuditLog.
@@ -28,6 +30,14 @@ export class AuditLogDTO {
   @IsInt()
   @IsNotEmpty()
   userId: number;
+
+  /**
+   * User associated with the address.
+   */
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UserDTO)
+  user?: UserDTO;
 
   /**
    * Type of action performed by the user.
@@ -75,6 +85,7 @@ export class AuditLogDTO {
    * @param entity - The entity affected by the action.
    * @param entityId - The unique identifier of the entity affected by the action.
    * @param changes - Details of the changes made.
+   * @param user - The user who performed the action
    * @param createdAt - (Optional) The date and time when the action was performed, defaults to the current date and time.
    */
   constructor(
@@ -84,6 +95,7 @@ export class AuditLogDTO {
     entity: string,
     entityId: number,
     changes: any,
+    user?: UserDTO,
     createdAt: Date = new Date(),
   ) {
     this.id = id;
@@ -92,6 +104,7 @@ export class AuditLogDTO {
     this.entity = entity;
     this.entityId = entityId;
     this.changes = changes;
+    this.user = user;
     this.createdAt = createdAt;
   }
 }

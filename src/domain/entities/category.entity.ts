@@ -39,7 +39,7 @@ export class Category {
   /**
    * The Shop this category belongs to, if any.
    */
-  Shop?: Shop;
+  shop?: Shop;
 
   /**
    * ID of the Shop this category belongs to.
@@ -50,22 +50,22 @@ export class Category {
    * Creates a new Category instance.
    * @param id - Unique identifier for the Category.
    * @param name - Name of the Category.
-   * @param parent - The parent category of this category (optional).
    * @param parentId - ID of the parent Category (optional).
+   * @param parent - The parent category of this category (optional).
    * @param children - Child categories of this category (optional).
    * @param products - Products associated with this Category (optional).
-   * @param Shop - The Shop this category belongs to (optional).
    * @param shopId - ID of the Shop this category belongs to (optional).
+   * @param shop - The Shop this category belongs to (optional).
    */
   constructor(
     id: number,
     name: string,
-    parent?: Category,
     parentId?: number,
+    parent?: Category,
     children: Category[] = [],
     products: Product[] = [],
-    Shop?: Shop,
     shopId?: number,
+    shop?: Shop,
   ) {
     this.id = id;
     this.name = name;
@@ -73,7 +73,7 @@ export class Category {
     this.parentId = parentId;
     this.children = children;
     this.products = products;
-    this.Shop = Shop;
+    this.shop = shop;
     this.shopId = shopId;
   }
 }

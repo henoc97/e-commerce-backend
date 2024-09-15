@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { NewsletterSubscription } from 'src/domain/entities/newsletter-subscription.entity';
 import { INewsletterSubscriptionRepository } from 'src/domain/repositories/newsletter-subscription.repository';
 import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
+import { fromNewsletterSubscriptionDTO } from '../helper/to-entity/to.newsletter-subscription.entity';
 
 /**
  * Service class for managing newsletter subscriptions.
@@ -21,11 +22,7 @@ export class NewsletterSubscriptionService {
   async createSubscription(
     dto: NewsletterSubscriptionDTO,
   ): Promise<NewsletterSubscription> {
-    const subscription = new NewsletterSubscription(
-      dto.id ?? 0,
-      dto.email,
-      dto.subscribedAt ?? new Date(),
-    );
+    const subscription = fromNewsletterSubscriptionDTO(dto);
     return this.newsletterSubscriptionRepository.create(subscription);
   }
 
@@ -50,14 +47,7 @@ export class NewsletterSubscriptionService {
     id: number,
     updates: Partial<NewsletterSubscriptionDTO>,
   ): Promise<NewsletterSubscription> {
-    const existingSubscription =
-      await this.newsletterSubscriptionRepository.getById(id);
-    if (!existingSubscription) {
-      // If no subscription is found, return null or handle appropriately in the implementation
-      return null;
-    }
-
-    const updatedSubscription = { ...existingSubscription, ...updates };
+    const updatedSubscription = fromNewsletterSubscriptionDTO(updates);
     return this.newsletterSubscriptionRepository.update(
       id,
       updatedSubscription,

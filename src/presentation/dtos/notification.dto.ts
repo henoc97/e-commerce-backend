@@ -1,11 +1,14 @@
+import { Type } from 'class-transformer';
 import {
   IsInt,
   IsString,
   IsEnum,
   IsDateString,
   IsOptional,
+  ValidateNested,
 } from 'class-validator';
 import { NotificationType } from 'src/domain/enums/notification-type.enum';
+import { UserDTO } from './user.dto';
 
 /**
  * Data Transfer Object for Notification.
@@ -26,6 +29,14 @@ export class NotificationDTO {
    */
   @IsInt()
   userId: number;
+
+  /**
+   * User associated with the address.
+   */
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UserDTO)
+  user?: UserDTO;
 
   /**
    * The type of the notification (e.g., INFO, WARNING, ERROR).
@@ -57,6 +68,7 @@ export class NotificationDTO {
    * @param content - The content of the notification.
    * @param sentAt - (Optional) Date and time of notification creation.
    * @param id - Unique identifier for the notification (optional).
+   * @param user - User to whom the address (optional)
    */
   constructor(
     userId: number,
@@ -64,11 +76,13 @@ export class NotificationDTO {
     content: string,
     sentAt?: Date,
     id?: number,
+    user?: UserDTO,
   ) {
     this.id = id;
     this.userId = userId;
     this.type = type;
     this.content = content;
     this.sentAt = sentAt;
+    this.user = user;
   }
 }

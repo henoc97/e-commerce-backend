@@ -40,6 +40,8 @@ export class OrderDTO {
    * Optional for input, included for output to provide context.
    */
   @IsOptional()
+  @ValidateNested()
+  @Type(() => UserDTO)
   user?: UserDTO;
 
   /**
@@ -54,15 +56,17 @@ export class OrderDTO {
    * Optional for input, included for output to provide context.
    */
   @IsOptional()
+  @ValidateNested()
+  @Type(() => ShopDTO)
   shop?: ShopDTO;
 
   /**
    * List of items included in the Order.
    * Each item must follow the OrderItemDTO schema.
    */
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => OrderItemDTO)
-  @IsOptional()
   items?: OrderItemDTO[];
 
   /**
@@ -133,6 +137,7 @@ export class OrderDTO {
 
   /**
    * Creates a new OrderDTO instance.
+   * @param id The ID of the Order
    * @param userId - Unique identifier for the User who placed the order.
    * @param shopId - Unique identifier for the Shop where the order was placed.
    * @param status - Status of the Order.
@@ -152,6 +157,7 @@ export class OrderDTO {
     shopId: number,
     status: OrderStatus,
     totalAmount: number,
+    id?: number,
     paymentId?: string,
     trackingNumber?: string,
     createdAt?: Date,
@@ -162,6 +168,7 @@ export class OrderDTO {
     payments?: PaymentDTO[],
     refunds?: RefundDTO[],
   ) {
+    this.id = id;
     this.userId = userId;
     this.shopId = shopId;
     this.status = status;

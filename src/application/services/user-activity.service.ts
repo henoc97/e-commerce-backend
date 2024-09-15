@@ -1,6 +1,7 @@
 import { UserActivity } from 'src/domain/entities/user-activity.entity';
 import { IUserActivityRepository } from 'src/domain/repositories/user-activity.repository';
 import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
+import { fromUserActivityDTO } from '../helper/to-entity/to.user-activity.entity';
 
 /**
  * Service for managing user activities.
@@ -18,14 +19,7 @@ export class UserActivityService {
    */
   async recordActivity(activityDTO: UserActivityDTO): Promise<UserActivity> {
     // Convert DTO to entity
-    const activity = new UserActivity(
-      activityDTO.id,
-      activityDTO.userId,
-      null,
-      activityDTO.action,
-      activityDTO.productId,
-      activityDTO.timestamp,
-    );
+    const activity = fromUserActivityDTO(activityDTO);
 
     // Use repository to create a new activity record
     return await this.userActivityRepository.create(activity);
@@ -66,17 +60,10 @@ export class UserActivityService {
    */
   async updateActivity(
     id: number,
-    activityDTO: UserActivityDTO,
+    activityDTO: Partial<UserActivityDTO>,
   ): Promise<UserActivity> {
     // Convert DTO to entity with updated details
-    const updatedActivity = new UserActivity(
-      id,
-      activityDTO.userId,
-      null,
-      activityDTO.action,
-      activityDTO.productId,
-      activityDTO.timestamp,
-    );
+    const updatedActivity = fromUserActivityDTO(activityDTO);
 
     // Use repository to update the activity record
     return await this.userActivityRepository.update(id, updatedActivity);
@@ -110,14 +97,7 @@ export class UserActivityService {
    * @returns True if the activity data is valid, otherwise false.
    */
   async validateActivity(activityDTO: UserActivityDTO): Promise<boolean> {
-    const activity = new UserActivity(
-      activityDTO.id,
-      activityDTO.userId,
-      null,
-      activityDTO.action,
-      activityDTO.productId,
-      activityDTO.timestamp,
-    );
+    const activity = fromUserActivityDTO(activityDTO);
 
     return await this.userActivityRepository.validate(activity);
   }

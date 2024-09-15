@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Address } from 'src/domain/entities/address.entity';
 import { IAddressRepository } from 'src/domain/repositories/address.repository';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
+import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
 
 /**
  * Service class for managing addresses.
@@ -17,15 +18,7 @@ export class AddressService {
    * @returns A promise that resolves to the created Address entity.
    */
   async createAddress(addressDTO: AddressDTO): Promise<Address> {
-    const address = new Address(
-      addressDTO.id,
-      addressDTO.userId,
-      addressDTO.street,
-      addressDTO.city,
-      addressDTO.state,
-      addressDTO.postalCode,
-      addressDTO.country,
-    );
+    const address = fromAddressDTO(addressDTO);
     return await this.addressRepository.create(address);
   }
 
@@ -41,13 +34,14 @@ export class AddressService {
   /**
    * Updates an existing address identified by its unique identifier.
    * @param id - The unique identifier of the address to be updated.
-   * @param updateData - Partial AddressDTO containing the data to update.
+   * @param data - Partial AddressDTO containing the data to update.
    * @returns A promise that resolves to the updated Address entity.
    */
   async updateAddressById(
     id: number,
-    updateData: Partial<AddressDTO>,
+    data: Partial<AddressDTO>,
   ): Promise<Address> {
+    const updateData = fromAddressDTO(data);
     return await this.addressRepository.updateById(id, updateData);
   }
 

@@ -42,9 +42,9 @@ export class MarketplaceDTO {
    * Validates each shop using ShopDTO.
    * Optional.
    */
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ShopDTO)
-  @IsOptional()
   shops?: ShopDTO[];
 
   /**

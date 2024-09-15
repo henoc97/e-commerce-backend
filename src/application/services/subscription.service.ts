@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Subscription } from 'src/domain/entities/subscription.entity';
 import { ISubscriptionRepository } from 'src/domain/repositories/subscription.repository';
 import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
+import { fromSubscriptionDTO } from '../helper/to-entity/to.subscription.entity';
 /**
  * Service class for managing subscription plans.
  * Implements business logic for subscription-related use cases.
@@ -20,17 +21,7 @@ export class SubscriptionService {
   async createSubscription(
     subscriptionDto: SubscriptionDTO,
   ): Promise<Subscription> {
-    const subscription = new Subscription(
-      subscriptionDto.id,
-      subscriptionDto.name,
-      subscriptionDto.price,
-      subscriptionDto.duration,
-      subscriptionDto.description,
-      null,
-      subscriptionDto.createdAt,
-      subscriptionDto.updatedAt,
-    );
-
+    const subscription = fromSubscriptionDTO(subscriptionDto);
     return this.subscriptionRepository.create(subscription);
   }
 
@@ -53,16 +44,7 @@ export class SubscriptionService {
     id: number,
     updates: Partial<SubscriptionDTO>,
   ): Promise<Subscription> {
-    const subscriptionUpdates = new Subscription(
-      updates.id,
-      updates.name,
-      updates.price,
-      updates.duration,
-      updates.description,
-      null,
-      updates.createdAt,
-      updates.updatedAt,
-    );
+    const subscriptionUpdates = fromSubscriptionDTO(updates);
 
     return this.subscriptionRepository.update(id, subscriptionUpdates);
   }

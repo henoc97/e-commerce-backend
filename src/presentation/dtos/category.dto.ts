@@ -34,9 +34,9 @@ export class CategoryDTO {
    * Validates the parent category using CategoryDTO if provided.
    * Optional.
    */
+  @IsOptional()
   @ValidateNested()
   @Type(() => CategoryDTO)
-  @IsOptional()
   parent?: CategoryDTO;
 
   /**
@@ -52,9 +52,9 @@ export class CategoryDTO {
    * Validates each child category using CategoryDTO.
    * Optional.
    */
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => CategoryDTO)
-  @IsOptional()
   children?: CategoryDTO[];
 
   /**
@@ -62,9 +62,9 @@ export class CategoryDTO {
    * Validates each product using ProductDTO.
    * Optional.
    */
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ProductDTO)
-  @IsOptional()
   products?: ProductDTO[];
 
   /**
@@ -98,13 +98,13 @@ export class CategoryDTO {
    */
   constructor(
     name: string,
-    parent?: CategoryDTO,
+    id?: number,
     parentId?: number,
+    parent?: CategoryDTO,
     children?: CategoryDTO[],
     products?: ProductDTO[],
-    shop?: ShopDTO,
     shopId?: number,
-    id?: number,
+    shop?: ShopDTO,
   ) {
     this.id = id;
     this.name = name;

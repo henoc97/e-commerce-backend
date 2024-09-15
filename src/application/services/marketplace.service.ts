@@ -3,6 +3,9 @@ import { Marketplace } from 'src/domain/entities/marketplace.entity';
 import { Shop } from 'src/domain/entities/shop.entity';
 import { IMarketplaceRepository } from 'src/domain/repositories/marketplace.repository';
 import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
+import { fromMarketplaceDTO } from '../helper/to-entity/to.marketplace.entity';
+import { ShopDTO } from 'src/presentation/dtos/shop.dto';
+import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
 /**
  * Service for handling marketplace-related operations.
  * This service contains business logic for managing marketplaces, including CRUD operations and association with shops.
@@ -18,7 +21,7 @@ export class MarketplaceService {
    * @throws Error if creation fails.
    */
   async createMarketplace(dto: MarketplaceDTO): Promise<Marketplace> {
-    const marketplace = new Marketplace(dto.id, dto.name, dto.description);
+    const marketplace = fromMarketplaceDTO(dto);
     return await this.marketplaceRepository.create(marketplace);
   }
 
@@ -50,9 +53,10 @@ export class MarketplaceService {
    */
   async updateMarketplace(
     id: number,
-    data: Partial<Marketplace>,
+    data: Partial<MarketplaceDTO>,
   ): Promise<Marketplace> {
-    return await this.marketplaceRepository.update(id, data);
+    const updatedData = fromMarketplaceDTO(data);
+    return await this.marketplaceRepository.update(id, updatedData);
   }
 
   /**
@@ -68,14 +72,15 @@ export class MarketplaceService {
   /**
    * Associates a Shop with a Marketplace.
    * @param marketplaceId - The unique ID of the Marketplace.
-   * @param shop - The Shop entity to add.
+   * @param shopDTO - The Shop dto to add.
    * @returns A promise that resolves to the updated Marketplace.
    * @throws Error if association fails.
    */
   async addShopToMarketplace(
     marketplaceId: number,
-    shop: Shop,
+    shopDTO: ShopDTO,
   ): Promise<Marketplace> {
+    const shop = fromShopDTO(shopDTO);
     return await this.marketplaceRepository.addShop(marketplaceId, shop);
   }
 

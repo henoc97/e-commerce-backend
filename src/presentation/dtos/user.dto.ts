@@ -14,7 +14,7 @@ import { OrderDTO } from './order.dto';
 import { ReviewDTO } from './review.dto';
 import { CartDTO } from './cart.dto';
 import { TicketDTO } from './ticket.dto';
-import { SubSiteDTO } from './subsite.dto';
+import { SubsiteDTO } from './subsite.dto';
 import { UserActivityDTO } from './user-activity.dto';
 import { AuditLogDTO } from './audit-log.dto';
 import { UserRole } from 'src/domain/enums/user-role.enum';
@@ -103,7 +103,7 @@ export class UserDTO {
    */
   @ValidateNested({ each: true })
   @Type(() => CartDTO)
-  cart: CartDTO[];
+  carts: CartDTO[];
 
   /**
    * Optional list of reviews written by the user.
@@ -118,8 +118,8 @@ export class UserDTO {
    */
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => NotificationDTO) // Ensure NotificationDTO is properly defined
-  notification?: NotificationDTO[];
+  @Type(() => NotificationDTO) 
+  notifications?: NotificationDTO[];
 
   /**
    * Optional list of support tickets raised by the user.
@@ -127,15 +127,15 @@ export class UserDTO {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => TicketDTO)
-  ticket?: TicketDTO[];
+  tickets?: TicketDTO[];
 
   /**
    * Optional list of sub-sites associated with the user.
    */
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => SubSiteDTO)
-  SubSite?: SubSiteDTO[];
+  @Type(() => SubsiteDTO)
+  subsites?: SubsiteDTO[];
 
   /**
    * Optional list of user activities.
@@ -143,7 +143,7 @@ export class UserDTO {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => UserActivityDTO)
-  userActivity?: UserActivityDTO[];
+  userActivities?: UserActivityDTO[];
 
   /**
    * Optional list of audit logs for the user.
@@ -151,7 +151,7 @@ export class UserDTO {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => AuditLogDTO)
-  auditLog?: AuditLogDTO[];
+  auditLogs?: AuditLogDTO[];
 
   /**
    * Creates a new UserDTO instance.
@@ -165,14 +165,14 @@ export class UserDTO {
    * @param createdAt - Date when the user was created.
    * @param updatedAt - Date when the user was last updated.
    * @param vendor - Vendor information if the user is a vendor.
-   * @param cart - List of carts associated with the user.
+   * @param carts - List of carts associated with the user.
    * @param name - Optional name of the user.
    * @param reviews - Optional list of reviews written by the user.
-   * @param notification - Optional list of notifications for the user.
-   * @param ticket - Optional list of support tickets raised by the user.
-   * @param SubSite - Optional list of sub-sites associated with the user.
-   * @param userActivity - Optional list of user activities.
-   * @param auditLog - Optional list of audit logs for the user.
+   * @param notifications - Optional list of notifications for the user.
+   * @param tickets - Optional list of support tickets raised by the user.
+   * @param subsites - Optional list of sub-sites associated with the user.
+   * @param userActivities - Optional list of user activities.
+   * @param auditLogs - Optional list of audit logs for the user.
    */
   constructor(
     id: number,
@@ -185,14 +185,14 @@ export class UserDTO {
     createdAt: Date,
     updatedAt: Date,
     vendor: VendorDTO,
-    cart: CartDTO[],
+    carts: CartDTO[],
     name?: string,
     reviews?: ReviewDTO[],
-    notification?: NotificationDTO[],
-    ticket?: TicketDTO[],
-    SubSite?: SubSiteDTO[],
-    userActivity?: UserActivityDTO[],
-    auditLog?: AuditLogDTO[],
+    notifications?: NotificationDTO[],
+    tickets?: TicketDTO[],
+    subsites?: SubsiteDTO[],
+    userActivities?: UserActivityDTO[],
+    auditLogs?: AuditLogDTO[],
   ) {
     this.id = id;
     this.email = email;
@@ -205,12 +205,12 @@ export class UserDTO {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.vendor = vendor;
-    this.cart = cart;
+    this.carts = carts;
     this.reviews = reviews;
-    this.notification = notification;
-    this.ticket = ticket;
-    this.SubSite = SubSite;
-    this.userActivity = userActivity;
-    this.auditLog = auditLog;
+    this.notifications = notifications;
+    this.tickets = tickets;
+    this.subsites = subsites;
+    this.userActivities = userActivities;
+    this.auditLogs = auditLogs;
   }
 }

@@ -9,6 +9,7 @@ import { Ticket } from './ticket.entity';
 import { UserActivity } from './user-activity.entity';
 import { SubSite } from './subsite.entity';
 import { AuditLog } from './audit-log.entity';
+import { Notification } from './notification.entity';
 
 /**
  * Represents a user in the system.
@@ -49,25 +50,25 @@ export class User {
   vendor: Vendor;
 
   /** List of carts associated with the user */
-  cart: Cart[];
+  carts: Cart[];
 
   /** Optional list of reviews written by the user */
   reviews?: Review[];
 
   /** Optional list of notifications for the user */
-  notification?: Notification[];
+  notifications?: Notification[];
 
   /** Optional list of support tickets raised by the user */
-  ticket?: Ticket[];
+  tickets?: Ticket[];
 
   /** Optional list of sub-sites associated with the user */
-  SubSite?: SubSite[];
+  subSites?: SubSite[];
 
   /** Optional list of user activities */
-  userActivity?: UserActivity[];
+  userActivities?: UserActivity[];
 
   /** Optional list of audit logs for the user */
-  auditLog?: AuditLog[];
+  auditLogs?: AuditLog[];
 
   /**
    * Constructor for the User entity.
@@ -81,14 +82,14 @@ export class User {
    * @param createdAt - Date when the user was created
    * @param updatedAt - Date when the user was last updated
    * @param vendor - Vendor information if the user is a vendor
-   * @param cart - List of carts associated with the user
+   * @param carts - List of carts associated with the user
    * @param name - Optional name of the user
    * @param reviews - Optional list of reviews written by the user
-   * @param notification - Optional list of notifications for the user
-   * @param ticket - Optional list of support tickets raised by the user
-   * @param SubSite - Optional list of sub-sites associated with the user
-   * @param userActivity - Optional list of user activities
-   * @param auditLog - Optional list of audit logs for the user
+   * @param notifications - Optional list of notifications for the user
+   * @param tickets - Optional list of support tickets raised by the user
+   * @param subSites - Optional list of sub-sites associated with the user
+   * @param userActivities - Optional list of user activities
+   * @param auditLogs - Optional list of audit logs for the user
    */
   constructor(
     id: number,
@@ -101,14 +102,14 @@ export class User {
     createdAt: Date,
     updatedAt: Date,
     vendor: Vendor,
-    cart: Cart[],
+    carts: Cart[],
     name?: string,
     reviews?: Review[],
-    notification?: Notification[],
-    ticket?: Ticket[],
-    SubSite?: SubSite[],
-    userActivity?: UserActivity[],
-    auditLog?: AuditLog[],
+    notifications?: Notification[],
+    tickets?: Ticket[],
+    subSites?: SubSite[],
+    userActivities?: UserActivity[],
+    auditLogs?: AuditLog[],
   ) {
     this.id = id;
     this.email = email;
@@ -121,12 +122,12 @@ export class User {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.vendor = vendor;
-    this.cart = cart;
+    this.carts = carts;
     this.reviews = reviews;
-    this.notification = notification;
-    this.ticket = ticket;
-    this.SubSite = SubSite;
-    this.userActivity = userActivity;
-    this.auditLog = auditLog;
+    this.notifications = notifications;
+    this.tickets = tickets;
+    this.subSites = subSites;
+    this.userActivities = userActivities;
+    this.auditLogs = auditLogs;
   }
 }

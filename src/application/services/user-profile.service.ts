@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserProfile } from 'src/domain/entities/user-profile.entity';
 import { IUserProfileRepository } from 'src/domain/repositories/user-profile.repository';
 import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
+import { fromUserProfileDTO } from '../helper/to-entity/to.user-profile.entity';
 /**
  * Service class for managing user profiles.
  * Implements business logic and interacts with the repository layer.
@@ -17,15 +18,7 @@ export class UserProfileService {
    */
   async createUserProfile(profileDTO: UserProfileDTO): Promise<UserProfile> {
     // Map DTO to Entity
-    const profile = new UserProfile(
-      profileDTO.id,
-      profileDTO.userId,
-      null,
-      profileDTO.phone,
-      profileDTO.birthday,
-      profileDTO.gender,
-    );
-
+    const profile = fromUserProfileDTO(profileDTO);
     return this.userProfileRepository.create(profile);
   }
 
@@ -49,14 +42,7 @@ export class UserProfileService {
     updates: Partial<UserProfileDTO>,
   ): Promise<UserProfile> {
     // Convert DTO updates to Entity updates
-    const updatesProfile = new UserProfile(
-      updates.id,
-      updates.userId,
-      null,
-      updates.phone,
-      updates.birthday,
-      updates.gender,
-    );
+    const updatesProfile = fromUserProfileDTO(updates);
     return this.userProfileRepository.update(id, updatesProfile);
   }
 
@@ -166,14 +152,7 @@ export class UserProfileService {
   async findMatchingProfiles(
     criteria: Partial<UserProfileDTO>,
   ): Promise<UserProfile[]> {
-    const profileCriteria = new UserProfile(
-      criteria.id,
-      criteria.userId,
-      null,
-      criteria.phone,
-      criteria.birthday,
-      criteria.gender,
-    );
+    const profileCriteria = fromUserProfileDTO(criteria);
     return this.userProfileRepository.findMatches(profileCriteria);
   }
 }

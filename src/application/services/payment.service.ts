@@ -3,6 +3,7 @@ import { Payment } from 'src/domain/entities/payment.entity';
 import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
 import { IPaymentRepository } from 'src/domain/repositories/payment.repository';
 import { PaymentDTO } from 'src/presentation/dtos/payment.dto';
+import { fromPaymentDTO } from '../helper/to-entity/to.payment.entity';
 /**
  * Service for managing payments.
  * Provides methods to perform CRUD operations and other business logic related to payments.
@@ -18,18 +19,7 @@ export class PaymentService {
    */
   async createPayment(paymentDTO: PaymentDTO): Promise<Payment> {
     // Convert DTO to entity
-    const payment = new Payment(
-      paymentDTO.id,
-      paymentDTO.orderId,
-      null,
-      paymentDTO.method,
-      paymentDTO.status,
-      paymentDTO.amount,
-      paymentDTO.providerId,
-      paymentDTO.metadata,
-      paymentDTO.createdAt,
-    );
-
+    const payment = fromPaymentDTO(paymentDTO);
     // Delegate creation to the repository
     return this.paymentRepository.create(payment);
   }
@@ -49,8 +39,12 @@ export class PaymentService {
    * @param updates - The data to update.
    * @returns A promise that resolves to the updated Payment entity.
    */
-  async updatePayment(id: number, updates: Partial<Payment>): Promise<Payment> {
-    return this.paymentRepository.update(id, updates);
+  async updatePayment(
+    id: number,
+    updates: Partial<PaymentDTO>,
+  ): Promise<Payment> {
+    const updatedPayment = fromPaymentDTO(updates);
+    return this.paymentRepository.update(id, updatedPayment);
   }
 
   /**

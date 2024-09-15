@@ -2,6 +2,7 @@ import { Category } from 'src/domain/entities/category.entity';
 import { Product } from 'src/domain/entities/product.entity';
 import { ICategoryRepository } from 'src/domain/repositories/category.repository';
 import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+import { fromCategoryDTO } from '../helper/to-entity/to.category.entity';
 
 /**
  * Service class for managing categories.
@@ -24,16 +25,7 @@ export class CategoryService {
    * @returns A promise that resolves to the created Category entity.
    */
   async createCategory(categoryDTO: CategoryDTO): Promise<Category> {
-    const category = new Category(
-      categoryDTO.id,
-      categoryDTO.name,
-      null,
-      categoryDTO.parentId,
-      [],
-      [],
-      null,
-      categoryDTO.shopId,
-    );
+    const category = fromCategoryDTO(categoryDTO);
     return this.categoryRepository.create(category);
   }
 
@@ -56,11 +48,8 @@ export class CategoryService {
     id: number,
     categoryDTO: Partial<CategoryDTO>,
   ): Promise<Category> {
-    return this.categoryRepository.update(id, {
-      name: categoryDTO.name,
-      parentId: categoryDTO.parentId,
-      shopId: categoryDTO.shopId,
-    });
+    const category = fromCategoryDTO(categoryDTO);
+    return this.categoryRepository.update(id, category);
   }
 
   /**
@@ -96,7 +85,7 @@ export class CategoryService {
    * @param newParentId - The unique identifier of the new parent Category.
    * @returns A promise that resolves to the updated Category entity.
    */
-  async setParent(id: number, newParentId: number): Promise<Category> {
+  async setCategoryParent(id: number, newParentId: number): Promise<Category> {
     return this.categoryRepository.setParent(id, newParentId);
   }
 

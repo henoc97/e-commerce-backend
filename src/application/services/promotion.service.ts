@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Promotion } from 'src/domain/entities/promotion.entity';
 import { IPromotionRepository } from 'src/domain/repositories/promotion.repository';
 import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
+import { fromPromotionDTO } from '../helper/to-entity/to.promotion.entity';
 /**
  * Service for managing promotional offers with business logic.
  */
@@ -15,18 +16,7 @@ export class PromotionService {
    * @returns The created promotion.
    */
   async createPromotion(promotionDTO: PromotionDTO): Promise<Promotion> {
-    const promotion = new Promotion(
-      promotionDTO.id,
-      promotionDTO.name,
-      promotionDTO.discountValue,
-      promotionDTO.discountType,
-      promotionDTO.startDate,
-      promotionDTO.endDate,
-      promotionDTO.productId,
-      null,
-      promotionDTO.createdAt,
-      promotionDTO.updatedAt,
-    );
+    const promotion = fromPromotionDTO(promotionDTO);
     return this.promotionRepository.create(promotion);
   }
 
@@ -50,18 +40,7 @@ export class PromotionService {
     updates: Partial<PromotionDTO>,
   ): Promise<Promotion> {
     // Convert DTO updates to entity
-    const promotionUpdates = new Promotion(
-      id,
-      updates.name,
-      updates.discountValue,
-      updates.discountType,
-      updates.startDate,
-      updates.endDate,
-      updates.productId,
-      null,
-      null,
-      new Date(), // Update the modified date to the current date
-    );
+    const promotionUpdates = fromPromotionDTO(updates);
     return this.promotionRepository.modify(id, promotionUpdates);
   }
 
@@ -120,8 +99,10 @@ export class PromotionService {
    * @param promotions - An array of promotions to combine.
    * @returns A combined promotion or null if combination is not possible.
    */
-  async combinePromotions(promotions: Promotion[]): Promise<Promotion | null> {
-    return this.promotionRepository.combine(promotions);
+  async combinePromotions(
+    promotions: PromotionDTO[],
+  ): Promise<Promotion | null> {
+    return this.promotionRepository.combine(promotions.map(fromPromotionDTO));
   }
 
   /**

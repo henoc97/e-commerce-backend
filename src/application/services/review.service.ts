@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Review } from 'src/domain/entities/review.entity';
 import { IReviewRepository } from 'src/domain/repositories/review.repository';
 import { ReviewDTO } from 'src/presentation/dtos/review.dto';
+import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
 /**
  * Service for managing product reviews.
  * Provides methods to handle review-related operations such as creation, retrieval, and updating.
@@ -16,16 +17,7 @@ export class ReviewService {
    * @returns The created Review entity.
    */
   async createReview(reviewDTO: ReviewDTO): Promise<Review> {
-    const review = new Review(
-      reviewDTO.id,
-      reviewDTO.productId,
-      null,
-      reviewDTO.userId,
-      null,
-      reviewDTO.rating,
-      reviewDTO.comment,
-      reviewDTO.createdAt,
-    );
+    const review = fromReviewDTO(reviewDTO);
     return this.reviewRepository.create(review);
   }
 
@@ -45,16 +37,7 @@ export class ReviewService {
    * @returns The updated Review entity.
    */
   async updateReview(id: number, updates: Partial<ReviewDTO>): Promise<Review> {
-    const updateReview = new Review(
-      updates.id,
-      updates.productId,
-      null,
-      updates.userId,
-      null,
-      updates.rating,
-      updates.comment,
-      updates.createdAt,
-    );
+    const updateReview = fromReviewDTO(updates);
     return this.reviewRepository.modify(id, updateReview);
   }
 

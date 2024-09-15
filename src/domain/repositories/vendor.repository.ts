@@ -114,6 +114,12 @@ export interface IVendorRepository {
   findBySubscription(subscriptionId: number): Promise<Vendor[]>;
 
   /**
+   * Execute the vendor-list use case.
+   * @returns A promise that resolves to an array of VendorDTOs.
+   */
+  getall(): Promise<Vendor[]>;
+
+  /**
    * Retrieves the most recently updated vendor.
    * @returns The most recently updated vendor entity if found, otherwise null.
    */

@@ -3,6 +3,7 @@ import { NotificationType } from 'src/domain/enums/notification-type.enum';
 import { INotificationRepository } from 'src/domain/repositories/notification.repository';
 import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
 import { Notification } from '../../domain/entities/notification.entity';
+import { fromNotificationDTO } from '../helper/to-entity/to.notification.entity';
 
 /**
  * Service for managing notifications.
@@ -22,14 +23,7 @@ export class NotificationService {
   async createNotification(
     notificationDTO: NotificationDTO,
   ): Promise<Notification> {
-    const notification = new Notification(
-      notificationDTO.id || 0,
-      notificationDTO.userId,
-      null, // user will be populated later if needed
-      notificationDTO.type,
-      notificationDTO.content,
-      notificationDTO.sentAt || new Date(),
-    );
+    const notification = fromNotificationDTO(notificationDTO);
     return await this.notificationRepository.create(notification);
   }
 
@@ -52,7 +46,8 @@ export class NotificationService {
     id: number,
     updates: Partial<NotificationDTO>,
   ): Promise<Notification> {
-    return await this.notificationRepository.update(id, updates);
+    const notification = fromNotificationDTO(updates);
+    return await this.notificationRepository.update(id, notification);
   }
 
   /**

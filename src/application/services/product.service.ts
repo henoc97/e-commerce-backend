@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { CartItem } from 'src/domain/entities/cart-item.entity';
-import { ProductImage } from 'src/domain/entities/product-image.entity';
-import { ProductVariant } from 'src/domain/entities/product-variant.entity';
 import { Product } from 'src/domain/entities/product.entity';
-import { Promotion } from 'src/domain/entities/promotion.entity';
 import { Review } from 'src/domain/entities/review.entity';
 import { IProductRepository } from 'src/domain/repositories/product.repository';
+import { fromProductDTO } from '../helper/to-entity/to.product.entity';
+import { ProductDTO } from 'src/presentation/dtos/product.dto';
+import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
+import { fromPromotionDTO } from '../helper/to-entity/to.promotion.entity';
+import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
+import { fromProductImageDTO } from '../helper/to-entity/to.product-image.entity';
+import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
+import { fromProductVariantDTO } from '../helper/to-entity/to.product-variant.entity';
+import { ReviewDTO } from 'src/presentation/dtos/review.dto';
+import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
+import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+import { fromCartItemDTO } from '../helper/to-entity/to.cart-item.entity';
 /**
  * Service class for managing product-related operations.
  */
@@ -15,11 +23,12 @@ export class ProductService {
 
   /**
    * Creates and saves a new product.
-   * @param product - The product entity to create.
+   * @param product - The product dto to create.
    * @returns A promise that resolves to the created Product entity.
    */
-  async createProduct(product: Product): Promise<Product> {
-    return this.productRepository.create(product);
+  async createProduct(product: ProductDTO): Promise<Product> {
+    const p = fromProductDTO(product);
+    return this.productRepository.create(p);
   }
 
   /**
@@ -37,8 +46,12 @@ export class ProductService {
    * @param updates - The data to update.
    * @returns A promise that resolves to the updated Product entity.
    */
-  async updateProduct(id: number, updates: Partial<Product>): Promise<Product> {
-    return this.productRepository.update(id, updates);
+  async updateProduct(
+    id: number,
+    updates: Partial<ProductDTO>,
+  ): Promise<Product> {
+    const updatedProduct = fromProductDTO(updates);
+    return this.productRepository.update(id, updatedProduct);
   }
 
   /**
@@ -76,9 +89,10 @@ export class ProductService {
    */
   async addPromotionToProduct(
     productId: number,
-    promotion: Promotion,
+    promotion: PromotionDTO,
   ): Promise<Product> {
-    return this.productRepository.addPromotion(productId, promotion);
+    const promo = fromPromotionDTO(promotion);
+    return this.productRepository.addPromotion(productId, promo);
   }
 
   /**
@@ -102,9 +116,10 @@ export class ProductService {
    */
   async addImageToProduct(
     productId: number,
-    image: ProductImage,
+    image: ProductImageDTO,
   ): Promise<Product> {
-    return this.productRepository.addImage(productId, image);
+    const img = fromProductImageDTO(image);
+    return this.productRepository.addImage(productId, img);
   }
 
   /**
@@ -128,9 +143,10 @@ export class ProductService {
    */
   async addVariantToProduct(
     productId: number,
-    variant: ProductVariant,
+    variant: ProductVariantDTO,
   ): Promise<Product> {
-    return this.productRepository.addVariant(productId, variant);
+    const productVariant = fromProductVariantDTO(variant);
+    return this.productRepository.addVariant(productId, productVariant);
   }
 
   /**
@@ -167,9 +183,10 @@ export class ProductService {
    */
   async addReviewToProduct(
     productId: number,
-    review: Review,
+    review: ReviewDTO,
   ): Promise<Product> {
-    return this.productRepository.addReview(productId, review);
+    const reviewToAdd = fromReviewDTO(review);
+    return this.productRepository.addReview(productId, reviewToAdd);
   }
 
   /**
@@ -189,9 +206,10 @@ export class ProductService {
    */
   async addCartItemToProduct(
     productId: number,
-    cartItem: CartItem,
+    cartItem: CartItemDTO,
   ): Promise<Product> {
-    return this.productRepository.addCartItem(productId, cartItem);
+    const ci = fromCartItemDTO(cartItem);
+    return this.productRepository.addCartItem(productId, ci);
   }
 
   /**

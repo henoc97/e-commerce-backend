@@ -1,10 +1,13 @@
+import { Type } from 'class-transformer';
 import {
   IsInt,
   IsNotEmpty,
   IsString,
   IsPostalCode,
   IsOptional,
+  ValidateNested,
 } from 'class-validator';
+import { UserDTO } from './user.dto';
 
 /**
  * Data Transfer Object for Address.
@@ -24,6 +27,14 @@ export class AddressDTO {
   @IsInt()
   @IsNotEmpty()
   userId: number;
+
+  /**
+   * User associated with the address.
+   */
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UserDTO)
+  user?: UserDTO;
 
   /**
    * Street address.
@@ -70,6 +81,7 @@ export class AddressDTO {
    * @param state - State or region where the address is located.
    * @param postalCode - Postal code for the address.
    * @param country - Country where the address is located.
+   * @param user - User to whom the address (optional)
    */
   constructor(
     id: number,
@@ -79,6 +91,7 @@ export class AddressDTO {
     state: string,
     postalCode: string,
     country: string,
+    user?: UserDTO,
   ) {
     this.id = id;
     this.userId = userId;
@@ -87,5 +100,6 @@ export class AddressDTO {
     this.state = state;
     this.postalCode = postalCode;
     this.country = country;
+    this.user = user;
   }
 }

@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { CartItem } from 'src/domain/entities/cart-item.entity';
 import { Cart } from 'src/domain/entities/cart.entity';
 import { ICartRepository } from 'src/domain/repositories/cart.repository';
+import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
 import { CartDTO } from 'src/presentation/dtos/cart.dto';
+import { fromCartDTO } from '../helper/to-entity/to.cart.entity';
+import { fromCartItemDTO } from '../helper/to-entity/to.cart-item.entity';
 
 /**
  * Service for managing shopping carts and their operations.
@@ -18,22 +21,7 @@ export class CartService {
    * @returns A promise that resolves to the created Cart.
    */
   async createCart(cartDTO: CartDTO): Promise<Cart> {
-    const cart = new Cart(
-      cartDTO.id,
-      cartDTO.userId,
-      null,
-      cartDTO.items.map(
-        (item) =>
-          new CartItem(
-            item.id,
-            cartDTO.id,
-            null, // Cart will be set later
-            item.productId,
-            null, // Product will be set later
-            item.quantity,
-          ),
-      ),
-    );
+    const cart = fromCartDTO(cartDTO);
     return this.cartRepository.create(cart);
   }
 
@@ -53,27 +41,8 @@ export class CartService {
    * @returns A promise that resolves to the updated Cart.
    */
   async updateCart(id: number, data: Partial<CartDTO>): Promise<Cart> {
-    const cart = await this.cartRepository.getById(id);
-    if (!cart) {
-      throw new Error('Cart not found');
-    }
-    return this.cartRepository.update(id, {
-      ...cart,
-      ...data,
-      items: data.items
-        ? data.items.map(
-            (itemDTO) =>
-              new CartItem(
-                itemDTO.id,
-                id,
-                cart,
-                itemDTO.productId,
-                null, // Product will be set later
-                itemDTO.quantity,
-              ),
-          )
-        : cart.items,
-    });
+    const cart = fromCartDTO(data);
+    return this.cartRepository.update(id, cart);
   }
 
   /**
@@ -91,8 +60,9 @@ export class CartService {
    * @param item - The CartItem to add.
    * @returns A promise that resolves to the updated Cart.
    */
-  async addItemToCart(cartId: number, item: CartItem): Promise<Cart> {
-    return this.cartRepository.addItem(cartId, item);
+  async addItemToCart(cartId: number, item: CartItemDTO): Promise<Cart> {
+    const cartItem = fromCartItemDTO(item);
+    return this.cartRepository.addItem(cartId, cartItem);
   }
 
   /**

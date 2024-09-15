@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CartItem } from 'src/domain/entities/cart-item.entity';
 import { ICartItemRepository } from 'src/domain/repositories/cart-item.repository';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+import { fromCartItemDTO } from '../helper/to-entity/to.cart-item.entity';
 /**
  * Service for managing cart items.
  * Implements business logic and interacts with the CartItem repository.
@@ -16,15 +17,7 @@ export class CartItemService {
    * @returns A promise that resolves to the created CartItem.
    */
   async createCartItem(cartItemDTO: CartItemDTO): Promise<CartItem> {
-    const cartItem = new CartItem(
-      cartItemDTO.id,
-      cartItemDTO.cartId,
-      null, // Cart is not loaded here.
-      cartItemDTO.productId,
-      null, // Product is not loaded here.
-      cartItemDTO.quantity,
-    );
-
+    const cartItem = fromCartItemDTO(cartItemDTO);
     return this.cartItemRepository.create(cartItem);
   }
 
@@ -47,15 +40,7 @@ export class CartItemService {
     id: number,
     cartItemDTO: CartItemDTO,
   ): Promise<CartItem> {
-    const updatedCartItem = new CartItem(
-      id,
-      cartItemDTO.cartId,
-      null, // Cart is not loaded here.
-      cartItemDTO.productId,
-      null, // Product is not loaded here.
-      cartItemDTO.quantity,
-    );
-
+    const updatedCartItem = fromCartItemDTO(cartItemDTO);
     return this.cartItemRepository.update(id, updatedCartItem);
   }
 

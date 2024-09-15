@@ -1,6 +1,7 @@
 import { IsInt, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CartItemDTO } from './cart-item.dto';
+import { UserDTO } from './user.dto';
 
 /**
  * Data Transfer Object for Cart.
@@ -23,6 +24,14 @@ export class CartDTO {
   userId: number;
 
   /**
+   * User associated with the address.
+   */
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UserDTO)
+  user?: UserDTO;
+
+  /**
    * Items in the Cart.
    * Validates each item using the CartItemDTO.
    * Optional during creation.
@@ -39,9 +48,15 @@ export class CartDTO {
    * @param user - The User who owns the Cart.
    * @param items - Items in the Cart (optional).
    */
-  constructor(userId: number, items?: CartItemDTO[], id?: number) {
+  constructor(
+    userId: number,
+    user?: UserDTO,
+    items?: CartItemDTO[],
+    id?: number,
+  ) {
     this.id = id;
     this.userId = userId;
+    this.user = user;
     this.items = items;
   }
 }

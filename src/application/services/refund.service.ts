@@ -1,6 +1,8 @@
 import { Refund } from 'src/domain/entities/refund.entity';
 import { RefundStatus } from 'src/domain/enums/refund-status.enum';
 import { IRefundRepository } from 'src/domain/repositories/refund.repository';
+import { RefundDTO } from 'src/presentation/dtos/refund.dto';
+import { fromRefundDTO } from '../helper/to-entity/to.refund.entity';
 
 /**
  * Service for managing refunds.
@@ -22,8 +24,9 @@ export class RefundService {
    * @param refund - The refund details to be created.
    * @returns The created refund.
    */
-  async createRefund(refund: Refund): Promise<Refund> {
-    return await this.refundRepository.create(refund);
+  async createRefund(refund: RefundDTO): Promise<Refund> {
+    const refundToCreate = fromRefundDTO(refund);
+    return await this.refundRepository.create(refundToCreate);
   }
 
   /**
@@ -50,8 +53,9 @@ export class RefundService {
    * @param updates - The fields to update in the refund.
    * @returns The updated refund.
    */
-  async updateRefund(id: number, updates: Partial<Refund>): Promise<Refund> {
-    return await this.refundRepository.modify(id, updates);
+  async updateRefund(id: number, updates: Partial<RefundDTO>): Promise<Refund> {
+    const updatedRefund = fromRefundDTO(updates);
+    return await this.refundRepository.modify(id, updatedRefund);
   }
 
   /**
@@ -68,8 +72,9 @@ export class RefundService {
    * @param refund - The refund to check for eligibility.
    * @returns True if the refund is eligible, false otherwise.
    */
-  isRefundEligible(refund: Refund): boolean {
-    return this.refundRepository.isEligible(refund);
+  isRefundEligible(refund: RefundDTO): boolean {
+    const r = fromRefundDTO(refund);
+    return this.refundRepository.isEligible(r);
   }
 
   /**

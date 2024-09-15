@@ -1,21 +1,18 @@
 import { OrderItem } from 'src/domain/entities/order-item.enttity';
 import { IOrderItemRepository } from 'src/domain/repositories/order-item.repository';
 import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
+import { fromOrderItemDTO } from '../helper/to-entity/to.order-item.entity';
 
 /**
  * Service class for managing OrderItems.
  * Implements business logic and interacts with the OrderItem repository.
  */
 export class OrderItemService {
-  private repository: IOrderItemRepository;
-
   /**
    * Creates a new instance of OrderItemService.
    * @param repository - The repository to interact with the OrderItem data.
    */
-  constructor(repository: IOrderItemRepository) {
-    this.repository = repository;
-  }
+  constructor(private readonly repository: IOrderItemRepository) {}
 
   /**
    * Creates a new OrderItem.
@@ -23,16 +20,7 @@ export class OrderItemService {
    * @returns A promise that resolves to the created OrderItem entity.
    */
   async create(dto: OrderItemDTO): Promise<OrderItem> {
-    const orderItem = new OrderItem(
-      dto.id || 0,
-      dto.orderId,
-      null,
-      dto.productId,
-      null,
-      dto.quantity,
-      dto.price,
-    );
-
+    const orderItem = fromOrderItemDTO(dto);
     return await this.repository.create(orderItem);
   }
 
@@ -52,19 +40,8 @@ export class OrderItemService {
    * @returns A promise that resolves to the updated OrderItem entity.
    */
   async update(id: number, updates: Partial<OrderItemDTO>): Promise<OrderItem> {
-    const updateData = { ...updates };
-
-    const entityUpdates = new OrderItem(
-      updateData.id || 0,
-      updateData.orderId || 0,
-      null,
-      updateData.productId || 0,
-      null,
-      updateData.quantity || 0,
-      updateData.price || 0,
-    );
-
-    return await this.repository.update(id, entityUpdates);
+    const updateData = fromOrderItemDTO(updates);
+    return await this.repository.update(id, updateData);
   }
 
   /**

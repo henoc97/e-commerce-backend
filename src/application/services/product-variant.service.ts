@@ -1,6 +1,7 @@
 import { ProductVariant } from 'src/domain/entities/product-variant.entity';
 import { IProductVariantRepository } from 'src/domain/repositories/product-variant.repository';
 import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
+import { fromProductVariantDTO } from '../helper/to-entity/to.product-variant.entity';
 
 /**
  * Service class for handling business logic related to ProductVariant entities.
@@ -25,13 +26,7 @@ export class ProductVariantService {
   async createProductVariant(
     variantDTO: ProductVariantDTO,
   ): Promise<ProductVariant> {
-    const variant = new ProductVariant(
-      variantDTO.id,
-      variantDTO.productId,
-      null,
-      variantDTO.name,
-      variantDTO.value,
-    );
+    const variant = fromProductVariantDTO(variantDTO);
     return this.repository.create(variant);
   }
 
@@ -55,13 +50,7 @@ export class ProductVariantService {
     updates: Partial<ProductVariantDTO>,
   ): Promise<ProductVariant> {
     // Convert DTO to entity for the update operation
-    const updatedEntity = new ProductVariant(
-      updates.id,
-      updates.productId,
-      null,
-      updates.name,
-      updates.value,
-    );
+    const updatedEntity = fromProductVariantDTO(updates);
     return this.repository.update(id, updatedEntity);
   }
 

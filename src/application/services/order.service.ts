@@ -2,6 +2,7 @@ import { Order } from 'src/domain/entities/order.entity';
 import { OrderStatus } from 'src/domain/enums/order-status.enum';
 import { IOrderRepository } from 'src/domain/repositories/order.repository';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
+import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
 
 /**
  * Service class for managing Order entities.
@@ -16,23 +17,7 @@ export class OrderService {
    * @returns A promise that resolves to the created Order entity.
    */
   async createOrder(orderDTO: OrderDTO): Promise<Order> {
-    const order = new Order(
-      orderDTO.id!,
-      orderDTO.userId,
-      null,
-      orderDTO.shopId,
-      null,
-      null,
-      orderDTO.status,
-      orderDTO.totalAmount,
-      orderDTO.paymentId,
-      orderDTO.trackingNumber,
-      orderDTO.createdAt || new Date(),
-      orderDTO.updatedAt || new Date(),
-      null,
-      null,
-    );
-
+    const order = fromOrderDTO(orderDTO);
     return this.orderRepository.create(order);
   }
 
@@ -52,22 +37,7 @@ export class OrderService {
    * @returns A promise that resolves to the updated Order entity.
    */
   async updateOrder(id: number, updates: Partial<OrderDTO>): Promise<Order> {
-    const updatedOrder = new Order(
-      updates.id!,
-      updates.userId,
-      null,
-      updates.shopId,
-      null,
-      null,
-      updates.status,
-      updates.totalAmount,
-      updates.paymentId,
-      updates.trackingNumber,
-      updates.updatedAt || new Date(),
-      null,
-      null,
-    );
-
+    const updatedOrder = fromOrderDTO(updates);
     return this.orderRepository.update(id, updatedOrder);
   }
 

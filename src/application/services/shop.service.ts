@@ -6,6 +6,15 @@ import { Product } from 'src/domain/entities/product.entity';
 import { Shop } from 'src/domain/entities/shop.entity';
 import { IShopRepository } from 'src/domain/repositories/shop.repository';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
+import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
+import { ProductDTO } from 'src/presentation/dtos/product.dto';
+import { fromProductDTO } from '../helper/to-entity/to.product.entity';
+import { OrderDTO } from 'src/presentation/dtos/order.dto';
+import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
+import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+import { fromCategoryDTO } from '../helper/to-entity/to.category.entity';
+import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
+import { fromMarketplaceDTO } from '../helper/to-entity/to.marketplace.entity';
 
 /**
  * Service for managing shop-related operations.
@@ -22,22 +31,7 @@ export class ShopService {
    */
   async createShop(shopDTO: ShopDTO): Promise<Shop> {
     // Convert DTO to Entity
-    const shop = new Shop(
-      shopDTO.id,
-      shopDTO.name,
-      shopDTO.url,
-      null,
-      shopDTO.vendorId,
-      null,
-      null,
-      null,
-      shopDTO.createdAt,
-      shopDTO.updatedAt,
-      shopDTO.description,
-      null,
-      shopDTO.marketplaceId,
-    );
-
+    const shop = fromShopDTO(shopDTO);
     // Call repository method to create the shop
     return this.shopRepository.create(shop);
   }
@@ -57,8 +51,9 @@ export class ShopService {
    * @param updates - Partial shop data to update.
    * @returns The updated Shop entity.
    */
-  async updateShop(id: number, updates: Partial<Shop>): Promise<Shop> {
-    return this.shopRepository.update(id, updates);
+  async updateShop(id: number, updates: Partial<ShopDTO>): Promise<Shop> {
+    const updatedShop = fromShopDTO(updates);
+    return this.shopRepository.update(id, updatedShop);
   }
 
   /**
@@ -85,8 +80,9 @@ export class ShopService {
    * @param product - The product to add.
    * @returns The updated Shop entity.
    */
-  async addProductToShop(shopId: number, product: Product): Promise<Shop> {
-    return this.shopRepository.addProduct(shopId, product);
+  async addProductToShop(shopId: number, product: ProductDTO): Promise<Shop> {
+    const prod = fromProductDTO(product);
+    return this.shopRepository.addProduct(shopId, prod);
   }
 
   /**
@@ -117,8 +113,9 @@ export class ShopService {
    * @param order - The order to add.
    * @returns The updated Shop entity.
    */
-  async addOrderToShop(shopId: number, order: Order): Promise<Shop> {
-    return this.shopRepository.addOrder(shopId, order);
+  async addOrderToShop(shopId: number, order: OrderDTO): Promise<Shop> {
+    const newOrder = fromOrderDTO(order);
+    return this.shopRepository.addOrder(shopId, newOrder);
   }
 
   /**
@@ -136,8 +133,12 @@ export class ShopService {
    * @param category - The category to add.
    * @returns The updated Shop entity.
    */
-  async addCategoryToShop(shopId: number, category: Category): Promise<Shop> {
-    return this.shopRepository.addCategory(shopId, category);
+  async addCategoryToShop(
+    shopId: number,
+    category: CategoryDTO,
+  ): Promise<Shop> {
+    const newCategory = fromCategoryDTO(category);
+    return this.shopRepository.addCategory(shopId, newCategory);
   }
 
   /**
@@ -170,9 +171,10 @@ export class ShopService {
    */
   async associateMarketplaceWithShop(
     shopId: number,
-    marketplace: Marketplace,
+    marketplace: MarketplaceDTO,
   ): Promise<Shop> {
-    return this.shopRepository.associateMarketplace(shopId, marketplace);
+    const market = fromMarketplaceDTO(marketplace);
+    return this.shopRepository.associateMarketplace(shopId, market);
   }
 
   /**

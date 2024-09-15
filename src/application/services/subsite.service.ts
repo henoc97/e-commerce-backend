@@ -1,64 +1,50 @@
-import { SubSite } from 'src/domain/entities/subsite.entity';
-import { ISubSiteRepository } from 'src/domain/repositories/subsite.repository';
-import { SubSiteDTO } from 'src/presentation/dtos/subsite.dto';
+import { Subsite } from 'src/domain/entities/Subsite.entity';
+import { ISubsiteRepository } from 'src/domain/repositories/Subsite.repository';
+import { SubsiteDTO } from 'src/presentation/dtos/Subsite.dto';
+import { fromSubsiteDTO } from '../helper/to-entity/to.sub-site.entity';
 
 /**
- * Service for managing SubSites.
- * Implements business logic for operations related to SubSites using the repository interface.
+ * Service for managing subsites.
+ * Implements business logic for operations related to subsites using the repository interface.
  */
-export class SubSiteService {
-  constructor(private readonly subSiteRepository: ISubSiteRepository) {}
+export class SubsiteService {
+  constructor(private readonly subsiteRepository: ISubsiteRepository) {}
 
   /**
    * Creates a new subsite.
-   * @param subSiteDTO - Data Transfer Object containing details of the subsite to create.
-   * @returns The created SubSite entity.
+   * @param subsiteDTO - Data Transfer Object containing details of the subsite to create.
+   * @returns The created subsite entity.
    */
-  async createSubSite(subSiteDTO: SubSiteDTO): Promise<SubSite> {
+  async createSubsite(SubsiteDTO: SubsiteDTO): Promise<Subsite> {
     // Map DTO to domain entity
-    const subSite = new SubSite(
-      subSiteDTO.id,
-      subSiteDTO.title,
-      subSiteDTO.userId,
-      null,
-      subSiteDTO.config,
-      subSiteDTO.createdAt,
-    );
+    const subsite = fromSubsiteDTO(SubsiteDTO);
 
     // Call repository to create the subsite
-    return this.subSiteRepository.create(subSite);
+    return this.subsiteRepository.create(subsite);
   }
 
   /**
    * Fetches a subsite by its ID.
    * @param id - Unique identifier of the subsite.
-   * @returns The SubSite entity if found, otherwise null.
+   * @returns The subsite entity if found, otherwise null.
    */
-  async getSubSiteById(id: number): Promise<SubSite | null> {
-    return this.subSiteRepository.getById(id);
+  async getSubsiteById(id: number): Promise<Subsite | null> {
+    return this.subsiteRepository.getById(id);
   }
 
   /**
    * Updates a subsite's details.
    * @param id - Unique identifier of the subsite to update.
    * @param updates - Partial fields to update for the subsite.
-   * @returns The updated SubSite entity.
+   * @returns The updated subsite entity.
    */
-  async updateSubSite(
+  async updateSubsite(
     id: number,
-    updates: Partial<SubSiteDTO>,
-  ): Promise<SubSite> {
+    updates: Partial<SubsiteDTO>,
+  ): Promise<Subsite> {
     // Ensure the provided updates conform to the domain entity
-    const subSiteUpdates = new SubSite(
-      id,
-      updates.title ?? '',
-      updates.userId ?? 0,
-      null,
-      updates.config ?? {},
-      new Date(),
-    );
-
-    return this.subSiteRepository.update(id, subSiteUpdates);
+    const subsiteUpdates = fromSubsiteDTO(updates);
+    return this.subsiteRepository.update(id, subsiteUpdates);
   }
 
   /**
@@ -66,36 +52,28 @@ export class SubSiteService {
    * @param id - Unique identifier of the subsite to remove.
    * @returns A boolean indicating the success of the removal.
    */
-  async removeSubSite(id: number): Promise<boolean> {
-    return this.subSiteRepository.remove(id);
+  async removeSubsite(id: number): Promise<boolean> {
+    return this.subsiteRepository.remove(id);
   }
 
   /**
    * Lists all subsites associated with a specific user.
    * @param userId - Unique identifier of the user.
-   * @returns Array of SubSites associated with the user.
+   * @returns Array of subsites associated with the user.
    */
-  async getSubSitesByUser(userId: number): Promise<SubSite[]> {
-    return this.subSiteRepository.getByUser(userId);
+  async getSubsitesByUser(userId: number): Promise<Subsite[]> {
+    return this.subsiteRepository.getByUser(userId);
   }
 
   /**
    * Validates a subsite's attributes such as title and configuration.
-   * @param subSiteDTO - Data Transfer Object representing the subsite to validate.
-   * @returns A boolean indicating if the SubSite is valid.
+   * @param subsiteDTO - Data Transfer Object representing the subsite to validate.
+   * @returns A boolean indicating if the subsite is valid.
    */
-  async validateSubSite(subSiteDTO: SubSiteDTO): Promise<boolean> {
+  async validateSubsite(SubsiteDTO: SubsiteDTO): Promise<boolean> {
     // Implement validation logic if needed
-    return this.subSiteRepository.validate(
-      new SubSite(
-        subSiteDTO.id,
-        subSiteDTO.title,
-        subSiteDTO.userId,
-        null,
-        subSiteDTO.config,
-        subSiteDTO.createdAt,
-      ),
-    );
+    const subsite = fromSubsiteDTO(SubsiteDTO);
+    return this.subsiteRepository.validate(subsite);
   }
 
   /**
@@ -103,34 +81,34 @@ export class SubSiteService {
    * @param id - Unique identifier of the subsite.
    * @returns The JSON configuration of the subsite.
    */
-  async getSubSiteConfig(id: number): Promise<any> {
-    return this.subSiteRepository.getConfig(id);
+  async getSubsiteConfig(id: number): Promise<any> {
+    return this.subsiteRepository.getConfig(id);
   }
 
   /**
    * Updates a subsite's configuration.
    * @param id - Unique identifier of the subsite.
    * @param config - New configuration to apply to the subsite.
-   * @returns The updated SubSite entity with new configuration.
+   * @returns The updated subsite entity with new configuration.
    */
-  async updateSubSiteConfig(id: number, config: any): Promise<SubSite> {
-    return this.subSiteRepository.updateConfig(id, config);
+  async updateSubsiteConfig(id: number, config: any): Promise<Subsite> {
+    return this.subsiteRepository.updateConfig(id, config);
   }
 
   /**
    * Finds the most recently created subsite.
-   * @returns The latest SubSite entity.
+   * @returns The latest subsite entity.
    */
-  async getLatestSubSite(): Promise<SubSite> {
-    return this.subSiteRepository.getLatest();
+  async getLatestSubsite(): Promise<Subsite> {
+    return this.subsiteRepository.getLatest();
   }
 
   /**
    * Lists all active subsites.
-   * @returns An array of currently active SubSite entities.
+   * @returns An array of currently active subsite entities.
    */
-  async getActiveSubSites(): Promise<SubSite[]> {
-    return this.subSiteRepository.getActive();
+  async getActiveSubsites(): Promise<Subsite[]> {
+    return this.subsiteRepository.getActive();
   }
 
   /**
@@ -138,7 +116,7 @@ export class SubSiteService {
    * @param userId - Unique identifier of the user.
    * @returns The total number of subsites for the user.
    */
-  async countSubSitesByUser(userId: number): Promise<number> {
-    return this.subSiteRepository.countByUser(userId);
+  async countSubsitesByUser(userId: number): Promise<number> {
+    return this.subsiteRepository.countByUser(userId);
   }
 }

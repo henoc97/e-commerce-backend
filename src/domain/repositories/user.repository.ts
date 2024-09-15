@@ -3,14 +3,14 @@ import { Address } from '../entities/address.entity';
 import { Order } from '../entities/order.entity';
 import { UserRole } from '../enums/user-role.enum';
 import { UserActivityAction } from '../enums/user-activity-action.enum';
-import { AuditLogAction } from '../enums/audit-log-action.enum';
-import { SubSite } from '../entities/subsite.entity';
+import { Subsite } from '../entities/Subsite.entity';
 import { Ticket } from '../entities/ticket.entity';
 import { UserActivity } from '../entities/user-activity.entity';
 import { Review } from '../entities/review.entity';
 import { UserProfile } from '../entities/user-profile.entity';
 import { AuditLog } from '../entities/audit-log.entity';
 import { Cart } from '../entities/cart.entity';
+import { Notification } from '../entities/notification.entity';
 
 /**
  * Interface defining operations for managing User entities.
@@ -103,18 +103,18 @@ export interface IUserRepository {
   /**
    * Adds a sub-site to a user's profile.
    * @param userId - The unique ID of the user.
-   * @param subSite - The SubSite entity to add.
+   * @param Subsite - The Subsite entity to add.
    * @returns The updated User entity.
    */
-  addSubSite(userId: number, subSite: SubSite): Promise<User>;
+  addSubsite(userId: number, Subsite: Subsite): Promise<User>;
 
   /**
    * Removes a sub-site from a user's profile.
    * @param userId - The unique ID of the user.
-   * @param subSiteId - The unique ID of the sub-site to remove.
+   * @param SubsiteId - The unique ID of the sub-site to remove.
    * @returns The updated User entity.
    */
-  removeSubSite(userId: number, subSiteId: number): Promise<User>;
+  removeSubsite(userId: number, SubsiteId: number): Promise<User>;
 
   /**
    * Logs a user activity.
@@ -139,19 +139,10 @@ export interface IUserRepository {
   /**
    * Creates an audit log entry.
    * @param userId - The unique ID of the user.
-   * @param action - The action performed.
-   * @param entity - The entity affected.
-   * @param entityId - The unique ID of the affected entity.
-   * @param changes - The changes made.
+   * @param auditLog - The log performed by the user.
    * @returns A promise that resolves when the log entry is created.
    */
-  createAuditLog(
-    userId: number,
-    action: AuditLogAction,
-    entity: string,
-    entityId: number,
-    changes: any,
-  ): Promise<void>;
+  createAuditLog(userId: number, auditLog: AuditLog): Promise<void>;
 
   /**
    * Retrieves all audit logs related to a user.
@@ -228,9 +219,9 @@ export interface IUserRepository {
   /**
    * Retrieves a user's sub-sites.
    * @param userId - The unique ID of the user.
-   * @returns An array of SubSite entities associated with the user.
+   * @returns An array of Subsite entities associated with the user.
    */
-  getSubSites(userId: number): Promise<SubSite[]>;
+  getSubsites(userId: number): Promise<Subsite[]>;
 
   /**
    * Retrieves the count of active users.

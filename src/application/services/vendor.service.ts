@@ -8,6 +8,10 @@ import { ProductDTO } from 'src/presentation/dtos/product.dto';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
 import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
+import { fromVendorDTO } from '../helper/to-entity/to.vendor.entity';
+import { fromProductDTO } from '../helper/to-entity/to.product.entity';
+import { fromSubscriptionDTO } from '../helper/to-entity/to.subscription.entity';
+import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
 
 /**
  * VendorService handles the application logic for managing vendors.
@@ -23,16 +27,7 @@ export class VendorService {
    * @returns The newly created Vendor entity.
    */
   async createVendor(vendorDTO: VendorDTO): Promise<Vendor> {
-    const vendorEntity = new Vendor(
-      vendorDTO.id,
-      vendorDTO.userId,
-      null,
-      vendorDTO.storeName,
-      null,
-      null,
-      vendorDTO.subscriptionId,
-      null,
-    );
+    const vendorEntity = fromVendorDTO(vendorDTO);
 
     return this.vendorRepository.create(vendorEntity);
   }
@@ -56,17 +51,7 @@ export class VendorService {
     id: number,
     updateData: Partial<VendorDTO>,
   ): Promise<Vendor> {
-    const updatedVendor = new Vendor(
-      updateData.id,
-      updateData.userId,
-      null,
-      updateData.storeName,
-      null,
-      null,
-      updateData.subscriptionId,
-      null,
-    );
-
+    const updatedVendor = fromVendorDTO(updateData);
     return this.vendorRepository.update(id, updatedVendor);
   }
 
@@ -98,27 +83,7 @@ export class VendorService {
     vendorId: number,
     productDTO: ProductDTO,
   ): Promise<Vendor> {
-    const productEntity = new Product(
-      productDTO.id,
-      productDTO.name,
-      productDTO.price,
-      null, // productDTO.promotions
-      null, // productDTO.category,
-      productDTO.categoryId,
-      null, // productDTO.images,
-      null, // productDTO.variants,
-      productDTO.stock,
-      null, // productDTO.shop,
-      productDTO.shopId,
-      productDTO.createdAt,
-      productDTO.updatedAt,
-      null, // productDTO.CartItem,
-      null, // productDTO.OrderItem,
-      null, // productDTO.Review,
-      productDTO.description,
-      null, // productDTO.vendor,
-      productDTO.vendorId,
-    );
+    const productEntity = fromProductDTO(productDTO);
 
     return this.vendorRepository.addProduct(vendorId, productEntity);
   }
@@ -164,16 +129,7 @@ export class VendorService {
     vendorId: number,
     subscriptionDTO: SubscriptionDTO,
   ): Promise<Vendor> {
-    const subscriptionEntity = new Subscription(
-      subscriptionDTO.id,
-      subscriptionDTO.name,
-      subscriptionDTO.price,
-      subscriptionDTO.duration,
-      subscriptionDTO.description,
-      null, // subscriptionDTO.vendors,
-      subscriptionDTO.createdAt,
-      subscriptionDTO.updatedAt,
-    );
+    const subscriptionEntity = fromSubscriptionDTO(subscriptionDTO);
 
     return this.vendorRepository.setSubscription(vendorId, subscriptionEntity);
   }
@@ -194,21 +150,7 @@ export class VendorService {
    * @returns The updated Vendor entity with the associated shop.
    */
   async setVendorShop(vendorId: number, shopDTO: ShopDTO): Promise<Vendor> {
-    const shopEntity = new Shop(
-      shopDTO.id,
-      shopDTO.name,
-      shopDTO.url,
-      null, // shopDTO.vendor,
-      shopDTO.vendorId,
-      null, // shopDTO.products,
-      null, // shopDTO.orders,
-      null, // shopDTO.categories,
-      shopDTO.createdAt,
-      shopDTO.updatedAt,
-      shopDTO.description,
-      null, // shopDTO.Marketplace,
-      shopDTO.marketplaceId,
-    );
+    const shopEntity = fromShopDTO(shopDTO);
 
     return this.vendorRepository.setShop(vendorId, shopEntity);
   }
@@ -229,6 +171,14 @@ export class VendorService {
    */
   async findVendorsBySubscription(subscriptionId: number): Promise<Vendor[]> {
     return this.vendorRepository.findBySubscription(subscriptionId);
+  }
+
+  /**
+   * Execute the vendor-list use case.
+   * @returns A promise that resolves to an array of Vendors.
+   */
+  async getAllVendors(): Promise<Vendor[]> {
+    return this.vendorRepository.getall();
   }
 
   /**

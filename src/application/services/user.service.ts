@@ -4,16 +4,28 @@ import { AuditLog } from 'src/domain/entities/audit-log.entity';
 import { Cart } from 'src/domain/entities/cart.entity';
 import { Order } from 'src/domain/entities/order.entity';
 import { Review } from 'src/domain/entities/review.entity';
-import { SubSite } from 'src/domain/entities/subsite.entity';
+import { Subsite } from 'src/domain/entities/Subsite.entity';
 import { Ticket } from 'src/domain/entities/ticket.entity';
 import { UserActivity } from 'src/domain/entities/user-activity.entity';
-import { UserProfile } from 'src/domain/entities/user-profile.entity';
+import { Notification } from 'src/domain/entities/notification.entity';
 import { User } from 'src/domain/entities/user.entity';
-import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
 import { UserActivityAction } from 'src/domain/enums/user-activity-action.enum';
 import { UserRole } from 'src/domain/enums/user-role.enum';
 import { IUserRepository } from 'src/domain/repositories/user.repository';
 import { UserDTO } from 'src/presentation/dtos/user.dto';
+import { fromUserDTO } from '../helper/to-entity/to.user.entity';
+import { fromNotificationDTO } from '../helper/to-entity/to.notification.entity';
+import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
+import { SubsiteDTO } from 'src/presentation/dtos/Subsite.dto';
+import { fromSubsiteDTO } from '../helper/to-entity/to.sub-site.entity';
+import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+import { fromAuditLogDTO } from '../helper/to-entity/to.audit-log.entity';
+import { fromUserProfileDTO } from '../helper/to-entity/to.user-profile.entity';
+import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
+import { AddressDTO } from 'src/presentation/dtos/address.dto';
+import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
+import { OrderDTO } from 'src/presentation/dtos/order.dto';
+import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
 
 @Injectable()
 export class UserService {
@@ -27,24 +39,7 @@ export class UserService {
    * @returns The created User entity.
    */
   async createUser(userDTO: UserDTO): Promise<User> {
-    const user = new User(
-      userDTO.id,
-      userDTO.password,
-      userDTO.name,
-      userDTO.role,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-    );
+    const user = fromUserDTO(userDTO);
     return await this.userRepository.create(user);
   }
 
@@ -64,24 +59,7 @@ export class UserService {
    * @returns The updated User entity.
    */
   async updateUser(id: number, updates: Partial<UserDTO>): Promise<User> {
-    const updatedUser = new User(
-      updates.id,
-      updates.password,
-      updates.name,
-      updates.role,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-    );
+    const updatedUser = fromUserDTO(updates);
     return await this.userRepository.update(id, updatedUser);
   }
 
@@ -109,8 +87,9 @@ export class UserService {
    * @param address - Address entity to be added.
    * @returns The updated User entity.
    */
-  async addAddressToUser(userId: number, address: Address): Promise<User> {
-    return await this.userRepository.addAddress(userId, address);
+  async addAddressToUser(userId: number, address: AddressDTO): Promise<User> {
+    const ad = fromAddressDTO(address);
+    return await this.userRepository.addAddress(userId, ad);
   }
 
   /**
@@ -132,8 +111,9 @@ export class UserService {
    * @param order - Order entity to be added.
    * @returns The updated User entity.
    */
-  async addOrderToUser(userId: number, order: Order): Promise<User> {
-    return await this.userRepository.addOrder(userId, order);
+  async addOrderToUser(userId: number, order: OrderDTO): Promise<User> {
+    const _order = fromOrderDTO(order);
+    return await this.userRepository.addOrder(userId, _order);
   }
 
   /**
@@ -154,9 +134,10 @@ export class UserService {
    */
   async addNotificationToUser(
     userId: number,
-    notification: Notification,
+    notification: NotificationDTO,
   ): Promise<User> {
-    return await this.userRepository.addNotification(userId, notification);
+    const notif = fromNotificationDTO(notification);
+    return await this.userRepository.addNotification(userId, notif);
   }
 
   /**
@@ -173,26 +154,27 @@ export class UserService {
   }
 
   /**
-   * Add a subsite to the user's profile.
+   * Add a Subsite to the user's profile.
    * @param userId - The unique ID of the user.
-   * @param subSite - SubSite entity to be added.
+   * @param subsite - subsite entity to be added.
    * @returns The updated User entity.
    */
-  async addSubSiteToUser(userId: number, subSite: SubSite): Promise<User> {
-    return await this.userRepository.addSubSite(userId, subSite);
+  async addSubsiteToUser(userId: number, subsite: SubsiteDTO): Promise<User> {
+    const site = fromSubsiteDTO(subsite);
+    return await this.userRepository.addSubsite(userId, site);
   }
 
   /**
-   * Remove a subsite from the user's profile.
+   * Remove a Subsite from the user's profile.
    * @param userId - The unique ID of the user.
-   * @param subSiteId - The unique ID of the subsite to be removed.
+   * @param SubsiteId - The unique ID of the Subsite to be removed.
    * @returns The updated User entity.
    */
-  async removeSubSiteFromUser(
+  async removeSubsiteFromUser(
     userId: number,
-    subSiteId: number,
+    subsiteId: number,
   ): Promise<User> {
-    return await this.userRepository.removeSubSite(userId, subSiteId);
+    return await this.userRepository.removeSubsite(userId, subsiteId);
   }
 
   /**
@@ -221,25 +203,11 @@ export class UserService {
   /**
    * Create an audit log entry for the user.
    * @param userId - The unique ID of the user.
-   * @param action - The action performed by the user.
-   * @param entity - The entity affected.
-   * @param entityId - The ID of the affected entity.
-   * @param changes - The changes made to the entity.
+   * @param auditLog - The log performed by the user.
    */
-  async createAuditLog(
-    userId: number,
-    action: AuditLogAction,
-    entity: string,
-    entityId: number,
-    changes: any,
-  ): Promise<void> {
-    await this.userRepository.createAuditLog(
-      userId,
-      action,
-      entity,
-      entityId,
-      changes,
-    );
+  async createAuditLog(userId: number, auditLog: AuditLogDTO): Promise<void> {
+    const log = fromAuditLogDTO(auditLog);
+    await this.userRepository.createAuditLog(userId, log);
   }
 
   /**
@@ -266,8 +234,12 @@ export class UserService {
    * @param profile - Updated UserProfile entity.
    * @returns The updated User entity.
    */
-  async updateUserProfile(userId: number, profile: UserProfile): Promise<User> {
-    return await this.userRepository.updateProfile(userId, profile);
+  async updateUserProfile(
+    userId: number,
+    profile: UserProfileDTO,
+  ): Promise<User> {
+    const pf = fromUserProfileDTO(profile);
+    return await this.userRepository.updateProfile(userId, pf);
   }
 
   /**
@@ -337,10 +309,10 @@ export class UserService {
   /**
    * Retrieves a user's sub-sites.
    * @param userId - The unique ID of the user.
-   * @returns An array of SubSite entities associated with the user.
+   * @returns An array of Subsite entities associated with the user.
    */
-  async getSubSites(userId: number): Promise<SubSite[]> {
-    return await this.userRepository.getSubSites(userId);
+  async getSubsites(userId: number): Promise<Subsite[]> {
+    return await this.userRepository.getSubsites(userId);
   }
 
   /**

@@ -64,7 +64,7 @@ export class VendorDTO {
   @IsOptional()
   @ValidateNested()
   @Type(() => ShopDTO)
-  Shop?: ShopDTO;
+  shop?: ShopDTO;
 
   /**
    * Creates a new VendorDTO instance.
@@ -73,9 +73,9 @@ export class VendorDTO {
    * @param user - The user associated with the vendor.
    * @param storeName - The name of the vendor's store.
    * @param products - Optional array of products associated with the vendor.
-   * @param subscription - Optional subscription associated with the vendor.
    * @param subscriptionId - Optional ID of the subscription.
-   * @param Shop - Optional shop associated with the vendor.
+   * @param subscription - Optional subscription associated with the vendor.
+   * @param shop - Optional shop associated with the vendor.
    */
   constructor(
     id: number,
@@ -83,9 +83,9 @@ export class VendorDTO {
     user: UserDTO,
     storeName: string,
     products?: ProductDTO[],
-    subscription?: SubscriptionDTO,
     subscriptionId?: number,
-    Shop?: ShopDTO,
+    subscription?: SubscriptionDTO,
+    shop?: ShopDTO,
   ) {
     this.id = id;
     this.userId = userId;
@@ -94,6 +94,6 @@ export class VendorDTO {
     this.products = products;
     this.subscription = subscription;
     this.subscriptionId = subscriptionId;
-    this.Shop = Shop;
+    this.shop = shop;
   }
 }

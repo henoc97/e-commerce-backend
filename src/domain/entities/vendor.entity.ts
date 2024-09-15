@@ -1,5 +1,5 @@
 import { Product } from './product.entity';
-import { Shop } from './shop.entity';
+import { Shop } from './Shop.entity';
 import { Subscription } from './subscription.entity';
 import { User } from './user.entity';
 
@@ -14,7 +14,7 @@ export class Vendor {
   products?: Product[];
   subscription?: Subscription;
   subscriptionId?: number;
-  Shop?: Shop;
+  shop?: Shop;
 
   /**
    * Creates a new instance of Vendor.
@@ -25,7 +25,7 @@ export class Vendor {
    * @param products - An optional array of products associated with the vendor.
    * @param subscription - An optional subscription associated with the vendor.
    * @param subscriptionId - An optional ID of the subscription.
-   * @param Shop - An optional shop associated with the vendor.
+   * @param shop - An optional shop associated with the vendor.
    */
   constructor(
     id: number,
@@ -33,9 +33,9 @@ export class Vendor {
     user: User,
     storeName: string,
     products: Product[] = [],
-    subscription?: Subscription,
     subscriptionId?: number,
-    Shop?: Shop,
+    subscription?: Subscription,
+    shop?: Shop,
   ) {
     this.id = id;
     this.userId = userId;
@@ -44,6 +44,6 @@ export class Vendor {
     this.products = products;
     this.subscription = subscription;
     this.subscriptionId = subscriptionId;
-    this.Shop = Shop;
+    this.shop = shop;
   }
 }

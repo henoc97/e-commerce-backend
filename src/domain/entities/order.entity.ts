@@ -73,12 +73,12 @@ export class Order {
   /**
    * List of Payments associated with the Order.
    */
-  Payment?: Payment[];
+  payments?: Payment[];
 
   /**
    * List of Refunds associated with the Order.
    */
-  Refund?: Refund[];
+  refunds?: Refund[];
 
   /**
    * Creates a new Order instance.
@@ -94,8 +94,8 @@ export class Order {
    * @param trackingNumber - Tracking number for the Order shipment.
    * @param createdAt - Date and time when the Order was created.
    * @param updatedAt - Date and time when the Order was last updated.
-   * @param Payment - List of Payments associated with the Order.
-   * @param Refund - List of Refunds associated with the Order.
+   * @param Payments - List of Payments associated with the Order.
+   * @param Refunds - List of Refunds associated with the Order.
    */
   constructor(
     id: number,
@@ -110,8 +110,8 @@ export class Order {
     trackingNumber?: string,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
-    Payment?: Payment[],
-    Refund?: Refund[],
+    payments?: Payment[],
+    refunds?: Refund[],
   ) {
     this.id = id;
     this.userId = userId;
@@ -125,7 +125,7 @@ export class Order {
     this.trackingNumber = trackingNumber;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.Payment = Payment;
-    this.Refund = Refund;
+    this.payments = payments;
+    this.refunds = refunds;
   }
 }

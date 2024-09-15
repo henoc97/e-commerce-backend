@@ -2,6 +2,7 @@ import { Ticket } from 'src/domain/entities/ticket.entity';
 import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
 import { ITicketRepository } from 'src/domain/repositories/ticket.repository';
 import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
+import { fromTicketDTO } from '../helper/to-entity/to.ticket.entity';
 
 /**
  * Service class for handling ticket-related operations.
@@ -25,21 +26,7 @@ export class TicketService {
    */
   async createTicket(ticketDTO: TicketDTO): Promise<Ticket> {
     // Map DTO to entity
-    const ticket = new Ticket(
-      ticketDTO.id,
-      ticketDTO.userId,
-      null,
-      ticketDTO.subject,
-      ticketDTO.description,
-      ticketDTO.status,
-      ticketDTO.createdAt,
-      ticketDTO.updatedAt,
-    );
-
-    // Validate ticket entity before creation (optional, based on requirements)
-    // const isValid = await this.ticketRepository.validate(ticket);
-    // if (!isValid) throw new Error('Invalid ticket data');
-
+    const ticket = fromTicketDTO(ticketDTO);
     // Call repository method to create ticket
     return await this.ticketRepository.create(ticket);
   }
@@ -61,12 +48,7 @@ export class TicketService {
    */
   async updateTicket(id: number, updates: Partial<TicketDTO>): Promise<Ticket> {
     // Convert DTO updates to entity updates
-    const updateFields = {
-      subject: updates.subject,
-      description: updates.description,
-      status: updates.status,
-      updatedAt: updates.updatedAt,
-    };
+    const updateFields = fromTicketDTO(updates);
 
     return await this.ticketRepository.update(id, updateFields);
   }

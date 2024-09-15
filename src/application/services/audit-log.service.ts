@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AuditLog } from 'src/domain/entities/audit-log.entity';
 import { IAuditLogRepository } from 'src/domain/repositories/auditlog.repository';
 import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+import { fromAuditLogDTO } from '../helper/to-entity/to.audit-log.entity';
 
 /**
  * Service for managing audit logs.
@@ -17,15 +18,7 @@ export class AuditLogService {
    * @returns A promise that resolves to the created audit log entry.
    */
   async createLog(dto: AuditLogDTO): Promise<AuditLog> {
-    const auditLog = new AuditLog(
-      dto.id,
-      dto.userId,
-      dto.action,
-      dto.entity,
-      dto.entityId,
-      dto.changes,
-      dto.createdAt,
-    );
+    const auditLog = fromAuditLogDTO(dto);
     return this.auditLogRepository.create(auditLog);
   }
 
@@ -64,15 +57,7 @@ export class AuditLogService {
    * @returns A promise that resolves to the updated audit log entry.
    */
   async updateLog(id: number, dto: AuditLogDTO): Promise<AuditLog> {
-    const updatedLog = new AuditLog(
-      dto.id,
-      dto.userId,
-      dto.action,
-      dto.entity,
-      dto.entityId,
-      dto.changes,
-      dto.createdAt,
-    );
+    const updatedLog = fromAuditLogDTO(dto);
     return this.auditLogRepository.update(id, updatedLog);
   }
 

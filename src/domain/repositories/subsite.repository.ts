@@ -1,83 +1,83 @@
-import { SubSite } from '../entities/subsite.entity';
+import { Subsite } from '../entities/Subsite.entity';
 
 /**
- * Interface for handling business rules and CRUD operations related to subsites.
+ * Interface for handling business rules and CRUD operations related to Subsites.
  */
-export interface ISubSiteRepository {
+export interface ISubsiteRepository {
   /**
-   * Creates a new subsite.
-   * @param subSite - The SubSite entity to be created.
-   * @returns The created SubSite entity.
+   * Creates a new Subsite.
+   * @param Subsite - The Subsite entity to be created.
+   * @returns The created Subsite entity.
    */
-  create(subSite: SubSite): Promise<SubSite>;
+  create(Subsite: Subsite): Promise<Subsite>;
 
   /**
-   * Fetches a subsite by its ID.
-   * @param id - Unique identifier of the subsite.
-   * @returns The SubSite if found, otherwise null.
+   * Fetches a Subsite by its ID.
+   * @param id - Unique identifier of the Subsite.
+   * @returns The Subsite if found, otherwise null.
    */
-  getById(id: number): Promise<SubSite | null>;
+  getById(id: number): Promise<Subsite | null>;
 
   /**
-   * Updates a subsite's details.
-   * @param id - Unique identifier of the subsite.
-   * @param updates - Fields to update for the subsite.
-   * @returns The updated SubSite entity.
+   * Updates a Subsite's details.
+   * @param id - Unique identifier of the Subsite.
+   * @param updates - Fields to update for the Subsite.
+   * @returns The updated Subsite entity.
    */
-  update(id: number, updates: Partial<SubSite>): Promise<SubSite>;
+  update(id: number, updates: Partial<Subsite>): Promise<Subsite>;
 
   /**
-   * Removes a subsite by its ID.
-   * @param id - Unique identifier of the subsite.
+   * Removes a Subsite by its ID.
+   * @param id - Unique identifier of the Subsite.
    * @returns A boolean indicating if the deletion was successful.
    */
   remove(id: number): Promise<boolean>;
 
   /**
-   * Lists all subsites associated with a specific user.
+   * Lists all Subsites associated with a specific user.
    * @param userId - Unique identifier of the user.
-   * @returns Array of SubSites associated with the user.
+   * @returns Array of Subsites associated with the user.
    */
-  getByUser(userId: number): Promise<SubSite[]>;
+  getByUser(userId: number): Promise<Subsite[]>;
 
   /**
-   * Validates the subsite's attributes such as title and configuration.
-   * @param subSite - The SubSite entity to be validated.
-   * @returns A boolean indicating if the SubSite is valid.
+   * Validates the Subsite's attributes such as title and configuration.
+   * @param Subsite - The Subsite entity to be validated.
+   * @returns A boolean indicating if the Subsite is valid.
    */
-  validate(subSite: SubSite): Promise<boolean>;
+  validate(Subsite: Subsite): Promise<boolean>;
 
   /**
-   * Retrieves the configuration of a subsite.
-   * @param id - Unique identifier of the subsite.
-   * @returns The subsite's configuration in JSON format.
+   * Retrieves the configuration of a Subsite.
+   * @param id - Unique identifier of the Subsite.
+   * @returns The Subsite's configuration in JSON format.
    */
   getConfig(id: number): Promise<any>;
 
   /**
-   * Updates a subsite's configuration.
-   * @param id - Unique identifier of the subsite.
-   * @param config - New configuration to be applied to the subsite.
-   * @returns The updated SubSite entity.
+   * Updates a Subsite's configuration.
+   * @param id - Unique identifier of the Subsite.
+   * @param config - New configuration to be applied to the Subsite.
+   * @returns The updated Subsite entity.
    */
-  updateConfig(id: number, config: any): Promise<SubSite>;
+  updateConfig(id: number, config: any): Promise<Subsite>;
 
   /**
-   * Finds the most recently created subsite.
-   * @returns The latest SubSite entity.
+   * Finds the most recently created Subsite.
+   * @returns The latest Subsite entity.
    */
-  getLatest(): Promise<SubSite>;
+  getLatest(): Promise<Subsite>;
 
   /**
-   * Lists all active subsites.
-   * @returns An array of currently active SubSite entities.
+   * Lists all active Subsites.
+   * @returns An array of currently active Subsite entities.
    */
-  getActive(): Promise<SubSite[]>;
+  getActive(): Promise<Subsite[]>;
 
   /**
-   * Counts the number of subsites for a specific user.
+   * Counts the number of Subsites for a specific user.
    * @param userId - Unique identifier of the user.
-   * @returns The total number of subsites for the user.
+   * @returns The total number of Subsites for the user.
    */
   countByUser(userId: number): Promise<number>;
 }

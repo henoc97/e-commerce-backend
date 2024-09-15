@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ProductImage } from 'src/domain/entities/product-image.entity';
 import { IProductImageRepository } from 'src/domain/repositories/product-image.repository';
 import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
+import { fromProductImageDTO } from '../helper/to-entity/to.product-image.entity';
 /**
  * Service for managing product images.
  * Handles business logic for operations related to ProductImage entities.
@@ -18,12 +19,7 @@ export class ProductImageService {
    * @returns A promise that resolves to the created ProductImage.
    */
   async createProductImage(imageDTO: ProductImageDTO): Promise<ProductImage> {
-    const image = new ProductImage(
-      imageDTO.id,
-      imageDTO.productId,
-      null,
-      imageDTO.url,
-    );
+    const image = fromProductImageDTO(imageDTO);
     return await this.productImageRepository.create(image);
   }
 
@@ -46,12 +42,7 @@ export class ProductImageService {
     id: number,
     updates: Partial<ProductImageDTO>,
   ): Promise<ProductImage> {
-    const updateImage = new ProductImage(
-      updates.id,
-      updates.productId,
-      null,
-      updates.url,
-    );
+    const updateImage = fromProductImageDTO(updates);
     return await this.productImageRepository.update(id, updateImage);
   }
 
