@@ -27,9 +27,47 @@ enum UserRole {
 // Enum for order statuses
 enum OrderStatus {
   PENDING
+  PROCESSING
   SHIPPED
   DELIVERED
   CANCELLED
+  REFUNDED
+  RETURNED
+}
+
+enum ShipmentStatus {
+  PENDING
+  IN_TRANSIT
+  DELIVERED
+  RETURNED
+  LOST
+  DAMAGED
+  CANCELLED
+}
+
+enum ShippingMethod {
+  STANDARD
+  EXPRESS
+  OVERNIGHT
+  SAME_DAY
+  ECONOMY
+  TWO_DAY
+}
+
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  JPY
+  CNY
+  XOF
+  AUD
+  CAD
+  CHF
+  INR
+  BRL
+  ZAR
 }
 
 enum DiscountType {
@@ -234,6 +272,9 @@ model Order {
   totalAmount    Float
   paymentId      String?
   trackingNumber String?
+  shipmentId     Int?        @unique 
+  shipment       Shipment?   @relation(name: "OrderToShipment", fields: [shipmentId], references: [id])
+  shippingMethod ShippingMethod 
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
   Payment        Payment[]
@@ -262,6 +303,65 @@ model Payment {
   providerId String?
   metadata   Json?
   createdAt  DateTime @default(now())
+}
+
+// Carrier Model: Stores carrier details
+model Carrier {
+  id              Int        @id @default(autoincrement())
+  name            String
+  country         String      // Country where the carrier operates
+  region          String?     // Specific region or city (if applicable)
+  shippingRates   ShippingRate[]
+  shipments       Shipment[]
+  externalAPI     String?     // Carrier's API URL (if available)
+  supportedZones  Zone[]      // Zones that this carrier supports
+  capabilities    String?     // Additional capabilities or notes (e.g., 'Refrigerated', 'Express')
+}
+
+// ShippingRate Model: Stores shippingRate details
+model ShippingRate {
+  id           Int       @id @default(autoincrement())
+  carrierId    Int
+  carrier      Carrier   @relation(fields: [carrierId], references: [id])
+  zoneId       Int
+  zone         Zone      @relation(fields: [zoneId], references: [id])
+  weightMin    Float     // Minimum weight in kg
+  weightMax    Float     // Maximum weight in kg
+  cost         Float     // Shipping cost for this weight range
+  currency     Currency    // Currency used for this rate (e.g., EUR, XOF)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([carrierId, zoneId, weightMin, weightMax])
+  
+}
+
+// Shipment Model: Stores shipment details
+model Shipment {
+  id            Int       @id @default(autoincrement())
+  orderId       Int?       @unique
+  order         Order?     @relation(name: "OrderToShipment")
+  carrierId     Int
+  carrier       Carrier   @relation(fields: [carrierId], references: [id])
+  trackingNumber String
+  status        ShipmentStatus // Using enumeration for statuses
+  shippedAt     DateTime?
+  deliveredAt   DateTime?
+  statusUpdatedAt DateTime? // Date of the last status update
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([orderId, trackingNumber])
+}
+
+// Zone Model: Stores zone details
+model Zone {
+  id              Int       @id @default(autoincrement())
+  country         String    // Country name
+  region          String?   // Specific region or city (optional)
+  carriers        Carrier[] // Carriers serving this zone
+
+  ShippingRate ShippingRate[]
 }
 
 // Review Model: Product reviews and ratings

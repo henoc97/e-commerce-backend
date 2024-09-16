@@ -1,9 +1,11 @@
 import { User } from './user.entity';
 import { Shop } from './shop.entity';
 import { OrderStatus } from '../enums/order-status.enum';
-import { OrderItem } from './order-item.enttity';
 import { Payment } from './payment.entity';
 import { Refund } from './refund.entity';
+import { OrderItem } from './order-item.enttity';
+import { Shipment } from './shippement.entity';
+import { ShippingMethod } from '../enums/shipping-method.enum';
 
 /**
  * Represents an order placed by a user in a shop.
@@ -61,6 +63,21 @@ export class Order {
   trackingNumber?: string;
 
   /**
+   * Foreign key for the Shipment associated with the Order.
+   */
+  shipmentId?: number;
+
+  /**
+   * The Shipment associated with the Order.
+   */
+  shipment?: Shipment;
+
+  /**
+   * Shipping method used for the Order.
+   */
+  shippingMethod: ShippingMethod;
+
+  /**
    * Date and time when the Order was created.
    */
   createdAt: Date;
@@ -90,12 +107,15 @@ export class Order {
    * @param items - List of items included in the Order.
    * @param status - Status of the Order.
    * @param totalAmount - Total amount for the Order.
+   * @param shippingMethod - Shipping method used for the Order.
    * @param paymentId - Unique identifier for the Payment associated with the Order.
    * @param trackingNumber - Tracking number for the Order shipment.
+   * @param shipmentId - Foreign key for the Shipment associated with the Order.
+   * @param shipment - The Shipment associated with the Order.
    * @param createdAt - Date and time when the Order was created.
    * @param updatedAt - Date and time when the Order was last updated.
-   * @param Payments - List of Payments associated with the Order.
-   * @param Refunds - List of Refunds associated with the Order.
+   * @param payments - List of Payments associated with the Order.
+   * @param refunds - List of Refunds associated with the Order.
    */
   constructor(
     id: number,
@@ -106,8 +126,11 @@ export class Order {
     items: OrderItem[] = [],
     status: OrderStatus,
     totalAmount: number,
+    shippingMethod: ShippingMethod,
     paymentId?: string,
     trackingNumber?: string,
+    shipmentId?: number,
+    shipment?: Shipment,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
     payments?: Payment[],
@@ -123,6 +146,9 @@ export class Order {
     this.totalAmount = totalAmount;
     this.paymentId = paymentId;
     this.trackingNumber = trackingNumber;
+    this.shipmentId = shipmentId;
+    this.shipment = shipment;
+    this.shippingMethod = shippingMethod;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.payments = payments;

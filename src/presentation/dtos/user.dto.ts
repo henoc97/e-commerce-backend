@@ -118,7 +118,7 @@ export class UserDTO {
    */
   @IsOptional()
   @ValidateNested({ each: true })
-  @Type(() => NotificationDTO) 
+  @Type(() => NotificationDTO)
   notifications?: NotificationDTO[];
 
   /**
