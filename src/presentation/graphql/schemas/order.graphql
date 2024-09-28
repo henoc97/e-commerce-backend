@@ -68,18 +68,12 @@ type Mutation {
   """
   Creates a new OrderItem.
   """
-  createOrderItem(
-    input: OrderItemInput!
-  ): OrderItem!
+  createOrderItem(input: OrderItemInput!): OrderItem!
 
   """
   Updates an existing OrderItem by its ID.
   """
-  updateOrderItem(
-    id: ID!
-    quantity: Int
-    price: Float
-  ): OrderItem!
+  updateOrderItem(id: ID!, quantity: Int, price: Float): OrderItem!
 
   """
   Deletes an OrderItem by its ID.

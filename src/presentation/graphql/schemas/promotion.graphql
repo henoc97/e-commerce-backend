@@ -95,9 +95,7 @@ type Mutation {
   """
   Creates a new promotion.
   """
-  createPromotion(
-    input: PromotionInput!
-  ): Promotion!
+  createPromotion(input: PromotionInput!): Promotion!
 
   """
   Updates an existing promotion by its ID.

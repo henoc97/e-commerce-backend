@@ -8,18 +8,69 @@ import { Vendor } from './vendor.entity';
  * Represents a shop entity in the system.
  */
 export class Shop {
+  /**
+   * Unique identifier for the shop.
+   */
   id: number;
+
+  /**
+   * The name of the shop.
+   */
   name: string;
+
+  /**
+   * The URL of the shop's website.
+   */
   url: string;
+
+  /**
+   * Optional description of the shop.
+   */
   description?: string;
+
+  /**
+   * The vendor associated with the shop.
+   */
   vendor: Vendor;
+
+  /**
+   * The ID of the vendor associated with the shop.
+   */
   vendorId: number;
+
+  /**
+   * An array of products available in the shop.
+   */
   products: Product[];
+
+  /**
+   * An array of orders associated with the shop.
+   */
   orders: Order[];
+
+  /**
+   * An array of categories associated with the shop.
+   */
   categories: Category[];
+
+  /**
+   * The date and time when the shop was created.
+   */
   createdAt: Date;
+
+  /**
+   * The date and time when the shop was last updated.
+   */
   updatedAt: Date;
+
+  /**
+   * Optional marketplace where the shop is listed.
+   */
   Marketplace?: Marketplace;
+
+  /**
+   * Optional ID of the marketplace where the shop is listed.
+   */
   marketplaceId?: number;
 
   /**

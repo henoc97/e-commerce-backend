@@ -113,9 +113,7 @@ type Mutation {
   """
   Creates a new Order.
   """
-  createOrder(
-    input: OrderInput!
-  ): Order!
+  createOrder(input: OrderInput!): Order!
 
   """
   Updates an existing Order by its ID.

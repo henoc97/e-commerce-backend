@@ -87,24 +87,15 @@ type Mutation {
   """
   Updates the phone number of an existing user profile.
   """
-  updateUserProfilePhone(
-    id: ID!
-    phone: String!
-  ): UserProfile!
+  updateUserProfilePhone(id: ID!, phone: String!): UserProfile!
 
   """
   Updates the birthday of an existing user profile.
   """
-  updateUserProfileBirthday(
-    id: ID!
-    birthday: String!
-  ): UserProfile!
+  updateUserProfileBirthday(id: ID!, birthday: String!): UserProfile!
 
   """
   Updates the gender of an existing user profile.
   """
-  updateUserProfileGender(
-    id: ID!
-    gender: String!
-  ): UserProfile!
+  updateUserProfileGender(id: ID!, gender: String!): UserProfile!
 }

@@ -8,7 +8,7 @@ import { fromVendorDTO } from './to.vendor.entity';
 import { fromReviewDTO } from './to.review.entity';
 import { fromAddressDTO } from './to.address.entity';
 import { fromCartDTO } from './to.cart.entity';
-import { fromSubSiteDTO } from './to.sub-site.entity';
+import { fromSubsiteDTO } from './to.sub-site.entity';
 import { fromTicketDTO } from './to.ticket.entity';
 import { fromNotificationDTO } from './to.notification.entity';
 
@@ -36,7 +36,7 @@ export function fromUserDTO(userDTO: UserDTO | Partial<UserDTO>): User {
       fromNotificationDTO(notification),
     ),
     userDTO.tickets.map((ticket) => fromTicketDTO(ticket)),
-    userDTO.subSites.map((subSite) => fromSubSiteDTO(subSite)),
+    userDTO.subsites.map((subsite) => fromSubsiteDTO(subsite)),
     userDTO.userActivities.map((userActivity) =>
       fromUserActivityDTO(userActivity),
     ),

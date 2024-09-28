@@ -78,7 +78,6 @@ type Query {
   totalAddresses: Int!
 }
 
-
 """
 Mutations for Address.
 """

@@ -52,17 +52,12 @@ type Mutation {
   """
   Creates a new ProductImage.
   """
-  createProductImage(
-    input: ProductImageInput!
-  ): ProductImage!
+  createProductImage(input: ProductImageInput!): ProductImage!
 
   """
   Updates an existing ProductImage by its ID.
   """
-  updateProductImage(
-    id: ID!
-    url: String
-  ): ProductImage!
+  updateProductImage(id: ID!, url: String): ProductImage!
 
   """
   Deletes a ProductImage by its ID.

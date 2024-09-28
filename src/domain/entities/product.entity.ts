@@ -12,24 +12,99 @@ import { OrderItem } from './order-item.enttity';
  * Represents a product entity in the system.
  */
 export class Product {
+  /**
+   * Unique identifier for the product.
+   */
   id: number;
+
+  /**
+   * The name of the product.
+   */
   name: string;
+
+  /**
+   * Optional description of the product.
+   */
   description?: string;
+
+  /**
+   * The price of the product.
+   */
   price: number;
+
+  /**
+   * An array of promotions associated with the product.
+   */
   promotions: Promotion[];
+
+  /**
+   * The category to which the product belongs.
+   */
   category: Category;
+
+  /**
+   * The ID of the category to which the product belongs.
+   */
   categoryId: number;
+
+  /**
+   * An array of images associated with the product.
+   */
   images: ProductImage[];
+
+  /**
+   * An array of variants for the product (such as different sizes or colors).
+   */
   variants: ProductVariant[];
+
+  /**
+   * The quantity of the product available in stock.
+   */
   stock: number;
+
+  /**
+   * The vendor associated with the product (optional).
+   */
   vendor?: Vendor;
+
+  /**
+   * The ID of the vendor associated with the product (optional).
+   */
   vendorId?: number;
+
+  /**
+   * The shop where the product is listed.
+   */
   shop: Shop;
+
+  /**
+   * The ID of the shop where the product is listed.
+   */
   shopId: number;
+
+  /**
+   * The date and time when the product was created.
+   */
   createdAt: Date;
+
+  /**
+   * The date and time when the product was last updated.
+   */
   updatedAt: Date;
+
+  /**
+   * An array of cart items associated with the product.
+   */
   CartItem: CartItem[];
+
+  /**
+   * An array of order items associated with the product.
+   */
   OrderItem: OrderItem[];
+
+  /**
+   * An array of reviews for the product.
+   */
   Review: Review[];
 
   /**

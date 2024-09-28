@@ -1,5 +1,5 @@
-
 import { PrismaClient } from '@prisma/client';
+import { fromAddressDTO } from 'src/application/helper/to-entity/to.address.entity';
 import { Address } from 'src/domain/entities/address.entity';
 import { IAddressRepository } from 'src/domain/repositories/address.repository';
 
@@ -7,18 +7,26 @@ export class AddressRepository implements IAddressRepository {
   private prisma = new PrismaClient();
 
   async create(address: Address): Promise<Address> {
+    // Exclure le champ `id` car il est généré automatiquement par Prisma
+    // Adapter l'entité Address à l'entrée de création Prisma
+    // const { id, user, ...addressData } = address;
+
     return this.prisma.address.create({
-      data: address,
+      data: {
+        ...addressData, // Le reste des champs que Prisma attend
+        user: { connect: { id: address.user.id } }, // Connexion avec l'utilisateur via son ID
+      },
     });
   }
 
   async getById(id: number): Promise<Address | null> {
-    return this.prisma.address.findUnique({
+    const result = await this.prisma.address.findUnique({
       where: { id },
       include: {
-        user : true,
-      }
+        user: true,
+      },
     });
+    return fromAddressDTO(result);
   }
 
   async updateById(id: number, updateData: Partial<Address>): Promise<Address> {
@@ -46,7 +54,10 @@ export class AddressRepository implements IAddressRepository {
     });
   }
 
-  async getByUserIdAndId(userId: number, addressId: number): Promise<Address | null> {
+  async getByUserIdAndId(
+    userId: number,
+    addressId: number,
+  ): Promise<Address | null> {
     return this.prisma.address.findFirst({
       where: {
         id: addressId,

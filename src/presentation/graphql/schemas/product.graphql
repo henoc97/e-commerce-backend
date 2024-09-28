@@ -147,9 +147,7 @@ type Mutation {
   """
   Creates a new product.
   """
-  createProduct(
-    input: ProductInput!
-  ): Product!
+  createProduct(input: ProductInput!): Product!
 
   """
   Updates an existing product by its ID.

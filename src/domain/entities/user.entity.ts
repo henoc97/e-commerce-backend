@@ -7,7 +7,7 @@ import { Review } from './review.entity';
 import { Cart } from './cart.entity';
 import { Ticket } from './ticket.entity';
 import { UserActivity } from './user-activity.entity';
-import { SubSite } from './subsite.entity';
+import { Subsite } from './subsite.entity';
 import { AuditLog } from './audit-log.entity';
 import { Notification } from './notification.entity';
 
@@ -62,7 +62,7 @@ export class User {
   tickets?: Ticket[];
 
   /** Optional list of sub-sites associated with the user */
-  subSites?: SubSite[];
+  subsites?: Subsite[];
 
   /** Optional list of user activities */
   userActivities?: UserActivity[];
@@ -87,7 +87,7 @@ export class User {
    * @param reviews - Optional list of reviews written by the user
    * @param notifications - Optional list of notifications for the user
    * @param tickets - Optional list of support tickets raised by the user
-   * @param subSites - Optional list of sub-sites associated with the user
+   * @param subsites - Optional list of sub-sites associated with the user
    * @param userActivities - Optional list of user activities
    * @param auditLogs - Optional list of audit logs for the user
    */
@@ -107,7 +107,7 @@ export class User {
     reviews?: Review[],
     notifications?: Notification[],
     tickets?: Ticket[],
-    subSites?: SubSite[],
+    subsites?: Subsite[],
     userActivities?: UserActivity[],
     auditLogs?: AuditLog[],
   ) {
@@ -126,7 +126,7 @@ export class User {
     this.reviews = reviews;
     this.notifications = notifications;
     this.tickets = tickets;
-    this.subSites = subSites;
+    this.subsites = subsites;
     this.userActivities = userActivities;
     this.auditLogs = auditLogs;
   }

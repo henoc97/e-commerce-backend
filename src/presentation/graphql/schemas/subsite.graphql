@@ -62,20 +62,12 @@ type Mutation {
   """
   Creates a new subsite.
   """
-  createSubSite(
-    title: String!
-    userId: ID!
-    config: JSON!
-  ): SubSite!
+  createSubSite(title: String!, userId: ID!, config: JSON!): SubSite!
 
   """
   Updates an existing subsite by its ID.
   """
-  updateSubSite(
-    id: ID!
-    title: String
-    config: JSON
-  ): SubSite!
+  updateSubSite(id: ID!, title: String, config: JSON): SubSite!
 
   """
   Deletes a subsite by its ID.
@@ -85,10 +77,7 @@ type Mutation {
   """
   Updates the configuration of an existing subsite.
   """
-  updateSubSiteConfig(
-    id: ID!
-    config: JSON!
-  ): SubSite!
+  updateSubSiteConfig(id: ID!, config: JSON!): SubSite!
 }
 
 """

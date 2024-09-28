@@ -80,9 +80,7 @@ type Mutation {
   """
   Creates a new refund.
   """
-  createRefund(
-    input: RefundInput!
-  ): Refund!
+  createRefund(input: RefundInput!): Refund!
 
   """
   Updates an existing refund by its ID.

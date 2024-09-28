@@ -102,9 +102,7 @@ type Mutation {
   """
   Creates a new shop.
   """
-  createShop(
-    input: ShopInput!
-  ): Shop!
+  createShop(input: ShopInput!): Shop!
 
   """
   Updates an existing shop by its ID.

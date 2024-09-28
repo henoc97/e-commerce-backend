@@ -48,19 +48,12 @@ type Mutation {
   """
   Creates a new Marketplace.
   """
-  createMarketplace(
-    name: String!,
-    description: String
-  ): Marketplace!
+  createMarketplace(name: String!, description: String): Marketplace!
 
   """
   Updates an existing Marketplace.
   """
-  updateMarketplace(
-    id: ID!,
-    name: String,
-    description: String
-  ): Marketplace!
+  updateMarketplace(id: ID!, name: String, description: String): Marketplace!
 
   """
   Deletes a Marketplace by its ID.

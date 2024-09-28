@@ -111,8 +111,5 @@ type Mutation {
   """
   Updates the status of an existing ticket.
   """
-  updateTicketStatus(
-    id: ID!
-    status: TicketStatus!
-  ): Ticket!
+  updateTicketStatus(id: ID!, status: TicketStatus!): Ticket!
 }

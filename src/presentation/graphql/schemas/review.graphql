@@ -88,11 +88,7 @@ type Mutation {
   """
   Updates an existing review by its ID.
   """
-  updateReview(
-    id: ID!
-    rating: Int
-    comment: String
-  ): Review!
+  updateReview(id: ID!, rating: Int, comment: String): Review!
 
   """
   Deletes a review by its ID.

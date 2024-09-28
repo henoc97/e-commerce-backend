@@ -109,8 +109,5 @@ type Mutation {
   """
   Updates the action of an existing user activity record.
   """
-  updateUserActivityAction(
-    id: ID!
-    action: UserActivityAction!
-  ): UserActivity!
+  updateUserActivityAction(id: ID!, action: UserActivityAction!): UserActivity!
 }

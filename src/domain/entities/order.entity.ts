@@ -126,11 +126,11 @@ export class Order {
     items: OrderItem[] = [],
     status: OrderStatus,
     totalAmount: number,
-    shippingMethod: ShippingMethod,
+    // shippingMethod: ShippingMethod,
     paymentId?: string,
     trackingNumber?: string,
-    shipmentId?: number,
-    shipment?: Shipment,
+    // shipmentId?: number,
+    // shipment?: Shipment,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
     payments?: Payment[],
@@ -146,9 +146,9 @@ export class Order {
     this.totalAmount = totalAmount;
     this.paymentId = paymentId;
     this.trackingNumber = trackingNumber;
-    this.shipmentId = shipmentId;
-    this.shipment = shipment;
-    this.shippingMethod = shippingMethod;
+    // this.shipmentId = shipmentId;
+    // this.shipment = shipment;
+    // this.shippingMethod = shippingMethod;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.payments = payments;

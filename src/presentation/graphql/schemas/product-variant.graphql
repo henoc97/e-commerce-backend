@@ -66,11 +66,7 @@ type Mutation {
   """
   Updates an existing ProductVariant by its ID.
   """
-  updateProductVariant(
-    id: ID!
-    name: String
-    value: String
-  ): ProductVariant!
+  updateProductVariant(id: ID!, name: String, value: String): ProductVariant!
 
   """
   Deletes a ProductVariant by its ID.

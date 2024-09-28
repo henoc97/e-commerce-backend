@@ -48,17 +48,12 @@ type Mutation {
   """
   Creates a new NewsletterSubscription.
   """
-  createNewsletterSubscription(
-    email: String!
-  ): NewsletterSubscription!
+  createNewsletterSubscription(email: String!): NewsletterSubscription!
 
   """
   Updates an existing NewsletterSubscription by its ID.
   """
-  updateNewsletterSubscription(
-    id: ID!,
-    email: String
-  ): NewsletterSubscription!
+  updateNewsletterSubscription(id: ID!, email: String): NewsletterSubscription!
 
   """
   Deletes a NewsletterSubscription by its ID.

@@ -68,21 +68,12 @@ type Mutation {
   """
   Creates a new Category.
   """
-  createCategory(
-    name: String!,
-    parentId: Int,
-    shopId: Int
-  ): Category!
+  createCategory(name: String!, parentId: Int, shopId: Int): Category!
 
   """
   Updates an existing Category.
   """
-  updateCategory(
-    id: ID!,
-    name: String,
-    parentId: Int,
-    shopId: Int
-  ): Category!
+  updateCategory(id: ID!, name: String, parentId: Int, shopId: Int): Category!
 
   """
   Deletes a Category by its ID.
