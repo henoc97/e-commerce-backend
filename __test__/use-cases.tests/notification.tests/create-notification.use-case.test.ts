@@ -19,10 +19,8 @@ describe('CreateNotification', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const notificationDTO: NotificationDTO = {
-    /* data */
-  };
+  
+     const notificationDTO: NotificationDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockNotificationDTO: NotificationDTO = {
@@ -62,18 +60,14 @@ describe('CreateNotification', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNotificationService.createNotification.mockResolvedValue(
-      mockNotificationDTO,
-    );
+    mockNotificationService.createNotification.mockResolvedValue(mockNotificationDTO);
     (toNotificationDTO as jest.Mock).mockReturnValue(mockNotificationDTO);
 
     // Execute the use case with provided parameters
-    const result = await createNotification.execute(notificationDTO);
+    const result = await createNotification.execute(notificationDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockNotificationService.createNotification).toHaveBeenCalledWith(
-      notificationDTO,
-    );
+    expect(mockNotificationService.createNotification).toHaveBeenCalledWith(notificationDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toNotificationDTO).toHaveBeenCalledWith(mockNotificationDTO);
@@ -88,13 +82,9 @@ describe('CreateNotification', () => {
    */
   it('should throw an error when createNotification execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNotificationService.createNotification.mockRejectedValue(
-      'Service method error',
-    );
+    mockNotificationService.createNotification.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createNotification.execute(notificationDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createNotification.execute(notificationDTO,)).rejects.toThrow('Service method error');
   });
 });

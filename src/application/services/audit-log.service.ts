@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { AuditLog } from 'src/domain/entities/audit-log.entity';
 import { IAuditLogRepository } from 'src/domain/repositories/auditlog.repository';
 import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
 import { fromAuditLogDTO } from '../helper/to-entity/to.audit-log.entity';
+import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
 
 /**
  * Service for managing audit logs.
@@ -10,7 +15,10 @@ import { fromAuditLogDTO } from '../helper/to-entity/to.audit-log.entity';
  */
 @Injectable()
 export class AuditLogService {
-  constructor(private readonly auditLogRepository: IAuditLogRepository) {}
+  constructor(
+    @Inject('IAuditLogRepository')
+    private readonly auditLogRepository: IAuditLogRepository,
+  ) {}
 
   /**
    * Creates a new audit log entry.
@@ -84,25 +92,6 @@ export class AuditLogService {
   }
 
   /**
-   * Validates an audit log entry before creation.
-   * Ensures all necessary fields are correctly set.
-   * @param dto - Data Transfer Object containing the log to be validated.
-   * @returns A promise that resolves to true if the log is valid, otherwise false.
-   */
-  async validateLog(dto: AuditLogDTO): Promise<boolean> {
-    const auditLog = new AuditLog(
-      dto.id,
-      dto.userId,
-      dto.action,
-      dto.entity,
-      dto.entityId,
-      dto.changes,
-      dto.createdAt,
-    );
-    return this.auditLogRepository.validate(auditLog);
-  }
-
-  /**
    * Retrieves the most recent audit logs.
    * @param limit - The maximum number of logs to retrieve.
    * @returns A promise that resolves to an array of the most recent audit logs.
@@ -116,7 +105,7 @@ export class AuditLogService {
    * @param action - The action type to filter logs by.
    * @returns A promise that resolves to an array of audit logs matching the specified action type.
    */
-  async getLogsByAction(action: string): Promise<AuditLog[]> {
+  async getLogsByAction(action: AuditLogAction): Promise<AuditLog[]> {
     return this.auditLogRepository.getByAction(action);
   }
 }

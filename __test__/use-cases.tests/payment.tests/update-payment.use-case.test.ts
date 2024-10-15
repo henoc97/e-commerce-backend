@@ -19,11 +19,9 @@ describe('UpdatePayment', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const updates: Partial<PaymentDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const updates: Partial<PaymentDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockPaymentDTO: PaymentDTO = {
@@ -67,10 +65,12 @@ describe('UpdatePayment', () => {
     (toPaymentDTO as jest.Mock).mockReturnValue(mockPaymentDTO);
 
     // Execute the use case with provided parameters
-    const result = await updatePayment.execute(id, updates);
+    const result = await updatePayment.execute(id,
+    updates,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockPaymentService.updatePayment).toHaveBeenCalledWith(id, updates);
+    expect(mockPaymentService.updatePayment).toHaveBeenCalledWith(id,
+    updates,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPaymentDTO).toHaveBeenCalledWith(mockPaymentDTO);
@@ -85,11 +85,10 @@ describe('UpdatePayment', () => {
    */
   it('should throw an error when updatePayment execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPaymentService.updatePayment.mockRejectedValue('Service method error');
+    mockPaymentService.updatePayment.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updatePayment.execute(id, updates)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updatePayment.execute(id,
+    updates,)).rejects.toThrow('Service method error');
   });
 });

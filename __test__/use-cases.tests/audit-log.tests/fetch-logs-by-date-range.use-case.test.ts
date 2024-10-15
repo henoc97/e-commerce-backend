@@ -19,13 +19,9 @@ describe('FetchLogsByDateRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockAuditLogDTO: AuditLogDTO = {
@@ -47,8 +43,7 @@ describe('FetchLogsByDateRange', () => {
       ],
     }).compile();
 
-    fetchLogsByDateRange =
-      module.get<FetchLogsByDateRange>(FetchLogsByDateRange);
+    fetchLogsByDateRange = module.get<FetchLogsByDateRange>(FetchLogsByDateRange);
     auditLogService = module.get<AuditLogService>(AuditLogService);
   });
 
@@ -73,10 +68,7 @@ describe('FetchLogsByDateRange', () => {
     const result = await fetchLogsByDateRange.execute(startDate, endDate);
 
     // Verify that the service was called with the expected arguments
-    expect(mockAuditLogService.fetchLogsByDateRange).toHaveBeenCalledWith(
-      startDate,
-      endDate,
-    );
+    expect(mockAuditLogService.fetchLogsByDateRange).toHaveBeenCalledWith(startDate, endDate);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toAuditLogDTO).toHaveBeenCalledWith(mockAuditLogDTO);
@@ -91,13 +83,9 @@ describe('FetchLogsByDateRange', () => {
    */
   it('should throw an error when fetchLogsByDateRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAuditLogService.fetchLogsByDateRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockAuditLogService.fetchLogsByDateRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchLogsByDateRange.execute(startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchLogsByDateRange.execute(startDate, endDate)).rejects.toThrow('Service method error');
   });
 });

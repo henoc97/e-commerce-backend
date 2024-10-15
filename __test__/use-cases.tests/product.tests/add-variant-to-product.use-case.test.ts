@@ -19,11 +19,9 @@ describe('AddVariantToProduct', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
-  const variantDTO: ProductVariantDTO = {
-    /* data */
-  };
+  
+     const productId: number = 1;
+     const variantDTO: ProductVariantDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -67,13 +65,12 @@ describe('AddVariantToProduct', () => {
     (toProductDTO as jest.Mock).mockReturnValue(mockProductDTO);
 
     // Execute the use case with provided parameters
-    const result = await addVariantToProduct.execute(productId, variantDTO);
+    const result = await addVariantToProduct.execute(productId,
+    variantDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductService.addVariantToProduct).toHaveBeenCalledWith(
-      productId,
-      variantDTO,
-    );
+    expect(mockProductService.addVariantToProduct).toHaveBeenCalledWith(productId,
+    variantDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductDTO).toHaveBeenCalledWith(mockProductDTO);
@@ -88,13 +85,10 @@ describe('AddVariantToProduct', () => {
    */
   it('should throw an error when addVariantToProduct execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.addVariantToProduct.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.addVariantToProduct.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      addVariantToProduct.execute(productId, variantDTO),
-    ).rejects.toThrow('Service method error');
+    await expect(addVariantToProduct.execute(productId,
+    variantDTO,)).rejects.toThrow('Service method error');
   });
 });

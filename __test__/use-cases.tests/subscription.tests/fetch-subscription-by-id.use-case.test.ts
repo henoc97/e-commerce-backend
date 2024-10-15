@@ -19,8 +19,8 @@ describe('FetchSubscriptionById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockSubscriptionDTO: SubscriptionDTO = {
@@ -42,9 +42,7 @@ describe('FetchSubscriptionById', () => {
       ],
     }).compile();
 
-    fetchSubscriptionById = module.get<FetchSubscriptionById>(
-      FetchSubscriptionById,
-    );
+    fetchSubscriptionById = module.get<FetchSubscriptionById>(FetchSubscriptionById);
     subscriptionService = module.get<SubscriptionService>(SubscriptionService);
   });
 
@@ -62,18 +60,14 @@ describe('FetchSubscriptionById', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockSubscriptionService.fetchSubscriptionById.mockResolvedValue(
-      mockSubscriptionDTO,
-    );
+    mockSubscriptionService.fetchSubscriptionById.mockResolvedValue(mockSubscriptionDTO);
     (toSubscriptionDTO as jest.Mock).mockReturnValue(mockSubscriptionDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchSubscriptionById.execute(id);
 
     // Verify that the service was called with the expected arguments
-    expect(mockSubscriptionService.fetchSubscriptionById).toHaveBeenCalledWith(
-      id,
-    );
+    expect(mockSubscriptionService.fetchSubscriptionById).toHaveBeenCalledWith(id);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toSubscriptionDTO).toHaveBeenCalledWith(mockSubscriptionDTO);
@@ -88,13 +82,9 @@ describe('FetchSubscriptionById', () => {
    */
   it('should throw an error when fetchSubscriptionById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubscriptionService.fetchSubscriptionById.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubscriptionService.fetchSubscriptionById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchSubscriptionById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchSubscriptionById.execute(id)).rejects.toThrow('Service method error');
   });
 });

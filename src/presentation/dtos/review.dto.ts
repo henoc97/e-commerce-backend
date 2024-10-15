@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsDateString,
   ValidateNested,
+  IsBoolean,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductDTO } from './product.dto';
@@ -59,6 +60,18 @@ export class ReviewDTO {
   @IsOptional()
   @IsString()
   comment?: string;
+
+  /**
+   * Indicates whether the review has been flagged for inspection.
+   */
+  @IsBoolean()
+  flagged: boolean;
+
+  /**
+   * Indicates whether the review has been verified.
+   */
+  @IsBoolean()
+  verified: boolean;
 
   /**
    * The date and time when the review was created.

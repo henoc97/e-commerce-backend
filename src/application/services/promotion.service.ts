@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Promotion } from 'src/domain/entities/promotion.entity';
 import { IPromotionRepository } from 'src/domain/repositories/promotion.repository';
 import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
@@ -8,7 +8,9 @@ import { fromPromotionDTO } from '../helper/to-entity/to.promotion.entity';
  */
 @Injectable()
 export class PromotionService {
-  constructor(private readonly promotionRepository: IPromotionRepository) {}
+  constructor(
+    @Inject('ICartItemRepository')
+    private readonly promotionRepository: IPromotionRepository) {}
 
   /**
    * Creates a new promotion.
@@ -103,18 +105,5 @@ export class PromotionService {
     promotions: PromotionDTO[],
   ): Promise<Promotion | null> {
     return this.promotionRepository.combine(promotions.map(fromPromotionDTO));
-  }
-
-  /**
-   * Applies a promotion directly to a product.
-   * @param productId - Unique identifier of the product.
-   * @param promotionId - Unique identifier of the promotion to apply.
-   * @returns The updated promotion if applied successfully.
-   */
-  async applyPromotionToProduct(
-    productId: number,
-    promotionId: number,
-  ): Promise<Promotion> {
-    return this.promotionRepository.applyToProduct(productId, promotionId);
   }
 }

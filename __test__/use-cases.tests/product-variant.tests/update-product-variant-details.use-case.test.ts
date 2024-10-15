@@ -19,11 +19,9 @@ describe('UpdateProductVariantDetails', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const updateData: Partial<ProductVariantDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const updateData: Partial<ProductVariantDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockProductVariantDTO: ProductVariantDTO = {
@@ -45,12 +43,8 @@ describe('UpdateProductVariantDetails', () => {
       ],
     }).compile();
 
-    updateProductVariantDetails = module.get<UpdateProductVariantDetails>(
-      UpdateProductVariantDetails,
-    );
-    productVariantService = module.get<ProductVariantService>(
-      ProductVariantService,
-    );
+    updateProductVariantDetails = module.get<UpdateProductVariantDetails>(UpdateProductVariantDetails);
+    productVariantService = module.get<ProductVariantService>(ProductVariantService);
   });
 
   /**
@@ -67,18 +61,16 @@ describe('UpdateProductVariantDetails', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductVariantService.updateProductVariantDetails.mockResolvedValue(
-      mockProductVariantDTO,
-    );
+    mockProductVariantService.updateProductVariantDetails.mockResolvedValue(mockProductVariantDTO);
     (toProductVariantDTO as jest.Mock).mockReturnValue(mockProductVariantDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateProductVariantDetails.execute(id, updateData);
+    const result = await updateProductVariantDetails.execute(id,
+    updateData,);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockProductVariantService.updateProductVariantDetails,
-    ).toHaveBeenCalledWith(id, updateData);
+    expect(mockProductVariantService.updateProductVariantDetails).toHaveBeenCalledWith(id,
+    updateData,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductVariantDTO).toHaveBeenCalledWith(mockProductVariantDTO);
@@ -93,13 +85,10 @@ describe('UpdateProductVariantDetails', () => {
    */
   it('should throw an error when updateProductVariantDetails execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductVariantService.updateProductVariantDetails.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductVariantService.updateProductVariantDetails.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      updateProductVariantDetails.execute(id, updateData),
-    ).rejects.toThrow('Service method error');
+    await expect(updateProductVariantDetails.execute(id,
+    updateData,)).rejects.toThrow('Service method error');
   });
 });

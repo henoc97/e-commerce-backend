@@ -19,8 +19,8 @@ describe('ListAddressesByCity', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const city: string = 'city';
+  
+     const city: string = 'city';
 
   // Mock version of  to be used as input and expected output
   const mockAddressDTO: AddressDTO = {
@@ -82,13 +82,9 @@ describe('ListAddressesByCity', () => {
    */
   it('should throw an error when listAddressesByCity execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAddressService.listAddressesByCity.mockRejectedValue(
-      'Service method error',
-    );
+    mockAddressService.listAddressesByCity.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listAddressesByCity.execute(city)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listAddressesByCity.execute(city)).rejects.toThrow('Service method error');
   });
 });

@@ -19,11 +19,9 @@ describe('SetVendorSubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const vendorId: number = 1;
-  const subscriptionDTO: SubscriptionDTO = {
-    /* data */
-  };
+  
+     const vendorId: number = 1;
+     const subscriptionDTO: SubscriptionDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -45,9 +43,7 @@ describe('SetVendorSubscription', () => {
       ],
     }).compile();
 
-    setVendorSubscription = module.get<SetVendorSubscription>(
-      SetVendorSubscription,
-    );
+    setVendorSubscription = module.get<SetVendorSubscription>(SetVendorSubscription);
     vendorService = module.get<VendorService>(VendorService);
   });
 
@@ -69,16 +65,12 @@ describe('SetVendorSubscription', () => {
     (toVendorDTO as jest.Mock).mockReturnValue(mockVendorDTO);
 
     // Execute the use case with provided parameters
-    const result = await setVendorSubscription.execute(
-      vendorId,
-      subscriptionDTO,
-    );
+    const result = await setVendorSubscription.execute(vendorId,
+    subscriptionDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockVendorService.setVendorSubscription).toHaveBeenCalledWith(
-      vendorId,
-      subscriptionDTO,
-    );
+    expect(mockVendorService.setVendorSubscription).toHaveBeenCalledWith(vendorId,
+    subscriptionDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toVendorDTO).toHaveBeenCalledWith(mockVendorDTO);
@@ -93,13 +85,10 @@ describe('SetVendorSubscription', () => {
    */
   it('should throw an error when setVendorSubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.setVendorSubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockVendorService.setVendorSubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      setVendorSubscription.execute(vendorId, subscriptionDTO),
-    ).rejects.toThrow('Service method error');
+    await expect(setVendorSubscription.execute(vendorId,
+    subscriptionDTO,)).rejects.toThrow('Service method error');
   });
 });

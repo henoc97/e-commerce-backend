@@ -19,6 +19,7 @@ describe('FetchFeaturedProducts', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -40,9 +41,7 @@ describe('FetchFeaturedProducts', () => {
       ],
     }).compile();
 
-    fetchFeaturedProducts = module.get<FetchFeaturedProducts>(
-      FetchFeaturedProducts,
-    );
+    fetchFeaturedProducts = module.get<FetchFeaturedProducts>(FetchFeaturedProducts);
     productService = module.get<ProductService>(ProductService);
   });
 
@@ -82,13 +81,9 @@ describe('FetchFeaturedProducts', () => {
    */
   it('should throw an error when fetchFeaturedProducts execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.fetchFeaturedProducts.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.fetchFeaturedProducts.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchFeaturedProducts.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchFeaturedProducts.execute()).rejects.toThrow('Service method error');
   });
 });

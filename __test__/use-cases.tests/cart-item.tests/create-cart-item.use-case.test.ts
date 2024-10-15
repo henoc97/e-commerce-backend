@@ -19,10 +19,8 @@ describe('CreateCartItem', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const cartItemDTO: CartItemDTO = {
-    /* data */
-  };
+  
+     const cartItemDTO: CartItemDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockCartItemDTO: CartItemDTO = {
@@ -69,9 +67,7 @@ describe('CreateCartItem', () => {
     const result = await createCartItem.execute(cartItemDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockCartItemService.createCartItem).toHaveBeenCalledWith(
-      cartItemDTO,
-    );
+    expect(mockCartItemService.createCartItem).toHaveBeenCalledWith(cartItemDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toCartItemDTO).toHaveBeenCalledWith(mockCartItemDTO);
@@ -86,13 +82,9 @@ describe('CreateCartItem', () => {
    */
   it('should throw an error when createCartItem execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCartItemService.createCartItem.mockRejectedValue(
-      'Service method error',
-    );
+    mockCartItemService.createCartItem.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createCartItem.execute(cartItemDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createCartItem.execute(cartItemDTO)).rejects.toThrow('Service method error');
   });
 });

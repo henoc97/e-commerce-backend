@@ -19,9 +19,9 @@ describe('UpdateOrderStatus', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const orderId: number = 1;
-  const status: string = 'status';
+  
+     const orderId: number = 1;
+     const status: string = 'status';
 
   // Mock version of  to be used as input and expected output
   const mockOrderDTO: OrderDTO = {
@@ -68,10 +68,7 @@ describe('UpdateOrderStatus', () => {
     const result = await updateOrderStatus.execute(orderId, status);
 
     // Verify that the service was called with the expected arguments
-    expect(mockOrderService.updateOrderStatus).toHaveBeenCalledWith(
-      orderId,
-      status,
-    );
+    expect(mockOrderService.updateOrderStatus).toHaveBeenCalledWith(orderId, status);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toOrderDTO).toHaveBeenCalledWith(mockOrderDTO);
@@ -86,13 +83,9 @@ describe('UpdateOrderStatus', () => {
    */
   it('should throw an error when updateOrderStatus execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockOrderService.updateOrderStatus.mockRejectedValue(
-      'Service method error',
-    );
+    mockOrderService.updateOrderStatus.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateOrderStatus.execute(orderId, status)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateOrderStatus.execute(orderId, status)).rejects.toThrow('Service method error');
   });
 });

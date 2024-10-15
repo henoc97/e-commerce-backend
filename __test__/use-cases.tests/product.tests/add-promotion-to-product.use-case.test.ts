@@ -19,11 +19,9 @@ describe('AddPromotionToProduct', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
-  const promotionDTO: PromotionDTO = {
-    /* data */
-  };
+  
+     const productId: number = 1;
+     const promotionDTO: PromotionDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -45,9 +43,7 @@ describe('AddPromotionToProduct', () => {
       ],
     }).compile();
 
-    addPromotionToProduct = module.get<AddPromotionToProduct>(
-      AddPromotionToProduct,
-    );
+    addPromotionToProduct = module.get<AddPromotionToProduct>(AddPromotionToProduct);
     productService = module.get<ProductService>(ProductService);
   });
 
@@ -69,13 +65,12 @@ describe('AddPromotionToProduct', () => {
     (toProductDTO as jest.Mock).mockReturnValue(mockProductDTO);
 
     // Execute the use case with provided parameters
-    const result = await addPromotionToProduct.execute(productId, promotionDTO);
+    const result = await addPromotionToProduct.execute(productId,
+    promotionDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductService.addPromotionToProduct).toHaveBeenCalledWith(
-      productId,
-      promotionDTO,
-    );
+    expect(mockProductService.addPromotionToProduct).toHaveBeenCalledWith(productId,
+    promotionDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductDTO).toHaveBeenCalledWith(mockProductDTO);
@@ -90,13 +85,10 @@ describe('AddPromotionToProduct', () => {
    */
   it('should throw an error when addPromotionToProduct execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.addPromotionToProduct.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.addPromotionToProduct.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      addPromotionToProduct.execute(productId, promotionDTO),
-    ).rejects.toThrow('Service method error');
+    await expect(addPromotionToProduct.execute(productId,
+    promotionDTO,)).rejects.toThrow('Service method error');
   });
 });

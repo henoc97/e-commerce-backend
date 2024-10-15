@@ -19,8 +19,8 @@ describe('DeleteProductImage', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductImageDTO: ProductImageDTO = {
@@ -60,9 +60,7 @@ describe('DeleteProductImage', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductImageService.deleteProductImage.mockResolvedValue(
-      mockProductImageDTO,
-    );
+    mockProductImageService.deleteProductImage.mockResolvedValue(mockProductImageDTO);
     (toProductImageDTO as jest.Mock).mockReturnValue(mockProductImageDTO);
 
     // Execute the use case with provided parameters
@@ -84,13 +82,9 @@ describe('DeleteProductImage', () => {
    */
   it('should throw an error when deleteProductImage execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductImageService.deleteProductImage.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductImageService.deleteProductImage.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deleteProductImage.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deleteProductImage.execute(id)).rejects.toThrow('Service method error');
   });
 });

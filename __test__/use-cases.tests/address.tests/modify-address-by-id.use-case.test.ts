@@ -19,11 +19,9 @@ describe('ModifyAddressById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const addressDTO: AddressDTO = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const addressDTO: AddressDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockAddressDTO: AddressDTO = {
@@ -70,10 +68,7 @@ describe('ModifyAddressById', () => {
     const result = await modifyAddressById.execute(id, addressDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockAddressService.modifyAddressById).toHaveBeenCalledWith(
-      id,
-      addressDTO,
-    );
+    expect(mockAddressService.modifyAddressById).toHaveBeenCalledWith(id, addressDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toAddressDTO).toHaveBeenCalledWith(mockAddressDTO);
@@ -88,13 +83,9 @@ describe('ModifyAddressById', () => {
    */
   it('should throw an error when modifyAddressById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAddressService.modifyAddressById.mockRejectedValue(
-      'Service method error',
-    );
+    mockAddressService.modifyAddressById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(modifyAddressById.execute(id, addressDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(modifyAddressById.execute(id, addressDTO)).rejects.toThrow('Service method error');
   });
 });

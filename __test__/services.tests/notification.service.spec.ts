@@ -4,30 +4,35 @@ import { INotificationRepository } from '../../src/domain/repositories/notificat
 import { Notification } from '../../src/domain/entities/notification.entity';
 import { NotificationDTO } from '../../src/presentation/dtos/notification.dto';
 
+
 const mockNotificationRepository = {
-  createNotification: jest.fn(),
-  getNotificationById: jest.fn(),
-  updateNotification: jest.fn(),
-  deleteNotification: jest.fn(),
-  getNotificationsByUserId: jest.fn(),
-  getNotificationsByType: jest.fn(),
-  getNotificationsByDateRange: jest.fn(),
-  markNotificationAsRead: jest.fn(),
-  countUnreadNotifications: jest.fn(),
-  getRecentNotifications: jest.fn(),
+  create: jest.fn(),
+getById: jest.fn(),
+update: jest.fn(),
+delete: jest.fn(),
+getByUserId: jest.fn(),
+getByType: jest.fn(),
+getByDateRange: jest.fn(),
+markAsRead: jest.fn(),
+countUnread: jest.fn(),
+getRecent: jest.fn()
 };
 
-describe('NotificationService', () => {
-  let service: NotificationService;
-  let notificationRepository: INotificationRepository;
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
-  beforeEach(async () => {
+
+describe('NotificationService', () => {
+    let service: NotificationService;
+    let notificationRepository: INotificationRepository;
+
+    beforeEach(async () => {
     // Set up the testing module with the service and the mock repository
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotificationService,
         {
-          provide: 'NotificationRepository',
+          provide: 'INotificationRepository',
           useValue: mockNotificationRepository, // Use the mock
         },
       ],
@@ -35,389 +40,342 @@ describe('NotificationService', () => {
 
     // Retrieve instances of the service and repository
     service = module.get<NotificationService>(NotificationService);
-    notificationRepository = module.get<INotificationRepository>(
-      'NotificationRepository',
-    );
+    notificationRepository = module.get<INotificationRepository>('INotificationRepository');
   });
 
-  /* create notification success and failure tests */
-  it('should create notification', async () => {
-    /**
+afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+
+    /* create notification success and failure tests */
+it('should create notification', async () => {
+    /** 
      * Tests the create notification method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's createNotification method is called with the correct data.
      */
+    
+     const notificationDTO: NotificationDTO = { /* data */ };
 
-    const notificationDTO: NotificationDTO = {
-      /* data */
-    };
+    const returnOject: Notification = { id: 1, /* others data */ };
+    
+    mockNotificationRepository.create.mockResolvedValue(returnOject);
 
-    const returnOject: Notification = { id: 1 /* others data */ };
-
-    mockNotificationRepository.createNotification.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.createNotification(notificationDTO);
+    const result = await service.createNotification(notificationDTO,);
     expect(result).toEqual(returnOject);
-    expect(mockNotificationRepository.createNotification).toHaveBeenCalledWith(
-      notificationDTO,
-    );
-  });
+    expect(mockNotificationRepository.create).toHaveBeenCalledWith(notificationDTO,);
+});
 
-  it('should throw an error when create notification method fails', async () => {
-    const notificationDTO: NotificationDTO = {
-      /* data */
-    };
+it('should throw an error when create notification method fails', async () => {
+    
+     const notificationDTO: NotificationDTO = { /* data */ };
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.create.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.createNotification.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.createNotification(notificationDTO,)).rejects.toThrow('Repository error');
 
-    const result = await service.createNotification(notificationDTO);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* get notification by id success and failure tests */
-  it('should get notification by id', async () => {
-    /**
+/* get notification by id success and failure tests */
+it('should get notification by id', async () => {
+    /** 
      * Tests the get notification by id method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's getNotificationById method is called with the correct data.
      */
+    
+     const id: number = 1;
 
-    const id: number = 1;
-
-    const returnOject: Notification | null = { id: 1 /* others data */ };
-
-    mockNotificationRepository.getNotificationById.mockResolvedValue(
-      returnOject,
-    );
+    const returnOject: Notification | null = { id: 1, /* others data */ };
+    
+    mockNotificationRepository.getById.mockResolvedValue(returnOject);
 
     const result = await service.getNotificationById(id);
     expect(result).toEqual(returnOject);
-    expect(mockNotificationRepository.getNotificationById).toHaveBeenCalledWith(
-      id,
-    );
-  });
+    expect(mockNotificationRepository.getById).toHaveBeenCalledWith(id);
+});
 
-  it('should throw an error when get notification by id method fails', async () => {
-    const id: number = 1;
+it('should throw an error when get notification by id method fails', async () => {
+    
+     const id: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.getNotificationById.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getNotificationById(id)).rejects.toThrow('Repository error');
 
-    const result = await service.getNotificationById(id);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* update notification success and failure tests */
-  it('should update notification', async () => {
-    /**
+/* update notification success and failure tests */
+it('should update notification', async () => {
+    /** 
      * Tests the update notification method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's updateNotification method is called with the correct data.
      */
+    
+     const id: number = 1;
+     const updates: Partial<NotificationDTO> = { /* data */ };
 
-    const id: number = 1;
-    const updates: Partial<NotificationDTO> = {
-      /* data */
-    };
+    const returnOject: Notification = { id: 1, /* others data */ };
+    
+    mockNotificationRepository.update.mockResolvedValue(returnOject);
 
-    const returnOject: Notification = { id: 1 /* others data */ };
-
-    mockNotificationRepository.updateNotification.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.updateNotification(id, updates);
+    const result = await service.updateNotification(id,
+    updates,);
     expect(result).toEqual(returnOject);
-    expect(mockNotificationRepository.updateNotification).toHaveBeenCalledWith(
-      id,
-      updates,
-    );
-  });
+    expect(mockNotificationRepository.update).toHaveBeenCalledWith(id,
+    updates,);
+});
 
-  it('should throw an error when update notification method fails', async () => {
-    const id: number = 1;
-    const updates: Partial<NotificationDTO> = {
-      /* data */
-    };
+it('should throw an error when update notification method fails', async () => {
+    
+     const id: number = 1;
+     const updates: Partial<NotificationDTO> = { /* data */ };
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.update.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.updateNotification.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.updateNotification(id,
+    updates,)).rejects.toThrow('Repository error');
 
-    const result = await service.updateNotification(id, updates);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* delete notification success and failure tests */
-  it('should delete notification', async () => {
-    /**
+/* delete notification success and failure tests */
+it('should delete notification', async () => {
+    /** 
      * Tests the delete notification method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's deleteNotification method is called with the correct data.
      */
+    
+     const id: number = 1;
 
-    const id: number = 1;
-
-    const returnOject: boolean = true;
-
-    mockNotificationRepository.deleteNotification.mockResolvedValue(
-      returnOject,
-    );
+    const returnOject: boolean = true
+    
+    mockNotificationRepository.delete.mockResolvedValue(returnOject);
 
     const result = await service.deleteNotification(id);
     expect(result).toEqual(returnOject);
-    expect(mockNotificationRepository.deleteNotification).toHaveBeenCalledWith(
-      id,
-    );
-  });
+    expect(mockNotificationRepository.delete).toHaveBeenCalledWith(id);
+});
 
-  it('should throw an error when delete notification method fails', async () => {
-    const id: number = 1;
+it('should throw an error when delete notification method fails', async () => {
+    
+     const id: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.deleteNotification.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.deleteNotification(id)).rejects.toThrow('Repository error');
 
-    const result = await service.deleteNotification(id);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* get notifications by user id success and failure tests */
-  it('should get notifications by user id', async () => {
-    /**
+/* get notifications by user id success and failure tests */
+it('should get notifications by user id', async () => {
+    /** 
      * Tests the get notifications by user id method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's getNotificationsByUserId method is called with the correct data.
      */
+    
+     const userId: number = 1;
 
-    const userId: number = 1;
-
-    const returnOject: Notification[] = [{ id: 1 /* others data */ }];
-
-    mockNotificationRepository.getNotificationsByUserId.mockResolvedValue(
-      returnOject,
-    );
+    const returnOject: Notification[] = [{ id: 1, /* others data */ }];
+    
+    mockNotificationRepository.getByUserId.mockResolvedValue(returnOject);
 
     const result = await service.getNotificationsByUserId(userId);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNotificationRepository.getNotificationsByUserId,
-    ).toHaveBeenCalledWith(userId);
-  });
+    expect(mockNotificationRepository.getByUserId).toHaveBeenCalledWith(userId);
+});
 
-  it('should throw an error when get notifications by user id method fails', async () => {
-    const userId: number = 1;
+it('should throw an error when get notifications by user id method fails', async () => {
+    
+     const userId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.getByUserId.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.getNotificationsByUserId.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getNotificationsByUserId(userId)).rejects.toThrow('Repository error');
 
-    const result = await service.getNotificationsByUserId(userId);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* get notifications by type success and failure tests */
-  it('should get notifications by type', async () => {
-    /**
+/* get notifications by type success and failure tests */
+it('should get notifications by type', async () => {
+    /** 
      * Tests the get notifications by type method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's getNotificationsByType method is called with the correct data.
      */
+    
+     const type: NotificationType = { /* data */ };
 
-    const type: NotificationType = {
-      /* data */
-    };
+    const returnOject: Notification[] = [{ id: 1, /* others data */ }];
+    
+    mockNotificationRepository.getByType.mockResolvedValue(returnOject);
 
-    const returnOject: Notification[] = [{ id: 1 /* others data */ }];
-
-    mockNotificationRepository.getNotificationsByType.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.getNotificationsByType(type);
+    const result = await service.getNotificationsByType(type,);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNotificationRepository.getNotificationsByType,
-    ).toHaveBeenCalledWith(type);
-  });
+    expect(mockNotificationRepository.getByType).toHaveBeenCalledWith(type,);
+});
 
-  it('should throw an error when get notifications by type method fails', async () => {
-    const type: NotificationType = {
-      /* data */
-    };
+it('should throw an error when get notifications by type method fails', async () => {
+    
+     const type: NotificationType = { /* data */ };
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.getByType.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.getNotificationsByType.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getNotificationsByType(type,)).rejects.toThrow('Repository error');
 
-    const result = await service.getNotificationsByType(type);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* get notifications by date range success and failure tests */
-  it('should get notifications by date range', async () => {
-    /**
+/* get notifications by date range success and failure tests */
+it('should get notifications by date range', async () => {
+    /** 
      * Tests the get notifications by date range method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's getNotificationsByDateRange method is called with the correct data.
      */
+    
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
-    const startDate: Date = {
-      /* data */
-    };
-    const endDate: Date = {
-      /* data */
-    };
+    const returnOject: Notification[] = [{ id: 1, /* others data */ }];
+    
+    mockNotificationRepository.getByDateRange.mockResolvedValue(returnOject);
 
-    const returnOject: Notification[] = [{ id: 1 /* others data */ }];
-
-    mockNotificationRepository.getNotificationsByDateRange.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.getNotificationsByDateRange(
-      startDate,
-      endDate,
-    );
+    const result = await service.getNotificationsByDateRange(startDate,
+    endDate,);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNotificationRepository.getNotificationsByDateRange,
-    ).toHaveBeenCalledWith(startDate, endDate);
-  });
+    expect(mockNotificationRepository.getByDateRange).toHaveBeenCalledWith(startDate,
+    endDate,);
+});
 
-  it('should throw an error when get notifications by date range method fails', async () => {
-    const startDate: Date = {
-      /* data */
-    };
-    const endDate: Date = {
-      /* data */
-    };
+it('should throw an error when get notifications by date range method fails', async () => {
+    
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.getByDateRange.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.getNotificationsByDateRange.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getNotificationsByDateRange(startDate,
+    endDate,)).rejects.toThrow('Repository error');
 
-    const result = await service.getNotificationsByDateRange(
-      startDate,
-      endDate,
-    );
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* mark notification as read success and failure tests */
-  it('should mark notification as read', async () => {
-    /**
+/* mark notification as read success and failure tests */
+it('should mark notification as read', async () => {
+    /** 
      * Tests the mark notification as read method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's markNotificationAsRead method is called with the correct data.
      */
+    
+     const id: number = 1;
 
-    const id: number = 1;
-
-    const returnOject: Notification = { id: 1 /* others data */ };
-
-    mockNotificationRepository.markNotificationAsRead.mockResolvedValue(
-      returnOject,
-    );
+    const returnOject: Notification = { id: 1, /* others data */ };
+    
+    mockNotificationRepository.markAsRead.mockResolvedValue(returnOject);
 
     const result = await service.markNotificationAsRead(id);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNotificationRepository.markNotificationAsRead,
-    ).toHaveBeenCalledWith(id);
-  });
+    expect(mockNotificationRepository.markAsRead).toHaveBeenCalledWith(id);
+});
 
-  it('should throw an error when mark notification as read method fails', async () => {
-    const id: number = 1;
+it('should throw an error when mark notification as read method fails', async () => {
+    
+     const id: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.markAsRead.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.markNotificationAsRead.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.markNotificationAsRead(id)).rejects.toThrow('Repository error');
 
-    const result = await service.markNotificationAsRead(id);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* count unread notifications success and failure tests */
-  it('should count unread notifications', async () => {
-    /**
+/* count unread notifications success and failure tests */
+it('should count unread notifications', async () => {
+    /** 
      * Tests the count unread notifications method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's countUnreadNotifications method is called with the correct data.
      */
+    
+     const userId: number = 1;
 
-    const userId: number = 1;
-
-    const returnOject: number = 1;
-
-    mockNotificationRepository.countUnreadNotifications.mockResolvedValue(
-      returnOject,
-    );
+    const returnOject: number = 1
+    
+    mockNotificationRepository.countUnread.mockResolvedValue(returnOject);
 
     const result = await service.countUnreadNotifications(userId);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNotificationRepository.countUnreadNotifications,
-    ).toHaveBeenCalledWith(userId);
-  });
+    expect(mockNotificationRepository.countUnread).toHaveBeenCalledWith(userId);
+});
 
-  it('should throw an error when count unread notifications method fails', async () => {
-    const userId: number = 1;
+it('should throw an error when count unread notifications method fails', async () => {
+    
+     const userId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.countUnread.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.countUnreadNotifications.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.countUnreadNotifications(userId)).rejects.toThrow('Repository error');
 
-    const result = await service.countUnreadNotifications(userId);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* get recent notifications success and failure tests */
-  it('should get recent notifications', async () => {
-    /**
+/* get recent notifications success and failure tests */
+it('should get recent notifications', async () => {
+    /** 
      * Tests the get recent notifications method.
-     * Verifies that the returned notification matches the expected one
+     * Verifies that the returned notification matches the expected one 
      * and that the repository's getRecentNotifications method is called with the correct data.
      */
+    
+     const userId: number = 1;
 
-    const userId: number = 1;
-
-    const returnOject: Notification[] = [{ id: 1 /* others data */ }];
-
-    mockNotificationRepository.getRecentNotifications.mockResolvedValue(
-      returnOject,
-    );
+    const returnOject: Notification[] = [{ id: 1, /* others data */ }];
+    
+    mockNotificationRepository.getRecent.mockResolvedValue(returnOject);
 
     const result = await service.getRecentNotifications(userId);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNotificationRepository.getRecentNotifications,
-    ).toHaveBeenCalledWith(userId);
-  });
-
-  it('should throw an error when get recent notifications method fails', async () => {
-    const userId: number = 1;
-
-    // Simulate a failure when calling the repository
-    mockNotificationRepository.getRecentNotifications.mockResolvedValue(
-      ' Repository error',
-    );
-
-    const result = await service.getRecentNotifications(userId);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    expect(mockNotificationRepository.getRecent).toHaveBeenCalledWith(userId);
 });
+
+it('should throw an error when get recent notifications method fails', async () => {
+    
+     const userId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNotificationRepository.getRecent.mockRejectedValue(new Error('Repository error'));
+
+    await expect(service.getRecentNotifications(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
+
+})

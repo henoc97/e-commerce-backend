@@ -19,9 +19,9 @@ describe('ListSubscriptionsByPriceRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const minPrice: number = 1;
-  const maxPrice: number = 1;
+  
+     const minPrice: number = 1;
+     const maxPrice: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockSubscriptionDTO: SubscriptionDTO = {
@@ -43,9 +43,7 @@ describe('ListSubscriptionsByPriceRange', () => {
       ],
     }).compile();
 
-    listSubscriptionsByPriceRange = module.get<ListSubscriptionsByPriceRange>(
-      ListSubscriptionsByPriceRange,
-    );
+    listSubscriptionsByPriceRange = module.get<ListSubscriptionsByPriceRange>(ListSubscriptionsByPriceRange);
     subscriptionService = module.get<SubscriptionService>(SubscriptionService);
   });
 
@@ -63,21 +61,16 @@ describe('ListSubscriptionsByPriceRange', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockSubscriptionService.listSubscriptionsByPriceRange.mockResolvedValue(
-      mockSubscriptionDTO,
-    );
+    mockSubscriptionService.listSubscriptionsByPriceRange.mockResolvedValue(mockSubscriptionDTO);
     (toSubscriptionDTO as jest.Mock).mockReturnValue(mockSubscriptionDTO);
 
     // Execute the use case with provided parameters
-    const result = await listSubscriptionsByPriceRange.execute(
-      minPrice,
-      maxPrice,
-    );
+    const result = await listSubscriptionsByPriceRange.execute(minPrice,
+    maxPrice,);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockSubscriptionService.listSubscriptionsByPriceRange,
-    ).toHaveBeenCalledWith(minPrice, maxPrice);
+    expect(mockSubscriptionService.listSubscriptionsByPriceRange).toHaveBeenCalledWith(minPrice,
+    maxPrice,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toSubscriptionDTO).toHaveBeenCalledWith(mockSubscriptionDTO);
@@ -92,13 +85,10 @@ describe('ListSubscriptionsByPriceRange', () => {
    */
   it('should throw an error when listSubscriptionsByPriceRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubscriptionService.listSubscriptionsByPriceRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubscriptionService.listSubscriptionsByPriceRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      listSubscriptionsByPriceRange.execute(minPrice, maxPrice),
-    ).rejects.toThrow('Service method error');
+    await expect(listSubscriptionsByPriceRange.execute(minPrice,
+    maxPrice,)).rejects.toThrow('Service method error');
   });
 });

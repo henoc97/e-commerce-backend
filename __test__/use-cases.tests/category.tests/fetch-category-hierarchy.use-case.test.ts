@@ -19,8 +19,8 @@ describe('FetchCategoryHierarchy', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const categoryId: number = 1;
+  
+     const categoryId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockCategoryDTO: CategoryDTO = {
@@ -42,9 +42,7 @@ describe('FetchCategoryHierarchy', () => {
       ],
     }).compile();
 
-    fetchCategoryHierarchy = module.get<FetchCategoryHierarchy>(
-      FetchCategoryHierarchy,
-    );
+    fetchCategoryHierarchy = module.get<FetchCategoryHierarchy>(FetchCategoryHierarchy);
     categoryService = module.get<CategoryService>(CategoryService);
   });
 
@@ -62,18 +60,14 @@ describe('FetchCategoryHierarchy', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockCategoryService.fetchCategoryHierarchy.mockResolvedValue(
-      mockCategoryDTO,
-    );
+    mockCategoryService.fetchCategoryHierarchy.mockResolvedValue(mockCategoryDTO);
     (toCategoryDTO as jest.Mock).mockReturnValue(mockCategoryDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchCategoryHierarchy.execute(categoryId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockCategoryService.fetchCategoryHierarchy).toHaveBeenCalledWith(
-      categoryId,
-    );
+    expect(mockCategoryService.fetchCategoryHierarchy).toHaveBeenCalledWith(categoryId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toCategoryDTO).toHaveBeenCalledWith(mockCategoryDTO);
@@ -88,13 +82,9 @@ describe('FetchCategoryHierarchy', () => {
    */
   it('should throw an error when fetchCategoryHierarchy execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCategoryService.fetchCategoryHierarchy.mockRejectedValue(
-      'Service method error',
-    );
+    mockCategoryService.fetchCategoryHierarchy.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchCategoryHierarchy.execute(categoryId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchCategoryHierarchy.execute(categoryId)).rejects.toThrow('Service method error');
   });
 });

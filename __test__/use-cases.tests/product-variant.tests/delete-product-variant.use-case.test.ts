@@ -19,8 +19,8 @@ describe('DeleteProductVariant', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductVariantDTO: ProductVariantDTO = {
@@ -42,11 +42,8 @@ describe('DeleteProductVariant', () => {
       ],
     }).compile();
 
-    deleteProductVariant =
-      module.get<DeleteProductVariant>(DeleteProductVariant);
-    productVariantService = module.get<ProductVariantService>(
-      ProductVariantService,
-    );
+    deleteProductVariant = module.get<DeleteProductVariant>(DeleteProductVariant);
+    productVariantService = module.get<ProductVariantService>(ProductVariantService);
   });
 
   /**
@@ -63,18 +60,14 @@ describe('DeleteProductVariant', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductVariantService.deleteProductVariant.mockResolvedValue(
-      mockProductVariantDTO,
-    );
+    mockProductVariantService.deleteProductVariant.mockResolvedValue(mockProductVariantDTO);
     (toProductVariantDTO as jest.Mock).mockReturnValue(mockProductVariantDTO);
 
     // Execute the use case with provided parameters
     const result = await deleteProductVariant.execute(id);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductVariantService.deleteProductVariant).toHaveBeenCalledWith(
-      id,
-    );
+    expect(mockProductVariantService.deleteProductVariant).toHaveBeenCalledWith(id);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductVariantDTO).toHaveBeenCalledWith(mockProductVariantDTO);
@@ -89,13 +82,9 @@ describe('DeleteProductVariant', () => {
    */
   it('should throw an error when deleteProductVariant execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductVariantService.deleteProductVariant.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductVariantService.deleteProductVariant.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deleteProductVariant.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deleteProductVariant.execute(id)).rejects.toThrow('Service method error');
   });
 });

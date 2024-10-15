@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { NotificationType } from 'src/domain/enums/notification-type.enum';
 import { INotificationRepository } from 'src/domain/repositories/notification.repository';
 import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
@@ -12,6 +12,7 @@ import { fromNotificationDTO } from '../helper/to-entity/to.notification.entity'
 @Injectable()
 export class NotificationService {
   constructor(
+    @Inject('INotificationRepository')
     private readonly notificationRepository: INotificationRepository,
   ) {}
 

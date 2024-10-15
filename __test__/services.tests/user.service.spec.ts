@@ -6,28 +6,28 @@ import { UserDTO } from '../../src/presentation/dtos/user.dto';
 
 
 const mockUserRepository = {
-  createUser: jest.fn(),
-getUserById: jest.fn(),
-updateUser: jest.fn(),
-deleteUser: jest.fn(),
-getUsersByRole: jest.fn(),
-addAddressToUser: jest.fn(),
-removeAddressFromUser: jest.fn(),
-addOrderToUser: jest.fn(),
-removeOrderFromUser: jest.fn(),
-addNotificationToUser: jest.fn(),
-removeNotificationFromUser: jest.fn(),
-addSubsiteToUser: jest.fn(),
-removeSubsiteFromUser: jest.fn(),
-logUserActivity: jest.fn(),
-getUserActivityLog: jest.fn(),
+  create: jest.fn(),
+getById: jest.fn(),
+update: jest.fn(),
+delete: jest.fn(),
+getByRole: jest.fn(),
+addAddress: jest.fn(),
+removeAddress: jest.fn(),
+addOrder: jest.fn(),
+removeOrder: jest.fn(),
+addNotification: jest.fn(),
+removeNotification: jest.fn(),
+addSubsite: jest.fn(),
+removeSubsite: jest.fn(),
+logActivity: jest.fn(),
+getActivityLog: jest.fn(),
 createAuditLog: jest.fn(),
-getUserAuditLogs: jest.fn(),
-getUserByEmail: jest.fn(),
-updateUserProfile: jest.fn(),
-updateUserPassword: jest.fn(),
-getUserOrders: jest.fn(),
-getUserAddresses: jest.fn(),
+getAuditLogs: jest.fn(),
+getByEmail: jest.fn(),
+updateProfile: jest.fn(),
+updatePassword: jest.fn(),
+getOrders: jest.fn(),
+getAddresses: jest.fn(),
 getReviews: jest.fn(),
 getCart: jest.fn(),
 getTickets: jest.fn(),
@@ -37,6 +37,10 @@ getActiveCount: jest.fn(),
 getCountByRole: jest.fn(),
 getInactiveUsers: jest.fn()
 };
+
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+
 
 describe('UserService', () => {
     let service: UserService;
@@ -48,7 +52,7 @@ describe('UserService', () => {
       providers: [
         UserService,
         {
-          provide: 'UserRepository',
+          provide: 'IUserRepository',
           useValue: mockUserRepository, // Use the mock
         },
       ],
@@ -56,8 +60,13 @@ describe('UserService', () => {
 
     // Retrieve instances of the service and repository
     service = module.get<UserService>(UserService);
-    userRepository = module.get<IUserRepository>('UserRepository');
+    userRepository = module.get<IUserRepository>('IUserRepository');
   });
+
+afterEach(() => {
+    jest.clearAllMocks();
+  });
+
 
     /* create user success and failure tests */
 it('should create user', async () => {
@@ -69,13 +78,13 @@ it('should create user', async () => {
     
      const userDTO: UserDTO = { /* data */ };
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.createUser.mockResolvedValue(returnOject);
+    mockUserRepository.create.mockResolvedValue(returnOject);
 
     const result = await service.createUser(userDTO);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.createUser).toHaveBeenCalledWith(userDTO);
+    expect(mockUserRepository.create).toHaveBeenCalledWith(userDTO);
 });
 
 it('should throw an error when create user method fails', async () => {
@@ -83,10 +92,12 @@ it('should throw an error when create user method fails', async () => {
      const userDTO: UserDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.createUser.mockResolvedValue(" Repository error");
+    mockUserRepository.create.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.createUser(userDTO);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.createUser(userDTO)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get user by id success and failure tests */
@@ -99,13 +110,13 @@ it('should get user by id', async () => {
     
      const id: number = 1;
 
-    const returnOject: User | null = { id: 1, /* others data */ }
+    const returnOject: User | null = { id: 1, /* others data */ };
     
-    mockUserRepository.getUserById.mockResolvedValue(returnOject);
+    mockUserRepository.getById.mockResolvedValue(returnOject);
 
     const result = await service.getUserById(id);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.getUserById).toHaveBeenCalledWith(id);
+    expect(mockUserRepository.getById).toHaveBeenCalledWith(id);
 });
 
 it('should throw an error when get user by id method fails', async () => {
@@ -113,10 +124,12 @@ it('should throw an error when get user by id method fails', async () => {
      const id: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getUserById.mockResolvedValue(" Repository error");
+    mockUserRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getUserById(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getUserById(id)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* update user success and failure tests */
@@ -130,13 +143,13 @@ it('should update user', async () => {
      const id: number = 1;
      const updates: Partial<UserDTO> = { /* data */ };
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.updateUser.mockResolvedValue(returnOject);
+    mockUserRepository.update.mockResolvedValue(returnOject);
 
     const result = await service.updateUser(id, updates);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.updateUser).toHaveBeenCalledWith(id, updates);
+    expect(mockUserRepository.update).toHaveBeenCalledWith(id, updates);
 });
 
 it('should throw an error when update user method fails', async () => {
@@ -145,10 +158,12 @@ it('should throw an error when update user method fails', async () => {
      const updates: Partial<UserDTO> = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.updateUser.mockResolvedValue(" Repository error");
+    mockUserRepository.update.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.updateUser(id, updates);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.updateUser(id, updates)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* delete user success and failure tests */
@@ -163,11 +178,11 @@ it('should delete user', async () => {
 
     const returnOject: boolean = true
     
-    mockUserRepository.deleteUser.mockResolvedValue(returnOject);
+    mockUserRepository.delete.mockResolvedValue(returnOject);
 
     const result = await service.deleteUser(id);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.deleteUser).toHaveBeenCalledWith(id);
+    expect(mockUserRepository.delete).toHaveBeenCalledWith(id);
 });
 
 it('should throw an error when delete user method fails', async () => {
@@ -175,10 +190,12 @@ it('should throw an error when delete user method fails', async () => {
      const id: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.deleteUser.mockResolvedValue(" Repository error");
+    mockUserRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.deleteUser(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.deleteUser(id)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get users by role success and failure tests */
@@ -191,13 +208,13 @@ it('should get users by role', async () => {
     
      const role: UserRole = { /* data */ };
 
-    const returnOject: User[] = [{ id: 1, /* others data */ }]
+    const returnOject: User[] = [{ id: 1, /* others data */ }];
     
-    mockUserRepository.getUsersByRole.mockResolvedValue(returnOject);
+    mockUserRepository.getByRole.mockResolvedValue(returnOject);
 
     const result = await service.getUsersByRole(role);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.getUsersByRole).toHaveBeenCalledWith(role);
+    expect(mockUserRepository.getByRole).toHaveBeenCalledWith(role);
 });
 
 it('should throw an error when get users by role method fails', async () => {
@@ -205,10 +222,12 @@ it('should throw an error when get users by role method fails', async () => {
      const role: UserRole = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getUsersByRole.mockResolvedValue(" Repository error");
+    mockUserRepository.getByRole.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getUsersByRole(role);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getUsersByRole(role)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* add address to user success and failure tests */
@@ -222,13 +241,13 @@ it('should add address to user', async () => {
      const userId: number = 1;
      const address: AddressDTO = { /* data */ };
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.addAddressToUser.mockResolvedValue(returnOject);
+    mockUserRepository.addAddress.mockResolvedValue(returnOject);
 
     const result = await service.addAddressToUser(userId, address);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.addAddressToUser).toHaveBeenCalledWith(userId, address);
+    expect(mockUserRepository.addAddress).toHaveBeenCalledWith(userId, address);
 });
 
 it('should throw an error when add address to user method fails', async () => {
@@ -237,10 +256,12 @@ it('should throw an error when add address to user method fails', async () => {
      const address: AddressDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.addAddressToUser.mockResolvedValue(" Repository error");
+    mockUserRepository.addAddress.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.addAddressToUser(userId, address);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.addAddressToUser(userId, address)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* remove address from user success and failure tests */
@@ -254,14 +275,14 @@ it('should remove address from user', async () => {
      const userId: number = 1;
      const addressId: number = 1;
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.removeAddressFromUser.mockResolvedValue(returnOject);
+    mockUserRepository.removeAddress.mockResolvedValue(returnOject);
 
     const result = await service.removeAddressFromUser(userId,
     addressId,);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.removeAddressFromUser).toHaveBeenCalledWith(userId,
+    expect(mockUserRepository.removeAddress).toHaveBeenCalledWith(userId,
     addressId,);
 });
 
@@ -271,11 +292,13 @@ it('should throw an error when remove address from user method fails', async () 
      const addressId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.removeAddressFromUser.mockResolvedValue(" Repository error");
+    mockUserRepository.removeAddress.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.removeAddressFromUser(userId,
-    addressId,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.removeAddressFromUser(userId,
+    addressId,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* add order to user success and failure tests */
@@ -289,13 +312,13 @@ it('should add order to user', async () => {
      const userId: number = 1;
      const order: OrderDTO = { /* data */ };
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.addOrderToUser.mockResolvedValue(returnOject);
+    mockUserRepository.addOrder.mockResolvedValue(returnOject);
 
     const result = await service.addOrderToUser(userId, order);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.addOrderToUser).toHaveBeenCalledWith(userId, order);
+    expect(mockUserRepository.addOrder).toHaveBeenCalledWith(userId, order);
 });
 
 it('should throw an error when add order to user method fails', async () => {
@@ -304,10 +327,12 @@ it('should throw an error when add order to user method fails', async () => {
      const order: OrderDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.addOrderToUser.mockResolvedValue(" Repository error");
+    mockUserRepository.addOrder.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.addOrderToUser(userId, order);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.addOrderToUser(userId, order)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* remove order from user success and failure tests */
@@ -321,13 +346,13 @@ it('should remove order from user', async () => {
      const userId: number = 1;
      const orderId: number = 1;
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.removeOrderFromUser.mockResolvedValue(returnOject);
+    mockUserRepository.removeOrder.mockResolvedValue(returnOject);
 
     const result = await service.removeOrderFromUser(userId, orderId);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.removeOrderFromUser).toHaveBeenCalledWith(userId, orderId);
+    expect(mockUserRepository.removeOrder).toHaveBeenCalledWith(userId, orderId);
 });
 
 it('should throw an error when remove order from user method fails', async () => {
@@ -336,10 +361,12 @@ it('should throw an error when remove order from user method fails', async () =>
      const orderId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.removeOrderFromUser.mockResolvedValue(" Repository error");
+    mockUserRepository.removeOrder.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.removeOrderFromUser(userId, orderId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.removeOrderFromUser(userId, orderId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* add notification to user success and failure tests */
@@ -353,14 +380,14 @@ it('should add notification to user', async () => {
      const userId: number = 1;
      const notification: NotificationDTO = { /* data */ };
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.addNotificationToUser.mockResolvedValue(returnOject);
+    mockUserRepository.addNotification.mockResolvedValue(returnOject);
 
     const result = await service.addNotificationToUser(userId,
     notification,);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.addNotificationToUser).toHaveBeenCalledWith(userId,
+    expect(mockUserRepository.addNotification).toHaveBeenCalledWith(userId,
     notification,);
 });
 
@@ -370,11 +397,13 @@ it('should throw an error when add notification to user method fails', async () 
      const notification: NotificationDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.addNotificationToUser.mockResolvedValue(" Repository error");
+    mockUserRepository.addNotification.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.addNotificationToUser(userId,
-    notification,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.addNotificationToUser(userId,
+    notification,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* remove notification from user success and failure tests */
@@ -388,14 +417,14 @@ it('should remove notification from user', async () => {
      const userId: number = 1;
      const notificationId: number = 1;
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.removeNotificationFromUser.mockResolvedValue(returnOject);
+    mockUserRepository.removeNotification.mockResolvedValue(returnOject);
 
     const result = await service.removeNotificationFromUser(userId,
     notificationId,);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.removeNotificationFromUser).toHaveBeenCalledWith(userId,
+    expect(mockUserRepository.removeNotification).toHaveBeenCalledWith(userId,
     notificationId,);
 });
 
@@ -405,11 +434,13 @@ it('should throw an error when remove notification from user method fails', asyn
      const notificationId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.removeNotificationFromUser.mockResolvedValue(" Repository error");
+    mockUserRepository.removeNotification.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.removeNotificationFromUser(userId,
-    notificationId,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.removeNotificationFromUser(userId,
+    notificationId,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* add subsite to user success and failure tests */
@@ -423,13 +454,13 @@ it('should add subsite to user', async () => {
      const userId: number = 1;
      const subsite: SubsiteDTO = { /* data */ };
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.addSubsiteToUser.mockResolvedValue(returnOject);
+    mockUserRepository.addSubsite.mockResolvedValue(returnOject);
 
     const result = await service.addSubsiteToUser(userId, subsite);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.addSubsiteToUser).toHaveBeenCalledWith(userId, subsite);
+    expect(mockUserRepository.addSubsite).toHaveBeenCalledWith(userId, subsite);
 });
 
 it('should throw an error when add subsite to user method fails', async () => {
@@ -438,10 +469,12 @@ it('should throw an error when add subsite to user method fails', async () => {
      const subsite: SubsiteDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.addSubsiteToUser.mockResolvedValue(" Repository error");
+    mockUserRepository.addSubsite.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.addSubsiteToUser(userId, subsite);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.addSubsiteToUser(userId, subsite)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* remove subsite from user success and failure tests */
@@ -455,14 +488,14 @@ it('should remove subsite from user', async () => {
      const userId: number = 1;
      const subsiteId: number = 1;
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.removeSubsiteFromUser.mockResolvedValue(returnOject);
+    mockUserRepository.removeSubsite.mockResolvedValue(returnOject);
 
     const result = await service.removeSubsiteFromUser(userId,
     subsiteId,);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.removeSubsiteFromUser).toHaveBeenCalledWith(userId,
+    expect(mockUserRepository.removeSubsite).toHaveBeenCalledWith(userId,
     subsiteId,);
 });
 
@@ -472,11 +505,13 @@ it('should throw an error when remove subsite from user method fails', async () 
      const subsiteId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.removeSubsiteFromUser.mockResolvedValue(" Repository error");
+    mockUserRepository.removeSubsite.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.removeSubsiteFromUser(userId,
-    subsiteId,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.removeSubsiteFromUser(userId,
+    subsiteId,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* log user activity success and failure tests */
@@ -490,15 +525,15 @@ it('should log user activity', async () => {
      const userId: number = 1;
      const action: UserActivityAction = { /* data */ };
 
-    const returnOject: void = { id: 1, /* others data */ }
+    const returnOject: void = { id: 1, /* others data */ };
     
-    mockUserRepository.logUserActivity.mockResolvedValue(returnOject);
+    mockUserRepository.logActivity.mockResolvedValue(returnOject);
 
     const result = await service.logUserActivity(userId,
     action,
     productId?,);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.logUserActivity).toHaveBeenCalledWith(userId,
+    expect(mockUserRepository.logActivity).toHaveBeenCalledWith(userId,
     action,
     productId?,);
 });
@@ -509,12 +544,14 @@ it('should throw an error when log user activity method fails', async () => {
      const action: UserActivityAction = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.logUserActivity.mockResolvedValue(" Repository error");
+    mockUserRepository.logActivity.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.logUserActivity(userId,
+    await expect(service.logUserActivity(userId,
     action,
-    productId?,);
-    expect(result).rejects.toThrow('Repository error');
+    productId?,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get user activity log success and failure tests */
@@ -527,13 +564,13 @@ it('should get user activity log', async () => {
     
      const userId: number = 1;
 
-    const returnOject: UserActivity[] = [{ id: 1, /* others data */ }]
+    const returnOject: UserActivity[] = [{ id: 1, /* others data */ }];
     
-    mockUserRepository.getUserActivityLog.mockResolvedValue(returnOject);
+    mockUserRepository.getActivityLog.mockResolvedValue(returnOject);
 
     const result = await service.getUserActivityLog(userId);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.getUserActivityLog).toHaveBeenCalledWith(userId);
+    expect(mockUserRepository.getActivityLog).toHaveBeenCalledWith(userId);
 });
 
 it('should throw an error when get user activity log method fails', async () => {
@@ -541,10 +578,12 @@ it('should throw an error when get user activity log method fails', async () => 
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getUserActivityLog.mockResolvedValue(" Repository error");
+    mockUserRepository.getActivityLog.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getUserActivityLog(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getUserActivityLog(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* create audit log success and failure tests */
@@ -558,7 +597,7 @@ it('should create audit log', async () => {
      const userId: number = 1;
      const auditLog: AuditLogDTO = { /* data */ };
 
-    const returnOject: void = { id: 1, /* others data */ }
+    const returnOject: void = { id: 1, /* others data */ };
     
     mockUserRepository.createAuditLog.mockResolvedValue(returnOject);
 
@@ -573,10 +612,12 @@ it('should throw an error when create audit log method fails', async () => {
      const auditLog: AuditLogDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.createAuditLog.mockResolvedValue(" Repository error");
+    mockUserRepository.createAuditLog.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.createAuditLog(userId, auditLog);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.createAuditLog(userId, auditLog)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get user audit logs success and failure tests */
@@ -589,13 +630,13 @@ it('should get user audit logs', async () => {
     
      const userId: number = 1;
 
-    const returnOject: AuditLog[] = [{ id: 1, /* others data */ }]
+    const returnOject: AuditLog[] = [{ id: 1, /* others data */ }];
     
-    mockUserRepository.getUserAuditLogs.mockResolvedValue(returnOject);
+    mockUserRepository.getAuditLogs.mockResolvedValue(returnOject);
 
     const result = await service.getUserAuditLogs(userId);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.getUserAuditLogs).toHaveBeenCalledWith(userId);
+    expect(mockUserRepository.getAuditLogs).toHaveBeenCalledWith(userId);
 });
 
 it('should throw an error when get user audit logs method fails', async () => {
@@ -603,10 +644,12 @@ it('should throw an error when get user audit logs method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getUserAuditLogs.mockResolvedValue(" Repository error");
+    mockUserRepository.getAuditLogs.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getUserAuditLogs(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getUserAuditLogs(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get user by email success and failure tests */
@@ -619,13 +662,13 @@ it('should get user by email', async () => {
     
      const email: string = 'email';
 
-    const returnOject: User | null = { id: 1, /* others data */ }
+    const returnOject: User | null = { id: 1, /* others data */ };
     
-    mockUserRepository.getUserByEmail.mockResolvedValue(returnOject);
+    mockUserRepository.getByEmail.mockResolvedValue(returnOject);
 
     const result = await service.getUserByEmail(email);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.getUserByEmail).toHaveBeenCalledWith(email);
+    expect(mockUserRepository.getByEmail).toHaveBeenCalledWith(email);
 });
 
 it('should throw an error when get user by email method fails', async () => {
@@ -633,10 +676,12 @@ it('should throw an error when get user by email method fails', async () => {
      const email: string = 'email';
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getUserByEmail.mockResolvedValue(" Repository error");
+    mockUserRepository.getByEmail.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getUserByEmail(email);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getUserByEmail(email)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* update user profile success and failure tests */
@@ -650,14 +695,14 @@ it('should update user profile', async () => {
      const userId: number = 1;
      const profile: UserProfileDTO = { /* data */ };
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.updateUserProfile.mockResolvedValue(returnOject);
+    mockUserRepository.updateProfile.mockResolvedValue(returnOject);
 
     const result = await service.updateUserProfile(userId,
     profile,);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.updateUserProfile).toHaveBeenCalledWith(userId,
+    expect(mockUserRepository.updateProfile).toHaveBeenCalledWith(userId,
     profile,);
 });
 
@@ -667,11 +712,13 @@ it('should throw an error when update user profile method fails', async () => {
      const profile: UserProfileDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.updateUserProfile.mockResolvedValue(" Repository error");
+    mockUserRepository.updateProfile.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.updateUserProfile(userId,
-    profile,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.updateUserProfile(userId,
+    profile,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* update user password success and failure tests */
@@ -685,13 +732,13 @@ it('should update user password', async () => {
      const userId: number = 1;
      const newPassword: string = 'newPassword';
 
-    const returnOject: User = { id: 1, /* others data */ }
+    const returnOject: User = { id: 1, /* others data */ };
     
-    mockUserRepository.updateUserPassword.mockResolvedValue(returnOject);
+    mockUserRepository.updatePassword.mockResolvedValue(returnOject);
 
     const result = await service.updateUserPassword(userId, newPassword);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.updateUserPassword).toHaveBeenCalledWith(userId, newPassword);
+    expect(mockUserRepository.updatePassword).toHaveBeenCalledWith(userId, newPassword);
 });
 
 it('should throw an error when update user password method fails', async () => {
@@ -700,10 +747,12 @@ it('should throw an error when update user password method fails', async () => {
      const newPassword: string = 'newPassword';
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.updateUserPassword.mockResolvedValue(" Repository error");
+    mockUserRepository.updatePassword.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.updateUserPassword(userId, newPassword);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.updateUserPassword(userId, newPassword)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get user orders success and failure tests */
@@ -716,13 +765,13 @@ it('should get user orders', async () => {
     
      const userId: number = 1;
 
-    const returnOject: Order[] = [{ id: 1, /* others data */ }]
+    const returnOject: Order[] = [{ id: 1, /* others data */ }];
     
-    mockUserRepository.getUserOrders.mockResolvedValue(returnOject);
+    mockUserRepository.getOrders.mockResolvedValue(returnOject);
 
     const result = await service.getUserOrders(userId);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.getUserOrders).toHaveBeenCalledWith(userId);
+    expect(mockUserRepository.getOrders).toHaveBeenCalledWith(userId);
 });
 
 it('should throw an error when get user orders method fails', async () => {
@@ -730,10 +779,12 @@ it('should throw an error when get user orders method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getUserOrders.mockResolvedValue(" Repository error");
+    mockUserRepository.getOrders.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getUserOrders(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getUserOrders(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get user addresses success and failure tests */
@@ -746,13 +797,13 @@ it('should get user addresses', async () => {
     
      const userId: number = 1;
 
-    const returnOject: Address[] = [{ id: 1, /* others data */ }]
+    const returnOject: Address[] = [{ id: 1, /* others data */ }];
     
-    mockUserRepository.getUserAddresses.mockResolvedValue(returnOject);
+    mockUserRepository.getAddresses.mockResolvedValue(returnOject);
 
     const result = await service.getUserAddresses(userId);
     expect(result).toEqual(returnOject);
-    expect(mockUserRepository.getUserAddresses).toHaveBeenCalledWith(userId);
+    expect(mockUserRepository.getAddresses).toHaveBeenCalledWith(userId);
 });
 
 it('should throw an error when get user addresses method fails', async () => {
@@ -760,10 +811,12 @@ it('should throw an error when get user addresses method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getUserAddresses.mockResolvedValue(" Repository error");
+    mockUserRepository.getAddresses.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getUserAddresses(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getUserAddresses(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get reviews success and failure tests */
@@ -776,7 +829,7 @@ it('should get reviews', async () => {
     
      const userId: number = 1;
 
-    const returnOject: Review[] = [{ id: 1, /* others data */ }]
+    const returnOject: Review[] = [{ id: 1, /* others data */ }];
     
     mockUserRepository.getReviews.mockResolvedValue(returnOject);
 
@@ -790,10 +843,12 @@ it('should throw an error when get reviews method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getReviews.mockResolvedValue(" Repository error");
+    mockUserRepository.getReviews.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getReviews(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getReviews(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get cart success and failure tests */
@@ -806,7 +861,7 @@ it('should get cart', async () => {
     
      const userId: number = 1;
 
-    const returnOject: Cart | null = { id: 1, /* others data */ }
+    const returnOject: Cart | null = { id: 1, /* others data */ };
     
     mockUserRepository.getCart.mockResolvedValue(returnOject);
 
@@ -820,10 +875,12 @@ it('should throw an error when get cart method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getCart.mockResolvedValue(" Repository error");
+    mockUserRepository.getCart.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getCart(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getCart(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get tickets success and failure tests */
@@ -836,7 +893,7 @@ it('should get tickets', async () => {
     
      const userId: number = 1;
 
-    const returnOject: Ticket[] = [{ id: 1, /* others data */ }]
+    const returnOject: Ticket[] = [{ id: 1, /* others data */ }];
     
     mockUserRepository.getTickets.mockResolvedValue(returnOject);
 
@@ -850,10 +907,12 @@ it('should throw an error when get tickets method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getTickets.mockResolvedValue(" Repository error");
+    mockUserRepository.getTickets.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getTickets(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getTickets(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get notifications success and failure tests */
@@ -866,7 +925,7 @@ it('should get notifications', async () => {
     
      const userId: number = 1;
 
-    const returnOject: Notification[] = [{ id: 1, /* others data */ }]
+    const returnOject: Notification[] = [{ id: 1, /* others data */ }];
     
     mockUserRepository.getNotifications.mockResolvedValue(returnOject);
 
@@ -880,10 +939,12 @@ it('should throw an error when get notifications method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getNotifications.mockResolvedValue(" Repository error");
+    mockUserRepository.getNotifications.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getNotifications(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getNotifications(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get subsites success and failure tests */
@@ -896,7 +957,7 @@ it('should get subsites', async () => {
     
      const userId: number = 1;
 
-    const returnOject: Subsite[] = [{ id: 1, /* others data */ }]
+    const returnOject: Subsite[] = [{ id: 1, /* others data */ }];
     
     mockUserRepository.getSubsites.mockResolvedValue(returnOject);
 
@@ -910,10 +971,12 @@ it('should throw an error when get subsites method fails', async () => {
      const userId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getSubsites.mockResolvedValue(" Repository error");
+    mockUserRepository.getSubsites.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getSubsites(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getSubsites(userId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get active count success and failure tests */
@@ -938,10 +1001,12 @@ it('should throw an error when get active count method fails', async () => {
     
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getActiveCount.mockResolvedValue(" Repository error");
+    mockUserRepository.getActiveCount.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getActiveCount();
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getActiveCount()).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get count by role success and failure tests */
@@ -968,10 +1033,12 @@ it('should throw an error when get count by role method fails', async () => {
      const role: UserRole = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getCountByRole.mockResolvedValue(" Repository error");
+    mockUserRepository.getCountByRole.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getCountByRole(role);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getCountByRole(role)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get inactive users success and failure tests */
@@ -984,7 +1051,7 @@ it('should get inactive users', async () => {
     
      const days: number = 1;
 
-    const returnOject: User[] = [{ id: 1, /* others data */ }]
+    const returnOject: User[] = [{ id: 1, /* others data */ }];
     
     mockUserRepository.getInactiveUsers.mockResolvedValue(returnOject);
 
@@ -998,10 +1065,12 @@ it('should throw an error when get inactive users method fails', async () => {
      const days: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockUserRepository.getInactiveUsers.mockResolvedValue(" Repository error");
+    mockUserRepository.getInactiveUsers.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getInactiveUsers(days);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getInactiveUsers(days)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 })

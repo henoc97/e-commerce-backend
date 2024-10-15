@@ -19,11 +19,9 @@ describe('AddSubsiteToUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const subsiteDTO: SubsiteDTO = {
-    /* data */
-  };
+  
+     const userId: number = 1;
+     const subsiteDTO: SubsiteDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -67,13 +65,12 @@ describe('AddSubsiteToUser', () => {
     (toUserDTO as jest.Mock).mockReturnValue(mockUserDTO);
 
     // Execute the use case with provided parameters
-    const result = await addSubsiteToUser.execute(userId, subsiteDTO);
+    const result = await addSubsiteToUser.execute(userId,
+    subsiteDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserService.addSubsiteToUser).toHaveBeenCalledWith(
-      userId,
-      subsiteDTO,
-    );
+    expect(mockUserService.addSubsiteToUser).toHaveBeenCalledWith(userId,
+    subsiteDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserDTO).toHaveBeenCalledWith(mockUserDTO);
@@ -88,11 +85,10 @@ describe('AddSubsiteToUser', () => {
    */
   it('should throw an error when addSubsiteToUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.addSubsiteToUser.mockRejectedValue('Service method error');
+    mockUserService.addSubsiteToUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(addSubsiteToUser.execute(userId, subsiteDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(addSubsiteToUser.execute(userId,
+    subsiteDTO,)).rejects.toThrow('Service method error');
   });
 });

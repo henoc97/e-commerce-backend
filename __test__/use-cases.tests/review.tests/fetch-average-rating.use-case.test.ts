@@ -19,8 +19,8 @@ describe('FetchAverageRating', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
+  
+     const productId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockReviewDTO: ReviewDTO = {
@@ -67,9 +67,7 @@ describe('FetchAverageRating', () => {
     const result = await fetchAverageRating.execute(productId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockReviewService.fetchAverageRating).toHaveBeenCalledWith(
-      productId,
-    );
+    expect(mockReviewService.fetchAverageRating).toHaveBeenCalledWith(productId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toReviewDTO).toHaveBeenCalledWith(mockReviewDTO);
@@ -84,13 +82,9 @@ describe('FetchAverageRating', () => {
    */
   it('should throw an error when fetchAverageRating execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockReviewService.fetchAverageRating.mockRejectedValue(
-      'Service method error',
-    );
+    mockReviewService.fetchAverageRating.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchAverageRating.execute(productId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchAverageRating.execute(productId)).rejects.toThrow('Service method error');
   });
 });

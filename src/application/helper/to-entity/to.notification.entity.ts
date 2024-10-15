@@ -16,6 +16,7 @@ export function fromNotificationDTO(
     notificationDTO.user ? fromUserDTO(notificationDTO.user) : undefined,
     notificationDTO.type,
     notificationDTO.content,
+    notificationDTO.read,
     notificationDTO.sentAt,
   );
 }

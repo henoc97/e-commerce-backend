@@ -19,8 +19,8 @@ describe('FetchReviewById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockReviewDTO: ReviewDTO = {
@@ -82,11 +82,9 @@ describe('FetchReviewById', () => {
    */
   it('should throw an error when fetchReviewById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockReviewService.fetchReviewById.mockRejectedValue('Service method error');
+    mockReviewService.fetchReviewById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchReviewById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchReviewById.execute(id)).rejects.toThrow('Service method error');
   });
 });

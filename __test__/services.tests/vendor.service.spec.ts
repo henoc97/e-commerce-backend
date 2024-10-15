@@ -3,25 +3,30 @@ import { VendorService } from '../../src/application/services/vendor.service';
 import { IVendorRepository } from '../../src/domain/repositories/vendor.repository';
 import { Vendor } from '../../src/domain/entities/vendor.entity';
 import { VendorDTO } from '../../src/presentation/dtos/vendor.dto';
+import { ProductDTO } from 'src/presentation/dtos/product.dto';
+import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 
 const mockVendorRepository = {
-  createVendor: jest.fn(),
-  findVendorById: jest.fn(),
-  updateVendor: jest.fn(),
-  deleteVendor: jest.fn(),
-  findVendorsByStoreName: jest.fn(),
-  addProductToVendor: jest.fn(),
-  removeProductFromVendor: jest.fn(),
-  getVendorProducts: jest.fn(),
-  getVendorSubscription: jest.fn(),
-  setVendorSubscription: jest.fn(),
-  getVendorShop: jest.fn(),
-  setVendorShop: jest.fn(),
-  findVendorsByUser: jest.fn(),
-  findVendorsBySubscription: jest.fn(),
-  getAllVendors: jest.fn(),
-  getLatestVendor: jest.fn(),
+  create: jest.fn(),
+  findById: jest.fn(),
+  update: jest.fn(),
+  delete: jest.fn(),
+  findByStoreName: jest.fn(),
+  addProduct: jest.fn(),
+  removeProduct: jest.fn(),
+  getProducts: jest.fn(),
+  getSubscription: jest.fn(),
+  setSubscription: jest.fn(),
+  getShop: jest.fn(),
+  setShop: jest.fn(),
+  findByUser: jest.fn(),
+  findBySubscription: jest.fn(),
+  getall: jest.fn(),
+  getLatest: jest.fn(),
 };
+
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
 describe('VendorService', () => {
   let service: VendorService;
@@ -33,7 +38,7 @@ describe('VendorService', () => {
       providers: [
         VendorService,
         {
-          provide: 'VendorRepository',
+          provide: 'IVendorRepository',
           useValue: mockVendorRepository, // Use the mock
         },
       ],
@@ -41,7 +46,11 @@ describe('VendorService', () => {
 
     // Retrieve instances of the service and repository
     service = module.get<VendorService>(VendorService);
-    vendorRepository = module.get<IVendorRepository>('VendorRepository');
+    vendorRepository = module.get<IVendorRepository>('IVendorRepository');
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   /* create vendor success and failure tests */
@@ -53,16 +62,26 @@ describe('VendorService', () => {
      */
 
     const vendorDTO: VendorDTO = {
-      /* data */
+        id: 1,
+        userId: 1,
+        user: { /* données utilisateur */ },
+        storeName: 'Nom du magasin',
+        // Ajoutez d'autres propriétés si nécessaire
     };
 
-    const returnOject: Vendor = { id: 1 /* others data */ };
+    const returnOject: Vendor = {
+        id: 1,
+        userId: 1,
+        user: { /* données utilisateur */ },
+        storeName: 'Nom du magasin',
+        // Ajoutez d'autres propriétés si nécessaire
+    };
 
-    mockVendorRepository.createVendor.mockResolvedValue(returnOject);
+    mockVendorRepository.create.mockResolvedValue(returnOject);
 
     const result = await service.createVendor(vendorDTO);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.createVendor).toHaveBeenCalledWith(vendorDTO);
+    expect(mockVendorRepository.create).toHaveBeenCalledWith(vendorDTO);
   });
 
   it('should throw an error when create vendor method fails', async () => {
@@ -71,10 +90,16 @@ describe('VendorService', () => {
     };
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.createVendor.mockResolvedValue(' Repository error');
+    mockVendorRepository.create.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.createVendor(vendorDTO);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.createVendor(vendorDTO)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* find vendor by id success and failure tests */
@@ -89,21 +114,27 @@ describe('VendorService', () => {
 
     const returnOject: Vendor | null = { id: 1 /* others data */ };
 
-    mockVendorRepository.findVendorById.mockResolvedValue(returnOject);
+    mockVendorRepository.findById.mockResolvedValue(returnOject);
 
     const result = await service.findVendorById(id);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.findVendorById).toHaveBeenCalledWith(id);
+    expect(mockVendorRepository.findById).toHaveBeenCalledWith(id);
   });
 
   it('should throw an error when find vendor by id method fails', async () => {
     const id: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.findVendorById.mockResolvedValue(' Repository error');
+    mockVendorRepository.findById.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.findVendorById(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.findVendorById(id)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* update vendor success and failure tests */
@@ -121,14 +152,11 @@ describe('VendorService', () => {
 
     const returnOject: Vendor = { id: 1 /* others data */ };
 
-    mockVendorRepository.updateVendor.mockResolvedValue(returnOject);
+    mockVendorRepository.update.mockResolvedValue(returnOject);
 
     const result = await service.updateVendor(id, updateData);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.updateVendor).toHaveBeenCalledWith(
-      id,
-      updateData,
-    );
+    expect(mockVendorRepository.update).toHaveBeenCalledWith(id, updateData);
   });
 
   it('should throw an error when update vendor method fails', async () => {
@@ -138,10 +166,16 @@ describe('VendorService', () => {
     };
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.updateVendor.mockResolvedValue(' Repository error');
+    mockVendorRepository.update.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.updateVendor(id, updateData);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.updateVendor(id, updateData)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* delete vendor success and failure tests */
@@ -156,21 +190,25 @@ describe('VendorService', () => {
 
     const returnOject: boolean = true;
 
-    mockVendorRepository.deleteVendor.mockResolvedValue(returnOject);
+    mockVendorRepository.delete.mockResolvedValue(returnOject);
 
     const result = await service.deleteVendor(id);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.deleteVendor).toHaveBeenCalledWith(id);
+    expect(mockVendorRepository.delete).toHaveBeenCalledWith(id);
   });
 
   it('should throw an error when delete vendor method fails', async () => {
     const id: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.deleteVendor.mockResolvedValue(' Repository error');
+    mockVendorRepository.delete.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.deleteVendor(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.deleteVendor(id)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* find vendors by store name success and failure tests */
@@ -185,11 +223,11 @@ describe('VendorService', () => {
 
     const returnOject: Vendor[] = [{ id: 1 /* others data */ }];
 
-    mockVendorRepository.findVendorsByStoreName.mockResolvedValue(returnOject);
+    mockVendorRepository.findByStoreName.mockResolvedValue(returnOject);
 
     const result = await service.findVendorsByStoreName(storeName);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.findVendorsByStoreName).toHaveBeenCalledWith(
+    expect(mockVendorRepository.findByStoreName).toHaveBeenCalledWith(
       storeName,
     );
   });
@@ -198,12 +236,16 @@ describe('VendorService', () => {
     const storeName: string = 'storeName';
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.findVendorsByStoreName.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.findByStoreName.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.findVendorsByStoreName(storeName);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.findVendorsByStoreName(storeName)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* add product to vendor success and failure tests */
@@ -216,34 +258,71 @@ describe('VendorService', () => {
 
     const vendorId: number = 1;
     const productDTO: ProductDTO = {
-      /* data */
+        id: 1,
+        name: 'Nom du produit',
+        price: 100,
+        category: { id: 1, name: 'Test Category' },
+        categoryId: 1,
+        images: [],
+        variants: [],
+        stock: 100,
+        shopId: 1,
+        shop: { id: 1, name: 'Test Shop' },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        cartItem: [],
+        orderItem: [],
+        review: []
     };
 
-    const returnOject: Vendor = { id: 1 /* others data */ };
+    const returnOject: Vendor = {
+        id: 1,
+        userId: 1,
+        storeName: 'Nom du magasin',
+        // Ajoutez d'autres propriétés si nécessaire
+    };
 
-    mockVendorRepository.addProductToVendor.mockResolvedValue(returnOject);
+    mockVendorRepository.addProduct.mockResolvedValue(returnOject);
 
     const result = await service.addProductToVendor(vendorId, productDTO);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.addProductToVendor).toHaveBeenCalledWith(
-      vendorId,
-      productDTO,
+    expect(mockVendorRepository.addProduct).toHaveBeenCalledWith(
+        vendorId,
+        productDTO,
     );
   });
 
   it('should throw an error when add product to vendor method fails', async () => {
     const vendorId: number = 1;
     const productDTO: ProductDTO = {
-      /* data */
+        id: 1,
+        name: 'Nom du produit',
+        price: 100,
+        category: { id: 1, name: 'Test Category' },
+        categoryId: 1,
+        images: [],
+        variants: [],
+        stock: 100,
+        shopId: 1,
+        shop: { id: 1, name: 'Test Shop' },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        cartItem: [],
+        orderItem: [],
+        review: []
     };
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.addProductToVendor.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.addProduct.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.addProductToVendor(vendorId, productDTO);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(
+      service.addProductToVendor(vendorId, productDTO),
+    ).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* remove product from vendor success and failure tests */
@@ -257,13 +336,19 @@ describe('VendorService', () => {
     const vendorId: number = 1;
     const productId: number = 1;
 
-    const returnOject: Vendor = { id: 1 /* others data */ };
+    const returnOject: Vendor = {
+      id: 1,
+      userId: 1,
+      user: { /* données utilisateur */ },
+      storeName: 'Nom du magasin',
+      // Ajoutez d'autres propriétés si nécessaire
+    };
 
-    mockVendorRepository.removeProductFromVendor.mockResolvedValue(returnOject);
+    mockVendorRepository.removeProduct.mockResolvedValue(returnOject);
 
     const result = await service.removeProductFromVendor(vendorId, productId);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.removeProductFromVendor).toHaveBeenCalledWith(
+    expect(mockVendorRepository.removeProduct).toHaveBeenCalledWith(
       vendorId,
       productId,
     );
@@ -274,12 +359,16 @@ describe('VendorService', () => {
     const productId: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.removeProductFromVendor.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.removeProduct.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.removeProductFromVendor(vendorId, productId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(
+      service.removeProductFromVendor(vendorId, productId),
+    ).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* get vendor products success and failure tests */
@@ -292,27 +381,31 @@ describe('VendorService', () => {
 
     const vendorId: number = 1;
 
-    const returnOject: Product[] = [{ id: 1 /* others data */ }];
+    const returnOject: Product[] = [
+        { id: 1, /* autres données */ }
+    ];
 
-    mockVendorRepository.getVendorProducts.mockResolvedValue(returnOject);
+    mockVendorRepository.getProducts.mockResolvedValue(returnOject);
 
     const result = await service.getVendorProducts(vendorId);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.getVendorProducts).toHaveBeenCalledWith(
-      vendorId,
-    );
+    expect(mockVendorRepository.getProducts).toHaveBeenCalledWith(vendorId);
   });
 
   it('should throw an error when get vendor products method fails', async () => {
     const vendorId: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.getVendorProducts.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.getProducts.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.getVendorProducts(vendorId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getVendorProducts(vendorId)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* get vendor subscription success and failure tests */
@@ -327,25 +420,27 @@ describe('VendorService', () => {
 
     const returnOject: Subscription | null = { id: 1 /* others data */ };
 
-    mockVendorRepository.getVendorSubscription.mockResolvedValue(returnOject);
+    mockVendorRepository.getSubscription.mockResolvedValue(returnOject);
 
     const result = await service.getVendorSubscription(vendorId);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.getVendorSubscription).toHaveBeenCalledWith(
-      vendorId,
-    );
+    expect(mockVendorRepository.getSubscription).toHaveBeenCalledWith(vendorId);
   });
 
   it('should throw an error when get vendor subscription method fails', async () => {
     const vendorId: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.getVendorSubscription.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.getSubscription.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.getVendorSubscription(vendorId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getVendorSubscription(vendorId)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* set vendor subscription success and failure tests */
@@ -363,14 +458,14 @@ describe('VendorService', () => {
 
     const returnOject: Vendor = { id: 1 /* others data */ };
 
-    mockVendorRepository.setVendorSubscription.mockResolvedValue(returnOject);
+    mockVendorRepository.setSubscription.mockResolvedValue(returnOject);
 
     const result = await service.setVendorSubscription(
       vendorId,
       subscriptionDTO,
     );
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.setVendorSubscription).toHaveBeenCalledWith(
+    expect(mockVendorRepository.setSubscription).toHaveBeenCalledWith(
       vendorId,
       subscriptionDTO,
     );
@@ -383,15 +478,16 @@ describe('VendorService', () => {
     };
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.setVendorSubscription.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.setSubscription.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.setVendorSubscription(
-      vendorId,
-      subscriptionDTO,
-    );
-    expect(result).rejects.toThrow('Repository error');
+    await expect(
+      service.setVendorSubscription(vendorId, subscriptionDTO),
+    ).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* get vendor shop success and failure tests */
@@ -406,21 +502,27 @@ describe('VendorService', () => {
 
     const returnOject: Shop | null = { id: 1 /* others data */ };
 
-    mockVendorRepository.getVendorShop.mockResolvedValue(returnOject);
+    mockVendorRepository.getShop.mockResolvedValue(returnOject);
 
     const result = await service.getVendorShop(vendorId);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.getVendorShop).toHaveBeenCalledWith(vendorId);
+    expect(mockVendorRepository.getShop).toHaveBeenCalledWith(vendorId);
   });
 
   it('should throw an error when get vendor shop method fails', async () => {
     const vendorId: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.getVendorShop.mockResolvedValue(' Repository error');
+    mockVendorRepository.getShop.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.getVendorShop(vendorId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getVendorShop(vendorId)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* set vendor shop success and failure tests */
@@ -433,16 +535,27 @@ describe('VendorService', () => {
 
     const vendorId: number = 1;
     const shopDTO: ShopDTO = {
-      /* data */
+      id: 1,
+      url: 'https://example.com',
+      vendor: { id: 1, /* autres données */ },
+      vendorId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
-    const returnOject: Vendor = { id: 1 /* others data */ };
+    const returnOject: Vendor = {
+      id: 1,
+      userId: 1,
+      user: { /* données utilisateur */ },
+      storeName: 'Nom du magasin',
+      // Ajoutez d'autres propriétés si nécessaire
+    };
 
-    mockVendorRepository.setVendorShop.mockResolvedValue(returnOject);
+    mockVendorRepository.setShop.mockResolvedValue(returnOject);
 
     const result = await service.setVendorShop(vendorId, shopDTO);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.setVendorShop).toHaveBeenCalledWith(
+    expect(mockVendorRepository.setShop).toHaveBeenCalledWith(
       vendorId,
       shopDTO,
     );
@@ -451,14 +564,25 @@ describe('VendorService', () => {
   it('should throw an error when set vendor shop method fails', async () => {
     const vendorId: number = 1;
     const shopDTO: ShopDTO = {
-      /* data */
+      id: 1,
+      url: 'https://example.com',
+      vendor: { id: 1, /* autres données */ },
+      vendorId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.setVendorShop.mockResolvedValue(' Repository error');
+    mockVendorRepository.setShop.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.setVendorShop(vendorId, shopDTO);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.setVendorShop(vendorId, shopDTO)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* find vendors by user success and failure tests */
@@ -471,25 +595,35 @@ describe('VendorService', () => {
 
     const userId: number = 1;
 
-    const returnOject: Vendor[] = [{ id: 1 /* others data */ }];
+    const returnOject: Vendor[] = [{
+      id: 1,
+      userId: 1,
+      user: { /* données utilisateur */ },
+      storeName: 'Nom du magasin',
+      // Ajoutez d'autres propriétés si nécessaire
+    }];
 
-    mockVendorRepository.findVendorsByUser.mockResolvedValue(returnOject);
+    mockVendorRepository.findByUser.mockResolvedValue(returnOject);
 
     const result = await service.findVendorsByUser(userId);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.findVendorsByUser).toHaveBeenCalledWith(userId);
+    expect(mockVendorRepository.findByUser).toHaveBeenCalledWith(userId);
   });
 
   it('should throw an error when find vendors by user method fails', async () => {
     const userId: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.findVendorsByUser.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.findByUser.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.findVendorsByUser(userId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.findVendorsByUser(userId)).rejects.toThrow(
+      'Repository error',
+    );
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* find vendors by subscription success and failure tests */
@@ -502,15 +636,19 @@ describe('VendorService', () => {
 
     const subscriptionId: number = 1;
 
-    const returnOject: Vendor[] = [{ id: 1 /* others data */ }];
+    const returnOject: Vendor[] = [{
+      id: 1,
+      userId: 1,
+      user: { /* données utilisateur */ },
+      storeName: 'Nom du magasin',
+      // Ajoutez d'autres propriétés si nécessaire
+    }];
 
-    mockVendorRepository.findVendorsBySubscription.mockResolvedValue(
-      returnOject,
-    );
+    mockVendorRepository.findBySubscription.mockResolvedValue(returnOject);
 
     const result = await service.findVendorsBySubscription(subscriptionId);
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.findVendorsBySubscription).toHaveBeenCalledWith(
+    expect(mockVendorRepository.findBySubscription).toHaveBeenCalledWith(
       subscriptionId,
     );
   });
@@ -519,12 +657,16 @@ describe('VendorService', () => {
     const subscriptionId: number = 1;
 
     // Simulate a failure when calling the repository
-    mockVendorRepository.findVendorsBySubscription.mockResolvedValue(
-      ' Repository error',
+    mockVendorRepository.findBySubscription.mockRejectedValue(
+      new Error('Repository error'),
     );
 
-    const result = await service.findVendorsBySubscription(subscriptionId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(
+      service.findVendorsBySubscription(subscriptionId),
+    ).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* get all vendors success and failure tests */
@@ -535,21 +677,31 @@ describe('VendorService', () => {
      * and that the repository's getAllVendors method is called with the correct data.
      */
 
-    const returnOject: Vendor[] = [{ id: 1 /* others data */ }];
+    const returnOject: Vendor[] = [{
+      id: 1,
+      userId: 1,
+      user: { /* données utilisateur */ },
+      storeName: 'Nom du magasin',
+      // Ajoutez d'autres propriétés si nécessaire
+    }];
 
-    mockVendorRepository.getAllVendors.mockResolvedValue(returnOject);
+    mockVendorRepository.getall.mockResolvedValue(returnOject);
 
     const result = await service.getAllVendors();
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.getAllVendors).toHaveBeenCalledWith();
+    expect(mockVendorRepository.getall).toHaveBeenCalledWith();
   });
 
   it('should throw an error when get all vendors method fails', async () => {
     // Simulate a failure when calling the repository
-    mockVendorRepository.getAllVendors.mockResolvedValue(' Repository error');
+    mockVendorRepository.getall.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.getAllVendors();
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getAllVendors()).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* get latest vendor success and failure tests */
@@ -560,20 +712,30 @@ describe('VendorService', () => {
      * and that the repository's getLatestVendor method is called with the correct data.
      */
 
-    const returnOject: Vendor | null = { id: 1 /* others data */ };
+    const returnOject: Vendor | null = {
+      id: 1,
+      userId: 1,
+      user: { /* données utilisateur */ },
+      storeName: 'Nom du magasin',
+      // Ajoutez d'autres propriétés si nécessaire
+    };
 
-    mockVendorRepository.getLatestVendor.mockResolvedValue(returnOject);
+    mockVendorRepository.getLatest.mockResolvedValue(returnOject);
 
     const result = await service.getLatestVendor();
     expect(result).toEqual(returnOject);
-    expect(mockVendorRepository.getLatestVendor).toHaveBeenCalledWith();
+    expect(mockVendorRepository.getLatest).toHaveBeenCalledWith();
   });
 
   it('should throw an error when get latest vendor method fails', async () => {
     // Simulate a failure when calling the repository
-    mockVendorRepository.getLatestVendor.mockResolvedValue(' Repository error');
+    mockVendorRepository.getLatest.mockRejectedValue(
+      new Error('Repository error'),
+    );
 
-    const result = await service.getLatestVendor();
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getLatestVendor()).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 });

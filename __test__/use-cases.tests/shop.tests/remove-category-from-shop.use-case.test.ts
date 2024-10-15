@@ -19,9 +19,9 @@ describe('RemoveCategoryFromShop', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const shopId: number = 1;
-  const categoryId: number = 1;
+  
+     const shopId: number = 1;
+     const categoryId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockShopDTO: ShopDTO = {
@@ -43,9 +43,7 @@ describe('RemoveCategoryFromShop', () => {
       ],
     }).compile();
 
-    removeCategoryFromShop = module.get<RemoveCategoryFromShop>(
-      RemoveCategoryFromShop,
-    );
+    removeCategoryFromShop = module.get<RemoveCategoryFromShop>(RemoveCategoryFromShop);
     shopService = module.get<ShopService>(ShopService);
   });
 
@@ -70,10 +68,7 @@ describe('RemoveCategoryFromShop', () => {
     const result = await removeCategoryFromShop.execute(shopId, categoryId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockShopService.removeCategoryFromShop).toHaveBeenCalledWith(
-      shopId,
-      categoryId,
-    );
+    expect(mockShopService.removeCategoryFromShop).toHaveBeenCalledWith(shopId, categoryId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toShopDTO).toHaveBeenCalledWith(mockShopDTO);
@@ -88,13 +83,9 @@ describe('RemoveCategoryFromShop', () => {
    */
   it('should throw an error when removeCategoryFromShop execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockShopService.removeCategoryFromShop.mockRejectedValue(
-      'Service method error',
-    );
+    mockShopService.removeCategoryFromShop.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      removeCategoryFromShop.execute(shopId, categoryId),
-    ).rejects.toThrow('Service method error');
+    await expect(removeCategoryFromShop.execute(shopId, categoryId)).rejects.toThrow('Service method error');
   });
 });

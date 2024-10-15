@@ -44,9 +44,10 @@ export interface IRefundRepository {
   /**
    * Checks if a refund is eligible for processing.
    * @param refund - The refund to check.
+   * @param eligibleDays - The refund to check.
    * @returns True if the refund is eligible, false otherwise.
    */
-  isEligible(refund: Refund): boolean;
+  isEligible(eligibleDay: number, refund: Refund): Promise<boolean>;
 
   /**
    * Processes a refund by updating its status.

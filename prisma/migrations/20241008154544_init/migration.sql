@@ -2,10 +2,37 @@
 CREATE TYPE "UserRole" AS ENUM ('CLIENT', 'ADMIN', 'SELLER');
 
 -- CreateEnum
-CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED');
+CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'REFUNDED', 'RETURNED');
+
+-- CreateEnum
+CREATE TYPE "ShipmentStatus" AS ENUM ('PENDING', 'IN_TRANSIT', 'DELIVERED', 'RETURNED', 'LOST', 'DAMAGED', 'CANCELLED');
+
+-- CreateEnum
+CREATE TYPE "ShippingMethod" AS ENUM ('STANDARD', 'EXPRESS', 'OVERNIGHT', 'SAME_DAY', 'ECONOMY', 'TWO_DAY');
+
+-- CreateEnum
+CREATE TYPE "Currency" AS ENUM ('USD', 'EUR', 'GBP', 'JPY', 'CNY', 'XOF', 'AUD', 'CAD', 'CHF', 'INR', 'BRL', 'ZAR');
 
 -- CreateEnum
 CREATE TYPE "DiscountType" AS ENUM ('PERCENTAGE', 'FIXED_AMOUNT');
+
+-- CreateEnum
+CREATE TYPE "PaymentStatus" AS ENUM ('SUCCESS', 'FAILED', 'PENDING');
+
+-- CreateEnum
+CREATE TYPE "NotificationType" AS ENUM ('PROMOTION', 'ORDER_UPDATE', 'INFO', 'WARNING');
+
+-- CreateEnum
+CREATE TYPE "TicketStatus" AS ENUM ('OPEN', 'IN_PROGRESS', 'HIGH', 'RESOLVED', 'CLOSED');
+
+-- CreateEnum
+CREATE TYPE "RefundStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'CANCELLED');
+
+-- CreateEnum
+CREATE TYPE "UserActivityAction" AS ENUM ('LOGIN', 'VIEW_PRODUCT', 'PURCHASE', 'LOGOUT', 'ADD_TO_CART', 'REMOVE_FROM_CART', 'SEARCH', 'OTHER');
+
+-- CreateEnum
+CREATE TYPE "AuditLogAction" AS ENUM ('CREATED', 'UPDATED', 'DELETED');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -140,6 +167,8 @@ CREATE TABLE "Order" (
     "totalAmount" DOUBLE PRECISION NOT NULL,
     "paymentId" TEXT,
     "trackingNumber" TEXT,
+    "shipmentId" INTEGER,
+    "shippingMethod" "ShippingMethod" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -153,6 +182,7 @@ CREATE TABLE "OrderItem" (
     "productId" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "OrderItem_pkey" PRIMARY KEY ("id")
 );
@@ -162,13 +192,65 @@ CREATE TABLE "Payment" (
     "id" SERIAL NOT NULL,
     "orderId" INTEGER NOT NULL,
     "method" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "PaymentStatus" NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
     "providerId" TEXT,
     "metadata" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Carrier" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "country" TEXT NOT NULL,
+    "region" TEXT,
+    "externalAPI" TEXT,
+    "capabilities" TEXT,
+
+    CONSTRAINT "Carrier_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ShippingRate" (
+    "id" SERIAL NOT NULL,
+    "carrierId" INTEGER NOT NULL,
+    "zoneId" INTEGER NOT NULL,
+    "weightMin" DOUBLE PRECISION NOT NULL,
+    "weightMax" DOUBLE PRECISION NOT NULL,
+    "cost" DOUBLE PRECISION NOT NULL,
+    "currency" "Currency" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ShippingRate_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Shipment" (
+    "id" SERIAL NOT NULL,
+    "orderId" INTEGER,
+    "carrierId" INTEGER NOT NULL,
+    "trackingNumber" TEXT NOT NULL,
+    "status" "ShipmentStatus" NOT NULL,
+    "shippedAt" TIMESTAMP(3),
+    "deliveredAt" TIMESTAMP(3),
+    "statusUpdatedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Shipment_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Zone" (
+    "id" SERIAL NOT NULL,
+    "country" TEXT NOT NULL,
+    "region" TEXT,
+
+    CONSTRAINT "Zone_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -188,6 +270,8 @@ CREATE TABLE "NewsletterSubscription" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "subscribedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "shopId" INTEGER NOT NULL,
 
     CONSTRAINT "NewsletterSubscription_pkey" PRIMARY KEY ("id")
 );
@@ -196,8 +280,9 @@ CREATE TABLE "NewsletterSubscription" (
 CREATE TABLE "Notification" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
-    "type" TEXT NOT NULL,
+    "type" "NotificationType" NOT NULL,
     "content" TEXT NOT NULL,
+    "read" BOOLEAN NOT NULL DEFAULT false,
     "sentAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Notification_pkey" PRIMARY KEY ("id")
@@ -209,7 +294,7 @@ CREATE TABLE "Ticket" (
     "userId" INTEGER NOT NULL,
     "subject" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "TicketStatus" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -250,28 +335,28 @@ CREATE TABLE "Refund" (
     "orderId" INTEGER NOT NULL,
     "reason" TEXT NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "RefundStatus" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Refund_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "SubSite" (
+CREATE TABLE "Subsite" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "config" JSONB NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "SubSite_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Subsite_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "UserActivity" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
-    "action" TEXT NOT NULL,
+    "action" "UserActivityAction" NOT NULL,
     "productId" INTEGER,
     "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -282,7 +367,7 @@ CREATE TABLE "UserActivity" (
 CREATE TABLE "AuditLog" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
-    "action" TEXT NOT NULL,
+    "action" "AuditLogAction" NOT NULL,
     "entity" TEXT NOT NULL,
     "entityId" INTEGER NOT NULL,
     "changes" JSONB NOT NULL,
@@ -298,6 +383,12 @@ CREATE TABLE "Marketplace" (
     "description" TEXT,
 
     CONSTRAINT "Marketplace_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_CarrierToZone" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
@@ -316,10 +407,28 @@ CREATE UNIQUE INDEX "Shop_url_key" ON "Shop"("url");
 CREATE UNIQUE INDEX "Shop_vendorId_key" ON "Shop"("vendorId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Order_shipmentId_key" ON "Order"("shipmentId");
+
+-- CreateIndex
+CREATE INDEX "ShippingRate_carrierId_zoneId_weightMin_weightMax_idx" ON "ShippingRate"("carrierId", "zoneId", "weightMin", "weightMax");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Shipment_orderId_key" ON "Shipment"("orderId");
+
+-- CreateIndex
+CREATE INDEX "Shipment_orderId_trackingNumber_idx" ON "Shipment"("orderId", "trackingNumber");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "NewsletterSubscription_email_key" ON "NewsletterSubscription"("email");
 
 -- CreateIndex
 CREATE INDEX "Promotion_productId_idx" ON "Promotion"("productId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_CarrierToZone_AB_unique" ON "_CarrierToZone"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_CarrierToZone_B_index" ON "_CarrierToZone"("B");
 
 -- AddForeignKey
 ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -376,6 +485,9 @@ ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") RE
 ALTER TABLE "Order" ADD CONSTRAINT "Order_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_shipmentId_fkey" FOREIGN KEY ("shipmentId") REFERENCES "Shipment"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -385,10 +497,22 @@ ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_productId_fkey" FOREIGN KEY ("
 ALTER TABLE "Payment" ADD CONSTRAINT "Payment_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "ShippingRate" ADD CONSTRAINT "ShippingRate_carrierId_fkey" FOREIGN KEY ("carrierId") REFERENCES "Carrier"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ShippingRate" ADD CONSTRAINT "ShippingRate_zoneId_fkey" FOREIGN KEY ("zoneId") REFERENCES "Zone"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Shipment" ADD CONSTRAINT "Shipment_carrierId_fkey" FOREIGN KEY ("carrierId") REFERENCES "Carrier"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Review" ADD CONSTRAINT "Review_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Review" ADD CONSTRAINT "Review_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "NewsletterSubscription" ADD CONSTRAINT "NewsletterSubscription_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -403,10 +527,16 @@ ALTER TABLE "Promotion" ADD CONSTRAINT "Promotion_productId_fkey" FOREIGN KEY ("
 ALTER TABLE "Refund" ADD CONSTRAINT "Refund_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "SubSite" ADD CONSTRAINT "SubSite_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Subsite" ADD CONSTRAINT "Subsite_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserActivity" ADD CONSTRAINT "UserActivity_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AuditLog" ADD CONSTRAINT "AuditLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_CarrierToZone" ADD CONSTRAINT "_CarrierToZone_A_fkey" FOREIGN KEY ("A") REFERENCES "Carrier"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_CarrierToZone" ADD CONSTRAINT "_CarrierToZone_B_fkey" FOREIGN KEY ("B") REFERENCES "Zone"("id") ON DELETE CASCADE ON UPDATE CASCADE;

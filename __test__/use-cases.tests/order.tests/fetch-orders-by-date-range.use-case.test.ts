@@ -19,13 +19,9 @@ describe('FetchOrdersByDateRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockOrderDTO: OrderDTO = {
@@ -47,9 +43,7 @@ describe('FetchOrdersByDateRange', () => {
       ],
     }).compile();
 
-    fetchOrdersByDateRange = module.get<FetchOrdersByDateRange>(
-      FetchOrdersByDateRange,
-    );
+    fetchOrdersByDateRange = module.get<FetchOrdersByDateRange>(FetchOrdersByDateRange);
     orderService = module.get<OrderService>(OrderService);
   });
 
@@ -74,10 +68,7 @@ describe('FetchOrdersByDateRange', () => {
     const result = await fetchOrdersByDateRange.execute(startDate, endDate);
 
     // Verify that the service was called with the expected arguments
-    expect(mockOrderService.fetchOrdersByDateRange).toHaveBeenCalledWith(
-      startDate,
-      endDate,
-    );
+    expect(mockOrderService.fetchOrdersByDateRange).toHaveBeenCalledWith(startDate, endDate);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toOrderDTO).toHaveBeenCalledWith(mockOrderDTO);
@@ -92,13 +83,9 @@ describe('FetchOrdersByDateRange', () => {
    */
   it('should throw an error when fetchOrdersByDateRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockOrderService.fetchOrdersByDateRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockOrderService.fetchOrdersByDateRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchOrdersByDateRange.execute(startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchOrdersByDateRange.execute(startDate, endDate)).rejects.toThrow('Service method error');
   });
 });

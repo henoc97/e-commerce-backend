@@ -19,10 +19,8 @@ describe('CreateUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userDTO: UserDTO = {
-    /* data */
-  };
+  
+     const userDTO: UserDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -84,11 +82,9 @@ describe('CreateUser', () => {
    */
   it('should throw an error when createUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.createUser.mockRejectedValue('Service method error');
+    mockUserService.createUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createUser.execute(userDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createUser.execute(userDTO)).rejects.toThrow('Service method error');
   });
 });

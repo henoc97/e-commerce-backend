@@ -19,11 +19,9 @@ describe('UpdateProductImage', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const updates: Partial<ProductImageDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const updates: Partial<ProductImageDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockProductImageDTO: ProductImageDTO = {
@@ -63,19 +61,16 @@ describe('UpdateProductImage', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductImageService.updateProductImage.mockResolvedValue(
-      mockProductImageDTO,
-    );
+    mockProductImageService.updateProductImage.mockResolvedValue(mockProductImageDTO);
     (toProductImageDTO as jest.Mock).mockReturnValue(mockProductImageDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateProductImage.execute(id, updates);
+    const result = await updateProductImage.execute(id,
+    updates,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductImageService.updateProductImage).toHaveBeenCalledWith(
-      id,
-      updates,
-    );
+    expect(mockProductImageService.updateProductImage).toHaveBeenCalledWith(id,
+    updates,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductImageDTO).toHaveBeenCalledWith(mockProductImageDTO);
@@ -90,13 +85,10 @@ describe('UpdateProductImage', () => {
    */
   it('should throw an error when updateProductImage execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductImageService.updateProductImage.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductImageService.updateProductImage.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateProductImage.execute(id, updates)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateProductImage.execute(id,
+    updates,)).rejects.toThrow('Service method error');
   });
 });

@@ -32,6 +32,11 @@ export class Notification {
   content: string;
 
   /**
+   * The content of the notification.
+   */
+  read: boolean;
+
+  /**
    * The date and time when the notification was sent.
    * Automatically set to the current date and time when the notification is created.
    */
@@ -44,6 +49,7 @@ export class Notification {
    * @param user - The user associated with the notification.
    * @param type - The type of the notification.
    * @param content - The content of the notification.
+   * @param read - The content is read or not.
    * @param sentAt - (Optional) Date and time of notification creation.
    */
   constructor(
@@ -52,6 +58,7 @@ export class Notification {
     user: User,
     type: NotificationType,
     content: string,
+    read: boolean = false,
     sentAt: Date = new Date(),
   ) {
     this.id = id;
@@ -59,6 +66,7 @@ export class Notification {
     this.user = user;
     this.type = type;
     this.content = content;
+    this.read = read;
     this.sentAt = sentAt;
   }
 }

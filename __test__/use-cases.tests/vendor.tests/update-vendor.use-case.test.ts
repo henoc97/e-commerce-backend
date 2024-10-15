@@ -19,11 +19,9 @@ describe('UpdateVendor', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const vendorId: number = 1;
-  const vendorDTO: Partial<VendorDTO> = {
-    /* data */
-  };
+  
+     const vendorId: number = 1;
+     const vendorDTO: Partial<VendorDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -67,13 +65,12 @@ describe('UpdateVendor', () => {
     (toVendorDTO as jest.Mock).mockReturnValue(mockVendorDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateVendor.execute(vendorId, vendorDTO);
+    const result = await updateVendor.execute(vendorId,
+    vendorDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockVendorService.updateVendor).toHaveBeenCalledWith(
-      vendorId,
-      vendorDTO,
-    );
+    expect(mockVendorService.updateVendor).toHaveBeenCalledWith(vendorId,
+    vendorDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toVendorDTO).toHaveBeenCalledWith(mockVendorDTO);
@@ -88,11 +85,10 @@ describe('UpdateVendor', () => {
    */
   it('should throw an error when updateVendor execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.updateVendor.mockRejectedValue('Service method error');
+    mockVendorService.updateVendor.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateVendor.execute(vendorId, vendorDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateVendor.execute(vendorId,
+    vendorDTO,)).rejects.toThrow('Service method error');
   });
 });

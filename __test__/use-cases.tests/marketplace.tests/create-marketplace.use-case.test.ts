@@ -19,10 +19,8 @@ describe('CreateMarketplace', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const dto: MarketplaceDTO = {
-    /* data */
-  };
+  
+     const dto: MarketplaceDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockMarketplaceDTO: MarketplaceDTO = {
@@ -62,9 +60,7 @@ describe('CreateMarketplace', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockMarketplaceService.createMarketplace.mockResolvedValue(
-      mockMarketplaceDTO,
-    );
+    mockMarketplaceService.createMarketplace.mockResolvedValue(mockMarketplaceDTO);
     (toMarketplaceDTO as jest.Mock).mockReturnValue(mockMarketplaceDTO);
 
     // Execute the use case with provided parameters
@@ -86,13 +82,9 @@ describe('CreateMarketplace', () => {
    */
   it('should throw an error when createMarketplace execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockMarketplaceService.createMarketplace.mockRejectedValue(
-      'Service method error',
-    );
+    mockMarketplaceService.createMarketplace.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createMarketplace.execute(dto)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createMarketplace.execute(dto)).rejects.toThrow('Service method error');
   });
 });

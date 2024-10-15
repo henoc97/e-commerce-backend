@@ -19,9 +19,9 @@ describe('FetchLogsByEntity', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const entity: string = 'entity';
-  const entityId: number = 1;
+  
+     const entity: string = 'entity';
+     const entityId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockAuditLogDTO: AuditLogDTO = {
@@ -68,10 +68,7 @@ describe('FetchLogsByEntity', () => {
     const result = await fetchLogsByEntity.execute(entity, entityId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockAuditLogService.fetchLogsByEntity).toHaveBeenCalledWith(
-      entity,
-      entityId,
-    );
+    expect(mockAuditLogService.fetchLogsByEntity).toHaveBeenCalledWith(entity, entityId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toAuditLogDTO).toHaveBeenCalledWith(mockAuditLogDTO);
@@ -86,13 +83,9 @@ describe('FetchLogsByEntity', () => {
    */
   it('should throw an error when fetchLogsByEntity execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAuditLogService.fetchLogsByEntity.mockRejectedValue(
-      'Service method error',
-    );
+    mockAuditLogService.fetchLogsByEntity.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchLogsByEntity.execute(entity, entityId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchLogsByEntity.execute(entity, entityId)).rejects.toThrow('Service method error');
   });
 });

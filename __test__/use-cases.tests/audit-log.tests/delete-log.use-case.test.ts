@@ -19,8 +19,8 @@ describe('DeleteLog', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockAuditLogDTO: AuditLogDTO = {
@@ -82,7 +82,7 @@ describe('DeleteLog', () => {
    */
   it('should throw an error when deleteLog execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAuditLogService.deleteLog.mockRejectedValue('Service method error');
+    mockAuditLogService.deleteLog.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
     await expect(deleteLog.execute(id)).rejects.toThrow('Service method error');

@@ -1,0 +1,10 @@
+{
+  "roots": ["<rootDir>/"],
+  "testMatch": ["**/?(*.)+(spec|test).[jt]s?(x)"],
+  "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+  },
+  "moduleNameMapper": {
+  "^src/(.*)$": "<rootDir>../src/$1"
+}
+}

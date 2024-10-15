@@ -15,6 +15,7 @@ export function fromNotificationPrisma(notificationPrisma: any): Notification {
       : undefined,
     notificationPrisma.type,
     notificationPrisma.content,
+    notificationPrisma.read,
     notificationPrisma.sentAt,
   );
 }

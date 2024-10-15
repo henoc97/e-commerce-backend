@@ -46,24 +46,6 @@ export interface IMarketplaceRepository {
   delete(id: number): Promise<boolean>;
 
   /**
-   * Associates a Shop with a Marketplace.
-   * @param marketplaceId - The unique ID of the Marketplace.
-   * @param shop - The Shop entity to add.
-   * @returns A promise that resolves to the updated Marketplace.
-   * @throws Error if association fails.
-   */
-  addShop(marketplaceId: number, shop: Shop): Promise<Marketplace>;
-
-  /**
-   * Disassociates a Shop from a Marketplace.
-   * @param marketplaceId - The unique ID of the Marketplace.
-   * @param shopId - The unique ID of the Shop to remove.
-   * @returns A promise that resolves to the updated Marketplace.
-   * @throws Error if disassociation fails.
-   */
-  removeShop(marketplaceId: number, shopId: number): Promise<Marketplace>;
-
-  /**
    * Retrieves all shops within a Marketplace.
    * @param marketplaceId - The unique ID of the Marketplace.
    * @returns A promise that resolves to an array of Shops in the Marketplace.

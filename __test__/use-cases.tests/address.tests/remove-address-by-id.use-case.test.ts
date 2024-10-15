@@ -19,8 +19,8 @@ describe('RemoveAddressById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockAddressDTO: AddressDTO = {
@@ -82,13 +82,9 @@ describe('RemoveAddressById', () => {
    */
   it('should throw an error when removeAddressById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAddressService.removeAddressById.mockRejectedValue(
-      'Service method error',
-    );
+    mockAddressService.removeAddressById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(removeAddressById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(removeAddressById.execute(id)).rejects.toThrow('Service method error');
   });
 });

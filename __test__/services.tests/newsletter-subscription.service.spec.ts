@@ -4,378 +4,357 @@ import { INewsletterSubscriptionRepository } from '../../src/domain/repositories
 import { NewsletterSubscription } from '../../src/domain/entities/newsletter-subscription.entity';
 import { NewsletterSubscriptionDTO } from '../../src/presentation/dtos/newsletter-subscription.dto';
 
+
 const mockNewsletterSubscriptionRepository = {
-  createSubscription: jest.fn(),
-  getSubscriptionById: jest.fn(),
-  updateSubscription: jest.fn(),
-  deleteSubscription: jest.fn(),
-  listAllSubscriptions: jest.fn(),
-  getSubscriptionByEmail: jest.fn(),
-  isEmailSubscribed: jest.fn(),
-  getSubscriptionsByDateRange: jest.fn(),
-  countTotalSubscriptions: jest.fn(),
+  create: jest.fn(),
+getById: jest.fn(),
+update: jest.fn(),
+delete: jest.fn(),
+listAllByShop: jest.fn(),
+getByEmailAndShop: jest.fn(),
+isSubscribed: jest.fn(),
+getByDateRange: jest.fn(),
+countAllForShop: jest.fn()
 };
 
-describe('NewsletterSubscriptionService', () => {
-  let service: NewsletterSubscriptionService;
-  let newsletterSubscriptionRepository: INewsletterSubscriptionRepository;
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
-  beforeEach(async () => {
+
+describe('NewsletterSubscriptionService', () => {
+    let service: NewsletterSubscriptionService;
+    let newsletterSubscriptionRepository: INewsletterSubscriptionRepository;
+
+    beforeEach(async () => {
     // Set up the testing module with the service and the mock repository
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NewsletterSubscriptionService,
         {
-          provide: 'NewsletterSubscriptionRepository',
+          provide: 'INewsletterSubscriptionRepository',
           useValue: mockNewsletterSubscriptionRepository, // Use the mock
         },
       ],
     }).compile();
 
     // Retrieve instances of the service and repository
-    service = module.get<NewsletterSubscriptionService>(
-      NewsletterSubscriptionService,
-    );
-    newsletterSubscriptionRepository =
-      module.get<INewsletterSubscriptionRepository>(
-        'NewsletterSubscriptionRepository',
-      );
+    service = module.get<NewsletterSubscriptionService>(NewsletterSubscriptionService);
+    newsletterSubscriptionRepository = module.get<INewsletterSubscriptionRepository>('INewsletterSubscriptionRepository');
   });
 
-  /* create subscription success and failure tests */
-  it('should create subscription', async () => {
-    /**
+afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+
+    /* create subscription success and failure tests */
+it('should create subscription', async () => {
+    /** 
      * Tests the create subscription method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's createSubscription method is called with the correct data.
      */
+    
+     const dto: NewsletterSubscriptionDTO = { /* data */ };
 
-    const dto: NewsletterSubscriptionDTO = {
-      /* data */
-    };
+    const returnOject: NewsletterSubscription = { id: 1, /* others data */ };
+    
+    mockNewsletterSubscriptionRepository.create.mockResolvedValue(returnOject);
 
-    const returnOject: NewsletterSubscription = { id: 1 /* others data */ };
-
-    mockNewsletterSubscriptionRepository.createSubscription.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.createSubscription(dto);
+    const result = await service.createSubscription(dto,);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.createSubscription,
-    ).toHaveBeenCalledWith(dto);
-  });
+    expect(mockNewsletterSubscriptionRepository.create).toHaveBeenCalledWith(dto,);
+});
 
-  it('should throw an error when create subscription method fails', async () => {
-    const dto: NewsletterSubscriptionDTO = {
-      /* data */
-    };
+it('should throw an error when create subscription method fails', async () => {
+    
+     const dto: NewsletterSubscriptionDTO = { /* data */ };
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.create.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.createSubscription.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.createSubscription(dto,)).rejects.toThrow('Repository error');
 
-    const result = await service.createSubscription(dto);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* get subscription by id success and failure tests */
-  it('should get subscription by id', async () => {
-    /**
+/* get subscription by id success and failure tests */
+it('should get subscription by id', async () => {
+    /** 
      * Tests the get subscription by id method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's getSubscriptionById method is called with the correct data.
      */
+    
+     const id: number = 1;
 
-    const id: number = 1;
+    const returnOject: NewsletterSubscription | null = { id: 1, /* others data */ };
+    
+    mockNewsletterSubscriptionRepository.getById.mockResolvedValue(returnOject);
 
-    const returnOject: NewsletterSubscription | null = {
-      id: 1 /* others data */,
-    };
-
-    mockNewsletterSubscriptionRepository.getSubscriptionById.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.getSubscriptionById(id);
+    const result = await service.getSubscriptionById(id,);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.getSubscriptionById,
-    ).toHaveBeenCalledWith(id);
-  });
+    expect(mockNewsletterSubscriptionRepository.getById).toHaveBeenCalledWith(id,);
+});
 
-  it('should throw an error when get subscription by id method fails', async () => {
-    const id: number = 1;
+it('should throw an error when get subscription by id method fails', async () => {
+    
+     const id: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.getSubscriptionById.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getSubscriptionById(id,)).rejects.toThrow('Repository error');
 
-    const result = await service.getSubscriptionById(id);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* update subscription success and failure tests */
-  it('should update subscription', async () => {
-    /**
+/* update subscription success and failure tests */
+it('should update subscription', async () => {
+    /** 
      * Tests the update subscription method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's updateSubscription method is called with the correct data.
      */
+    
+     const id: number = 1;
+     const updates: Partial<NewsletterSubscriptionDTO> = { /* data */ };
 
-    const id: number = 1;
-    const updates: Partial<NewsletterSubscriptionDTO> = {
-      /* data */
-    };
+    const returnOject: NewsletterSubscription = { id: 1, /* others data */ };
+    
+    mockNewsletterSubscriptionRepository.update.mockResolvedValue(returnOject);
 
-    const returnOject: NewsletterSubscription = { id: 1 /* others data */ };
-
-    mockNewsletterSubscriptionRepository.updateSubscription.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.updateSubscription(id, updates);
+    const result = await service.updateSubscription(id,
+    updates,);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.updateSubscription,
-    ).toHaveBeenCalledWith(id, updates);
-  });
+    expect(mockNewsletterSubscriptionRepository.update).toHaveBeenCalledWith(id,
+    updates,);
+});
 
-  it('should throw an error when update subscription method fails', async () => {
-    const id: number = 1;
-    const updates: Partial<NewsletterSubscriptionDTO> = {
-      /* data */
-    };
+it('should throw an error when update subscription method fails', async () => {
+    
+     const id: number = 1;
+     const updates: Partial<NewsletterSubscriptionDTO> = { /* data */ };
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.update.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.updateSubscription.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.updateSubscription(id,
+    updates,)).rejects.toThrow('Repository error');
 
-    const result = await service.updateSubscription(id, updates);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* delete subscription success and failure tests */
-  it('should delete subscription', async () => {
-    /**
+/* delete subscription success and failure tests */
+it('should delete subscription', async () => {
+    /** 
      * Tests the delete subscription method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's deleteSubscription method is called with the correct data.
      */
+    
+     const id: number = 1;
 
-    const id: number = 1;
-
-    const returnOject: boolean = true;
-
-    mockNewsletterSubscriptionRepository.deleteSubscription.mockResolvedValue(
-      returnOject,
-    );
+    const returnOject: boolean = true
+    
+    mockNewsletterSubscriptionRepository.delete.mockResolvedValue(returnOject);
 
     const result = await service.deleteSubscription(id);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.deleteSubscription,
-    ).toHaveBeenCalledWith(id);
-  });
+    expect(mockNewsletterSubscriptionRepository.delete).toHaveBeenCalledWith(id);
+});
 
-  it('should throw an error when delete subscription method fails', async () => {
-    const id: number = 1;
+it('should throw an error when delete subscription method fails', async () => {
+    
+     const id: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.deleteSubscription.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.deleteSubscription(id)).rejects.toThrow('Repository error');
 
-    const result = await service.deleteSubscription(id);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* list all subscriptions success and failure tests */
-  it('should list all subscriptions', async () => {
-    /**
+/* list all subscriptions success and failure tests */
+it('should list all subscriptions', async () => {
+    /** 
      * Tests the list all subscriptions method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's listAllSubscriptions method is called with the correct data.
      */
+    
+     const shopId: number = 1;
 
-    const returnOject: NewsletterSubscription[] = [{ id: 1 /* others data */ }];
+    const returnOject: NewsletterSubscription[] = [{ id: 1, /* others data */ }];
+    
+    mockNewsletterSubscriptionRepository.listAllByShop.mockResolvedValue(returnOject);
 
-    mockNewsletterSubscriptionRepository.listAllSubscriptions.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.listAllSubscriptions();
+    const result = await service.listAllSubscriptions(shopId);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.listAllSubscriptions,
-    ).toHaveBeenCalledWith();
-  });
+    expect(mockNewsletterSubscriptionRepository.listAllByShop).toHaveBeenCalledWith(shopId);
+});
 
-  it('should throw an error when list all subscriptions method fails', async () => {
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.listAllSubscriptions.mockResolvedValue(
-      ' Repository error',
-    );
+it('should throw an error when list all subscriptions method fails', async () => {
+    
+     const shopId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.listAllByShop.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.listAllSubscriptions();
-    expect(result).rejects.toThrow('Repository error');
-  });
+    await expect(service.listAllSubscriptions(shopId)).rejects.toThrow('Repository error');
 
-  /* get subscription by email success and failure tests */
-  it('should get subscription by email', async () => {
-    /**
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
+
+/* get subscription by email success and failure tests */
+it('should get subscription by email', async () => {
+    /** 
      * Tests the get subscription by email method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's getSubscriptionByEmail method is called with the correct data.
      */
+    
+     const email: string = 'email';
+     const shopId: number = 1;
 
-    const email: string = 'email';
+    const returnOject: NewsletterSubscription | null = { id: 1, /* others data */ };
+    
+    mockNewsletterSubscriptionRepository.getByEmailAndShop.mockResolvedValue(returnOject);
 
-    const returnOject: NewsletterSubscription | null = {
-      id: 1 /* others data */,
-    };
-
-    mockNewsletterSubscriptionRepository.getSubscriptionByEmail.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.getSubscriptionByEmail(email);
+    const result = await service.getSubscriptionByEmail(email,
+    shopId,);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.getSubscriptionByEmail,
-    ).toHaveBeenCalledWith(email);
-  });
+    expect(mockNewsletterSubscriptionRepository.getByEmailAndShop).toHaveBeenCalledWith(email,
+    shopId,);
+});
 
-  it('should throw an error when get subscription by email method fails', async () => {
-    const email: string = 'email';
+it('should throw an error when get subscription by email method fails', async () => {
+    
+     const email: string = 'email';
+     const shopId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.getByEmailAndShop.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.getSubscriptionByEmail.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getSubscriptionByEmail(email,
+    shopId,)).rejects.toThrow('Repository error');
 
-    const result = await service.getSubscriptionByEmail(email);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* is email subscribed success and failure tests */
-  it('should is email subscribed', async () => {
-    /**
+/* is email subscribed success and failure tests */
+it('should is email subscribed', async () => {
+    /** 
      * Tests the is email subscribed method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's isEmailSubscribed method is called with the correct data.
      */
+    
+     const email: string = 'email';
+     const shopId: number = 1;
 
-    const email: string = 'email';
+    const returnOject: boolean = true
+    
+    mockNewsletterSubscriptionRepository.isSubscribed.mockResolvedValue(returnOject);
 
-    const returnOject: boolean = true;
-
-    mockNewsletterSubscriptionRepository.isEmailSubscribed.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.isEmailSubscribed(email);
+    const result = await service.isEmailSubscribed(email, shopId);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.isEmailSubscribed,
-    ).toHaveBeenCalledWith(email);
-  });
+    expect(mockNewsletterSubscriptionRepository.isSubscribed).toHaveBeenCalledWith(email, shopId);
+});
 
-  it('should throw an error when is email subscribed method fails', async () => {
-    const email: string = 'email';
+it('should throw an error when is email subscribed method fails', async () => {
+    
+     const email: string = 'email';
+     const shopId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.isSubscribed.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.isEmailSubscribed.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.isEmailSubscribed(email, shopId)).rejects.toThrow('Repository error');
 
-    const result = await service.isEmailSubscribed(email);
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* get subscriptions by date range success and failure tests */
-  it('should get subscriptions by date range', async () => {
-    /**
+/* get subscriptions by date range success and failure tests */
+it('should get subscriptions by date range', async () => {
+    /** 
      * Tests the get subscriptions by date range method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's getSubscriptionsByDateRange method is called with the correct data.
      */
+    
+     const shopId: number = 1;
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
-    const startDate: Date = {
-      /* data */
-    };
-    const endDate: Date = {
-      /* data */
-    };
+    const returnOject: NewsletterSubscription[] = [{ id: 1, /* others data */ }];
+    
+    mockNewsletterSubscriptionRepository.getByDateRange.mockResolvedValue(returnOject);
 
-    const returnOject: NewsletterSubscription[] = [{ id: 1 /* others data */ }];
-
-    mockNewsletterSubscriptionRepository.getSubscriptionsByDateRange.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.getSubscriptionsByDateRange(
-      startDate,
-      endDate,
-    );
+    const result = await service.getSubscriptionsByDateRange(shopId,
+    startDate,
+    endDate,);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.getSubscriptionsByDateRange,
-    ).toHaveBeenCalledWith(startDate, endDate);
-  });
+    expect(mockNewsletterSubscriptionRepository.getByDateRange).toHaveBeenCalledWith(shopId,
+    startDate,
+    endDate,);
+});
 
-  it('should throw an error when get subscriptions by date range method fails', async () => {
-    const startDate: Date = {
-      /* data */
-    };
-    const endDate: Date = {
-      /* data */
-    };
+it('should throw an error when get subscriptions by date range method fails', async () => {
+    
+     const shopId: number = 1;
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.getByDateRange.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.getSubscriptionsByDateRange.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getSubscriptionsByDateRange(shopId,
+    startDate,
+    endDate,)).rejects.toThrow('Repository error');
 
-    const result = await service.getSubscriptionsByDateRange(
-      startDate,
-      endDate,
-    );
-    expect(result).rejects.toThrow('Repository error');
-  });
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
 
-  /* count total subscriptions success and failure tests */
-  it('should count total subscriptions', async () => {
-    /**
+/* count total subscriptions success and failure tests */
+it('should count total subscriptions', async () => {
+    /** 
      * Tests the count total subscriptions method.
-     * Verifies that the returned newsletterSubscription matches the expected one
+     * Verifies that the returned newsletterSubscription matches the expected one 
      * and that the repository's countTotalSubscriptions method is called with the correct data.
      */
+    
+     const shopId: number = 1;
 
-    const returnOject: number = 1;
+    const returnOject: number = 1
+    
+    mockNewsletterSubscriptionRepository.countAllForShop.mockResolvedValue(returnOject);
 
-    mockNewsletterSubscriptionRepository.countTotalSubscriptions.mockResolvedValue(
-      returnOject,
-    );
-
-    const result = await service.countTotalSubscriptions();
+    const result = await service.countTotalSubscriptions(shopId);
     expect(result).toEqual(returnOject);
-    expect(
-      mockNewsletterSubscriptionRepository.countTotalSubscriptions,
-    ).toHaveBeenCalledWith();
-  });
-
-  it('should throw an error when count total subscriptions method fails', async () => {
-    // Simulate a failure when calling the repository
-    mockNewsletterSubscriptionRepository.countTotalSubscriptions.mockResolvedValue(
-      ' Repository error',
-    );
-
-    const result = await service.countTotalSubscriptions();
-    expect(result).rejects.toThrow('Repository error');
-  });
+    expect(mockNewsletterSubscriptionRepository.countAllForShop).toHaveBeenCalledWith(shopId);
 });
+
+it('should throw an error when count total subscriptions method fails', async () => {
+    
+     const shopId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockNewsletterSubscriptionRepository.countAllForShop.mockRejectedValue(new Error('Repository error'));
+
+    await expect(service.countTotalSubscriptions(shopId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
+});
+
+})

@@ -3,416 +3,446 @@ import { CartService } from '../../src/application/services/cart.service';
 import { ICartRepository } from '../../src/domain/repositories/cart.repository';
 import { Cart } from '../../src/domain/entities/cart.entity';
 import { CartDTO } from '../../src/presentation/dtos/cart.dto';
+import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+import { CartItem } from 'src/domain/entities/cart-item.entity';
+import { CartItemService } from 'src/application/services/cart-item.service';
+import { InternalServerErrorException } from '@nestjs/common';
+
 
 const mockCartRepository = {
-  createCart: jest.fn(),
-  getCartById: jest.fn(),
-  updateCart: jest.fn(),
-  deleteCart: jest.fn(),
-  addItemToCart: jest.fn(),
-  removeItemFromCart: jest.fn(),
-  getCartItems: jest.fn(),
-  clearCart: jest.fn(),
-  getCartByUserId: jest.fn(),
-  mergeCarts: jest.fn(),
-  getItemCount: jest.fn(),
-  getTotalValue: jest.fn(),
+    create: jest.fn(),
+    getById: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    getByUserId: jest.fn(),
 };
 
+const mockCartItemService = {
+    createCartItem: jest.fn(),
+    getItemsByCartId: jest.fn(),
+    deleteCartItem: jest.fn(),
+    clearCart: jest.fn(),
+    getItemCount: jest.fn(),
+    calculateCartTotal: jest.fn(),
+    getCartItemsByCartId: jest.fn()
+};
+
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+
+
 describe('CartService', () => {
-  let service: CartService;
-  let cartRepository: ICartRepository;
-
-  beforeEach(async () => {
-    // Set up the testing module with the service and the mock repository
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        CartService,
-        {
-          provide: 'CartRepository',
-          useValue: mockCartRepository, // Use the mock
-        },
-      ],
-    }).compile();
-
-    // Retrieve instances of the service and repository
-    service = module.get<CartService>(CartService);
-    cartRepository = module.get<ICartRepository>('CartRepository');
-  });
-
-  /* create cart success and failure tests */
-  it('should create cart', async () => {
-    /**
-     * Tests the create cart method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's createCart method is called with the correct data.
-     */
-
-    const cartDTO: CartDTO = {
-      /* data */
-    };
-
-    const returnOject: Cart = { id: 1 /* others data */ };
-
-    mockCartRepository.createCart.mockResolvedValue(returnOject);
-
-    const result = await service.createCart(cartDTO);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.createCart).toHaveBeenCalledWith(cartDTO);
-  });
-
-  it('should throw an error when create cart method fails', async () => {
-    const cartDTO: CartDTO = {
-      /* data */
-    };
-
-    // Simulate a failure when calling the repository
-    mockCartRepository.createCart.mockResolvedValue(' Repository error');
-
-    const result = await service.createCart(cartDTO);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* get cart by id success and failure tests */
-  it('should get cart by id', async () => {
-    /**
-     * Tests the get cart by id method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's getCartById method is called with the correct data.
-     */
-
-    const id: number = 1;
-
-    const returnOject: Cart | null = { id: 1 /* others data */ };
-
-    mockCartRepository.getCartById.mockResolvedValue(returnOject);
-
-    const result = await service.getCartById(id);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.getCartById).toHaveBeenCalledWith(id);
-  });
-
-  it('should throw an error when get cart by id method fails', async () => {
-    const id: number = 1;
-
-    // Simulate a failure when calling the repository
-    mockCartRepository.getCartById.mockResolvedValue(' Repository error');
-
-    const result = await service.getCartById(id);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* update cart success and failure tests */
-  it('should update cart', async () => {
-    /**
-     * Tests the update cart method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's updateCart method is called with the correct data.
-     */
-
-    const id: number = 1;
-    const data: Partial<CartDTO> = {
-      /* data */
-    };
-
-    const returnOject: Cart = { id: 1 /* others data */ };
-
-    mockCartRepository.updateCart.mockResolvedValue(returnOject);
-
-    const result = await service.updateCart(id, data);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.updateCart).toHaveBeenCalledWith(id, data);
-  });
-
-  it('should throw an error when update cart method fails', async () => {
-    const id: number = 1;
-    const data: Partial<CartDTO> = {
-      /* data */
-    };
-
-    // Simulate a failure when calling the repository
-    mockCartRepository.updateCart.mockResolvedValue(' Repository error');
-
-    const result = await service.updateCart(id, data);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* delete cart success and failure tests */
-  it('should delete cart', async () => {
-    /**
-     * Tests the delete cart method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's deleteCart method is called with the correct data.
-     */
-
-    const id: number = 1;
-
-    const returnOject: boolean = true;
-
-    mockCartRepository.deleteCart.mockResolvedValue(returnOject);
-
-    const result = await service.deleteCart(id);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.deleteCart).toHaveBeenCalledWith(id);
-  });
-
-  it('should throw an error when delete cart method fails', async () => {
-    const id: number = 1;
-
-    // Simulate a failure when calling the repository
-    mockCartRepository.deleteCart.mockResolvedValue(' Repository error');
-
-    const result = await service.deleteCart(id);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* add item to cart success and failure tests */
-  it('should add item to cart', async () => {
-    /**
-     * Tests the add item to cart method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's addItemToCart method is called with the correct data.
-     */
-
-    const cartId: number = 1;
-    const item: CartItemDTO = {
-      /* data */
-    };
-
-    const returnOject: Cart = { id: 1 /* others data */ };
+    let service: CartService;
+    let cartRepository: ICartRepository;
 
-    mockCartRepository.addItemToCart.mockResolvedValue(returnOject);
-
-    const result = await service.addItemToCart(cartId, item);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.addItemToCart).toHaveBeenCalledWith(cartId, item);
-  });
-
-  it('should throw an error when add item to cart method fails', async () => {
-    const cartId: number = 1;
-    const item: CartItemDTO = {
-      /* data */
-    };
-
-    // Simulate a failure when calling the repository
-    mockCartRepository.addItemToCart.mockResolvedValue(' Repository error');
+    beforeEach(async () => {
+        // Set up the testing module with the service and the mock repository
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [
+                CartService,
+                {
+                    provide: 'ICartRepository',
+                    useValue: mockCartRepository, // Use the mock
+                },
+                {
+                    provide: CartItemService,
+                    useValue: mockCartItemService, // Mock the CartItemService
+                },
+            ],
+        }).compile();
 
-    const result = await service.addItemToCart(cartId, item);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* remove item from cart success and failure tests */
-  it('should remove item from cart', async () => {
-    /**
-     * Tests the remove item from cart method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's removeItemFromCart method is called with the correct data.
-     */
+        // Retrieve instances of the service and repository
+        service = module.get<CartService>(CartService);
+        cartRepository = module.get<ICartRepository>('ICartRepository');
+    });
 
-    const cartId: number = 1;
-    const itemId: number = 1;
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-    const returnOject: Cart = { id: 1 /* others data */ };
-
-    mockCartRepository.removeItemFromCart.mockResolvedValue(returnOject);
 
-    const result = await service.removeItemFromCart(cartId, itemId);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.removeItemFromCart).toHaveBeenCalledWith(
-      cartId,
-      itemId,
-    );
-  });
+    /* create cart success and failure tests */
+    it('should create cart', async () => {
+        /** 
+         * Tests the create cart method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's createCart method is called with the correct data.
+         */
 
-  it('should throw an error when remove item from cart method fails', async () => {
-    const cartId: number = 1;
-    const itemId: number = 1;
+        const cartDTO: CartDTO = new Cart(1, 1);
 
-    // Simulate a failure when calling the repository
-    mockCartRepository.removeItemFromCart.mockResolvedValue(
-      ' Repository error',
-    );
+        const returnOject: Cart = new Cart(1, 1);
 
-    const result = await service.removeItemFromCart(cartId, itemId);
-    expect(result).rejects.toThrow('Repository error');
-  });
+        mockCartRepository.create.mockResolvedValue(returnOject);
 
-  /* get cart items success and failure tests */
-  it('should get cart items', async () => {
-    /**
-     * Tests the get cart items method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's getCartItems method is called with the correct data.
-     */
+        const result = await service.createCart(cartDTO);
+        expect(result).toEqual(returnOject);
+        expect(mockCartRepository.create).toHaveBeenCalledWith(cartDTO);
+    });
 
-    const cartId: number = 1;
-
-    const returnOject: CartItem[] = [{ id: 1 /* others data */ }];
+    it('should throw an error when create cart method fails', async () => {
 
-    mockCartRepository.getCartItems.mockResolvedValue(returnOject);
-
-    const result = await service.getCartItems(cartId);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.getCartItems).toHaveBeenCalledWith(cartId);
-  });
+        const cartDTO: CartDTO = new CartDTO(1, 1);
 
-  it('should throw an error when get cart items method fails', async () => {
-    const cartId: number = 1;
+        // Simulate a failure when calling the repository 
+        mockCartRepository.create.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockCartRepository.getCartItems.mockResolvedValue(' Repository error');
-
-    const result = await service.getCartItems(cartId);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* clear cart success and failure tests */
-  it('should clear cart', async () => {
-    /**
-     * Tests the clear cart method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's clearCart method is called with the correct data.
-     */
+        await expect(service.createCart(cartDTO)).rejects.toThrow(InternalServerErrorException);
+    });
 
-    const cartId: number = 1;
+    /* get cart by id success and failure tests */
+    it('should get cart by id', async () => {
+        /** 
+         * Tests the get cart by id method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's getCartById method is called with the correct data.
+         */
 
-    const returnOject: Cart = { id: 1 /* others data */ };
+        const id: number = 1;
 
-    mockCartRepository.clearCart.mockResolvedValue(returnOject);
+        const returnOject: Cart | null = new Cart(1, 1);
 
-    const result = await service.clearCart(cartId);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.clearCart).toHaveBeenCalledWith(cartId);
-  });
+        mockCartRepository.getById.mockResolvedValue(returnOject);
 
-  it('should throw an error when clear cart method fails', async () => {
-    const cartId: number = 1;
+        const result = await service.getCartById(id);
+        expect(result).toEqual(returnOject);
+        expect(mockCartRepository.getById).toHaveBeenCalledWith(id);
+    });
 
-    // Simulate a failure when calling the repository
-    mockCartRepository.clearCart.mockResolvedValue(' Repository error');
+    it('should throw an error when get cart by id method fails', async () => {
 
-    const result = await service.clearCart(cartId);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* get cart by user id success and failure tests */
-  it('should get cart by user id', async () => {
-    /**
-     * Tests the get cart by user id method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's getCartByUserId method is called with the correct data.
-     */
+        const id: number = 1;
 
-    const userId: number = 1;
+        // Simulate a failure when calling the repository 
+        mockCartRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-    const returnOject: Cart | null = { id: 1 /* others data */ };
+        await expect(service.getCartById(id)).rejects.toThrow(InternalServerErrorException);
+    });
 
-    mockCartRepository.getCartByUserId.mockResolvedValue(returnOject);
+    /* update cart success and failure tests */
+    it('should update cart', async () => {
+        /** 
+         * Tests the update cart method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's updateCart method is called with the correct data.
+         */
 
-    const result = await service.getCartByUserId(userId);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.getCartByUserId).toHaveBeenCalledWith(userId);
-  });
+        const id: number = 1;
+        const data: Partial<Cart> = new Cart(1, 1, [new CartItem(1, 1, 1, 2)]);
 
-  it('should throw an error when get cart by user id method fails', async () => {
-    const userId: number = 1;
+        const returnOject: Cart = new Cart(1, 1, [new CartItem(1, 1, 1, 2)]);
 
-    // Simulate a failure when calling the repository
-    mockCartRepository.getCartByUserId.mockResolvedValue(' Repository error');
+        mockCartRepository.update.mockResolvedValue(returnOject);
 
-    const result = await service.getCartByUserId(userId);
-    expect(result).rejects.toThrow('Repository error');
-  });
+        const result = await service.updateCart(id, data);
+        expect(result).toEqual(returnOject);
+        expect(mockCartRepository.update).toHaveBeenCalledWith(id, data);
+    });
 
-  /* merge carts success and failure tests */
-  it('should merge carts', async () => {
-    /**
-     * Tests the merge carts method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's mergeCarts method is called with the correct data.
-     */
+    it('should throw an error when update cart method fails', async () => {
 
-    const sourceCartId: number = 1;
-    const targetCartId: number = 1;
+        const id: number = 1;
+        const data: Partial<Cart> = new Cart(1, 1, [new CartItem(1, 1, 1, 2)]);
 
-    const returnOject: Cart = { id: 1 /* others data */ };
+        // Simulate a failure when calling the repository 
+        mockCartRepository.update.mockRejectedValue(new Error('Repository error'));
 
-    mockCartRepository.mergeCarts.mockResolvedValue(returnOject);
+        await expect(service.updateCart(id, data)).rejects.toThrow(InternalServerErrorException);
+    });
 
-    const result = await service.mergeCarts(sourceCartId, targetCartId);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.mergeCarts).toHaveBeenCalledWith(
-      sourceCartId,
-      targetCartId,
-    );
-  });
+    /* delete cart success and failure tests */
+    it('should delete cart', async () => {
+        /** 
+         * Tests the delete cart method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's deleteCart method is called with the correct data.
+         */
 
-  it('should throw an error when merge carts method fails', async () => {
-    const sourceCartId: number = 1;
-    const targetCartId: number = 1;
+        const id: number = 1;
 
-    // Simulate a failure when calling the repository
-    mockCartRepository.mergeCarts.mockResolvedValue(' Repository error');
+        const returnOject: boolean = true
 
-    const result = await service.mergeCarts(sourceCartId, targetCartId);
-    expect(result).rejects.toThrow('Repository error');
-  });
+        mockCartRepository.delete.mockResolvedValue(returnOject);
 
-  /* get item count success and failure tests */
-  it('should get item count', async () => {
-    /**
-     * Tests the get item count method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's getItemCount method is called with the correct data.
-     */
+        const result = await service.deleteCart(id);
+        expect(result).toEqual(returnOject);
+        expect(mockCartRepository.delete).toHaveBeenCalledWith(id);
+    });
 
-    const cartId: number = 1;
+    it('should throw an error when delete cart method fails', async () => {
 
-    const returnOject: number = 1;
+        const id: number = 1;
 
-    mockCartRepository.getItemCount.mockResolvedValue(returnOject);
+        // Simulate a failure when calling the repository 
+        mockCartRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getItemCount(cartId);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.getItemCount).toHaveBeenCalledWith(cartId);
-  });
+        await expect(service.deleteCart(id)).rejects.toThrow(InternalServerErrorException);
+    });
 
-  it('should throw an error when get item count method fails', async () => {
-    const cartId: number = 1;
+    /* add item to cart success and failure tests */
+    it('should add item to cart', async () => {
+        /** 
+         * Tests the add item to cart method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's addItemToCart method is called with the correct data.
+         */
 
-    // Simulate a failure when calling the repository
-    mockCartRepository.getItemCount.mockResolvedValue(' Repository error');
+        const cartId: number = 1;
+        const item: CartItemDTO = new CartItemDTO(cartId, 1, 1, 2);
 
-    const result = await service.getItemCount(cartId);
-    expect(result).rejects.toThrow('Repository error');
-  });
+        const returnOject: Cart = new Cart(1, 1, [new CartItem(1, 1, 1, 2)]);
 
-  /* get total value success and failure tests */
-  it('should get total value', async () => {
-    /**
-     * Tests the get total value method.
-     * Verifies that the returned cart matches the expected one
-     * and that the repository's getTotalValue method is called with the correct data.
-     */
+        mockCartItemService.createCartItem.mockResolvedValue(null);
+        mockCartRepository.getById.mockResolvedValue(returnOject);
 
-    const cartId: number = 1;
+        const result = await service.addItemToCart(cartId, item);
+        expect(result).toEqual(returnOject);
+        expect(mockCartItemService.createCartItem).toHaveBeenCalledWith(item);
+        expect(mockCartRepository.getById).toHaveBeenCalledWith(cartId);
+    });
 
-    const returnOject: number = 1;
+    it('should throw an error when add item to cart method fails', async () => {
 
-    mockCartRepository.getTotalValue.mockResolvedValue(returnOject);
+        const cartId: number = 1;
+        const item: CartItemDTO = new CartItemDTO(cartId, 1, 1, 2);
 
-    const result = await service.getTotalValue(cartId);
-    expect(result).toEqual(returnOject);
-    expect(mockCartRepository.getTotalValue).toHaveBeenCalledWith(cartId);
-  });
+        // Simulate a failure when calling the repository 
+        mockCartRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-  it('should throw an error when get total value method fails', async () => {
-    const cartId: number = 1;
+        await expect(service.addItemToCart(cartId, item)).rejects.toThrow(InternalServerErrorException);
+    });
 
-    // Simulate a failure when calling the repository
-    mockCartRepository.getTotalValue.mockResolvedValue(' Repository error');
+    /* remove item from cart success and failure tests */
+    it('should remove item from cart', async () => {
+        /** 
+         * Tests the remove item from cart method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's removeItemFromCart method is called with the correct data.
+         */
 
-    const result = await service.getTotalValue(cartId);
-    expect(result).rejects.toThrow('Repository error');
-  });
-});
+        const cartId: number = 1;
+        const itemId: number = 1;
+
+        const returnOject: Cart = new Cart(1, 1, []);
+
+        mockCartItemService.deleteCartItem.mockResolvedValue(null); // Créer les articles dans le targetCart
+        mockCartRepository.getById.mockResolvedValue(returnOject);
+
+        const result = await service.removeItemFromCart(cartId, itemId);
+        expect(result).toEqual(returnOject);
+        expect(mockCartItemService.deleteCartItem).toHaveBeenCalledWith(itemId);
+        expect(mockCartRepository.getById).toHaveBeenCalledWith(cartId);
+    });
+
+    it('should throw an error when remove item from cart method fails', async () => {
+
+        const cartId: number = 1;
+        const itemId: number = 1;
+
+        // Simulate a failure when calling the repository 
+        mockCartItemService.deleteCartItem.mockRejectedValue(new Error('Repository error'));
+        mockCartRepository.getById.mockRejectedValue(new Error('Repository error'));
+
+        await expect(service.removeItemFromCart(cartId, itemId)).rejects.toThrow(InternalServerErrorException);
+    });
+
+    /* get cart items success and failure tests */
+    it('should get cart items', async () => {
+        /** 
+         * Tests the get cart items method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's getCartItems method is called with the correct data.
+         */
+
+        const cartId: number = 1;
+
+        const returnOject: CartItem[] = [new CartItem(1, 1, 1, 2)];
+
+        mockCartItemService.getCartItemsByCartId.mockResolvedValue(returnOject);
+
+        const result = await service.getCartItems(cartId);
+        expect(result).toEqual(returnOject);
+        expect(mockCartItemService.getCartItemsByCartId).toHaveBeenCalledWith(cartId);
+    });
+
+    it('should throw an error when get cart items method fails', async () => {
+
+        const cartId: number = 1;
+
+        // Simulate a failure when calling the repository 
+        mockCartItemService.getCartItemsByCartId.mockRejectedValue(new Error('Repository error'));
+
+        await expect(service.getCartItems(cartId)).rejects.toThrow(InternalServerErrorException);
+    });
+
+    /* clear cart success and failure tests */
+    it('should clear cart', async () => {
+        /** 
+         * Tests the clear cart method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's clearCart method is called with the correct data.
+         */
+
+        const cartId: number = 1;
+
+        const returnOject: Cart = new Cart(1, 1, []);
+
+        mockCartItemService.clearCart.mockResolvedValue(null);
+        mockCartRepository.getById.mockResolvedValue(returnOject);
+
+        const result = await service.clearCart(cartId);
+        expect(result).toEqual(returnOject);
+        expect(mockCartItemService.clearCart).toHaveBeenCalledWith(cartId);
+        expect(mockCartRepository.getById).toHaveBeenCalledWith(cartId);
+    });
+
+    it('should throw an error when clear cart method fails', async () => {
+
+        const cartId: number = 1;
+
+        // Simulate a failure when calling the repository 
+        mockCartItemService.clearCart.mockRejectedValue(new Error('Repository error'));
+        mockCartRepository.getById.mockRejectedValue(new Error('Repository error'));
+
+        await expect(service.clearCart(cartId)).rejects.toThrow(InternalServerErrorException);
+    });
+
+    /* get cart by user id success and failure tests */
+    it('should get cart by user id', async () => {
+        /** 
+         * Tests the get cart by user id method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's getCartByUserId method is called with the correct data.
+         */
+
+        const userId: number = 1;
+
+        const returnOject: Cart[] = [new Cart(1, 1)];
+
+        mockCartRepository.getByUserId.mockResolvedValue(returnOject);
+
+        const result = await service.getCartByUserId(userId);
+        expect(result).toEqual(returnOject);
+        expect(mockCartRepository.getByUserId).toHaveBeenCalledWith(userId);
+    });
+
+    it('should throw an error when get cart by user id method fails', async () => {
+
+        const userId: number = 1;
+
+        // Simulate a failure when calling the repository 
+        mockCartRepository.getByUserId.mockRejectedValue(new Error('Repository error'));
+
+        await expect(service.getCartByUserId(userId)).rejects.toThrow(InternalServerErrorException);
+    });
+
+    /* merge carts success and failure tests */
+    it('should merge carts', async () => {
+        const sourceCartId = 1;
+        const targetCartId = 2;
+
+        const sourceItems = [
+            { id: 1, cartId: sourceCartId, productId: 1, quantity: 2 },
+            { id: 2, cartId: sourceCartId, productId: 2, quantity: 1 },
+        ];
+
+        const targetCart = { id: targetCartId, items: [] }; // Expected target cart after merge
+
+        // Mock service calls
+        mockCartItemService.getCartItemsByCartId.mockResolvedValue(sourceItems); // Fetch items from source cart
+        mockCartItemService.createCartItem.mockResolvedValue(null); // Create items in target cart
+        mockCartRepository.getById.mockResolvedValue(targetCart); // Get updated target cart
+        mockCartRepository.delete.mockResolvedValue(null); // Delete source cart
+
+        const result = await service.mergeCarts(sourceCartId, targetCartId);
+
+        // Assertions
+        expect(mockCartItemService.getCartItemsByCartId).toHaveBeenCalledWith(sourceCartId);
+
+        for (const item of sourceItems) {
+            expect(mockCartItemService.createCartItem).toHaveBeenCalledWith({ ...item, cartId: targetCartId });
+        }
+
+        expect(mockCartRepository.delete).toHaveBeenCalledWith(sourceCartId);
+        expect(mockCartRepository.getById).toHaveBeenCalledWith(targetCartId);
+        expect(result).toEqual(targetCart);
+    });
+
+
+    it('should throw an error when merge carts method fails', async () => {
+        const sourceCartId: number = 1;
+        const targetCartId: number = 1;
+
+        // Simulate a failure when calling the repository 
+        mockCartItemService.getItemsByCartId.mockRejectedValue(new Error('Repository error'));
+        mockCartItemService.createCartItem.mockRejectedValue(new Error('Repository error'));
+        mockCartRepository.getById.mockRejectedValue(new Error('Repository error'));
+        mockCartRepository.delete.mockRejectedValue(new Error('Repository error'));
+
+        await expect(service.mergeCarts(sourceCartId, targetCartId))
+            .rejects
+            .toThrow(InternalServerErrorException);
+
+        // Restore console.error
+        consoleErrorMock.mockRestore();
+    });
+
+    /* get item count success and failure tests */
+    it('should get item count', async () => {
+        /** 
+         * Tests the get item count method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's getItemCount method is called with the correct data.
+         */
+
+        const cartId: number = 1;
+
+        const returnOject: number = 10;
+
+        mockCartItemService.getItemCount.mockResolvedValue(returnOject);
+
+        const result = await service.getItemCount(cartId);
+        expect(result).toEqual(returnOject);
+        expect(mockCartItemService.getItemCount).toHaveBeenCalledWith(cartId);
+    });
+
+    it('should throw an error when get item count method fails', async () => {
+
+        const cartId: number = 1;
+
+        // Simulate a failure when calling the repository 
+        mockCartItemService.getItemCount.mockRejectedValue(new Error('Repository error'));
+
+        await expect(service.getItemCount(cartId)).rejects.toThrow(InternalServerErrorException);
+    });
+
+    /* get total value success and failure tests */
+    it('should get total value', async () => {
+        /** 
+         * Tests the get total value method.
+         * Verifies that the returned cart matches the expected one 
+         * and that the repository's getTotalValue method is called with the correct data.
+         */
+
+        const cartId: number = 1;
+
+        const returnOject: number = 2
+
+        mockCartItemService.calculateCartTotal.mockResolvedValue(returnOject);
+
+        const result = await service.getTotalValue(cartId);
+        expect(result).toEqual(returnOject);
+        expect(mockCartItemService.calculateCartTotal).toHaveBeenCalledWith(cartId);
+    });
+
+    it('should throw an error when get total value method fails', async () => {
+
+        const cartId: number = 1;
+
+        // Simulate a failure when calling the repository 
+        mockCartItemService.calculateCartTotal.mockRejectedValue(new Error('Repository error'));
+
+        await expect(service.getTotalValue(cartId)).rejects.toThrow(InternalServerErrorException);
+    });
+
+})

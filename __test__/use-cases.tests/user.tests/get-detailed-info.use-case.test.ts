@@ -19,8 +19,8 @@ describe('GetDetailedInfo', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
+  
+     const userId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -82,11 +82,9 @@ describe('GetDetailedInfo', () => {
    */
   it('should throw an error when getDetailedInfo execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.getDetailedInfo.mockRejectedValue('Service method error');
+    mockUserService.getDetailedInfo.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(getDetailedInfo.execute(userId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(getDetailedInfo.execute(userId)).rejects.toThrow('Service method error');
   });
 });

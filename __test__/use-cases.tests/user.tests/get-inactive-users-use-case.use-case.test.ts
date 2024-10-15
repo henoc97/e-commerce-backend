@@ -19,8 +19,8 @@ describe('GetInactiveUsersUseCase', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const days: number = 1;
+  
+     const days: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -42,9 +42,7 @@ describe('GetInactiveUsersUseCase', () => {
       ],
     }).compile();
 
-    getInactiveUsersUseCase = module.get<GetInactiveUsersUseCase>(
-      GetInactiveUsersUseCase,
-    );
+    getInactiveUsersUseCase = module.get<GetInactiveUsersUseCase>(GetInactiveUsersUseCase);
     userService = module.get<UserService>(UserService);
   });
 
@@ -84,13 +82,9 @@ describe('GetInactiveUsersUseCase', () => {
    */
   it('should throw an error when getInactiveUsersUseCase execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.getInactiveUsersUseCase.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserService.getInactiveUsersUseCase.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(getInactiveUsersUseCase.execute(days)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(getInactiveUsersUseCase.execute(days)).rejects.toThrow('Service method error');
   });
 });

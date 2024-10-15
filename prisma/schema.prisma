@@ -91,13 +91,16 @@ enum NotificationType {
 enum TicketStatus {
   OPEN
   IN_PROGRESS
+  HIGH
   RESOLVED
+  CLOSED
 }
 
 enum RefundStatus {
   PENDING
   APPROVED
   REJECTED
+  CANCELLED
 }
 
 enum UserActivityAction {
@@ -129,14 +132,14 @@ model User {
   orders       Order[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  Vendor       Vendor?
-  Cart         Cart[]
-  Review       Review[]
-  Notification Notification[]
-  Ticket       Ticket[]
-  SubSite      SubSite[]
-  UserActivity UserActivity[]
-  AuditLog     AuditLog[]
+  vendor       Vendor?
+  cart         Cart[]
+  review       Review[]
+  notification Notification[]
+  ticket       Ticket[]
+  subsite      Subsite[]
+  userActivity UserActivity[]
+  auditLog     AuditLog[]
 }
 
 // User Profile Model
@@ -170,23 +173,24 @@ model Vendor {
   products       Product[]     @relation("VendorProducts")
   subscription   Subscription? @relation(name: "VendorSubscription", fields: [subscriptionId], references: [id])
   subscriptionId Int?
-  Shop           Shop?
+  shop           Shop?
 }
 
 // Shop Model: Represents a generated e-commerce site for each vendor
 model Shop {
-  id            Int          @id @default(autoincrement())
+  id            Int                       @id @default(autoincrement())
   name          String
-  url           String       @unique
+  url           String                    @unique
   description   String?
-  vendor        Vendor       @relation(fields: [vendorId], references: [id])
-  vendorId      Int          @unique
+  vendor        Vendor                    @relation(fields: [vendorId], references: [id])
+  vendorId      Int                       @unique
   products      Product[]
   orders        Order[]
   categories    Category[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  Marketplace   Marketplace? @relation(fields: [marketplaceId], references: [id])
+  newsletterSubscriptions NewsletterSubscription[] // Relation with NewsletterSubscription
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+  marketplace   Marketplace?              @relation(fields: [marketplaceId], references: [id])
   marketplaceId Int?
 }
 
@@ -208,9 +212,9 @@ model Product {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   vendorId    Int?
-  CartItem    CartItem[]
-  OrderItem   OrderItem[]
-  Review      Review[]
+  cartItem    CartItem[]
+  orderItem   OrderItem[]
+  review      Review[]
 }
 
 // Product Image Model
@@ -238,7 +242,7 @@ model Category {
   parentId Int?
   children Category[] @relation("CategoryChildren")
   products Product[]
-  Shop     Shop?      @relation(fields: [shopId], references: [id])
+  shop     Shop?      @relation(fields: [shopId], references: [id])
   shopId   Int?
 }
 
@@ -277,8 +281,8 @@ model Order {
   shippingMethod ShippingMethod 
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
-  Payment        Payment[]
-  Refund         Refund[]
+  payments       Payment[]
+  refunds        Refund[]
 }
 
 // OrderItem Model: Items in an order
@@ -290,6 +294,7 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float
+  createdAt DateTime @default(now())
 }
 
 // Payment Model: Stores payment details
@@ -360,7 +365,6 @@ model Zone {
   country         String    // Country name
   region          String?   // Specific region or city (optional)
   carriers        Carrier[] // Carriers serving this zone
-
   ShippingRate ShippingRate[]
 }
 
@@ -373,6 +377,8 @@ model Review {
   user      User     @relation(fields: [userId], references: [id])
   rating    Int      @default(1) // e.g., 1 to 5 stars
   comment   String?
+  flagged   Boolean @default(false)
+  verified   Boolean  @default(false)
   createdAt DateTime @default(now())
 }
 
@@ -381,6 +387,9 @@ model NewsletterSubscription {
   id           Int      @id @default(autoincrement())
   email        String   @unique
   subscribedAt DateTime @default(now())
+  isActive     Boolean  @default(true)    // Indicates if the subscription is active
+  shop         Shop     @relation(fields: [shopId], references: [id])
+  shopId       Int                              // Foreign key to reference the Shop
 }
 
 // Notification Model: For push notifications and email updates
@@ -390,6 +399,7 @@ model Notification {
   user    User     @relation(fields: [userId], references: [id])
   type    NotificationType // e.g., PROMOTION, ORDER_UPDATE
   content String
+  read    Boolean  @default(false)
   sentAt  DateTime @default(now())
 }
 
@@ -443,7 +453,7 @@ model Refund {
   createdAt DateTime @default(now())
 }
 
-model SubSite {
+model Subsite {
   id        Int      @id @default(autoincrement())
   title     String
   userId    Int

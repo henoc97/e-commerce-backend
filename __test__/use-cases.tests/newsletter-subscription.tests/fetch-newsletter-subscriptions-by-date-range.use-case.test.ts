@@ -19,13 +19,9 @@ describe('FetchNewsletterSubscriptionsByDateRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockNewsletterSubscriptionDTO: NewsletterSubscriptionDTO = {
@@ -47,13 +43,8 @@ describe('FetchNewsletterSubscriptionsByDateRange', () => {
       ],
     }).compile();
 
-    fetchNewsletterSubscriptionsByDateRange =
-      module.get<FetchNewsletterSubscriptionsByDateRange>(
-        FetchNewsletterSubscriptionsByDateRange,
-      );
-    newsletterSubscriptionService = module.get<NewsletterSubscriptionService>(
-      NewsletterSubscriptionService,
-    );
+    fetchNewsletterSubscriptionsByDateRange = module.get<FetchNewsletterSubscriptionsByDateRange>(FetchNewsletterSubscriptionsByDateRange);
+    newsletterSubscriptionService = module.get<NewsletterSubscriptionService>(NewsletterSubscriptionService);
   });
 
   /**
@@ -70,28 +61,19 @@ describe('FetchNewsletterSubscriptionsByDateRange', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNewsletterSubscriptionService.fetchNewsletterSubscriptionsByDateRange.mockResolvedValue(
-      mockNewsletterSubscriptionDTO,
-    );
-    (toNewsletterSubscriptionDTO as jest.Mock).mockReturnValue(
-      mockNewsletterSubscriptionDTO,
-    );
+    mockNewsletterSubscriptionService.fetchNewsletterSubscriptionsByDateRange.mockResolvedValue(mockNewsletterSubscriptionDTO);
+    (toNewsletterSubscriptionDTO as jest.Mock).mockReturnValue(mockNewsletterSubscriptionDTO);
 
     // Execute the use case with provided parameters
-    const result = await fetchNewsletterSubscriptionsByDateRange.execute(
-      startDate,
-      endDate,
-    );
+    const result = await fetchNewsletterSubscriptionsByDateRange.execute(startDate,
+    endDate,);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockNewsletterSubscriptionService.fetchNewsletterSubscriptionsByDateRange,
-    ).toHaveBeenCalledWith(startDate, endDate);
+    expect(mockNewsletterSubscriptionService.fetchNewsletterSubscriptionsByDateRange).toHaveBeenCalledWith(startDate,
+    endDate,);
 
     // Verify that the transformation to DTO was called with the service result
-    expect(toNewsletterSubscriptionDTO).toHaveBeenCalledWith(
-      mockNewsletterSubscriptionDTO,
-    );
+    expect(toNewsletterSubscriptionDTO).toHaveBeenCalledWith(mockNewsletterSubscriptionDTO);
 
     // Ensure the result matches the expected DTO
     expect(result).toEqual(mockNewsletterSubscriptionDTO);
@@ -103,13 +85,10 @@ describe('FetchNewsletterSubscriptionsByDateRange', () => {
    */
   it('should throw an error when fetchNewsletterSubscriptionsByDateRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNewsletterSubscriptionService.fetchNewsletterSubscriptionsByDateRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockNewsletterSubscriptionService.fetchNewsletterSubscriptionsByDateRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchNewsletterSubscriptionsByDateRange.execute(startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchNewsletterSubscriptionsByDateRange.execute(startDate,
+    endDate,)).rejects.toThrow('Service method error');
   });
 });

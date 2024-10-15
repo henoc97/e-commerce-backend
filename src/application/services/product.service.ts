@@ -1,25 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { Product } from 'src/domain/entities/product.entity';
-import { Review } from 'src/domain/entities/review.entity';
 import { IProductRepository } from 'src/domain/repositories/product.repository';
 import { fromProductDTO } from '../helper/to-entity/to.product.entity';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
-import { fromPromotionDTO } from '../helper/to-entity/to.promotion.entity';
 import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
-import { fromProductImageDTO } from '../helper/to-entity/to.product-image.entity';
 import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
-import { fromProductVariantDTO } from '../helper/to-entity/to.product-variant.entity';
 import { ReviewDTO } from 'src/presentation/dtos/review.dto';
-import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
-import { fromCartItemDTO } from '../helper/to-entity/to.cart-item.entity';
+import { PromotionService } from './promotion.service';
+import { ProductImageService } from './product-image.service';
+import { ProductVariantService } from './product-variant.service';
+import { ReviewService } from './review.service';
+import { CartItemService } from './cart-item.service';
 /**
  * Service class for managing product-related operations.
  */
 @Injectable()
 export class ProductService {
-  constructor(private readonly productRepository: IProductRepository) {}
+  constructor(
+    @Inject('IProductRepository')
+    private readonly productRepository: IProductRepository,
+    private readonly promotionService: PromotionService,
+    private readonly productImageService: ProductImageService,
+    private readonly productVariantService: ProductVariantService,
+    private readonly reviewService: ReviewService,
+    private readonly cartItemService: CartItemService,
+  ) {}
 
   /**
    * Creates and saves a new product.
@@ -91,8 +101,8 @@ export class ProductService {
     productId: number,
     promotion: PromotionDTO,
   ): Promise<Product> {
-    const promo = fromPromotionDTO(promotion);
-    return this.productRepository.addPromotion(productId, promo);
+    await this.promotionService.createPromotion(promotion);
+    return this.productRepository.getById(productId);
   }
 
   /**
@@ -105,7 +115,8 @@ export class ProductService {
     productId: number,
     promotionId: number,
   ): Promise<Product> {
-    return this.productRepository.removePromotion(productId, promotionId);
+    await this.promotionService.deletePromotion(promotionId);
+    return this.productRepository.getById(productId);
   }
 
   /**
@@ -118,8 +129,8 @@ export class ProductService {
     productId: number,
     image: ProductImageDTO,
   ): Promise<Product> {
-    const img = fromProductImageDTO(image);
-    return this.productRepository.addImage(productId, img);
+    await this.productImageService.createProductImage(image);
+    return this.productRepository.getById(productId);
   }
 
   /**
@@ -132,7 +143,8 @@ export class ProductService {
     productId: number,
     imageId: number,
   ): Promise<Product> {
-    return this.productRepository.removeImage(productId, imageId);
+    await this.productImageService.deleteProductImage(imageId);
+    return this.productRepository.getById(productId);
   }
 
   /**
@@ -145,8 +157,8 @@ export class ProductService {
     productId: number,
     variant: ProductVariantDTO,
   ): Promise<Product> {
-    const productVariant = fromProductVariantDTO(variant);
-    return this.productRepository.addVariant(productId, productVariant);
+    await this.productVariantService.createProductVariant(variant);
+    return this.productRepository.getById(productId);
   }
 
   /**
@@ -159,7 +171,8 @@ export class ProductService {
     productId: number,
     variantId: number,
   ): Promise<Product> {
-    return this.productRepository.removeVariant(productId, variantId);
+    await this.productVariantService.deleteProductVariant(variantId);
+    return this.productRepository.getById(productId);
   }
 
   /**
@@ -185,17 +198,8 @@ export class ProductService {
     productId: number,
     review: ReviewDTO,
   ): Promise<Product> {
-    const reviewToAdd = fromReviewDTO(review);
-    return this.productRepository.addReview(productId, reviewToAdd);
-  }
-
-  /**
-   * Retrieves all reviews for a product.
-   * @param productId - The unique ID of the product.
-   * @returns A promise that resolves to an array of Review entities.
-   */
-  async getProductReviews(productId: number): Promise<Review[]> {
-    return this.productRepository.getReviews(productId);
+    await this.reviewService.createReview(review);
+    return this.productRepository.getById(productId);
   }
 
   /**
@@ -208,9 +212,18 @@ export class ProductService {
     productId: number,
     cartItem: CartItemDTO,
   ): Promise<Product> {
-    const ci = fromCartItemDTO(cartItem);
-    return this.productRepository.addCartItem(productId, ci);
+    await this.cartItemService.createCartItem(cartItem);
+    return this.productRepository.getById(productId);
   }
+
+    /**
+   * Retrieves all products associated with a vendor.
+   * @param vendorId - The unique identifier of the vendor.
+   * @returns An array of Product entities associated with the vendor.
+   */
+    async getVendorProducts(vendorId: number): Promise<Product[]> {
+      return this.productRepository.findByVendor(vendorId);
+    }
 
   /**
    * Finds all products within a price range.
@@ -229,7 +242,7 @@ export class ProductService {
    * Retrieves a list of featured products.
    * @returns A promise that resolves to an array of featured Product entities.
    */
-  async getFeaturedProducts(): Promise<Product[]> {
-    return this.productRepository.getFeaturedProducts();
-  }
+  // async getFeaturedProducts(): Promise<Product[]> {
+  //   return this.productRepository.getFeaturedProducts();
+  // }
 }

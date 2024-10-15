@@ -42,6 +42,11 @@ export class OrderItem {
   price: number;
 
   /**
+   * Price of the Product at the time of the order.
+   */
+  createdAt: Date;
+
+  /**
    * Creates a new OrderItem instance.
    * @param id - Unique identifier for the OrderItem.
    * @param orderId - Unique identifier for the Order to which this item belongs.
@@ -50,6 +55,7 @@ export class OrderItem {
    * @param product - The Product that is included in this order item.
    * @param quantity - Quantity of the Product included in this order item.
    * @param price - Price of the Product at the time of the order.
+   * @param createdAt - (Optional) Date and time of order-item creation.
    */
   constructor(
     id: number,
@@ -59,6 +65,7 @@ export class OrderItem {
     product: Product,
     quantity: number,
     price: number,
+    createdAt: Date = new Date(),
   ) {
     this.id = id;
     this.orderId = orderId;
@@ -67,5 +74,6 @@ export class OrderItem {
     this.product = product;
     this.quantity = quantity;
     this.price = price;
+    this.createdAt = createdAt;
   }
 }

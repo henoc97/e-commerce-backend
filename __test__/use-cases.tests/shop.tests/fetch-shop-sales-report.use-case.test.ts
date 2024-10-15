@@ -19,14 +19,10 @@ describe('FetchShopSalesReport', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const shopId: number = 1;
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const shopId: number = 1;
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockShopDTO: ShopDTO = {
@@ -48,8 +44,7 @@ describe('FetchShopSalesReport', () => {
       ],
     }).compile();
 
-    fetchShopSalesReport =
-      module.get<FetchShopSalesReport>(FetchShopSalesReport);
+    fetchShopSalesReport = module.get<FetchShopSalesReport>(FetchShopSalesReport);
     shopService = module.get<ShopService>(ShopService);
   });
 
@@ -71,18 +66,10 @@ describe('FetchShopSalesReport', () => {
     (toShopDTO as jest.Mock).mockReturnValue(mockShopDTO);
 
     // Execute the use case with provided parameters
-    const result = await fetchShopSalesReport.execute(
-      shopId,
-      startDate,
-      endDate,
-    );
+    const result = await fetchShopSalesReport.execute(shopId, startDate, endDate);
 
     // Verify that the service was called with the expected arguments
-    expect(mockShopService.fetchShopSalesReport).toHaveBeenCalledWith(
-      shopId,
-      startDate,
-      endDate,
-    );
+    expect(mockShopService.fetchShopSalesReport).toHaveBeenCalledWith(shopId, startDate, endDate);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toShopDTO).toHaveBeenCalledWith(mockShopDTO);
@@ -97,13 +84,9 @@ describe('FetchShopSalesReport', () => {
    */
   it('should throw an error when fetchShopSalesReport execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockShopService.fetchShopSalesReport.mockRejectedValue(
-      'Service method error',
-    );
+    mockShopService.fetchShopSalesReport.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchShopSalesReport.execute(shopId, startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchShopSalesReport.execute(shopId, startDate, endDate)).rejects.toThrow('Service method error');
   });
 });

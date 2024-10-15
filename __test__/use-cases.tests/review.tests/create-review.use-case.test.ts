@@ -19,10 +19,8 @@ describe('CreateReview', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const reviewDTO: ReviewDTO = {
-    /* data */
-  };
+  
+     const reviewDTO: ReviewDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockReviewDTO: ReviewDTO = {
@@ -84,11 +82,9 @@ describe('CreateReview', () => {
    */
   it('should throw an error when createReview execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockReviewService.createReview.mockRejectedValue('Service method error');
+    mockReviewService.createReview.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createReview.execute(reviewDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createReview.execute(reviewDTO)).rejects.toThrow('Service method error');
   });
 });

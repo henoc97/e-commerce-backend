@@ -19,6 +19,7 @@ describe('ListMarketplaces', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockMarketplaceDTO: MarketplaceDTO = {
@@ -58,9 +59,7 @@ describe('ListMarketplaces', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockMarketplaceService.listMarketplaces.mockResolvedValue(
-      mockMarketplaceDTO,
-    );
+    mockMarketplaceService.listMarketplaces.mockResolvedValue(mockMarketplaceDTO);
     (toMarketplaceDTO as jest.Mock).mockReturnValue(mockMarketplaceDTO);
 
     // Execute the use case with provided parameters
@@ -82,13 +81,9 @@ describe('ListMarketplaces', () => {
    */
   it('should throw an error when listMarketplaces execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockMarketplaceService.listMarketplaces.mockRejectedValue(
-      'Service method error',
-    );
+    mockMarketplaceService.listMarketplaces.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listMarketplaces.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listMarketplaces.execute()).rejects.toThrow('Service method error');
   });
 });

@@ -19,9 +19,9 @@ describe('GetRecentActivitiesByUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const limit: number = 1;
+  
+     const userId: number = 1;
+     const limit: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -43,9 +43,7 @@ describe('GetRecentActivitiesByUser', () => {
       ],
     }).compile();
 
-    getRecentActivitiesByUser = module.get<GetRecentActivitiesByUser>(
-      GetRecentActivitiesByUser,
-    );
+    getRecentActivitiesByUser = module.get<GetRecentActivitiesByUser>(GetRecentActivitiesByUser);
     userActivityService = module.get<UserActivityService>(UserActivityService);
   });
 
@@ -63,18 +61,14 @@ describe('GetRecentActivitiesByUser', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.getRecentActivitiesByUser.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.getRecentActivitiesByUser.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
     const result = await getRecentActivitiesByUser.execute(userId, limit);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockUserActivityService.getRecentActivitiesByUser,
-    ).toHaveBeenCalledWith(userId, limit);
+    expect(mockUserActivityService.getRecentActivitiesByUser).toHaveBeenCalledWith(userId, limit);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserActivityDTO).toHaveBeenCalledWith(mockUserActivityDTO);
@@ -89,13 +83,9 @@ describe('GetRecentActivitiesByUser', () => {
    */
   it('should throw an error when getRecentActivitiesByUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.getRecentActivitiesByUser.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.getRecentActivitiesByUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      getRecentActivitiesByUser.execute(userId, limit),
-    ).rejects.toThrow('Service method error');
+    await expect(getRecentActivitiesByUser.execute(userId, limit)).rejects.toThrow('Service method error');
   });
 });

@@ -19,8 +19,8 @@ describe('FetchPaymentById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockPaymentDTO: PaymentDTO = {
@@ -82,13 +82,9 @@ describe('FetchPaymentById', () => {
    */
   it('should throw an error when fetchPaymentById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPaymentService.fetchPaymentById.mockRejectedValue(
-      'Service method error',
-    );
+    mockPaymentService.fetchPaymentById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchPaymentById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchPaymentById.execute(id)).rejects.toThrow('Service method error');
   });
 });

@@ -19,9 +19,9 @@ describe('UpdateProductImageUrl', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const url: string = 'url';
+  
+     const id: number = 1;
+     const url: string = 'url';
 
   // Mock version of  to be used as input and expected output
   const mockProductImageDTO: ProductImageDTO = {
@@ -43,9 +43,7 @@ describe('UpdateProductImageUrl', () => {
       ],
     }).compile();
 
-    updateProductImageUrl = module.get<UpdateProductImageUrl>(
-      UpdateProductImageUrl,
-    );
+    updateProductImageUrl = module.get<UpdateProductImageUrl>(UpdateProductImageUrl);
     productImageService = module.get<ProductImageService>(ProductImageService);
   });
 
@@ -63,19 +61,14 @@ describe('UpdateProductImageUrl', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductImageService.updateProductImageUrl.mockResolvedValue(
-      mockProductImageDTO,
-    );
+    mockProductImageService.updateProductImageUrl.mockResolvedValue(mockProductImageDTO);
     (toProductImageDTO as jest.Mock).mockReturnValue(mockProductImageDTO);
 
     // Execute the use case with provided parameters
     const result = await updateProductImageUrl.execute(id, url);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductImageService.updateProductImageUrl).toHaveBeenCalledWith(
-      id,
-      url,
-    );
+    expect(mockProductImageService.updateProductImageUrl).toHaveBeenCalledWith(id, url);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductImageDTO).toHaveBeenCalledWith(mockProductImageDTO);
@@ -90,13 +83,9 @@ describe('UpdateProductImageUrl', () => {
    */
   it('should throw an error when updateProductImageUrl execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductImageService.updateProductImageUrl.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductImageService.updateProductImageUrl.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateProductImageUrl.execute(id, url)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateProductImageUrl.execute(id, url)).rejects.toThrow('Service method error');
   });
 });

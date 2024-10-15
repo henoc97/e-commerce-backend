@@ -19,8 +19,8 @@ describe('DeleteNotification', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const notificationId: number = 1;
+  
+     const notificationId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockNotificationDTO: NotificationDTO = {
@@ -60,18 +60,14 @@ describe('DeleteNotification', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNotificationService.deleteNotification.mockResolvedValue(
-      mockNotificationDTO,
-    );
+    mockNotificationService.deleteNotification.mockResolvedValue(mockNotificationDTO);
     (toNotificationDTO as jest.Mock).mockReturnValue(mockNotificationDTO);
 
     // Execute the use case with provided parameters
     const result = await deleteNotification.execute(notificationId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockNotificationService.deleteNotification).toHaveBeenCalledWith(
-      notificationId,
-    );
+    expect(mockNotificationService.deleteNotification).toHaveBeenCalledWith(notificationId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toNotificationDTO).toHaveBeenCalledWith(mockNotificationDTO);
@@ -86,13 +82,9 @@ describe('DeleteNotification', () => {
    */
   it('should throw an error when deleteNotification execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNotificationService.deleteNotification.mockRejectedValue(
-      'Service method error',
-    );
+    mockNotificationService.deleteNotification.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deleteNotification.execute(notificationId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deleteNotification.execute(notificationId)).rejects.toThrow('Service method error');
   });
 });

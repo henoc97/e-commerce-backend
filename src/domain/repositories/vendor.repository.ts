@@ -60,46 +60,6 @@ export interface IVendorRepository {
   removeProduct(vendorId: number, productId: number): Promise<Vendor>;
 
   /**
-   * Retrieves all products for a vendor.
-   * @param vendorId - The ID of the vendor.
-   * @returns An array of products.
-   */
-  getProducts(vendorId: number): Promise<Product[]>;
-
-  /**
-   * Retrieves a vendor's subscription details.
-   * @param vendorId - The ID of the vendor.
-   * @returns The subscription entity if found, otherwise null.
-   */
-  getSubscription(vendorId: number): Promise<Subscription | null>;
-
-  /**
-   * Associates a subscription with a vendor.
-   * @param vendorId - The ID of the vendor.
-   * @param subscription - The subscription to associate.
-   * @returns The updated vendor entity.
-   */
-  setSubscription(
-    vendorId: number,
-    subscription: Subscription,
-  ): Promise<Vendor>;
-
-  /**
-   * Retrieves a vendor's shop.
-   * @param vendorId - The ID of the vendor.
-   * @returns The shop entity if found, otherwise null.
-   */
-  getShop(vendorId: number): Promise<Shop | null>;
-
-  /**
-   * Associates a shop with a vendor.
-   * @param vendorId - The ID of the vendor.
-   * @param shop - The shop to associate.
-   * @returns The updated vendor entity.
-   */
-  setShop(vendorId: number, shop: Shop): Promise<Vendor>;
-
-  /**
    * Finds vendors associated with a user.
    * @param userId - The user ID.
    * @returns An array of vendors.
@@ -117,11 +77,5 @@ export interface IVendorRepository {
    * Execute the vendor-list use case.
    * @returns A promise that resolves to an array of VendorDTOs.
    */
-  getall(): Promise<Vendor[]>;
-
-  /**
-   * Retrieves the most recently updated vendor.
-   * @returns The most recently updated vendor entity if found, otherwise null.
-   */
-  getLatest(): Promise<Vendor | null>;
+  getAll(): Promise<Vendor[]>;
 }

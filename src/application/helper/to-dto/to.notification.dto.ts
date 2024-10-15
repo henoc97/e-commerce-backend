@@ -12,6 +12,7 @@ export function toNotificationDTO(notification: Notification): NotificationDTO {
     notification.userId,
     notification.type,
     notification.content,
+    notification.read,
     notification.sentAt,
     notification.id,
     notification.user ? toUserDTO(notification.user) : undefined,

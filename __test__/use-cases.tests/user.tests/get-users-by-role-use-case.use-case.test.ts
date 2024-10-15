@@ -19,10 +19,8 @@ describe('GetUsersByRoleUseCase', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const role: UserRole = {
-    /* data */
-  };
+  
+     const role: UserRole = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -44,9 +42,7 @@ describe('GetUsersByRoleUseCase', () => {
       ],
     }).compile();
 
-    getUsersByRoleUseCase = module.get<GetUsersByRoleUseCase>(
-      GetUsersByRoleUseCase,
-    );
+    getUsersByRoleUseCase = module.get<GetUsersByRoleUseCase>(GetUsersByRoleUseCase);
     userService = module.get<UserService>(UserService);
   });
 
@@ -86,13 +82,9 @@ describe('GetUsersByRoleUseCase', () => {
    */
   it('should throw an error when getUsersByRoleUseCase execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.getUsersByRoleUseCase.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserService.getUsersByRoleUseCase.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(getUsersByRoleUseCase.execute(role)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(getUsersByRoleUseCase.execute(role)).rejects.toThrow('Service method error');
   });
 });

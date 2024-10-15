@@ -19,13 +19,9 @@ describe('ListActivitiesByDateRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const start: Date = {
-    /* data */
-  };
-  const end: Date = {
-    /* data */
-  };
+  
+     const start: Date = { /* data */ };
+     const end: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -47,9 +43,7 @@ describe('ListActivitiesByDateRange', () => {
       ],
     }).compile();
 
-    listActivitiesByDateRange = module.get<ListActivitiesByDateRange>(
-      ListActivitiesByDateRange,
-    );
+    listActivitiesByDateRange = module.get<ListActivitiesByDateRange>(ListActivitiesByDateRange);
     userActivityService = module.get<UserActivityService>(UserActivityService);
   });
 
@@ -67,18 +61,14 @@ describe('ListActivitiesByDateRange', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.listActivitiesByDateRange.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.listActivitiesByDateRange.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
     const result = await listActivitiesByDateRange.execute(start, end);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockUserActivityService.listActivitiesByDateRange,
-    ).toHaveBeenCalledWith(start, end);
+    expect(mockUserActivityService.listActivitiesByDateRange).toHaveBeenCalledWith(start, end);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserActivityDTO).toHaveBeenCalledWith(mockUserActivityDTO);
@@ -93,13 +83,9 @@ describe('ListActivitiesByDateRange', () => {
    */
   it('should throw an error when listActivitiesByDateRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.listActivitiesByDateRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.listActivitiesByDateRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listActivitiesByDateRange.execute(start, end)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listActivitiesByDateRange.execute(start, end)).rejects.toThrow('Service method error');
   });
 });

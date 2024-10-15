@@ -1,20 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { Category } from 'src/domain/entities/category.entity';
-import { Marketplace } from 'src/domain/entities/marketplace.entity';
-import { Order } from 'src/domain/entities/order.entity';
-import { Product } from 'src/domain/entities/product.entity';
+import { Inject, Injectable } from '@nestjs/common';
+
 import { Shop } from 'src/domain/entities/shop.entity';
 import { IShopRepository } from 'src/domain/repositories/shop.repository';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { fromProductDTO } from '../helper/to-entity/to.product.entity';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
 import { CategoryDTO } from 'src/presentation/dtos/category.dto';
-import { fromCategoryDTO } from '../helper/to-entity/to.category.entity';
-import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
-import { fromMarketplaceDTO } from '../helper/to-entity/to.marketplace.entity';
+import { ProductService } from './product.service';
+import { OrderService } from './order.service';
+import { CategoryService } from './category.service';
 
 /**
  * Service for managing shop-related operations.
@@ -22,7 +17,13 @@ import { fromMarketplaceDTO } from '../helper/to-entity/to.marketplace.entity';
  */
 @Injectable()
 export class ShopService {
-  constructor(private readonly shopRepository: IShopRepository) {}
+  constructor(
+    @Inject('IShopRepository')
+    private readonly shopRepository: IShopRepository,
+    private readonly productService: ProductService,
+    private readonly orderService: OrderService,
+    private readonly categoryService: CategoryService,
+  ) {}
 
   /**
    * Creates a new shop.
@@ -81,8 +82,8 @@ export class ShopService {
    * @returns The updated Shop entity.
    */
   async addProductToShop(shopId: number, product: ProductDTO): Promise<Shop> {
-    const prod = fromProductDTO(product);
-    return this.shopRepository.addProduct(shopId, prod);
+    await this.productService.createProduct(product);
+    return this.shopRepository.getById(shopId);
   }
 
   /**
@@ -95,16 +96,8 @@ export class ShopService {
     shopId: number,
     productId: number,
   ): Promise<Shop> {
-    return this.shopRepository.removeProduct(shopId, productId);
-  }
-
-  /**
-   * Retrieves all products for a shop.
-   * @param shopId - The ID of the shop.
-   * @returns An array of Product entities.
-   */
-  async listProductsForShop(shopId: number): Promise<Product[]> {
-    return this.shopRepository.listProducts(shopId);
+    await this.productService.deleteProduct(productId);
+    return this.shopRepository.getById(shopId);
   }
 
   /**
@@ -114,17 +107,8 @@ export class ShopService {
    * @returns The updated Shop entity.
    */
   async addOrderToShop(shopId: number, order: OrderDTO): Promise<Shop> {
-    const newOrder = fromOrderDTO(order);
-    return this.shopRepository.addOrder(shopId, newOrder);
-  }
-
-  /**
-   * Retrieves all orders for a shop.
-   * @param shopId - The ID of the shop.
-   * @returns An array of Order entities.
-   */
-  async listOrdersForShop(shopId: number): Promise<Order[]> {
-    return this.shopRepository.listOrders(shopId);
+    await this.orderService.createOrder(order);
+    return this.shopRepository.getById(shopId);
   }
 
   /**
@@ -137,8 +121,8 @@ export class ShopService {
     shopId: number,
     category: CategoryDTO,
   ): Promise<Shop> {
-    const newCategory = fromCategoryDTO(category);
-    return this.shopRepository.addCategory(shopId, newCategory);
+    await this.categoryService.createCategory(category);
+    return this.shopRepository.getById(shopId);
   }
 
   /**
@@ -151,39 +135,21 @@ export class ShopService {
     shopId: number,
     categoryId: number,
   ): Promise<Shop> {
-    return this.shopRepository.removeCategory(shopId, categoryId);
-  }
-
-  /**
-   * Retrieves all categories for a shop.
-   * @param shopId - The ID of the shop.
-   * @returns An array of Category entities.
-   */
-  async listCategoriesForShop(shopId: number): Promise<Category[]> {
-    return this.shopRepository.listCategories(shopId);
+    await this.categoryService.deleteCategory(categoryId);
+    return this.shopRepository.getById(shopId);
   }
 
   /**
    * Associates a marketplace with a shop.
    * @param shopId - The ID of the shop.
-   * @param marketplace - The marketplace to associate.
+   * @param marketplaceId - The ID of marketplace to associate.
    * @returns The updated Shop entity.
    */
   async associateMarketplaceWithShop(
     shopId: number,
-    marketplace: MarketplaceDTO,
+    marketplaceId: number,
   ): Promise<Shop> {
-    const market = fromMarketplaceDTO(marketplace);
-    return this.shopRepository.associateMarketplace(shopId, market);
-  }
-
-  /**
-   * Retrieves the marketplace associated with a shop.
-   * @param shopId - The ID of the shop.
-   * @returns The Marketplace entity, or null if not found.
-   */
-  async getMarketplaceForShop(shopId: number): Promise<Marketplace | null> {
-    return this.shopRepository.getMarketplace(shopId);
+    return this.shopRepository.associateMarketplace(shopId, marketplaceId);
   }
 
   /**
@@ -225,14 +191,5 @@ export class ShopService {
     endDate: Date,
   ): Promise<any> {
     return this.shopRepository.getOrderReport(shopId, startDate, endDate);
-  }
-
-  /**
-   * Retrieves the most popular product for a shop.
-   * @param shopId - The ID of the shop.
-   * @returns The most sold Product entity.
-   */
-  async getTopProductForShop(shopId: number): Promise<Product> {
-    return this.shopRepository.getTopProduct(shopId);
   }
 }

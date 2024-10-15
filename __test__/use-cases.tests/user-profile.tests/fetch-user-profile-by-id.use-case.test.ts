@@ -19,8 +19,8 @@ describe('FetchUserProfileById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserProfileDTO: UserProfileDTO = {
@@ -42,8 +42,7 @@ describe('FetchUserProfileById', () => {
       ],
     }).compile();
 
-    fetchUserProfileById =
-      module.get<FetchUserProfileById>(FetchUserProfileById);
+    fetchUserProfileById = module.get<FetchUserProfileById>(FetchUserProfileById);
     userProfileService = module.get<UserProfileService>(UserProfileService);
   });
 
@@ -61,18 +60,14 @@ describe('FetchUserProfileById', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserProfileService.fetchUserProfileById.mockResolvedValue(
-      mockUserProfileDTO,
-    );
+    mockUserProfileService.fetchUserProfileById.mockResolvedValue(mockUserProfileDTO);
     (toUserProfileDTO as jest.Mock).mockReturnValue(mockUserProfileDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchUserProfileById.execute(id);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserProfileService.fetchUserProfileById).toHaveBeenCalledWith(
-      id,
-    );
+    expect(mockUserProfileService.fetchUserProfileById).toHaveBeenCalledWith(id);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserProfileDTO).toHaveBeenCalledWith(mockUserProfileDTO);
@@ -87,13 +82,9 @@ describe('FetchUserProfileById', () => {
    */
   it('should throw an error when fetchUserProfileById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserProfileService.fetchUserProfileById.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserProfileService.fetchUserProfileById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchUserProfileById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchUserProfileById.execute(id)).rejects.toThrow('Service method error');
   });
 });

@@ -2,13 +2,17 @@ import { Subsite } from 'src/domain/entities/Subsite.entity';
 import { ISubsiteRepository } from 'src/domain/repositories/Subsite.repository';
 import { SubsiteDTO } from 'src/presentation/dtos/Subsite.dto';
 import { fromSubsiteDTO } from '../helper/to-entity/to.sub-site.entity';
+import { Inject } from '@nestjs/common';
 
 /**
  * Service for managing subsites.
  * Implements business logic for operations related to subsites using the repository interface.
  */
 export class SubsiteService {
-  constructor(private readonly subsiteRepository: ISubsiteRepository) {}
+  constructor(
+    @Inject('ISubsiteRepository')
+    private readonly subsiteRepository: ISubsiteRepository
+  ) {}
 
   /**
    * Creates a new subsite.
@@ -107,9 +111,9 @@ export class SubsiteService {
    * Lists all active subsites.
    * @returns An array of currently active subsite entities.
    */
-  async getActiveSubsites(): Promise<Subsite[]> {
-    return this.subsiteRepository.getActive();
-  }
+  // async getActiveSubsites(): Promise<Subsite[]> {
+  //   return this.subsiteRepository.getActive();
+  // }
 
   /**
    * Counts the number of subsites for a specific user.

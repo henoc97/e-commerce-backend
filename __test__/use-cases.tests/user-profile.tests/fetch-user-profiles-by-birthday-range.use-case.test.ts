@@ -19,13 +19,9 @@ describe('FetchUserProfilesByBirthdayRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserProfileDTO: UserProfileDTO = {
@@ -47,10 +43,7 @@ describe('FetchUserProfilesByBirthdayRange', () => {
       ],
     }).compile();
 
-    fetchUserProfilesByBirthdayRange =
-      module.get<FetchUserProfilesByBirthdayRange>(
-        FetchUserProfilesByBirthdayRange,
-      );
+    fetchUserProfilesByBirthdayRange = module.get<FetchUserProfilesByBirthdayRange>(FetchUserProfilesByBirthdayRange);
     userProfileService = module.get<UserProfileService>(UserProfileService);
   });
 
@@ -68,21 +61,14 @@ describe('FetchUserProfilesByBirthdayRange', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserProfileService.fetchUserProfilesByBirthdayRange.mockResolvedValue(
-      mockUserProfileDTO,
-    );
+    mockUserProfileService.fetchUserProfilesByBirthdayRange.mockResolvedValue(mockUserProfileDTO);
     (toUserProfileDTO as jest.Mock).mockReturnValue(mockUserProfileDTO);
 
     // Execute the use case with provided parameters
-    const result = await fetchUserProfilesByBirthdayRange.execute(
-      startDate,
-      endDate,
-    );
+    const result = await fetchUserProfilesByBirthdayRange.execute(startDate, endDate);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockUserProfileService.fetchUserProfilesByBirthdayRange,
-    ).toHaveBeenCalledWith(startDate, endDate);
+    expect(mockUserProfileService.fetchUserProfilesByBirthdayRange).toHaveBeenCalledWith(startDate, endDate);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserProfileDTO).toHaveBeenCalledWith(mockUserProfileDTO);
@@ -97,13 +83,9 @@ describe('FetchUserProfilesByBirthdayRange', () => {
    */
   it('should throw an error when fetchUserProfilesByBirthdayRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserProfileService.fetchUserProfilesByBirthdayRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserProfileService.fetchUserProfilesByBirthdayRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchUserProfilesByBirthdayRange.execute(startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchUserProfilesByBirthdayRange.execute(startDate, endDate)).rejects.toThrow('Service method error');
   });
 });

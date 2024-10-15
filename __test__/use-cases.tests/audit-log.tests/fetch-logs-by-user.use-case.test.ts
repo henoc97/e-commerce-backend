@@ -19,8 +19,8 @@ describe('FetchLogsByUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
+  
+     const userId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockAuditLogDTO: AuditLogDTO = {
@@ -82,13 +82,9 @@ describe('FetchLogsByUser', () => {
    */
   it('should throw an error when fetchLogsByUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAuditLogService.fetchLogsByUser.mockRejectedValue(
-      'Service method error',
-    );
+    mockAuditLogService.fetchLogsByUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchLogsByUser.execute(userId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchLogsByUser.execute(userId)).rejects.toThrow('Service method error');
   });
 });

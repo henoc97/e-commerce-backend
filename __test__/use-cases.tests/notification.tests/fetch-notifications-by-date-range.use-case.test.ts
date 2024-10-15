@@ -19,13 +19,9 @@ describe('FetchNotificationsByDateRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockNotificationDTO: NotificationDTO = {
@@ -47,9 +43,7 @@ describe('FetchNotificationsByDateRange', () => {
       ],
     }).compile();
 
-    fetchNotificationsByDateRange = module.get<FetchNotificationsByDateRange>(
-      FetchNotificationsByDateRange,
-    );
+    fetchNotificationsByDateRange = module.get<FetchNotificationsByDateRange>(FetchNotificationsByDateRange);
     notificationService = module.get<NotificationService>(NotificationService);
   });
 
@@ -67,21 +61,14 @@ describe('FetchNotificationsByDateRange', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNotificationService.fetchNotificationsByDateRange.mockResolvedValue(
-      mockNotificationDTO,
-    );
+    mockNotificationService.fetchNotificationsByDateRange.mockResolvedValue(mockNotificationDTO);
     (toNotificationDTO as jest.Mock).mockReturnValue(mockNotificationDTO);
 
     // Execute the use case with provided parameters
-    const result = await fetchNotificationsByDateRange.execute(
-      startDate,
-      endDate,
-    );
+    const result = await fetchNotificationsByDateRange.execute(startDate, endDate);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockNotificationService.fetchNotificationsByDateRange,
-    ).toHaveBeenCalledWith(startDate, endDate);
+    expect(mockNotificationService.fetchNotificationsByDateRange).toHaveBeenCalledWith(startDate, endDate);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toNotificationDTO).toHaveBeenCalledWith(mockNotificationDTO);
@@ -96,13 +83,9 @@ describe('FetchNotificationsByDateRange', () => {
    */
   it('should throw an error when fetchNotificationsByDateRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNotificationService.fetchNotificationsByDateRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockNotificationService.fetchNotificationsByDateRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchNotificationsByDateRange.execute(startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchNotificationsByDateRange.execute(startDate, endDate)).rejects.toThrow('Service method error');
   });
 });

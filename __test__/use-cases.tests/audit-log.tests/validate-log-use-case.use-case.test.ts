@@ -19,10 +19,8 @@ describe('ValidateLogUseCase', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const dto: AuditLogDTO = {
-    /* data */
-  };
+  
+     const dto: AuditLogDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockAuditLogDTO: AuditLogDTO = {
@@ -84,13 +82,9 @@ describe('ValidateLogUseCase', () => {
    */
   it('should throw an error when validateLogUseCase execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAuditLogService.validateLogUseCase.mockRejectedValue(
-      'Service method error',
-    );
+    mockAuditLogService.validateLogUseCase.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(validateLogUseCase.execute(dto)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(validateLogUseCase.execute(dto)).rejects.toThrow('Service method error');
   });
 });

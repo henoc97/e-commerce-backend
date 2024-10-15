@@ -26,11 +26,22 @@ import { AddressDTO } from 'src/presentation/dtos/address.dto';
 import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
+import { IAddressRepository } from 'src/domain/repositories/address.repository';
+import { IOrderRepository } from 'src/domain/repositories/order.repository';
+import { IUserActivityRepository } from 'src/domain/repositories/user-activity.repository';
+import { IUserProfileRepository } from 'src/domain/repositories/user-profile.repository';
+import { ITicketRepository } from 'src/domain/repositories/ticket.repository';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('IUserRepository') private readonly userRepository: IUserRepository,
+    @Inject('IUserRepository') 
+    private readonly userRepository: IUserRepository,
+    private readonly addressService: IAddressRepository,
+    private readonly orderService: IOrderRepository,
+    private readonly userActivityService: IUserActivityRepository,
+    private readonly userProfileService: IUserProfileRepository,
+    private readonly ticketService: ITicketRepository,
   ) {}
 
   /**
@@ -89,7 +100,8 @@ export class UserService {
    */
   async addAddressToUser(userId: number, address: AddressDTO): Promise<User> {
     const ad = fromAddressDTO(address);
-    return await this.userRepository.addAddress(userId, ad);
+    await this.addressService.create(ad)
+    return await this.userRepository.getById(userId);
   }
 
   /**
@@ -102,18 +114,8 @@ export class UserService {
     userId: number,
     addressId: number,
   ): Promise<User> {
-    return await this.userRepository.removeAddress(userId, addressId);
-  }
-
-  /**
-   * Add an order to the user's profile.
-   * @param userId - The unique ID of the user.
-   * @param order - Order entity to be added.
-   * @returns The updated User entity.
-   */
-  async addOrderToUser(userId: number, order: OrderDTO): Promise<User> {
-    const _order = fromOrderDTO(order);
-    return await this.userRepository.addOrder(userId, _order);
+    await this.addressService.deleteById(addressId)
+    return await this.userRepository.getById(userId);
   }
 
   /**

@@ -3,13 +3,17 @@ import { OrderStatus } from 'src/domain/enums/order-status.enum';
 import { IOrderRepository } from 'src/domain/repositories/order.repository';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
+import { Inject } from '@nestjs/common';
 
 /**
  * Service class for managing Order entities.
  * Implements business logic for CRUD operations and other use cases related to Orders.
  */
 export class OrderService {
-  constructor(private readonly orderRepository: IOrderRepository) {}
+  constructor(
+    @Inject('IOrderRepository')
+    private readonly orderRepository: IOrderRepository,
+  ) {}
 
   /**
    * Creates a new Order.

@@ -19,9 +19,9 @@ describe('RemoveAddressFromUserUseCase', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const addressId: number = 1;
+  
+     const userId: number = 1;
+     const addressId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -43,9 +43,7 @@ describe('RemoveAddressFromUserUseCase', () => {
       ],
     }).compile();
 
-    removeAddressFromUserUseCase = module.get<RemoveAddressFromUserUseCase>(
-      RemoveAddressFromUserUseCase,
-    );
+    removeAddressFromUserUseCase = module.get<RemoveAddressFromUserUseCase>(RemoveAddressFromUserUseCase);
     userService = module.get<UserService>(UserService);
   });
 
@@ -67,16 +65,10 @@ describe('RemoveAddressFromUserUseCase', () => {
     (toUserDTO as jest.Mock).mockReturnValue(mockUserDTO);
 
     // Execute the use case with provided parameters
-    const result = await removeAddressFromUserUseCase.execute(
-      userId,
-      addressId,
-    );
+    const result = await removeAddressFromUserUseCase.execute(userId, addressId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserService.removeAddressFromUserUseCase).toHaveBeenCalledWith(
-      userId,
-      addressId,
-    );
+    expect(mockUserService.removeAddressFromUserUseCase).toHaveBeenCalledWith(userId, addressId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserDTO).toHaveBeenCalledWith(mockUserDTO);
@@ -91,13 +83,9 @@ describe('RemoveAddressFromUserUseCase', () => {
    */
   it('should throw an error when removeAddressFromUserUseCase execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.removeAddressFromUserUseCase.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserService.removeAddressFromUserUseCase.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      removeAddressFromUserUseCase.execute(userId, addressId),
-    ).rejects.toThrow('Service method error');
+    await expect(removeAddressFromUserUseCase.execute(userId, addressId)).rejects.toThrow('Service method error');
   });
 });

@@ -19,8 +19,8 @@ describe('VerifyReview', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockReviewDTO: ReviewDTO = {
@@ -82,11 +82,9 @@ describe('VerifyReview', () => {
    */
   it('should throw an error when verifyReview execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockReviewService.verifyReview.mockRejectedValue('Service method error');
+    mockReviewService.verifyReview.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(verifyReview.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(verifyReview.execute(id)).rejects.toThrow('Service method error');
   });
 });

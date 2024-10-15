@@ -19,8 +19,8 @@ describe('DeleteProductVariantsByProductId', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
+  
+     const productId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductVariantDTO: ProductVariantDTO = {
@@ -42,13 +42,8 @@ describe('DeleteProductVariantsByProductId', () => {
       ],
     }).compile();
 
-    deleteProductVariantsByProductId =
-      module.get<DeleteProductVariantsByProductId>(
-        DeleteProductVariantsByProductId,
-      );
-    productVariantService = module.get<ProductVariantService>(
-      ProductVariantService,
-    );
+    deleteProductVariantsByProductId = module.get<DeleteProductVariantsByProductId>(DeleteProductVariantsByProductId);
+    productVariantService = module.get<ProductVariantService>(ProductVariantService);
   });
 
   /**
@@ -65,18 +60,14 @@ describe('DeleteProductVariantsByProductId', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductVariantService.deleteProductVariantsByProductId.mockResolvedValue(
-      mockProductVariantDTO,
-    );
+    mockProductVariantService.deleteProductVariantsByProductId.mockResolvedValue(mockProductVariantDTO);
     (toProductVariantDTO as jest.Mock).mockReturnValue(mockProductVariantDTO);
 
     // Execute the use case with provided parameters
     const result = await deleteProductVariantsByProductId.execute(productId);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockProductVariantService.deleteProductVariantsByProductId,
-    ).toHaveBeenCalledWith(productId);
+    expect(mockProductVariantService.deleteProductVariantsByProductId).toHaveBeenCalledWith(productId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductVariantDTO).toHaveBeenCalledWith(mockProductVariantDTO);
@@ -91,13 +82,9 @@ describe('DeleteProductVariantsByProductId', () => {
    */
   it('should throw an error when deleteProductVariantsByProductId execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductVariantService.deleteProductVariantsByProductId.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductVariantService.deleteProductVariantsByProductId.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      deleteProductVariantsByProductId.execute(productId),
-    ).rejects.toThrow('Service method error');
+    await expect(deleteProductVariantsByProductId.execute(productId)).rejects.toThrow('Service method error');
   });
 });

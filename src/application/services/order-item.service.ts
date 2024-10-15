@@ -2,6 +2,7 @@ import { OrderItem } from 'src/domain/entities/order-item.enttity';
 import { IOrderItemRepository } from 'src/domain/repositories/order-item.repository';
 import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
 import { fromOrderItemDTO } from '../helper/to-entity/to.order-item.entity';
+import { Inject } from '@nestjs/common';
 
 /**
  * Service class for managing OrderItems.
@@ -12,7 +13,9 @@ export class OrderItemService {
    * Creates a new instance of OrderItemService.
    * @param repository - The repository to interact with the OrderItem data.
    */
-  constructor(private readonly repository: IOrderItemRepository) {}
+  constructor(
+    @Inject('ICartItemRepository')
+    private readonly repository: IOrderItemRepository) {}
 
   /**
    * Creates a new OrderItem.

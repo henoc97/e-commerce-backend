@@ -19,9 +19,9 @@ describe('CheckCategoryExistence', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const name: string = 'name';
-  const shopId: number = 1;
+  
+     const name: string = 'name';
+     const shopId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockCategoryDTO: CategoryDTO = {
@@ -43,9 +43,7 @@ describe('CheckCategoryExistence', () => {
       ],
     }).compile();
 
-    checkCategoryExistence = module.get<CheckCategoryExistence>(
-      CheckCategoryExistence,
-    );
+    checkCategoryExistence = module.get<CheckCategoryExistence>(CheckCategoryExistence);
     categoryService = module.get<CategoryService>(CategoryService);
   });
 
@@ -63,19 +61,14 @@ describe('CheckCategoryExistence', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockCategoryService.checkCategoryExistence.mockResolvedValue(
-      mockCategoryDTO,
-    );
+    mockCategoryService.checkCategoryExistence.mockResolvedValue(mockCategoryDTO);
     (toCategoryDTO as jest.Mock).mockReturnValue(mockCategoryDTO);
 
     // Execute the use case with provided parameters
     const result = await checkCategoryExistence.execute(name, shopId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockCategoryService.checkCategoryExistence).toHaveBeenCalledWith(
-      name,
-      shopId,
-    );
+    expect(mockCategoryService.checkCategoryExistence).toHaveBeenCalledWith(name, shopId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toCategoryDTO).toHaveBeenCalledWith(mockCategoryDTO);
@@ -90,13 +83,9 @@ describe('CheckCategoryExistence', () => {
    */
   it('should throw an error when checkCategoryExistence execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCategoryService.checkCategoryExistence.mockRejectedValue(
-      'Service method error',
-    );
+    mockCategoryService.checkCategoryExistence.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(checkCategoryExistence.execute(name, shopId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(checkCategoryExistence.execute(name, shopId)).rejects.toThrow('Service method error');
   });
 });

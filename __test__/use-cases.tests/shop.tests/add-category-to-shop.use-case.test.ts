@@ -19,11 +19,9 @@ describe('AddCategoryToShop', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const shopId: number = 1;
-  const categoryDTO: CategoryDTO = {
-    /* data */
-  };
+  
+     const shopId: number = 1;
+     const categoryDTO: CategoryDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockShopDTO: ShopDTO = {
@@ -67,13 +65,12 @@ describe('AddCategoryToShop', () => {
     (toShopDTO as jest.Mock).mockReturnValue(mockShopDTO);
 
     // Execute the use case with provided parameters
-    const result = await addCategoryToShop.execute(shopId, categoryDTO);
+    const result = await addCategoryToShop.execute(shopId,
+    categoryDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockShopService.addCategoryToShop).toHaveBeenCalledWith(
-      shopId,
-      categoryDTO,
-    );
+    expect(mockShopService.addCategoryToShop).toHaveBeenCalledWith(shopId,
+    categoryDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toShopDTO).toHaveBeenCalledWith(mockShopDTO);
@@ -88,11 +85,10 @@ describe('AddCategoryToShop', () => {
    */
   it('should throw an error when addCategoryToShop execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockShopService.addCategoryToShop.mockRejectedValue('Service method error');
+    mockShopService.addCategoryToShop.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      addCategoryToShop.execute(shopId, categoryDTO),
-    ).rejects.toThrow('Service method error');
+    await expect(addCategoryToShop.execute(shopId,
+    categoryDTO,)).rejects.toThrow('Service method error');
   });
 });

@@ -19,8 +19,8 @@ describe('FetchSubsiteById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockSubsiteDTO: SubsiteDTO = {
@@ -82,13 +82,9 @@ describe('FetchSubsiteById', () => {
    */
   it('should throw an error when fetchSubsiteById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubsiteService.fetchSubsiteById.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubsiteService.fetchSubsiteById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchSubsiteById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchSubsiteById.execute(id)).rejects.toThrow('Service method error');
   });
 });

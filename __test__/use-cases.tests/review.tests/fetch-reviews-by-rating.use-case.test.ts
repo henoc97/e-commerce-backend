@@ -19,8 +19,8 @@ describe('FetchReviewsByRating', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const rating: number = 1;
+  
+     const rating: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockReviewDTO: ReviewDTO = {
@@ -42,8 +42,7 @@ describe('FetchReviewsByRating', () => {
       ],
     }).compile();
 
-    fetchReviewsByRating =
-      module.get<FetchReviewsByRating>(FetchReviewsByRating);
+    fetchReviewsByRating = module.get<FetchReviewsByRating>(FetchReviewsByRating);
     reviewService = module.get<ReviewService>(ReviewService);
   });
 
@@ -83,13 +82,9 @@ describe('FetchReviewsByRating', () => {
    */
   it('should throw an error when fetchReviewsByRating execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockReviewService.fetchReviewsByRating.mockRejectedValue(
-      'Service method error',
-    );
+    mockReviewService.fetchReviewsByRating.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchReviewsByRating.execute(rating)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchReviewsByRating.execute(rating)).rejects.toThrow('Service method error');
   });
 });

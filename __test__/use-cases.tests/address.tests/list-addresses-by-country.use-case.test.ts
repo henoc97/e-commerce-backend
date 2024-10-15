@@ -19,8 +19,8 @@ describe('ListAddressesByCountry', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const country: string = 'country';
+  
+     const country: string = 'country';
 
   // Mock version of  to be used as input and expected output
   const mockAddressDTO: AddressDTO = {
@@ -42,9 +42,7 @@ describe('ListAddressesByCountry', () => {
       ],
     }).compile();
 
-    listAddressesByCountry = module.get<ListAddressesByCountry>(
-      ListAddressesByCountry,
-    );
+    listAddressesByCountry = module.get<ListAddressesByCountry>(ListAddressesByCountry);
     addressService = module.get<AddressService>(AddressService);
   });
 
@@ -69,9 +67,7 @@ describe('ListAddressesByCountry', () => {
     const result = await listAddressesByCountry.execute(country);
 
     // Verify that the service was called with the expected arguments
-    expect(mockAddressService.listAddressesByCountry).toHaveBeenCalledWith(
-      country,
-    );
+    expect(mockAddressService.listAddressesByCountry).toHaveBeenCalledWith(country);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toAddressDTO).toHaveBeenCalledWith(mockAddressDTO);
@@ -86,13 +82,9 @@ describe('ListAddressesByCountry', () => {
    */
   it('should throw an error when listAddressesByCountry execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAddressService.listAddressesByCountry.mockRejectedValue(
-      'Service method error',
-    );
+    mockAddressService.listAddressesByCountry.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listAddressesByCountry.execute(country)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listAddressesByCountry.execute(country)).rejects.toThrow('Service method error');
   });
 });

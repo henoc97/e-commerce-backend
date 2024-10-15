@@ -6,17 +6,21 @@ import { ProductVariantDTO } from '../../src/presentation/dtos/product-variant.d
 
 
 const mockProductVariantRepository = {
-  createProductVariant: jest.fn(),
-getProductVariantById: jest.fn(),
-updateProductVariant: jest.fn(),
-deleteProductVariant: jest.fn(),
-getProductVariantsByProductId: jest.fn(),
-deleteProductVariantsByProductId: jest.fn(),
-productVariantExists: jest.fn(),
-updateProductVariantDetails: jest.fn(),
-getProductVariantsByName: jest.fn(),
+  create: jest.fn(),
+getById: jest.fn(),
+update: jest.fn(),
+delete: jest.fn(),
+getByProductId: jest.fn(),
+deleteByProductId: jest.fn(),
+exists: jest.fn(),
+updateDetails: jest.fn(),
+getByName: jest.fn(),
 getMostPopularVariant: jest.fn()
 };
+
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+
 
 describe('ProductVariantService', () => {
     let service: ProductVariantService;
@@ -28,7 +32,7 @@ describe('ProductVariantService', () => {
       providers: [
         ProductVariantService,
         {
-          provide: 'ProductVariantRepository',
+          provide: 'IProductVariantRepository',
           useValue: mockProductVariantRepository, // Use the mock
         },
       ],
@@ -36,8 +40,13 @@ describe('ProductVariantService', () => {
 
     // Retrieve instances of the service and repository
     service = module.get<ProductVariantService>(ProductVariantService);
-    productVariantRepository = module.get<IProductVariantRepository>('ProductVariantRepository');
+    productVariantRepository = module.get<IProductVariantRepository>('IProductVariantRepository');
   });
+
+afterEach(() => {
+    jest.clearAllMocks();
+  });
+
 
     /* create product variant success and failure tests */
 it('should create product variant', async () => {
@@ -49,13 +58,13 @@ it('should create product variant', async () => {
     
      const variantDTO: ProductVariantDTO = { /* data */ };
 
-    const returnOject: ProductVariant = { id: 1, /* others data */ }
+    const returnOject: ProductVariant = { id: 1, /* others data */ };
     
-    mockProductVariantRepository.createProductVariant.mockResolvedValue(returnOject);
+    mockProductVariantRepository.create.mockResolvedValue(returnOject);
 
     const result = await service.createProductVariant(variantDTO,);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.createProductVariant).toHaveBeenCalledWith(variantDTO,);
+    expect(mockProductVariantRepository.create).toHaveBeenCalledWith(variantDTO,);
 });
 
 it('should throw an error when create product variant method fails', async () => {
@@ -63,10 +72,12 @@ it('should throw an error when create product variant method fails', async () =>
      const variantDTO: ProductVariantDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.createProductVariant.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.create.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.createProductVariant(variantDTO,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.createProductVariant(variantDTO,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get product variant by id success and failure tests */
@@ -79,13 +90,13 @@ it('should get product variant by id', async () => {
     
      const id: number = 1;
 
-    const returnOject: ProductVariant | null = { id: 1, /* others data */ }
+    const returnOject: ProductVariant | null = { id: 1, /* others data */ };
     
-    mockProductVariantRepository.getProductVariantById.mockResolvedValue(returnOject);
+    mockProductVariantRepository.getById.mockResolvedValue(returnOject);
 
     const result = await service.getProductVariantById(id);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.getProductVariantById).toHaveBeenCalledWith(id);
+    expect(mockProductVariantRepository.getById).toHaveBeenCalledWith(id);
 });
 
 it('should throw an error when get product variant by id method fails', async () => {
@@ -93,10 +104,12 @@ it('should throw an error when get product variant by id method fails', async ()
      const id: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.getProductVariantById.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getProductVariantById(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getProductVariantById(id)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* update product variant success and failure tests */
@@ -110,14 +123,14 @@ it('should update product variant', async () => {
      const id: number = 1;
      const updates: Partial<ProductVariantDTO> = { /* data */ };
 
-    const returnOject: ProductVariant = { id: 1, /* others data */ }
+    const returnOject: ProductVariant = { id: 1, /* others data */ };
     
-    mockProductVariantRepository.updateProductVariant.mockResolvedValue(returnOject);
+    mockProductVariantRepository.update.mockResolvedValue(returnOject);
 
     const result = await service.updateProductVariant(id,
     updates,);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.updateProductVariant).toHaveBeenCalledWith(id,
+    expect(mockProductVariantRepository.update).toHaveBeenCalledWith(id,
     updates,);
 });
 
@@ -127,11 +140,13 @@ it('should throw an error when update product variant method fails', async () =>
      const updates: Partial<ProductVariantDTO> = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.updateProductVariant.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.update.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.updateProductVariant(id,
-    updates,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.updateProductVariant(id,
+    updates,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* delete product variant success and failure tests */
@@ -146,11 +161,11 @@ it('should delete product variant', async () => {
 
     const returnOject: boolean = true
     
-    mockProductVariantRepository.deleteProductVariant.mockResolvedValue(returnOject);
+    mockProductVariantRepository.delete.mockResolvedValue(returnOject);
 
     const result = await service.deleteProductVariant(id);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.deleteProductVariant).toHaveBeenCalledWith(id);
+    expect(mockProductVariantRepository.delete).toHaveBeenCalledWith(id);
 });
 
 it('should throw an error when delete product variant method fails', async () => {
@@ -158,10 +173,12 @@ it('should throw an error when delete product variant method fails', async () =>
      const id: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.deleteProductVariant.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.deleteProductVariant(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.deleteProductVariant(id)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get product variants by product id success and failure tests */
@@ -174,13 +191,13 @@ it('should get product variants by product id', async () => {
     
      const productId: number = 1;
 
-    const returnOject: ProductVariant[] = [{ id: 1, /* others data */ }]
+    const returnOject: ProductVariant[] = [{ id: 1, /* others data */ }];
     
-    mockProductVariantRepository.getProductVariantsByProductId.mockResolvedValue(returnOject);
+    mockProductVariantRepository.getByProductId.mockResolvedValue(returnOject);
 
     const result = await service.getProductVariantsByProductId(productId,);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.getProductVariantsByProductId).toHaveBeenCalledWith(productId,);
+    expect(mockProductVariantRepository.getByProductId).toHaveBeenCalledWith(productId,);
 });
 
 it('should throw an error when get product variants by product id method fails', async () => {
@@ -188,10 +205,12 @@ it('should throw an error when get product variants by product id method fails',
      const productId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.getProductVariantsByProductId.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.getByProductId.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getProductVariantsByProductId(productId,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getProductVariantsByProductId(productId,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* delete product variants by product id success and failure tests */
@@ -206,11 +225,11 @@ it('should delete product variants by product id', async () => {
 
     const returnOject: boolean = true
     
-    mockProductVariantRepository.deleteProductVariantsByProductId.mockResolvedValue(returnOject);
+    mockProductVariantRepository.deleteByProductId.mockResolvedValue(returnOject);
 
     const result = await service.deleteProductVariantsByProductId(productId);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.deleteProductVariantsByProductId).toHaveBeenCalledWith(productId);
+    expect(mockProductVariantRepository.deleteByProductId).toHaveBeenCalledWith(productId);
 });
 
 it('should throw an error when delete product variants by product id method fails', async () => {
@@ -218,10 +237,12 @@ it('should throw an error when delete product variants by product id method fail
      const productId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.deleteProductVariantsByProductId.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.deleteByProductId.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.deleteProductVariantsByProductId(productId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.deleteProductVariantsByProductId(productId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* product variant exists success and failure tests */
@@ -238,13 +259,13 @@ it('should product variant exists', async () => {
 
     const returnOject: boolean = true
     
-    mockProductVariantRepository.productVariantExists.mockResolvedValue(returnOject);
+    mockProductVariantRepository.exists.mockResolvedValue(returnOject);
 
     const result = await service.productVariantExists(productId,
     name,
     value,);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.productVariantExists).toHaveBeenCalledWith(productId,
+    expect(mockProductVariantRepository.exists).toHaveBeenCalledWith(productId,
     name,
     value,);
 });
@@ -256,12 +277,14 @@ it('should throw an error when product variant exists method fails', async () =>
      const value: string = 'value';
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.productVariantExists.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.exists.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.productVariantExists(productId,
+    await expect(service.productVariantExists(productId,
     name,
-    value,);
-    expect(result).rejects.toThrow('Repository error');
+    value,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* update product variant details success and failure tests */
@@ -274,15 +297,15 @@ it('should update product variant details', async () => {
     
      const id: number = 1;
 
-    const returnOject: ProductVariant = { id: 1, /* others data */ }
+    const returnOject: ProductVariant = { id: 1, /* others data */ };
     
-    mockProductVariantRepository.updateProductVariantDetails.mockResolvedValue(returnOject);
+    mockProductVariantRepository.updateDetails.mockResolvedValue(returnOject);
 
     const result = await service.updateProductVariantDetails(id,
     name?,
     value?,);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.updateProductVariantDetails).toHaveBeenCalledWith(id,
+    expect(mockProductVariantRepository.updateDetails).toHaveBeenCalledWith(id,
     name?,
     value?,);
 });
@@ -292,12 +315,14 @@ it('should throw an error when update product variant details method fails', asy
      const id: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.updateProductVariantDetails.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.updateDetails.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.updateProductVariantDetails(id,
+    await expect(service.updateProductVariantDetails(id,
     name?,
-    value?,);
-    expect(result).rejects.toThrow('Repository error');
+    value?,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get product variants by name success and failure tests */
@@ -311,14 +336,14 @@ it('should get product variants by name', async () => {
      const productId: number = 1;
      const name: string = 'name';
 
-    const returnOject: ProductVariant[] = [{ id: 1, /* others data */ }]
+    const returnOject: ProductVariant[] = [{ id: 1, /* others data */ }];
     
-    mockProductVariantRepository.getProductVariantsByName.mockResolvedValue(returnOject);
+    mockProductVariantRepository.getByName.mockResolvedValue(returnOject);
 
     const result = await service.getProductVariantsByName(productId,
     name,);
     expect(result).toEqual(returnOject);
-    expect(mockProductVariantRepository.getProductVariantsByName).toHaveBeenCalledWith(productId,
+    expect(mockProductVariantRepository.getByName).toHaveBeenCalledWith(productId,
     name,);
 });
 
@@ -328,11 +353,13 @@ it('should throw an error when get product variants by name method fails', async
      const name: string = 'name';
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.getProductVariantsByName.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.getByName.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getProductVariantsByName(productId,
-    name,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getProductVariantsByName(productId,
+    name,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get most popular variant success and failure tests */
@@ -345,7 +372,7 @@ it('should get most popular variant', async () => {
     
      const productId: number = 1;
 
-    const returnOject: ProductVariant | null = { id: 1, /* others data */ }
+    const returnOject: ProductVariant | null = { id: 1, /* others data */ };
     
     mockProductVariantRepository.getMostPopularVariant.mockResolvedValue(returnOject);
 
@@ -359,10 +386,12 @@ it('should throw an error when get most popular variant method fails', async () 
      const productId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockProductVariantRepository.getMostPopularVariant.mockResolvedValue(" Repository error");
+    mockProductVariantRepository.getMostPopularVariant.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getMostPopularVariant(productId,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getMostPopularVariant(productId,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 })

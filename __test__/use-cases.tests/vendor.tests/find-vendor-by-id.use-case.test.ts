@@ -19,8 +19,8 @@ describe('FindVendorById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const vendorId: number = 1;
+  
+     const vendorId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -82,11 +82,9 @@ describe('FindVendorById', () => {
    */
   it('should throw an error when findVendorById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.findVendorById.mockRejectedValue('Service method error');
+    mockVendorService.findVendorById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(findVendorById.execute(vendorId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(findVendorById.execute(vendorId)).rejects.toThrow('Service method error');
   });
 });

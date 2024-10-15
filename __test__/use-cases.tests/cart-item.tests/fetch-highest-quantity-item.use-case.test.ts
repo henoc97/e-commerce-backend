@@ -19,8 +19,8 @@ describe('FetchHighestQuantityItem', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const cartId: number = 1;
+  
+     const cartId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockCartItemDTO: CartItemDTO = {
@@ -42,9 +42,7 @@ describe('FetchHighestQuantityItem', () => {
       ],
     }).compile();
 
-    fetchHighestQuantityItem = module.get<FetchHighestQuantityItem>(
-      FetchHighestQuantityItem,
-    );
+    fetchHighestQuantityItem = module.get<FetchHighestQuantityItem>(FetchHighestQuantityItem);
     cartItemService = module.get<CartItemService>(CartItemService);
   });
 
@@ -62,18 +60,14 @@ describe('FetchHighestQuantityItem', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockCartItemService.fetchHighestQuantityItem.mockResolvedValue(
-      mockCartItemDTO,
-    );
+    mockCartItemService.fetchHighestQuantityItem.mockResolvedValue(mockCartItemDTO);
     (toCartItemDTO as jest.Mock).mockReturnValue(mockCartItemDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchHighestQuantityItem.execute(cartId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockCartItemService.fetchHighestQuantityItem).toHaveBeenCalledWith(
-      cartId,
-    );
+    expect(mockCartItemService.fetchHighestQuantityItem).toHaveBeenCalledWith(cartId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toCartItemDTO).toHaveBeenCalledWith(mockCartItemDTO);
@@ -88,13 +82,9 @@ describe('FetchHighestQuantityItem', () => {
    */
   it('should throw an error when fetchHighestQuantityItem execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCartItemService.fetchHighestQuantityItem.mockRejectedValue(
-      'Service method error',
-    );
+    mockCartItemService.fetchHighestQuantityItem.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchHighestQuantityItem.execute(cartId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchHighestQuantityItem.execute(cartId)).rejects.toThrow('Service method error');
   });
 });

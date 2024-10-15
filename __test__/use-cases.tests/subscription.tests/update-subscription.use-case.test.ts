@@ -19,11 +19,9 @@ describe('UpdateSubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const updates: Partial<SubscriptionDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const updates: Partial<SubscriptionDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockSubscriptionDTO: SubscriptionDTO = {
@@ -63,19 +61,16 @@ describe('UpdateSubscription', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockSubscriptionService.updateSubscription.mockResolvedValue(
-      mockSubscriptionDTO,
-    );
+    mockSubscriptionService.updateSubscription.mockResolvedValue(mockSubscriptionDTO);
     (toSubscriptionDTO as jest.Mock).mockReturnValue(mockSubscriptionDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateSubscription.execute(id, updates);
+    const result = await updateSubscription.execute(id,
+    updates,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockSubscriptionService.updateSubscription).toHaveBeenCalledWith(
-      id,
-      updates,
-    );
+    expect(mockSubscriptionService.updateSubscription).toHaveBeenCalledWith(id,
+    updates,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toSubscriptionDTO).toHaveBeenCalledWith(mockSubscriptionDTO);
@@ -90,13 +85,10 @@ describe('UpdateSubscription', () => {
    */
   it('should throw an error when updateSubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubscriptionService.updateSubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubscriptionService.updateSubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateSubscription.execute(id, updates)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateSubscription.execute(id,
+    updates,)).rejects.toThrow('Service method error');
   });
 });

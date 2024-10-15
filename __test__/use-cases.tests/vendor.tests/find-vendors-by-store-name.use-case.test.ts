@@ -19,8 +19,8 @@ describe('FindVendorsByStoreName', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const storeName: string = 'storeName';
+  
+     const storeName: string = 'storeName';
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -42,9 +42,7 @@ describe('FindVendorsByStoreName', () => {
       ],
     }).compile();
 
-    findVendorsByStoreName = module.get<FindVendorsByStoreName>(
-      FindVendorsByStoreName,
-    );
+    findVendorsByStoreName = module.get<FindVendorsByStoreName>(FindVendorsByStoreName);
     vendorService = module.get<VendorService>(VendorService);
   });
 
@@ -69,9 +67,7 @@ describe('FindVendorsByStoreName', () => {
     const result = await findVendorsByStoreName.execute(storeName);
 
     // Verify that the service was called with the expected arguments
-    expect(mockVendorService.findVendorsByStoreName).toHaveBeenCalledWith(
-      storeName,
-    );
+    expect(mockVendorService.findVendorsByStoreName).toHaveBeenCalledWith(storeName);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toVendorDTO).toHaveBeenCalledWith(mockVendorDTO);
@@ -86,13 +82,9 @@ describe('FindVendorsByStoreName', () => {
    */
   it('should throw an error when findVendorsByStoreName execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.findVendorsByStoreName.mockRejectedValue(
-      'Service method error',
-    );
+    mockVendorService.findVendorsByStoreName.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(findVendorsByStoreName.execute(storeName)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(findVendorsByStoreName.execute(storeName)).rejects.toThrow('Service method error');
   });
 });

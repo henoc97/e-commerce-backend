@@ -19,9 +19,9 @@ describe('FindProductsByPriceRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const minPrice: number = 1;
-  const maxPrice: number = 1;
+  
+     const minPrice: number = 1;
+     const maxPrice: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -43,9 +43,7 @@ describe('FindProductsByPriceRange', () => {
       ],
     }).compile();
 
-    findProductsByPriceRange = module.get<FindProductsByPriceRange>(
-      FindProductsByPriceRange,
-    );
+    findProductsByPriceRange = module.get<FindProductsByPriceRange>(FindProductsByPriceRange);
     productService = module.get<ProductService>(ProductService);
   });
 
@@ -63,19 +61,14 @@ describe('FindProductsByPriceRange', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductService.findProductsByPriceRange.mockResolvedValue(
-      mockProductDTO,
-    );
+    mockProductService.findProductsByPriceRange.mockResolvedValue(mockProductDTO);
     (toProductDTO as jest.Mock).mockReturnValue(mockProductDTO);
 
     // Execute the use case with provided parameters
     const result = await findProductsByPriceRange.execute(minPrice, maxPrice);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductService.findProductsByPriceRange).toHaveBeenCalledWith(
-      minPrice,
-      maxPrice,
-    );
+    expect(mockProductService.findProductsByPriceRange).toHaveBeenCalledWith(minPrice, maxPrice);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductDTO).toHaveBeenCalledWith(mockProductDTO);
@@ -90,13 +83,9 @@ describe('FindProductsByPriceRange', () => {
    */
   it('should throw an error when findProductsByPriceRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.findProductsByPriceRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.findProductsByPriceRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      findProductsByPriceRange.execute(minPrice, maxPrice),
-    ).rejects.toThrow('Service method error');
+    await expect(findProductsByPriceRange.execute(minPrice, maxPrice)).rejects.toThrow('Service method error');
   });
 });

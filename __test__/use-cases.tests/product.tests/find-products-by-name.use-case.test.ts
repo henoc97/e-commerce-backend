@@ -19,8 +19,8 @@ describe('FindProductsByName', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const name: string = 'name';
+  
+     const name: string = 'name';
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -82,13 +82,9 @@ describe('FindProductsByName', () => {
    */
   it('should throw an error when findProductsByName execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.findProductsByName.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.findProductsByName.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(findProductsByName.execute(name)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(findProductsByName.execute(name)).rejects.toThrow('Service method error');
   });
 });

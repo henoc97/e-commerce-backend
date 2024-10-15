@@ -19,6 +19,7 @@ describe('FetchPaymentsGroupedByMethod', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockPaymentDTO: PaymentDTO = {
@@ -40,9 +41,7 @@ describe('FetchPaymentsGroupedByMethod', () => {
       ],
     }).compile();
 
-    fetchPaymentsGroupedByMethod = module.get<FetchPaymentsGroupedByMethod>(
-      FetchPaymentsGroupedByMethod,
-    );
+    fetchPaymentsGroupedByMethod = module.get<FetchPaymentsGroupedByMethod>(FetchPaymentsGroupedByMethod);
     paymentService = module.get<PaymentService>(PaymentService);
   });
 
@@ -60,18 +59,14 @@ describe('FetchPaymentsGroupedByMethod', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockPaymentService.fetchPaymentsGroupedByMethod.mockResolvedValue(
-      mockPaymentDTO,
-    );
+    mockPaymentService.fetchPaymentsGroupedByMethod.mockResolvedValue(mockPaymentDTO);
     (toPaymentDTO as jest.Mock).mockReturnValue(mockPaymentDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchPaymentsGroupedByMethod.execute();
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockPaymentService.fetchPaymentsGroupedByMethod,
-    ).toHaveBeenCalledWith();
+    expect(mockPaymentService.fetchPaymentsGroupedByMethod).toHaveBeenCalledWith();
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPaymentDTO).toHaveBeenCalledWith(mockPaymentDTO);
@@ -86,13 +81,9 @@ describe('FetchPaymentsGroupedByMethod', () => {
    */
   it('should throw an error when fetchPaymentsGroupedByMethod execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPaymentService.fetchPaymentsGroupedByMethod.mockRejectedValue(
-      'Service method error',
-    );
+    mockPaymentService.fetchPaymentsGroupedByMethod.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchPaymentsGroupedByMethod.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchPaymentsGroupedByMethod.execute()).rejects.toThrow('Service method error');
   });
 });

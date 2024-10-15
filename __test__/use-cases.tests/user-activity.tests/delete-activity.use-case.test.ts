@@ -19,8 +19,8 @@ describe('DeleteActivity', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -60,9 +60,7 @@ describe('DeleteActivity', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.deleteActivity.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.deleteActivity.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
@@ -84,13 +82,9 @@ describe('DeleteActivity', () => {
    */
   it('should throw an error when deleteActivity execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.deleteActivity.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.deleteActivity.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deleteActivity.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deleteActivity.execute(id)).rejects.toThrow('Service method error');
   });
 });

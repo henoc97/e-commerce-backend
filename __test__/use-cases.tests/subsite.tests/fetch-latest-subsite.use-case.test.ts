@@ -19,6 +19,7 @@ describe('FetchLatestSubsite', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockSubsiteDTO: SubsiteDTO = {
@@ -80,13 +81,9 @@ describe('FetchLatestSubsite', () => {
    */
   it('should throw an error when fetchLatestSubsite execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubsiteService.fetchLatestSubsite.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubsiteService.fetchLatestSubsite.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchLatestSubsite.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchLatestSubsite.execute()).rejects.toThrow('Service method error');
   });
 });

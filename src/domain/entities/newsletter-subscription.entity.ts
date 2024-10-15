@@ -1,6 +1,6 @@
 /**
  * Represents a subscription to a newsletter.
- * Stores details about the subscriber's email and the subscription date.
+ * Stores details about the subscriber's email, the subscription date, the associated shop, and the subscription status.
  */
 export class NewsletterSubscription {
   /**
@@ -20,14 +20,34 @@ export class NewsletterSubscription {
   subscribedAt: Date;
 
   /**
+   * The identifier of the shop associated with this subscription.
+   */
+  shopId: number;
+
+  /**
+   * Indicates whether the subscription is active or not.
+   */
+  isActive: boolean;
+
+  /**
    * Creates a new NewsletterSubscription instance.
    * @param id - Unique identifier for the subscription.
    * @param email - Email address of the subscriber.
-   * @param subscribedAt - (Optional) Date and time of subscription creation.
+   * @param shopId - Identifier of the associated shop.
+   * @param isActive - Status of the subscription (active/inactive). Default is `true`.
+   * @param subscribedAt - Date and time of subscription creation.
    */
-  constructor(id: number, email: string, subscribedAt: Date = new Date()) {
+  constructor(
+    id: number,
+    email: string,
+    shopId: number,
+    isActive: boolean = true,
+    subscribedAt: Date = new Date(),
+  ) {
     this.id = id;
     this.email = email;
+    this.shopId = shopId;
+    this.isActive = isActive;
     this.subscribedAt = subscribedAt;
   }
 }

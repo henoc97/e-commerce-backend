@@ -19,6 +19,7 @@ describe('FetchTopLevelCategories', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockCategoryDTO: CategoryDTO = {
@@ -40,9 +41,7 @@ describe('FetchTopLevelCategories', () => {
       ],
     }).compile();
 
-    fetchTopLevelCategories = module.get<FetchTopLevelCategories>(
-      FetchTopLevelCategories,
-    );
+    fetchTopLevelCategories = module.get<FetchTopLevelCategories>(FetchTopLevelCategories);
     categoryService = module.get<CategoryService>(CategoryService);
   });
 
@@ -60,9 +59,7 @@ describe('FetchTopLevelCategories', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockCategoryService.fetchTopLevelCategories.mockResolvedValue(
-      mockCategoryDTO,
-    );
+    mockCategoryService.fetchTopLevelCategories.mockResolvedValue(mockCategoryDTO);
     (toCategoryDTO as jest.Mock).mockReturnValue(mockCategoryDTO);
 
     // Execute the use case with provided parameters
@@ -84,13 +81,9 @@ describe('FetchTopLevelCategories', () => {
    */
   it('should throw an error when fetchTopLevelCategories execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCategoryService.fetchTopLevelCategories.mockRejectedValue(
-      'Service method error',
-    );
+    mockCategoryService.fetchTopLevelCategories.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchTopLevelCategories.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchTopLevelCategories.execute()).rejects.toThrow('Service method error');
   });
 });

@@ -19,8 +19,8 @@ describe('ListActivitiesByProduct', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
+  
+     const productId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -42,9 +42,7 @@ describe('ListActivitiesByProduct', () => {
       ],
     }).compile();
 
-    listActivitiesByProduct = module.get<ListActivitiesByProduct>(
-      ListActivitiesByProduct,
-    );
+    listActivitiesByProduct = module.get<ListActivitiesByProduct>(ListActivitiesByProduct);
     userActivityService = module.get<UserActivityService>(UserActivityService);
   });
 
@@ -62,18 +60,14 @@ describe('ListActivitiesByProduct', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.listActivitiesByProduct.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.listActivitiesByProduct.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
     const result = await listActivitiesByProduct.execute(productId);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockUserActivityService.listActivitiesByProduct,
-    ).toHaveBeenCalledWith(productId);
+    expect(mockUserActivityService.listActivitiesByProduct).toHaveBeenCalledWith(productId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserActivityDTO).toHaveBeenCalledWith(mockUserActivityDTO);
@@ -88,13 +82,9 @@ describe('ListActivitiesByProduct', () => {
    */
   it('should throw an error when listActivitiesByProduct execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.listActivitiesByProduct.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.listActivitiesByProduct.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listActivitiesByProduct.execute(productId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listActivitiesByProduct.execute(productId)).rejects.toThrow('Service method error');
   });
 });

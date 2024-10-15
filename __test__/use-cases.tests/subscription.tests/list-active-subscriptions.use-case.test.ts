@@ -19,6 +19,7 @@ describe('ListActiveSubscriptions', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockSubscriptionDTO: SubscriptionDTO = {
@@ -40,9 +41,7 @@ describe('ListActiveSubscriptions', () => {
       ],
     }).compile();
 
-    listActiveSubscriptions = module.get<ListActiveSubscriptions>(
-      ListActiveSubscriptions,
-    );
+    listActiveSubscriptions = module.get<ListActiveSubscriptions>(ListActiveSubscriptions);
     subscriptionService = module.get<SubscriptionService>(SubscriptionService);
   });
 
@@ -60,18 +59,14 @@ describe('ListActiveSubscriptions', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockSubscriptionService.listActiveSubscriptions.mockResolvedValue(
-      mockSubscriptionDTO,
-    );
+    mockSubscriptionService.listActiveSubscriptions.mockResolvedValue(mockSubscriptionDTO);
     (toSubscriptionDTO as jest.Mock).mockReturnValue(mockSubscriptionDTO);
 
     // Execute the use case with provided parameters
     const result = await listActiveSubscriptions.execute();
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockSubscriptionService.listActiveSubscriptions,
-    ).toHaveBeenCalledWith();
+    expect(mockSubscriptionService.listActiveSubscriptions).toHaveBeenCalledWith();
 
     // Verify that the transformation to DTO was called with the service result
     expect(toSubscriptionDTO).toHaveBeenCalledWith(mockSubscriptionDTO);
@@ -86,13 +81,9 @@ describe('ListActiveSubscriptions', () => {
    */
   it('should throw an error when listActiveSubscriptions execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubscriptionService.listActiveSubscriptions.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubscriptionService.listActiveSubscriptions.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listActiveSubscriptions.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listActiveSubscriptions.execute()).rejects.toThrow('Service method error');
   });
 });

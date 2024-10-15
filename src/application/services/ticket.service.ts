@@ -3,21 +3,22 @@ import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
 import { ITicketRepository } from 'src/domain/repositories/ticket.repository';
 import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
 import { fromTicketDTO } from '../helper/to-entity/to.ticket.entity';
+import { Inject } from '@nestjs/common';
 
 /**
  * Service class for handling ticket-related operations.
  * Implements business logic for creating, retrieving, updating, and deleting tickets.
  */
 export class TicketService {
-  private ticketRepository: ITicketRepository;
 
   /**
    * Constructs a new TicketService instance.
    * @param ticketRepository - The repository instance for interacting with the ticket data.
    */
-  constructor(ticketRepository: ITicketRepository) {
-    this.ticketRepository = ticketRepository;
-  }
+  constructor(
+    @Inject('ITicketRepository')
+    private readonly ticketRepository: ITicketRepository
+  ) {}
 
   /**
    * Creates a new support ticket.

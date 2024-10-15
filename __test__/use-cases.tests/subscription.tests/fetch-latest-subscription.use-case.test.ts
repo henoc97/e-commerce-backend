@@ -19,6 +19,7 @@ describe('FetchLatestSubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockSubscriptionDTO: SubscriptionDTO = {
@@ -40,9 +41,7 @@ describe('FetchLatestSubscription', () => {
       ],
     }).compile();
 
-    fetchLatestSubscription = module.get<FetchLatestSubscription>(
-      FetchLatestSubscription,
-    );
+    fetchLatestSubscription = module.get<FetchLatestSubscription>(FetchLatestSubscription);
     subscriptionService = module.get<SubscriptionService>(SubscriptionService);
   });
 
@@ -60,18 +59,14 @@ describe('FetchLatestSubscription', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockSubscriptionService.fetchLatestSubscription.mockResolvedValue(
-      mockSubscriptionDTO,
-    );
+    mockSubscriptionService.fetchLatestSubscription.mockResolvedValue(mockSubscriptionDTO);
     (toSubscriptionDTO as jest.Mock).mockReturnValue(mockSubscriptionDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchLatestSubscription.execute();
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockSubscriptionService.fetchLatestSubscription,
-    ).toHaveBeenCalledWith();
+    expect(mockSubscriptionService.fetchLatestSubscription).toHaveBeenCalledWith();
 
     // Verify that the transformation to DTO was called with the service result
     expect(toSubscriptionDTO).toHaveBeenCalledWith(mockSubscriptionDTO);
@@ -86,13 +81,9 @@ describe('FetchLatestSubscription', () => {
    */
   it('should throw an error when fetchLatestSubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubscriptionService.fetchLatestSubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubscriptionService.fetchLatestSubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchLatestSubscription.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchLatestSubscription.execute()).rejects.toThrow('Service method error');
   });
 });

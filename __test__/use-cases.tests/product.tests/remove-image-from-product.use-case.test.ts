@@ -19,9 +19,9 @@ describe('RemoveImageFromProduct', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
-  const imageId: number = 1;
+  
+     const productId: number = 1;
+     const imageId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -43,9 +43,7 @@ describe('RemoveImageFromProduct', () => {
       ],
     }).compile();
 
-    removeImageFromProduct = module.get<RemoveImageFromProduct>(
-      RemoveImageFromProduct,
-    );
+    removeImageFromProduct = module.get<RemoveImageFromProduct>(RemoveImageFromProduct);
     productService = module.get<ProductService>(ProductService);
   });
 
@@ -67,13 +65,12 @@ describe('RemoveImageFromProduct', () => {
     (toProductDTO as jest.Mock).mockReturnValue(mockProductDTO);
 
     // Execute the use case with provided parameters
-    const result = await removeImageFromProduct.execute(productId, imageId);
+    const result = await removeImageFromProduct.execute(productId,
+    imageId,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductService.removeImageFromProduct).toHaveBeenCalledWith(
-      productId,
-      imageId,
-    );
+    expect(mockProductService.removeImageFromProduct).toHaveBeenCalledWith(productId,
+    imageId,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductDTO).toHaveBeenCalledWith(mockProductDTO);
@@ -88,13 +85,10 @@ describe('RemoveImageFromProduct', () => {
    */
   it('should throw an error when removeImageFromProduct execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.removeImageFromProduct.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.removeImageFromProduct.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      removeImageFromProduct.execute(productId, imageId),
-    ).rejects.toThrow('Service method error');
+    await expect(removeImageFromProduct.execute(productId,
+    imageId,)).rejects.toThrow('Service method error');
   });
 });

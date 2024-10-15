@@ -19,8 +19,8 @@ describe('FetchTotalSalesForShop', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const shopId: number = 1;
+  
+     const shopId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockShopDTO: ShopDTO = {
@@ -42,9 +42,7 @@ describe('FetchTotalSalesForShop', () => {
       ],
     }).compile();
 
-    fetchTotalSalesForShop = module.get<FetchTotalSalesForShop>(
-      FetchTotalSalesForShop,
-    );
+    fetchTotalSalesForShop = module.get<FetchTotalSalesForShop>(FetchTotalSalesForShop);
     shopService = module.get<ShopService>(ShopService);
   });
 
@@ -84,13 +82,9 @@ describe('FetchTotalSalesForShop', () => {
    */
   it('should throw an error when fetchTotalSalesForShop execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockShopService.fetchTotalSalesForShop.mockRejectedValue(
-      'Service method error',
-    );
+    mockShopService.fetchTotalSalesForShop.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchTotalSalesForShop.execute(shopId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchTotalSalesForShop.execute(shopId)).rejects.toThrow('Service method error');
   });
 });

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Payment } from 'src/domain/entities/payment.entity';
 import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
 import { IPaymentRepository } from 'src/domain/repositories/payment.repository';
@@ -10,7 +10,9 @@ import { fromPaymentDTO } from '../helper/to-entity/to.payment.entity';
  */
 @Injectable()
 export class PaymentService {
-  constructor(private readonly paymentRepository: IPaymentRepository) {}
+  constructor(
+    @Inject('ICartItemRepository')
+    private readonly paymentRepository: IPaymentRepository) {}
 
   /**
    * Creates a new payment record.

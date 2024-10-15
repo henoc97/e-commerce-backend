@@ -19,8 +19,8 @@ describe('FetchMostRecentPaymentByOrderId', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const orderId: number = 1;
+  
+     const orderId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockPaymentDTO: PaymentDTO = {
@@ -42,10 +42,7 @@ describe('FetchMostRecentPaymentByOrderId', () => {
       ],
     }).compile();
 
-    fetchMostRecentPaymentByOrderId =
-      module.get<FetchMostRecentPaymentByOrderId>(
-        FetchMostRecentPaymentByOrderId,
-      );
+    fetchMostRecentPaymentByOrderId = module.get<FetchMostRecentPaymentByOrderId>(FetchMostRecentPaymentByOrderId);
     paymentService = module.get<PaymentService>(PaymentService);
   });
 
@@ -63,18 +60,14 @@ describe('FetchMostRecentPaymentByOrderId', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockPaymentService.fetchMostRecentPaymentByOrderId.mockResolvedValue(
-      mockPaymentDTO,
-    );
+    mockPaymentService.fetchMostRecentPaymentByOrderId.mockResolvedValue(mockPaymentDTO);
     (toPaymentDTO as jest.Mock).mockReturnValue(mockPaymentDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchMostRecentPaymentByOrderId.execute(orderId);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockPaymentService.fetchMostRecentPaymentByOrderId,
-    ).toHaveBeenCalledWith(orderId);
+    expect(mockPaymentService.fetchMostRecentPaymentByOrderId).toHaveBeenCalledWith(orderId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPaymentDTO).toHaveBeenCalledWith(mockPaymentDTO);
@@ -89,13 +82,9 @@ describe('FetchMostRecentPaymentByOrderId', () => {
    */
   it('should throw an error when fetchMostRecentPaymentByOrderId execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPaymentService.fetchMostRecentPaymentByOrderId.mockRejectedValue(
-      'Service method error',
-    );
+    mockPaymentService.fetchMostRecentPaymentByOrderId.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchMostRecentPaymentByOrderId.execute(orderId),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchMostRecentPaymentByOrderId.execute(orderId)).rejects.toThrow('Service method error');
   });
 });

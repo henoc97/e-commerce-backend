@@ -19,8 +19,8 @@ describe('FindVendorsBySubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const subscriptionId: number = 1;
+  
+     const subscriptionId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -42,9 +42,7 @@ describe('FindVendorsBySubscription', () => {
       ],
     }).compile();
 
-    findVendorsBySubscription = module.get<FindVendorsBySubscription>(
-      FindVendorsBySubscription,
-    );
+    findVendorsBySubscription = module.get<FindVendorsBySubscription>(FindVendorsBySubscription);
     vendorService = module.get<VendorService>(VendorService);
   });
 
@@ -62,18 +60,14 @@ describe('FindVendorsBySubscription', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockVendorService.findVendorsBySubscription.mockResolvedValue(
-      mockVendorDTO,
-    );
+    mockVendorService.findVendorsBySubscription.mockResolvedValue(mockVendorDTO);
     (toVendorDTO as jest.Mock).mockReturnValue(mockVendorDTO);
 
     // Execute the use case with provided parameters
     const result = await findVendorsBySubscription.execute(subscriptionId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockVendorService.findVendorsBySubscription).toHaveBeenCalledWith(
-      subscriptionId,
-    );
+    expect(mockVendorService.findVendorsBySubscription).toHaveBeenCalledWith(subscriptionId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toVendorDTO).toHaveBeenCalledWith(mockVendorDTO);
@@ -88,13 +82,9 @@ describe('FindVendorsBySubscription', () => {
    */
   it('should throw an error when findVendorsBySubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.findVendorsBySubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockVendorService.findVendorsBySubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      findVendorsBySubscription.execute(subscriptionId),
-    ).rejects.toThrow('Service method error');
+    await expect(findVendorsBySubscription.execute(subscriptionId)).rejects.toThrow('Service method error');
   });
 });

@@ -47,14 +47,6 @@ export interface ICategoryRepository {
   getChildren(parentId: number): Promise<Category[]>;
 
   /**
-   * Retrieves all products associated with a specific Category.
-   * @param categoryId - The unique ID of the Category.
-   * @returns A promise that resolves to an array of Products.
-   * @throws Error if the retrieval fails.
-   */
-  getProducts(categoryId: number): Promise<Product[]>;
-
-  /**
    * Updates the parent category of a specific Category.
    * @param id - The unique ID of the Category to update.
    * @param newParentId - The unique ID of the new parent Category.

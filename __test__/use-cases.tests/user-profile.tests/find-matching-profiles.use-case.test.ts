@@ -19,10 +19,8 @@ describe('FindMatchingProfiles', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const criteria: Partial<UserProfileDTO> = {
-    /* data */
-  };
+  
+     const criteria: Partial<UserProfileDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserProfileDTO: UserProfileDTO = {
@@ -44,8 +42,7 @@ describe('FindMatchingProfiles', () => {
       ],
     }).compile();
 
-    findMatchingProfiles =
-      module.get<FindMatchingProfiles>(FindMatchingProfiles);
+    findMatchingProfiles = module.get<FindMatchingProfiles>(FindMatchingProfiles);
     userProfileService = module.get<UserProfileService>(UserProfileService);
   });
 
@@ -63,18 +60,14 @@ describe('FindMatchingProfiles', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserProfileService.findMatchingProfiles.mockResolvedValue(
-      mockUserProfileDTO,
-    );
+    mockUserProfileService.findMatchingProfiles.mockResolvedValue(mockUserProfileDTO);
     (toUserProfileDTO as jest.Mock).mockReturnValue(mockUserProfileDTO);
 
     // Execute the use case with provided parameters
     const result = await findMatchingProfiles.execute(criteria);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserProfileService.findMatchingProfiles).toHaveBeenCalledWith(
-      criteria,
-    );
+    expect(mockUserProfileService.findMatchingProfiles).toHaveBeenCalledWith(criteria);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserProfileDTO).toHaveBeenCalledWith(mockUserProfileDTO);
@@ -89,13 +82,9 @@ describe('FindMatchingProfiles', () => {
    */
   it('should throw an error when findMatchingProfiles execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserProfileService.findMatchingProfiles.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserProfileService.findMatchingProfiles.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(findMatchingProfiles.execute(criteria)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(findMatchingProfiles.execute(criteria)).rejects.toThrow('Service method error');
   });
 });

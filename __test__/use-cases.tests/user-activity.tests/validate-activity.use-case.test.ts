@@ -19,10 +19,8 @@ describe('ValidateActivity', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const activityDTO: UserActivityDTO = {
-    /* data */
-  };
+  
+     const activityDTO: UserActivityDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -62,18 +60,14 @@ describe('ValidateActivity', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.validateActivity.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.validateActivity.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
     const result = await validateActivity.execute(activityDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserActivityService.validateActivity).toHaveBeenCalledWith(
-      activityDTO,
-    );
+    expect(mockUserActivityService.validateActivity).toHaveBeenCalledWith(activityDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserActivityDTO).toHaveBeenCalledWith(mockUserActivityDTO);
@@ -88,13 +82,9 @@ describe('ValidateActivity', () => {
    */
   it('should throw an error when validateActivity execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.validateActivity.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.validateActivity.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(validateActivity.execute(activityDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(validateActivity.execute(activityDTO)).rejects.toThrow('Service method error');
   });
 });

@@ -19,10 +19,8 @@ describe('CreatePromotion', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const promotionDTO: PromotionDTO = {
-    /* data */
-  };
+  
+     const promotionDTO: PromotionDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockPromotionDTO: PromotionDTO = {
@@ -69,9 +67,7 @@ describe('CreatePromotion', () => {
     const result = await createPromotion.execute(promotionDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockPromotionService.createPromotion).toHaveBeenCalledWith(
-      promotionDTO,
-    );
+    expect(mockPromotionService.createPromotion).toHaveBeenCalledWith(promotionDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPromotionDTO).toHaveBeenCalledWith(mockPromotionDTO);
@@ -86,13 +82,9 @@ describe('CreatePromotion', () => {
    */
   it('should throw an error when createPromotion execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPromotionService.createPromotion.mockRejectedValue(
-      'Service method error',
-    );
+    mockPromotionService.createPromotion.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createPromotion.execute(promotionDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createPromotion.execute(promotionDTO)).rejects.toThrow('Service method error');
   });
 });

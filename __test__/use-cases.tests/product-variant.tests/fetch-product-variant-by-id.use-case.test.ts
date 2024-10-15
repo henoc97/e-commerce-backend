@@ -19,8 +19,8 @@ describe('FetchProductVariantById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductVariantDTO: ProductVariantDTO = {
@@ -42,12 +42,8 @@ describe('FetchProductVariantById', () => {
       ],
     }).compile();
 
-    fetchProductVariantById = module.get<FetchProductVariantById>(
-      FetchProductVariantById,
-    );
-    productVariantService = module.get<ProductVariantService>(
-      ProductVariantService,
-    );
+    fetchProductVariantById = module.get<FetchProductVariantById>(FetchProductVariantById);
+    productVariantService = module.get<ProductVariantService>(ProductVariantService);
   });
 
   /**
@@ -64,18 +60,14 @@ describe('FetchProductVariantById', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductVariantService.fetchProductVariantById.mockResolvedValue(
-      mockProductVariantDTO,
-    );
+    mockProductVariantService.fetchProductVariantById.mockResolvedValue(mockProductVariantDTO);
     (toProductVariantDTO as jest.Mock).mockReturnValue(mockProductVariantDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchProductVariantById.execute(id);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockProductVariantService.fetchProductVariantById,
-    ).toHaveBeenCalledWith(id);
+    expect(mockProductVariantService.fetchProductVariantById).toHaveBeenCalledWith(id);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductVariantDTO).toHaveBeenCalledWith(mockProductVariantDTO);
@@ -90,13 +82,9 @@ describe('FetchProductVariantById', () => {
    */
   it('should throw an error when fetchProductVariantById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductVariantService.fetchProductVariantById.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductVariantService.fetchProductVariantById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchProductVariantById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchProductVariantById.execute(id)).rejects.toThrow('Service method error');
   });
 });

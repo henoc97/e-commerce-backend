@@ -19,8 +19,8 @@ describe('DeleteCategory', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockCategoryDTO: CategoryDTO = {
@@ -82,13 +82,9 @@ describe('DeleteCategory', () => {
    */
   it('should throw an error when deleteCategory execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCategoryService.deleteCategory.mockRejectedValue(
-      'Service method error',
-    );
+    mockCategoryService.deleteCategory.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deleteCategory.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deleteCategory.execute(id)).rejects.toThrow('Service method error');
   });
 });

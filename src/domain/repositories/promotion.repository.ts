@@ -67,12 +67,4 @@ export interface IPromotionRepository {
    * @returns A combined promotion or null if combination is not possible.
    */
   combine(promotions: Promotion[]): Promise<Promotion | null>;
-
-  /**
-   * Applies a promotion directly to a product.
-   * @param productId - The ID of the product.
-   * @param promotionId - The ID of the promotion to apply.
-   * @returns The updated promotion if applied successfully.
-   */
-  applyToProduct(productId: number, promotionId: number): Promise<Promotion>;
 }

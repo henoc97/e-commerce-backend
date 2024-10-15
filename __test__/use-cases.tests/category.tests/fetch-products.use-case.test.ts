@@ -19,8 +19,8 @@ describe('FetchProducts', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const categoryId: number = 1;
+  
+     const categoryId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockCategoryDTO: CategoryDTO = {
@@ -82,11 +82,9 @@ describe('FetchProducts', () => {
    */
   it('should throw an error when fetchProducts execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCategoryService.fetchProducts.mockRejectedValue('Service method error');
+    mockCategoryService.fetchProducts.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchProducts.execute(categoryId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchProducts.execute(categoryId)).rejects.toThrow('Service method error');
   });
 });

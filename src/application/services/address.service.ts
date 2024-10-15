@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { Address } from 'src/domain/entities/address.entity';
 import { IAddressRepository } from 'src/domain/repositories/address.repository';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
@@ -10,7 +14,10 @@ import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
  */
 @Injectable()
 export class AddressService {
-  constructor(private readonly addressRepository: IAddressRepository) {}
+  constructor(
+    @Inject('IAddressRepository')
+    private readonly addressRepository: IAddressRepository,
+  ) {}
 
   /**
    * Creates a new address entry.
@@ -19,7 +26,7 @@ export class AddressService {
    */
   async createAddress(addressDTO: AddressDTO): Promise<Address> {
     const address = fromAddressDTO(addressDTO);
-    return await this.addressRepository.create(address);
+    return this.addressRepository.create(address);
   }
 
   /**
@@ -28,7 +35,7 @@ export class AddressService {
    * @returns A promise that resolves to the Address entity if found, otherwise null.
    */
   async getAddressById(id: number): Promise<Address | null> {
-    return await this.addressRepository.getById(id);
+    return this.addressRepository.getById(id);
   }
 
   /**
@@ -42,7 +49,7 @@ export class AddressService {
     data: Partial<AddressDTO>,
   ): Promise<Address> {
     const updateData = fromAddressDTO(data);
-    return await this.addressRepository.updateById(id, updateData);
+    return this.addressRepository.updateById(id, updateData);
   }
 
   /**
@@ -51,7 +58,7 @@ export class AddressService {
    * @returns A promise that resolves to true if the deletion was successful, otherwise false.
    */
   async deleteAddressById(id: number): Promise<boolean> {
-    return await this.addressRepository.deleteById(id);
+    return this.addressRepository.deleteById(id);
   }
 
   /**
@@ -60,7 +67,7 @@ export class AddressService {
    * @returns A promise that resolves to an array of Address entities associated with the user.
    */
   async getAddressesByUserId(userId: number): Promise<Address[]> {
-    return await this.addressRepository.getAllByUserId(userId);
+    return this.addressRepository.getAllByUserId(userId);
   }
 
   /**
@@ -73,7 +80,7 @@ export class AddressService {
     userId: number,
     addressId: number,
   ): Promise<Address | null> {
-    return await this.addressRepository.getByUserIdAndId(userId, addressId);
+    return this.addressRepository.getByUserIdAndId(userId, addressId);
   }
 
   /**
@@ -82,7 +89,7 @@ export class AddressService {
    * @returns A promise that resolves to an array of Address entities located in the specified city.
    */
   async getAddressesByCity(city: string): Promise<Address[]> {
-    return await this.addressRepository.getByCity(city);
+    return this.addressRepository.getByCity(city);
   }
 
   /**
@@ -91,7 +98,7 @@ export class AddressService {
    * @returns A promise that resolves to an array of Address entities located in the specified state.
    */
   async getAddressesByState(state: string): Promise<Address[]> {
-    return await this.addressRepository.getByState(state);
+    return this.addressRepository.getByState(state);
   }
 
   /**
@@ -100,7 +107,7 @@ export class AddressService {
    * @returns A promise that resolves to an array of Address entities located in the specified country.
    */
   async getAddressesByCountry(country: string): Promise<Address[]> {
-    return await this.addressRepository.getByCountry(country);
+    return this.addressRepository.getByCountry(country);
   }
 
   /**
@@ -109,6 +116,6 @@ export class AddressService {
    * @returns A promise that resolves to an array of Address entities with the specified postal code.
    */
   async getAddressesByPostalCode(postalCode: string): Promise<Address[]> {
-    return await this.addressRepository.getByPostalCode(postalCode);
+    return this.addressRepository.getByPostalCode(postalCode);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { UserProfile } from 'src/domain/entities/user-profile.entity';
 import { IUserProfileRepository } from 'src/domain/repositories/user-profile.repository';
 import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
@@ -9,7 +9,10 @@ import { fromUserProfileDTO } from '../helper/to-entity/to.user-profile.entity';
  */
 @Injectable()
 export class UserProfileService {
-  constructor(private readonly userProfileRepository: IUserProfileRepository) {}
+  constructor(
+    @Inject('IUserProfileRepository')
+    private readonly userProfileRepository: IUserProfileRepository
+  ) {}
 
   /**
    * Creates a new user profile.
@@ -139,9 +142,9 @@ export class UserProfileService {
    * @param limit - The number of recent profiles to retrieve.
    * @returns An array of the most recently updated profiles.
    */
-  async getRecentlyUpdatedProfiles(limit: number): Promise<UserProfile[]> {
-    return this.userProfileRepository.getRecentlyUpdated(limit);
-  }
+  // async getRecentlyUpdatedProfiles(limit: number): Promise<UserProfile[]> {
+  //   return this.userProfileRepository.getRecentlyUpdated(limit);
+  // }
 
   /**
    * Finds profiles with similar data points for potential data clustering or user matching.

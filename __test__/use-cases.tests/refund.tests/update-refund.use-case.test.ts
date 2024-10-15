@@ -19,11 +19,9 @@ describe('UpdateRefund', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const updates: Partial<RefundDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const updates: Partial<RefundDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockRefundDTO: RefundDTO = {
@@ -85,11 +83,9 @@ describe('UpdateRefund', () => {
    */
   it('should throw an error when updateRefund execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockRefundService.updateRefund.mockRejectedValue('Service method error');
+    mockRefundService.updateRefund.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateRefund.execute(id, updates)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateRefund.execute(id, updates)).rejects.toThrow('Service method error');
   });
 });

@@ -94,13 +94,6 @@ export interface IUserProfileRepository {
   exists(userId: number): Promise<boolean>;
 
   /**
-   * Retrieves all profiles that have been recently updated.
-   * @param limit - The number of recent profiles to retrieve.
-   * @returns An array of the most recently updated profiles.
-   */
-  getRecentlyUpdated(limit: number): Promise<UserProfile[]>;
-
-  /**
    * Finds profiles with similar data points for potential data clustering or user matching.
    * @param criteria - Criteria for matching profiles (e.g., similar interests, age, etc.).
    * @returns An array of matched profiles.

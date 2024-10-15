@@ -19,10 +19,8 @@ describe('CreateSubsite', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const subsiteDTO: SubsiteDTO = {
-    /* data */
-  };
+  
+     const subsiteDTO: SubsiteDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockSubsiteDTO: SubsiteDTO = {
@@ -84,11 +82,9 @@ describe('CreateSubsite', () => {
    */
   it('should throw an error when createSubsite execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubsiteService.createSubsite.mockRejectedValue('Service method error');
+    mockSubsiteService.createSubsite.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createSubsite.execute(subsiteDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createSubsite.execute(subsiteDTO)).rejects.toThrow('Service method error');
   });
 });

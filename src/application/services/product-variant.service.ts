@@ -2,21 +2,18 @@ import { ProductVariant } from 'src/domain/entities/product-variant.entity';
 import { IProductVariantRepository } from 'src/domain/repositories/product-variant.repository';
 import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
 import { fromProductVariantDTO } from '../helper/to-entity/to.product-variant.entity';
+import { Inject } from '@nestjs/common';
 
 /**
  * Service class for handling business logic related to ProductVariant entities.
  * Utilizes repository methods to perform CRUD operations and implement use case logic.
  */
 export class ProductVariantService {
-  private readonly repository: IProductVariantRepository;
-
-  /**
-   * Creates an instance of ProductVariantService.
-   * @param repository - An instance of the repository to manage ProductVariant entities.
-   */
-  constructor(repository: IProductVariantRepository) {
-    this.repository = repository;
-  }
+  
+  constructor(
+    @Inject('IProductImageRepository')
+    private readonly repository: IProductVariantRepository
+  ) {}
 
   /**
    * Creates and saves a new ProductVariant.

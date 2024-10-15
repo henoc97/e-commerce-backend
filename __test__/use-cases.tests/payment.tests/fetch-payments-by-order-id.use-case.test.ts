@@ -19,8 +19,8 @@ describe('FetchPaymentsByOrderId', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const orderId: number = 1;
+  
+     const orderId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockPaymentDTO: PaymentDTO = {
@@ -42,9 +42,7 @@ describe('FetchPaymentsByOrderId', () => {
       ],
     }).compile();
 
-    fetchPaymentsByOrderId = module.get<FetchPaymentsByOrderId>(
-      FetchPaymentsByOrderId,
-    );
+    fetchPaymentsByOrderId = module.get<FetchPaymentsByOrderId>(FetchPaymentsByOrderId);
     paymentService = module.get<PaymentService>(PaymentService);
   });
 
@@ -69,9 +67,7 @@ describe('FetchPaymentsByOrderId', () => {
     const result = await fetchPaymentsByOrderId.execute(orderId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockPaymentService.fetchPaymentsByOrderId).toHaveBeenCalledWith(
-      orderId,
-    );
+    expect(mockPaymentService.fetchPaymentsByOrderId).toHaveBeenCalledWith(orderId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPaymentDTO).toHaveBeenCalledWith(mockPaymentDTO);
@@ -86,13 +82,9 @@ describe('FetchPaymentsByOrderId', () => {
    */
   it('should throw an error when fetchPaymentsByOrderId execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPaymentService.fetchPaymentsByOrderId.mockRejectedValue(
-      'Service method error',
-    );
+    mockPaymentService.fetchPaymentsByOrderId.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchPaymentsByOrderId.execute(orderId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchPaymentsByOrderId.execute(orderId)).rejects.toThrow('Service method error');
   });
 });

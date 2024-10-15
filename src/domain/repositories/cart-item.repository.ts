@@ -58,6 +58,14 @@ export interface ICartItemRepository {
   ): Promise<CartItem | null>;
 
   /**
+   * Retrieves the total number of items in a Cart.
+   * @param cartId - The unique ID of the Cart.
+   * @returns A promise that resolves to the total item count.
+   * @throws Error if the retrieval fails.
+   */
+  getItemCount(cartId: number): Promise<number>;
+
+  /**
    * Updates the quantity of a CartItem.
    * @param id - The unique ID of the CartItem.
    * @param quantity - The new quantity to set for the CartItem.

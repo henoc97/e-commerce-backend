@@ -19,8 +19,8 @@ describe('ListAddressesByPostalCode', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const postalCode: string = 'postalCode';
+  
+     const postalCode: string = 'postalCode';
 
   // Mock version of  to be used as input and expected output
   const mockAddressDTO: AddressDTO = {
@@ -42,9 +42,7 @@ describe('ListAddressesByPostalCode', () => {
       ],
     }).compile();
 
-    listAddressesByPostalCode = module.get<ListAddressesByPostalCode>(
-      ListAddressesByPostalCode,
-    );
+    listAddressesByPostalCode = module.get<ListAddressesByPostalCode>(ListAddressesByPostalCode);
     addressService = module.get<AddressService>(AddressService);
   });
 
@@ -62,18 +60,14 @@ describe('ListAddressesByPostalCode', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockAddressService.listAddressesByPostalCode.mockResolvedValue(
-      mockAddressDTO,
-    );
+    mockAddressService.listAddressesByPostalCode.mockResolvedValue(mockAddressDTO);
     (toAddressDTO as jest.Mock).mockReturnValue(mockAddressDTO);
 
     // Execute the use case with provided parameters
     const result = await listAddressesByPostalCode.execute(postalCode);
 
     // Verify that the service was called with the expected arguments
-    expect(mockAddressService.listAddressesByPostalCode).toHaveBeenCalledWith(
-      postalCode,
-    );
+    expect(mockAddressService.listAddressesByPostalCode).toHaveBeenCalledWith(postalCode);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toAddressDTO).toHaveBeenCalledWith(mockAddressDTO);
@@ -88,13 +82,9 @@ describe('ListAddressesByPostalCode', () => {
    */
   it('should throw an error when listAddressesByPostalCode execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAddressService.listAddressesByPostalCode.mockRejectedValue(
-      'Service method error',
-    );
+    mockAddressService.listAddressesByPostalCode.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listAddressesByPostalCode.execute(postalCode)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listAddressesByPostalCode.execute(postalCode)).rejects.toThrow('Service method error');
   });
 });

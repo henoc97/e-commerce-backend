@@ -19,11 +19,9 @@ describe('UpdateActivity', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const updates: Partial<UserActivityDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const updates: Partial<UserActivityDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -63,19 +61,16 @@ describe('UpdateActivity', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.updateActivity.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.updateActivity.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateActivity.execute(id, updates);
+    const result = await updateActivity.execute(id,
+    updates,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserActivityService.updateActivity).toHaveBeenCalledWith(
-      id,
-      updates,
-    );
+    expect(mockUserActivityService.updateActivity).toHaveBeenCalledWith(id,
+    updates,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserActivityDTO).toHaveBeenCalledWith(mockUserActivityDTO);
@@ -90,13 +85,10 @@ describe('UpdateActivity', () => {
    */
   it('should throw an error when updateActivity execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.updateActivity.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.updateActivity.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateActivity.execute(id, updates)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateActivity.execute(id,
+    updates,)).rejects.toThrow('Service method error');
   });
 });

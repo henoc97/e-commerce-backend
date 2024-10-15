@@ -14,9 +14,9 @@ export function fromCartItemDTO(
   return new CartItem(
     cartItemDTO.id,
     cartItemDTO.cartId,
-    cartItemDTO.cart ? fromCartDTO(cartItemDTO.cart) : undefined,
     cartItemDTO.productId,
-    cartItemDTO.product ? fromProductDTO(cartItemDTO.product) : undefined,
     cartItemDTO.quantity,
+    cartItemDTO.cart ? fromCartDTO(cartItemDTO.cart) : undefined,
+    cartItemDTO.product ? fromProductDTO(cartItemDTO.product) : undefined,
   );
 }

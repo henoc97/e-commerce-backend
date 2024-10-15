@@ -19,8 +19,8 @@ describe('FetchMostPopularVariant', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
+  
+     const productId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductVariantDTO: ProductVariantDTO = {
@@ -42,12 +42,8 @@ describe('FetchMostPopularVariant', () => {
       ],
     }).compile();
 
-    fetchMostPopularVariant = module.get<FetchMostPopularVariant>(
-      FetchMostPopularVariant,
-    );
-    productVariantService = module.get<ProductVariantService>(
-      ProductVariantService,
-    );
+    fetchMostPopularVariant = module.get<FetchMostPopularVariant>(FetchMostPopularVariant);
+    productVariantService = module.get<ProductVariantService>(ProductVariantService);
   });
 
   /**
@@ -64,18 +60,14 @@ describe('FetchMostPopularVariant', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductVariantService.fetchMostPopularVariant.mockResolvedValue(
-      mockProductVariantDTO,
-    );
+    mockProductVariantService.fetchMostPopularVariant.mockResolvedValue(mockProductVariantDTO);
     (toProductVariantDTO as jest.Mock).mockReturnValue(mockProductVariantDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchMostPopularVariant.execute(productId);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockProductVariantService.fetchMostPopularVariant,
-    ).toHaveBeenCalledWith(productId);
+    expect(mockProductVariantService.fetchMostPopularVariant).toHaveBeenCalledWith(productId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductVariantDTO).toHaveBeenCalledWith(mockProductVariantDTO);
@@ -90,13 +82,9 @@ describe('FetchMostPopularVariant', () => {
    */
   it('should throw an error when fetchMostPopularVariant execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductVariantService.fetchMostPopularVariant.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductVariantService.fetchMostPopularVariant.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchMostPopularVariant.execute(productId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchMostPopularVariant.execute(productId)).rejects.toThrow('Service method error');
   });
 });

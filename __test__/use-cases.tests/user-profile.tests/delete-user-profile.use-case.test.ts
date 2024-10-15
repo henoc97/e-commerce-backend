@@ -19,8 +19,8 @@ describe('DeleteUserProfile', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserProfileDTO: UserProfileDTO = {
@@ -60,9 +60,7 @@ describe('DeleteUserProfile', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserProfileService.deleteUserProfile.mockResolvedValue(
-      mockUserProfileDTO,
-    );
+    mockUserProfileService.deleteUserProfile.mockResolvedValue(mockUserProfileDTO);
     (toUserProfileDTO as jest.Mock).mockReturnValue(mockUserProfileDTO);
 
     // Execute the use case with provided parameters
@@ -84,13 +82,9 @@ describe('DeleteUserProfile', () => {
    */
   it('should throw an error when deleteUserProfile execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserProfileService.deleteUserProfile.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserProfileService.deleteUserProfile.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deleteUserProfile.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deleteUserProfile.execute(id)).rejects.toThrow('Service method error');
   });
 });

@@ -19,9 +19,9 @@ describe('UpdateCartItemQuantity', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const quantity: number = 1;
+  
+     const id: number = 1;
+     const quantity: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockCartItemDTO: CartItemDTO = {
@@ -43,9 +43,7 @@ describe('UpdateCartItemQuantity', () => {
       ],
     }).compile();
 
-    updateCartItemQuantity = module.get<UpdateCartItemQuantity>(
-      UpdateCartItemQuantity,
-    );
+    updateCartItemQuantity = module.get<UpdateCartItemQuantity>(UpdateCartItemQuantity);
     cartItemService = module.get<CartItemService>(CartItemService);
   });
 
@@ -63,19 +61,14 @@ describe('UpdateCartItemQuantity', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockCartItemService.updateCartItemQuantity.mockResolvedValue(
-      mockCartItemDTO,
-    );
+    mockCartItemService.updateCartItemQuantity.mockResolvedValue(mockCartItemDTO);
     (toCartItemDTO as jest.Mock).mockReturnValue(mockCartItemDTO);
 
     // Execute the use case with provided parameters
     const result = await updateCartItemQuantity.execute(id, quantity);
 
     // Verify that the service was called with the expected arguments
-    expect(mockCartItemService.updateCartItemQuantity).toHaveBeenCalledWith(
-      id,
-      quantity,
-    );
+    expect(mockCartItemService.updateCartItemQuantity).toHaveBeenCalledWith(id, quantity);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toCartItemDTO).toHaveBeenCalledWith(mockCartItemDTO);
@@ -90,13 +83,9 @@ describe('UpdateCartItemQuantity', () => {
    */
   it('should throw an error when updateCartItemQuantity execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCartItemService.updateCartItemQuantity.mockRejectedValue(
-      'Service method error',
-    );
+    mockCartItemService.updateCartItemQuantity.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateCartItemQuantity.execute(id, quantity)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateCartItemQuantity.execute(id, quantity)).rejects.toThrow('Service method error');
   });
 });

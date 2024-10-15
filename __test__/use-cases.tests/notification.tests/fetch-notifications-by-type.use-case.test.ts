@@ -19,10 +19,8 @@ describe('FetchNotificationsByType', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const type: NotificationType = {
-    /* data */
-  };
+  
+     const type: NotificationType = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockNotificationDTO: NotificationDTO = {
@@ -44,9 +42,7 @@ describe('FetchNotificationsByType', () => {
       ],
     }).compile();
 
-    fetchNotificationsByType = module.get<FetchNotificationsByType>(
-      FetchNotificationsByType,
-    );
+    fetchNotificationsByType = module.get<FetchNotificationsByType>(FetchNotificationsByType);
     notificationService = module.get<NotificationService>(NotificationService);
   });
 
@@ -64,18 +60,14 @@ describe('FetchNotificationsByType', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNotificationService.fetchNotificationsByType.mockResolvedValue(
-      mockNotificationDTO,
-    );
+    mockNotificationService.fetchNotificationsByType.mockResolvedValue(mockNotificationDTO);
     (toNotificationDTO as jest.Mock).mockReturnValue(mockNotificationDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchNotificationsByType.execute(type);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockNotificationService.fetchNotificationsByType,
-    ).toHaveBeenCalledWith(type);
+    expect(mockNotificationService.fetchNotificationsByType).toHaveBeenCalledWith(type);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toNotificationDTO).toHaveBeenCalledWith(mockNotificationDTO);
@@ -90,13 +82,9 @@ describe('FetchNotificationsByType', () => {
    */
   it('should throw an error when fetchNotificationsByType execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNotificationService.fetchNotificationsByType.mockRejectedValue(
-      'Service method error',
-    );
+    mockNotificationService.fetchNotificationsByType.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchNotificationsByType.execute(type)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchNotificationsByType.execute(type)).rejects.toThrow('Service method error');
   });
 });

@@ -19,8 +19,8 @@ describe('FetchOrderByTrackingNumber', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const trackingNumber: string = 'trackingNumber';
+  
+     const trackingNumber: string = 'trackingNumber';
 
   // Mock version of  to be used as input and expected output
   const mockOrderDTO: OrderDTO = {
@@ -42,9 +42,7 @@ describe('FetchOrderByTrackingNumber', () => {
       ],
     }).compile();
 
-    fetchOrderByTrackingNumber = module.get<FetchOrderByTrackingNumber>(
-      FetchOrderByTrackingNumber,
-    );
+    fetchOrderByTrackingNumber = module.get<FetchOrderByTrackingNumber>(FetchOrderByTrackingNumber);
     orderService = module.get<OrderService>(OrderService);
   });
 
@@ -69,9 +67,7 @@ describe('FetchOrderByTrackingNumber', () => {
     const result = await fetchOrderByTrackingNumber.execute(trackingNumber);
 
     // Verify that the service was called with the expected arguments
-    expect(mockOrderService.fetchOrderByTrackingNumber).toHaveBeenCalledWith(
-      trackingNumber,
-    );
+    expect(mockOrderService.fetchOrderByTrackingNumber).toHaveBeenCalledWith(trackingNumber);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toOrderDTO).toHaveBeenCalledWith(mockOrderDTO);
@@ -86,13 +82,9 @@ describe('FetchOrderByTrackingNumber', () => {
    */
   it('should throw an error when fetchOrderByTrackingNumber execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockOrderService.fetchOrderByTrackingNumber.mockRejectedValue(
-      'Service method error',
-    );
+    mockOrderService.fetchOrderByTrackingNumber.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchOrderByTrackingNumber.execute(trackingNumber),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchOrderByTrackingNumber.execute(trackingNumber)).rejects.toThrow('Service method error');
   });
 });

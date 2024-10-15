@@ -19,11 +19,9 @@ describe('UpdateMarketplace', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const data: Partial<MarketplaceDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const data: Partial<MarketplaceDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockMarketplaceDTO: MarketplaceDTO = {
@@ -63,19 +61,16 @@ describe('UpdateMarketplace', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockMarketplaceService.updateMarketplace.mockResolvedValue(
-      mockMarketplaceDTO,
-    );
+    mockMarketplaceService.updateMarketplace.mockResolvedValue(mockMarketplaceDTO);
     (toMarketplaceDTO as jest.Mock).mockReturnValue(mockMarketplaceDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateMarketplace.execute(id, data);
+    const result = await updateMarketplace.execute(id,
+    data,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockMarketplaceService.updateMarketplace).toHaveBeenCalledWith(
-      id,
-      data,
-    );
+    expect(mockMarketplaceService.updateMarketplace).toHaveBeenCalledWith(id,
+    data,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toMarketplaceDTO).toHaveBeenCalledWith(mockMarketplaceDTO);
@@ -90,13 +85,10 @@ describe('UpdateMarketplace', () => {
    */
   it('should throw an error when updateMarketplace execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockMarketplaceService.updateMarketplace.mockRejectedValue(
-      'Service method error',
-    );
+    mockMarketplaceService.updateMarketplace.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateMarketplace.execute(id, data)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateMarketplace.execute(id,
+    data,)).rejects.toThrow('Service method error');
   });
 });

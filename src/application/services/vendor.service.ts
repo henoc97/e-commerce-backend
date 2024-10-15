@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Product } from 'src/domain/entities/product.entity';
 import { Shop } from 'src/domain/entities/shop.entity';
 import { Subscription } from 'src/domain/entities/subscription.entity';
@@ -12,6 +12,8 @@ import { fromVendorDTO } from '../helper/to-entity/to.vendor.entity';
 import { fromProductDTO } from '../helper/to-entity/to.product.entity';
 import { fromSubscriptionDTO } from '../helper/to-entity/to.subscription.entity';
 import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
+import { SubscriptionService } from './subscription.service';
+import { ShopService } from './shop.service';
 
 /**
  * VendorService handles the application logic for managing vendors.
@@ -19,7 +21,12 @@ import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
  */
 @Injectable()
 export class VendorService {
-  constructor(private readonly vendorRepository: IVendorRepository) {}
+  constructor(
+    @Inject('IVendorRepository')
+    private readonly vendorRepository: IVendorRepository,
+    private readonly subscriptionService: SubscriptionService,
+    private readonly shopService: ShopService
+  ) {}
 
   /**
    * Creates a new vendor based on the provided DTO.
@@ -102,24 +109,6 @@ export class VendorService {
   }
 
   /**
-   * Retrieves all products associated with a vendor.
-   * @param vendorId - The unique identifier of the vendor.
-   * @returns An array of Product entities associated with the vendor.
-   */
-  async getVendorProducts(vendorId: number): Promise<Product[]> {
-    return this.vendorRepository.getProducts(vendorId);
-  }
-
-  /**
-   * Retrieves the subscription details of a vendor.
-   * @param vendorId - The unique identifier of the vendor.
-   * @returns The Subscription entity if found, otherwise null.
-   */
-  async getVendorSubscription(vendorId: number): Promise<Subscription | null> {
-    return this.vendorRepository.getSubscription(vendorId);
-  }
-
-  /**
    * Associates a subscription with a vendor.
    * @param vendorId - The unique identifier of the vendor.
    * @param subscriptionDTO - The DTO containing subscription information.
@@ -129,18 +118,8 @@ export class VendorService {
     vendorId: number,
     subscriptionDTO: SubscriptionDTO,
   ): Promise<Vendor> {
-    const subscriptionEntity = fromSubscriptionDTO(subscriptionDTO);
-
-    return this.vendorRepository.setSubscription(vendorId, subscriptionEntity);
-  }
-
-  /**
-   * Retrieves the shop associated with a vendor.
-   * @param vendorId - The unique identifier of the vendor.
-   * @returns The Shop entity if found, otherwise null.
-   */
-  async getVendorShop(vendorId: number): Promise<Shop | null> {
-    return this.vendorRepository.getShop(vendorId);
+    await this.subscriptionService.createSubscription(subscriptionDTO);
+    return this.vendorRepository.findById(vendorId);
   }
 
   /**
@@ -150,9 +129,8 @@ export class VendorService {
    * @returns The updated Vendor entity with the associated shop.
    */
   async setVendorShop(vendorId: number, shopDTO: ShopDTO): Promise<Vendor> {
-    const shopEntity = fromShopDTO(shopDTO);
-
-    return this.vendorRepository.setShop(vendorId, shopEntity);
+    await this.shopService.createShop(shopDTO);
+    return this.vendorRepository.findById(vendorId);
   }
 
   /**
@@ -178,14 +156,6 @@ export class VendorService {
    * @returns A promise that resolves to an array of Vendors.
    */
   async getAllVendors(): Promise<Vendor[]> {
-    return this.vendorRepository.getall();
-  }
-
-  /**
-   * Retrieves the most recently updated vendor.
-   * @returns The most recently updated Vendor entity if found, otherwise null.
-   */
-  async getLatestVendor(): Promise<Vendor | null> {
-    return this.vendorRepository.getLatest();
+    return this.vendorRepository.getAll();
   }
 }

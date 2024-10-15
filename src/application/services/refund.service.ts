@@ -3,21 +3,22 @@ import { RefundStatus } from 'src/domain/enums/refund-status.enum';
 import { IRefundRepository } from 'src/domain/repositories/refund.repository';
 import { RefundDTO } from 'src/presentation/dtos/refund.dto';
 import { fromRefundDTO } from '../helper/to-entity/to.refund.entity';
+import { Inject } from '@nestjs/common';
 
 /**
  * Service for managing refunds.
  * Implements business logic related to refund processing.
  */
 export class RefundService {
-  private readonly refundRepository: IRefundRepository;
 
   /**
    * Creates an instance of RefundService.
    * @param refundRepository - The repository for managing refunds.
    */
-  constructor(refundRepository: IRefundRepository) {
-    this.refundRepository = refundRepository;
-  }
+  constructor(
+    @Inject('IRefundRepository')
+    private readonly refundRepository: IRefundRepository
+  ) {}
 
   /**
    * Creates a new refund.
@@ -67,15 +68,15 @@ export class RefundService {
     return await this.refundRepository.remove(id);
   }
 
-  /**
-   * Checks if a refund is eligible for processing.
-   * @param refund - The refund to check for eligibility.
-   * @returns True if the refund is eligible, false otherwise.
-   */
-  isRefundEligible(refund: RefundDTO): boolean {
-    const r = fromRefundDTO(refund);
-    return this.refundRepository.isEligible(r);
-  }
+  // /**
+  //  * Checks if a refund is eligible for processing.
+  //  * @param refund - The refund to check for eligibility.
+  //  * @returns True if the refund is eligible, false otherwise.
+  //  */
+  // isRefundEligible(refund: RefundDTO): boolean {
+  //   const r = fromRefundDTO(refund);
+  //   return this.refundRepository.isEligible(r);
+  // }
 
   /**
    * Processes a refund by updating its status.

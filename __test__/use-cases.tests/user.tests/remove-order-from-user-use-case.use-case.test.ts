@@ -19,9 +19,9 @@ describe('RemoveOrderFromUserUseCase', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const orderId: number = 1;
+  
+     const userId: number = 1;
+     const orderId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -43,9 +43,7 @@ describe('RemoveOrderFromUserUseCase', () => {
       ],
     }).compile();
 
-    removeOrderFromUserUseCase = module.get<RemoveOrderFromUserUseCase>(
-      RemoveOrderFromUserUseCase,
-    );
+    removeOrderFromUserUseCase = module.get<RemoveOrderFromUserUseCase>(RemoveOrderFromUserUseCase);
     userService = module.get<UserService>(UserService);
   });
 
@@ -70,10 +68,7 @@ describe('RemoveOrderFromUserUseCase', () => {
     const result = await removeOrderFromUserUseCase.execute(userId, orderId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserService.removeOrderFromUserUseCase).toHaveBeenCalledWith(
-      userId,
-      orderId,
-    );
+    expect(mockUserService.removeOrderFromUserUseCase).toHaveBeenCalledWith(userId, orderId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserDTO).toHaveBeenCalledWith(mockUserDTO);
@@ -88,13 +83,9 @@ describe('RemoveOrderFromUserUseCase', () => {
    */
   it('should throw an error when removeOrderFromUserUseCase execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.removeOrderFromUserUseCase.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserService.removeOrderFromUserUseCase.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      removeOrderFromUserUseCase.execute(userId, orderId),
-    ).rejects.toThrow('Service method error');
+    await expect(removeOrderFromUserUseCase.execute(userId, orderId)).rejects.toThrow('Service method error');
   });
 });

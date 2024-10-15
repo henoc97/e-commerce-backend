@@ -19,8 +19,8 @@ describe('GetVendorSubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const vendorId: number = 1;
+  
+     const vendorId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -42,9 +42,7 @@ describe('GetVendorSubscription', () => {
       ],
     }).compile();
 
-    getVendorSubscription = module.get<GetVendorSubscription>(
-      GetVendorSubscription,
-    );
+    getVendorSubscription = module.get<GetVendorSubscription>(GetVendorSubscription);
     vendorService = module.get<VendorService>(VendorService);
   });
 
@@ -69,9 +67,7 @@ describe('GetVendorSubscription', () => {
     const result = await getVendorSubscription.execute(vendorId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockVendorService.getVendorSubscription).toHaveBeenCalledWith(
-      vendorId,
-    );
+    expect(mockVendorService.getVendorSubscription).toHaveBeenCalledWith(vendorId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toVendorDTO).toHaveBeenCalledWith(mockVendorDTO);
@@ -86,13 +82,9 @@ describe('GetVendorSubscription', () => {
    */
   it('should throw an error when getVendorSubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.getVendorSubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockVendorService.getVendorSubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(getVendorSubscription.execute(vendorId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(getVendorSubscription.execute(vendorId)).rejects.toThrow('Service method error');
   });
 });

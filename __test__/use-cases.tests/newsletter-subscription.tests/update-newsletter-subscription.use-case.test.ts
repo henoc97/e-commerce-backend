@@ -19,11 +19,9 @@ describe('UpdateNewsletterSubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const dto: Partial<NewsletterSubscriptionDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const dto: Partial<NewsletterSubscriptionDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockNewsletterSubscriptionDTO: NewsletterSubscriptionDTO = {
@@ -45,12 +43,8 @@ describe('UpdateNewsletterSubscription', () => {
       ],
     }).compile();
 
-    updateNewsletterSubscription = module.get<UpdateNewsletterSubscription>(
-      UpdateNewsletterSubscription,
-    );
-    newsletterSubscriptionService = module.get<NewsletterSubscriptionService>(
-      NewsletterSubscriptionService,
-    );
+    updateNewsletterSubscription = module.get<UpdateNewsletterSubscription>(UpdateNewsletterSubscription);
+    newsletterSubscriptionService = module.get<NewsletterSubscriptionService>(NewsletterSubscriptionService);
   });
 
   /**
@@ -67,25 +61,19 @@ describe('UpdateNewsletterSubscription', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNewsletterSubscriptionService.updateNewsletterSubscription.mockResolvedValue(
-      mockNewsletterSubscriptionDTO,
-    );
-    (toNewsletterSubscriptionDTO as jest.Mock).mockReturnValue(
-      mockNewsletterSubscriptionDTO,
-    );
+    mockNewsletterSubscriptionService.updateNewsletterSubscription.mockResolvedValue(mockNewsletterSubscriptionDTO);
+    (toNewsletterSubscriptionDTO as jest.Mock).mockReturnValue(mockNewsletterSubscriptionDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateNewsletterSubscription.execute(id, dto);
+    const result = await updateNewsletterSubscription.execute(id,
+    dto,);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockNewsletterSubscriptionService.updateNewsletterSubscription,
-    ).toHaveBeenCalledWith(id, dto);
+    expect(mockNewsletterSubscriptionService.updateNewsletterSubscription).toHaveBeenCalledWith(id,
+    dto,);
 
     // Verify that the transformation to DTO was called with the service result
-    expect(toNewsletterSubscriptionDTO).toHaveBeenCalledWith(
-      mockNewsletterSubscriptionDTO,
-    );
+    expect(toNewsletterSubscriptionDTO).toHaveBeenCalledWith(mockNewsletterSubscriptionDTO);
 
     // Ensure the result matches the expected DTO
     expect(result).toEqual(mockNewsletterSubscriptionDTO);
@@ -97,13 +85,10 @@ describe('UpdateNewsletterSubscription', () => {
    */
   it('should throw an error when updateNewsletterSubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNewsletterSubscriptionService.updateNewsletterSubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockNewsletterSubscriptionService.updateNewsletterSubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateNewsletterSubscription.execute(id, dto)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateNewsletterSubscription.execute(id,
+    dto,)).rejects.toThrow('Service method error');
   });
 });

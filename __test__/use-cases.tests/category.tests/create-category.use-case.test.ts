@@ -19,10 +19,8 @@ describe('CreateCategory', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const categoryDTO: CategoryDTO = {
-    /* data */
-  };
+  
+     const categoryDTO: CategoryDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockCategoryDTO: CategoryDTO = {
@@ -69,9 +67,7 @@ describe('CreateCategory', () => {
     const result = await createCategory.execute(categoryDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockCategoryService.createCategory).toHaveBeenCalledWith(
-      categoryDTO,
-    );
+    expect(mockCategoryService.createCategory).toHaveBeenCalledWith(categoryDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toCategoryDTO).toHaveBeenCalledWith(mockCategoryDTO);
@@ -86,13 +82,9 @@ describe('CreateCategory', () => {
    */
   it('should throw an error when createCategory execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCategoryService.createCategory.mockRejectedValue(
-      'Service method error',
-    );
+    mockCategoryService.createCategory.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createCategory.execute(categoryDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createCategory.execute(categoryDTO)).rejects.toThrow('Service method error');
   });
 });

@@ -19,10 +19,10 @@ describe('CheckProductVariantExistence', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
-  const name: string = 'name';
-  const value: string = 'value';
+  
+     const productId: number = 1;
+     const name: string = 'name';
+     const value: string = 'value';
 
   // Mock version of  to be used as input and expected output
   const mockProductVariantDTO: ProductVariantDTO = {
@@ -44,12 +44,8 @@ describe('CheckProductVariantExistence', () => {
       ],
     }).compile();
 
-    checkProductVariantExistence = module.get<CheckProductVariantExistence>(
-      CheckProductVariantExistence,
-    );
-    productVariantService = module.get<ProductVariantService>(
-      ProductVariantService,
-    );
+    checkProductVariantExistence = module.get<CheckProductVariantExistence>(CheckProductVariantExistence);
+    productVariantService = module.get<ProductVariantService>(ProductVariantService);
   });
 
   /**
@@ -66,22 +62,18 @@ describe('CheckProductVariantExistence', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductVariantService.checkProductVariantExistence.mockResolvedValue(
-      mockProductVariantDTO,
-    );
+    mockProductVariantService.checkProductVariantExistence.mockResolvedValue(mockProductVariantDTO);
     (toProductVariantDTO as jest.Mock).mockReturnValue(mockProductVariantDTO);
 
     // Execute the use case with provided parameters
-    const result = await checkProductVariantExistence.execute(
-      productId,
-      name,
-      value,
-    );
+    const result = await checkProductVariantExistence.execute(productId,
+    name,
+    value,);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockProductVariantService.checkProductVariantExistence,
-    ).toHaveBeenCalledWith(productId, name, value);
+    expect(mockProductVariantService.checkProductVariantExistence).toHaveBeenCalledWith(productId,
+    name,
+    value,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductVariantDTO).toHaveBeenCalledWith(mockProductVariantDTO);
@@ -96,13 +88,11 @@ describe('CheckProductVariantExistence', () => {
    */
   it('should throw an error when checkProductVariantExistence execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductVariantService.checkProductVariantExistence.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductVariantService.checkProductVariantExistence.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      checkProductVariantExistence.execute(productId, name, value),
-    ).rejects.toThrow('Service method error');
+    await expect(checkProductVariantExistence.execute(productId,
+    name,
+    value,)).rejects.toThrow('Service method error');
   });
 });

@@ -19,13 +19,9 @@ describe('FetchTotalAmountByDateRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockPaymentDTO: PaymentDTO = {
@@ -47,9 +43,7 @@ describe('FetchTotalAmountByDateRange', () => {
       ],
     }).compile();
 
-    fetchTotalAmountByDateRange = module.get<FetchTotalAmountByDateRange>(
-      FetchTotalAmountByDateRange,
-    );
+    fetchTotalAmountByDateRange = module.get<FetchTotalAmountByDateRange>(FetchTotalAmountByDateRange);
     paymentService = module.get<PaymentService>(PaymentService);
   });
 
@@ -67,22 +61,14 @@ describe('FetchTotalAmountByDateRange', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockPaymentService.fetchTotalAmountByDateRange.mockResolvedValue(
-      mockPaymentDTO,
-    );
+    mockPaymentService.fetchTotalAmountByDateRange.mockResolvedValue(mockPaymentDTO);
     (toPaymentDTO as jest.Mock).mockReturnValue(mockPaymentDTO);
 
     // Execute the use case with provided parameters
-    const result = await fetchTotalAmountByDateRange.execute(
-      startDate,
-      endDate,
-    );
+    const result = await fetchTotalAmountByDateRange.execute(startDate, endDate);
 
     // Verify that the service was called with the expected arguments
-    expect(mockPaymentService.fetchTotalAmountByDateRange).toHaveBeenCalledWith(
-      startDate,
-      endDate,
-    );
+    expect(mockPaymentService.fetchTotalAmountByDateRange).toHaveBeenCalledWith(startDate, endDate);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPaymentDTO).toHaveBeenCalledWith(mockPaymentDTO);
@@ -97,13 +83,9 @@ describe('FetchTotalAmountByDateRange', () => {
    */
   it('should throw an error when fetchTotalAmountByDateRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPaymentService.fetchTotalAmountByDateRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockPaymentService.fetchTotalAmountByDateRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchTotalAmountByDateRange.execute(startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchTotalAmountByDateRange.execute(startDate, endDate)).rejects.toThrow('Service method error');
   });
 });

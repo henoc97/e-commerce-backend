@@ -19,10 +19,8 @@ describe('FetchRefundsByStatus', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const status: RefundStatus = {
-    /* data */
-  };
+  
+     const status: RefundStatus = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockRefundDTO: RefundDTO = {
@@ -44,8 +42,7 @@ describe('FetchRefundsByStatus', () => {
       ],
     }).compile();
 
-    fetchRefundsByStatus =
-      module.get<FetchRefundsByStatus>(FetchRefundsByStatus);
+    fetchRefundsByStatus = module.get<FetchRefundsByStatus>(FetchRefundsByStatus);
     refundService = module.get<RefundService>(RefundService);
   });
 
@@ -85,13 +82,9 @@ describe('FetchRefundsByStatus', () => {
    */
   it('should throw an error when fetchRefundsByStatus execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockRefundService.fetchRefundsByStatus.mockRejectedValue(
-      'Service method error',
-    );
+    mockRefundService.fetchRefundsByStatus.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchRefundsByStatus.execute(status)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchRefundsByStatus.execute(status)).rejects.toThrow('Service method error');
   });
 });

@@ -19,10 +19,8 @@ describe('RecordActivity', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const activityDTO: UserActivityDTO = {
-    /* data */
-  };
+  
+     const activityDTO: UserActivityDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -62,18 +60,14 @@ describe('RecordActivity', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.recordActivity.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.recordActivity.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
     const result = await recordActivity.execute(activityDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserActivityService.recordActivity).toHaveBeenCalledWith(
-      activityDTO,
-    );
+    expect(mockUserActivityService.recordActivity).toHaveBeenCalledWith(activityDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserActivityDTO).toHaveBeenCalledWith(mockUserActivityDTO);
@@ -88,13 +82,9 @@ describe('RecordActivity', () => {
    */
   it('should throw an error when recordActivity execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.recordActivity.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.recordActivity.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(recordActivity.execute(activityDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(recordActivity.execute(activityDTO)).rejects.toThrow('Service method error');
   });
 });

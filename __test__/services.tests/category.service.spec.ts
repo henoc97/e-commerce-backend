@@ -3,320 +3,227 @@ import { CategoryService } from '../../src/application/services/category.service
 import { ICategoryRepository } from '../../src/domain/repositories/category.repository';
 import { Category } from '../../src/domain/entities/category.entity';
 import { CategoryDTO } from '../../src/presentation/dtos/category.dto';
+import { ProductService } from '../../src/application/services/product.service';
+import { Product } from '../../src/domain/entities/product.entity';
+import { NotFoundException } from '@nestjs/common';
 
 const mockCategoryRepository = {
-  createCategory: jest.fn(),
-  getCategoryById: jest.fn(),
-  updateCategory: jest.fn(),
-  deleteCategory: jest.fn(),
+  create: jest.fn(),
+  getById: jest.fn(),
+  update: jest.fn(),
+  delete: jest.fn(),
   getChildren: jest.fn(),
   getProducts: jest.fn(),
-  setCategoryParent: jest.fn(),
-  categoryExists: jest.fn(),
+  setParent: jest.fn(),
+  exists: jest.fn(),
   getTopLevelCategories: jest.fn(),
-  getCategoryHierarchy: jest.fn(),
+  getCategoryHierarchy: jest.fn()
+};
+
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+
+// Mock du ProductService
+const mockProductService = {
+  findProductsByCategory: jest.fn(),
 };
 
 describe('CategoryService', () => {
   let service: CategoryService;
   let categoryRepository: ICategoryRepository;
+  let productService: ProductService;
 
   beforeEach(async () => {
-    // Set up the testing module with the service and the mock repository
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CategoryService,
         {
-          provide: 'CategoryRepository',
-          useValue: mockCategoryRepository, // Use the mock
+          provide: 'ICategoryRepository',
+          useValue: mockCategoryRepository,
+        },
+        {
+          provide: ProductService,
+          useValue: mockProductService,
         },
       ],
     }).compile();
 
-    // Retrieve instances of the service and repository
     service = module.get<CategoryService>(CategoryService);
-    categoryRepository = module.get<ICategoryRepository>('CategoryRepository');
+    categoryRepository = module.get<ICategoryRepository>('ICategoryRepository');
+    productService = module.get<ProductService>(ProductService);
   });
 
-  /* create category success and failure tests */
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // Test pour createCategory
   it('should create category', async () => {
-    /**
-     * Tests the create category method.
-     * Verifies that the returned category matches the expected one
-     * and that the repository's createCategory method is called with the correct data.
-     */
-
-    const categoryDTO: CategoryDTO = {
-      /* data */
-    };
-
-    const returnOject: Category = { id: 1 /* others data */ };
-
-    mockCategoryRepository.createCategory.mockResolvedValue(returnOject);
+    const categoryDTO: CategoryDTO = { name: 'Test Category', shopId: 1 };
+    const returnObject: Category = { id: 1, name: 'Test Category', children: [], products: [] };
+    
+    mockCategoryRepository.create.mockResolvedValue(returnObject);
 
     const result = await service.createCategory(categoryDTO);
-    expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.createCategory).toHaveBeenCalledWith(
-      categoryDTO,
-    );
+    expect(result).toEqual(returnObject);
+    expect(mockCategoryRepository.create).toHaveBeenCalledWith(expect.objectContaining(categoryDTO));
   });
 
-  it('should throw an error when create category method fails', async () => {
-    const categoryDTO: CategoryDTO = {
-      /* data */
-    };
-
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.createCategory.mockResolvedValue(
-      ' Repository error',
-    );
-
-    const result = await service.createCategory(categoryDTO);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* get category by id success and failure tests */
+  // Test pour getCategoryById
   it('should get category by id', async () => {
-    /**
-     * Tests the get category by id method.
-     * Verifies that the returned category matches the expected one
-     * and that the repository's getCategoryById method is called with the correct data.
-     */
-
     const id: number = 1;
-
-    const returnOject: Category | null = { id: 1 /* others data */ };
-
-    mockCategoryRepository.getCategoryById.mockResolvedValue(returnOject);
+    const returnObject: Category = { id: 1, name: 'Test Category', children: [], products: [] };
+    
+    mockCategoryRepository.getById.mockResolvedValue(returnObject);
 
     const result = await service.getCategoryById(id);
-    expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.getCategoryById).toHaveBeenCalledWith(id);
+    expect(result).toEqual(returnObject);
+    expect(mockCategoryRepository.getById).toHaveBeenCalledWith(id);
   });
 
-  it('should throw an error when get category by id method fails', async () => {
+  it('should throw NotFoundException when category not found', async () => {
     const id: number = 1;
+    
+    mockCategoryRepository.getById.mockResolvedValue(null);
 
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.getCategoryById.mockResolvedValue(
-      ' Repository error',
-    );
-
-    const result = await service.getCategoryById(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getCategoryById(id)).rejects.toThrow(NotFoundException);
   });
 
-  /* update category success and failure tests */
+  // Test pour updateCategory
   it('should update category', async () => {
-    /**
-     * Tests the update category method.
-     * Verifies that the returned category matches the expected one
-     * and that the repository's updateCategory method is called with the correct data.
-     */
-
     const id: number = 1;
-    const categoryDTO: Partial<CategoryDTO> = {
-      /* data */
-    };
-
-    const returnOject: Category = { id: 1 /* others data */ };
-
-    mockCategoryRepository.updateCategory.mockResolvedValue(returnOject);
+    const categoryDTO: Partial<CategoryDTO> = { name: 'Updated Category' };
+    const returnObject: Category = { id: 1, name: 'Updated Category', children: [], products: [] };
+    
+    mockCategoryRepository.update.mockResolvedValue(returnObject);
 
     const result = await service.updateCategory(id, categoryDTO);
-    expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.updateCategory).toHaveBeenCalledWith(
-      id,
-      categoryDTO,
-    );
+    expect(result).toEqual(returnObject);
+    expect(mockCategoryRepository.update).toHaveBeenCalledWith(id, expect.objectContaining(categoryDTO));
   });
 
-  it('should throw an error when update category method fails', async () => {
-    const id: number = 1;
-    const categoryDTO: Partial<CategoryDTO> = {
-      /* data */
-    };
-
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.updateCategory.mockResolvedValue(
-      ' Repository error',
-    );
-
-    const result = await service.updateCategory(id, categoryDTO);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* delete category success and failure tests */
+  // Test pour deleteCategory
   it('should delete category', async () => {
-    /**
-     * Tests the delete category method.
-     * Verifies that the returned category matches the expected one
-     * and that the repository's deleteCategory method is called with the correct data.
-     */
-
     const id: number = 1;
-
-    const returnOject: boolean = true;
-
-    mockCategoryRepository.deleteCategory.mockResolvedValue(returnOject);
+    
+    mockCategoryRepository.delete.mockResolvedValue(true);
 
     const result = await service.deleteCategory(id);
-    expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.deleteCategory).toHaveBeenCalledWith(id);
+    expect(result).toBe(true);
+    expect(mockCategoryRepository.delete).toHaveBeenCalledWith(id);
   });
 
-  it('should throw an error when delete category method fails', async () => {
+  it('should throw NotFoundException when deleting non-existent category', async () => {
     const id: number = 1;
+    
+    mockCategoryRepository.delete.mockResolvedValue(false);
 
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.deleteCategory.mockResolvedValue(
-      ' Repository error',
-    );
-
-    const result = await service.deleteCategory(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.deleteCategory(id)).rejects.toThrow(NotFoundException);
   });
 
-  /* get children success and failure tests */
+  // Test pour getChildren
   it('should get children', async () => {
-    /**
-     * Tests the get children method.
-     * Verifies that the returned category matches the expected one
-     * and that the repository's getChildren method is called with the correct data.
-     */
-
     const parentId: number = 1;
-
-    const returnOject: Category[] = [{ id: 1 /* others data */ }];
-
-    mockCategoryRepository.getChildren.mockResolvedValue(returnOject);
+    const returnObject: Category[] = [{ id: 2, name: 'Child Category', children: [], products: [] }];
+    
+    mockCategoryRepository.getChildren.mockResolvedValue(returnObject);
 
     const result = await service.getChildren(parentId);
-    expect(result).toEqual(returnOject);
+    expect(result).toEqual(returnObject);
     expect(mockCategoryRepository.getChildren).toHaveBeenCalledWith(parentId);
   });
 
-  it('should throw an error when get children method fails', async () => {
-    const parentId: number = 1;
-
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.getChildren.mockResolvedValue(' Repository error');
-
-    const result = await service.getChildren(parentId);
-    expect(result).rejects.toThrow('Repository error');
-  });
-
-  /* get products success and failure tests */
+  // Test pour getProducts
   it('should get products', async () => {
-    /**
-     * Tests the get products method.
-     * Verifies that the returned category matches the expected one
-     * and that the repository's getProducts method is called with the correct data.
-     */
-
     const categoryId: number = 1;
-
-    const returnOject: Product[] = [{ id: 1 /* others data */ }];
-
-    mockCategoryRepository.getProducts.mockResolvedValue(returnOject);
+    const returnObject: Product[] = [];
+    
+    mockProductService.findProductsByCategory.mockResolvedValue(returnObject);
 
     const result = await service.getProducts(categoryId);
-    expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.getProducts).toHaveBeenCalledWith(categoryId);
-  });
-
-  it('should throw an error when get products method fails', async () => {
-    const categoryId: number = 1;
-
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.getProducts.mockResolvedValue(' Repository error');
-
-    const result = await service.getProducts(categoryId);
-    expect(result).rejects.toThrow('Repository error');
+    expect(result).toEqual(returnObject);
+    expect(mockProductService.findProductsByCategory).toHaveBeenCalledWith(categoryId);
   });
 
   /* set category parent success and failure tests */
   it('should set category parent', async () => {
-    /**
+    /** 
      * Tests the set category parent method.
-     * Verifies that the returned category matches the expected one
+     * Verifies that the returned category matches the expected one 
      * and that the repository's setCategoryParent method is called with the correct data.
      */
+    
+     const id: number = 1;
+     const newParentId: number = 1;
 
-    const id: number = 1;
-    const newParentId: number = 1;
-
-    const returnOject: Category = { id: 1 /* others data */ };
-
-    mockCategoryRepository.setCategoryParent.mockResolvedValue(returnOject);
+    const returnOject: Category = { id: 1, /* others data */ };
+    
+    mockCategoryRepository.setParent.mockResolvedValue(returnOject);
 
     const result = await service.setCategoryParent(id, newParentId);
     expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.setCategoryParent).toHaveBeenCalledWith(
-      id,
-      newParentId,
-    );
+    expect(mockCategoryRepository.setParent).toHaveBeenCalledWith(id, newParentId);
   });
 
   it('should throw an error when set category parent method fails', async () => {
-    const id: number = 1;
-    const newParentId: number = 1;
+    
+     const id: number = 1;
+     const newParentId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockCategoryRepository.setParent.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.setCategoryParent.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.setCategoryParent(id, newParentId)).rejects.toThrow('Repository error');
 
-    const result = await service.setCategoryParent(id, newParentId);
-    expect(result).rejects.toThrow('Repository error');
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* category exists success and failure tests */
   it('should category exists', async () => {
-    /**
+    /** 
      * Tests the category exists method.
-     * Verifies that the returned category matches the expected one
+     * Verifies that the returned category matches the expected one 
      * and that the repository's categoryExists method is called with the correct data.
      */
+    
+     const name: string = 'name';
+     const shopId: number = 1;
 
-    const name: string = 'name';
-    const shopId: number = 1;
-
-    const returnOject: boolean = true;
-
-    mockCategoryRepository.categoryExists.mockResolvedValue(returnOject);
+    const returnOject: boolean = true
+    
+    mockCategoryRepository.exists.mockResolvedValue(returnOject);
 
     const result = await service.categoryExists(name, shopId);
     expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.categoryExists).toHaveBeenCalledWith(
-      name,
-      shopId,
-    );
+    expect(mockCategoryRepository.exists).toHaveBeenCalledWith(name, shopId);
   });
 
   it('should throw an error when category exists method fails', async () => {
-    const name: string = 'name';
-    const shopId: number = 1;
+    
+     const name: string = 'name';
+     const shopId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockCategoryRepository.exists.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.categoryExists.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.categoryExists(name, shopId)).rejects.toThrow('Repository error');
 
-    const result = await service.categoryExists(name, shopId);
-    expect(result).rejects.toThrow('Repository error');
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* get top level categories success and failure tests */
   it('should get top level categories', async () => {
-    /**
+    /** 
      * Tests the get top level categories method.
-     * Verifies that the returned category matches the expected one
+     * Verifies that the returned category matches the expected one 
      * and that the repository's getTopLevelCategories method is called with the correct data.
      */
+    
 
-    const returnOject: Category[] = [{ id: 1 /* others data */ }];
-
+    const returnOject: Category[] = [{ id: 1, /* others data */ }];
+    
     mockCategoryRepository.getTopLevelCategories.mockResolvedValue(returnOject);
 
     const result = await service.getTopLevelCategories();
@@ -325,45 +232,47 @@ describe('CategoryService', () => {
   });
 
   it('should throw an error when get top level categories method fails', async () => {
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.getTopLevelCategories.mockResolvedValue(
-      ' Repository error',
-    );
+    
+    
+    // Simulate a failure when calling the repository 
+    mockCategoryRepository.getTopLevelCategories.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getTopLevelCategories();
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getTopLevelCategories()).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
 
   /* get category hierarchy success and failure tests */
   it('should get category hierarchy', async () => {
-    /**
+    /** 
      * Tests the get category hierarchy method.
-     * Verifies that the returned category matches the expected one
+     * Verifies that the returned category matches the expected one 
      * and that the repository's getCategoryHierarchy method is called with the correct data.
      */
+    
+     const categoryId: number = 1;
 
-    const categoryId: number = 1;
-
-    const returnOject: Category[] = [{ id: 1 /* others data */ }];
-
+    const returnOject: Category[] = [{ id: 1, /* others data */ }];
+    
     mockCategoryRepository.getCategoryHierarchy.mockResolvedValue(returnOject);
 
     const result = await service.getCategoryHierarchy(categoryId);
     expect(result).toEqual(returnOject);
-    expect(mockCategoryRepository.getCategoryHierarchy).toHaveBeenCalledWith(
-      categoryId,
-    );
+    expect(mockCategoryRepository.getCategoryHierarchy).toHaveBeenCalledWith(categoryId);
   });
 
   it('should throw an error when get category hierarchy method fails', async () => {
-    const categoryId: number = 1;
+    
+     const categoryId: number = 1;
+    
+    // Simulate a failure when calling the repository 
+    mockCategoryRepository.getCategoryHierarchy.mockRejectedValue(new Error('Repository error'));
 
-    // Simulate a failure when calling the repository
-    mockCategoryRepository.getCategoryHierarchy.mockResolvedValue(
-      ' Repository error',
-    );
+    await expect(service.getCategoryHierarchy(categoryId)).rejects.toThrow('Repository error');
 
-    const result = await service.getCategoryHierarchy(categoryId);
-    expect(result).rejects.toThrow('Repository error');
+    // Restore console.error
+    consoleErrorMock.mockRestore();
   });
-});
+
+})

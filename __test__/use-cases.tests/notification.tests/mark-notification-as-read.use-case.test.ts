@@ -19,8 +19,8 @@ describe('MarkNotificationAsRead', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const notificationId: number = 1;
+  
+     const notificationId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockNotificationDTO: NotificationDTO = {
@@ -42,9 +42,7 @@ describe('MarkNotificationAsRead', () => {
       ],
     }).compile();
 
-    markNotificationAsRead = module.get<MarkNotificationAsRead>(
-      MarkNotificationAsRead,
-    );
+    markNotificationAsRead = module.get<MarkNotificationAsRead>(MarkNotificationAsRead);
     notificationService = module.get<NotificationService>(NotificationService);
   });
 
@@ -62,18 +60,14 @@ describe('MarkNotificationAsRead', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNotificationService.markNotificationAsRead.mockResolvedValue(
-      mockNotificationDTO,
-    );
+    mockNotificationService.markNotificationAsRead.mockResolvedValue(mockNotificationDTO);
     (toNotificationDTO as jest.Mock).mockReturnValue(mockNotificationDTO);
 
     // Execute the use case with provided parameters
     const result = await markNotificationAsRead.execute(notificationId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockNotificationService.markNotificationAsRead).toHaveBeenCalledWith(
-      notificationId,
-    );
+    expect(mockNotificationService.markNotificationAsRead).toHaveBeenCalledWith(notificationId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toNotificationDTO).toHaveBeenCalledWith(mockNotificationDTO);
@@ -88,13 +82,9 @@ describe('MarkNotificationAsRead', () => {
    */
   it('should throw an error when markNotificationAsRead execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNotificationService.markNotificationAsRead.mockRejectedValue(
-      'Service method error',
-    );
+    mockNotificationService.markNotificationAsRead.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      markNotificationAsRead.execute(notificationId),
-    ).rejects.toThrow('Service method error');
+    await expect(markNotificationAsRead.execute(notificationId)).rejects.toThrow('Service method error');
   });
 });

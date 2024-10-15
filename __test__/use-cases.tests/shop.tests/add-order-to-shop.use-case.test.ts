@@ -19,11 +19,9 @@ describe('AddOrderToShop', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const shopId: number = 1;
-  const orderDTO: OrderDTO = {
-    /* data */
-  };
+  
+     const shopId: number = 1;
+     const orderDTO: OrderDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockShopDTO: ShopDTO = {
@@ -70,10 +68,7 @@ describe('AddOrderToShop', () => {
     const result = await addOrderToShop.execute(shopId, orderDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockShopService.addOrderToShop).toHaveBeenCalledWith(
-      shopId,
-      orderDTO,
-    );
+    expect(mockShopService.addOrderToShop).toHaveBeenCalledWith(shopId, orderDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toShopDTO).toHaveBeenCalledWith(mockShopDTO);
@@ -88,11 +83,9 @@ describe('AddOrderToShop', () => {
    */
   it('should throw an error when addOrderToShop execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockShopService.addOrderToShop.mockRejectedValue('Service method error');
+    mockShopService.addOrderToShop.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(addOrderToShop.execute(shopId, orderDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(addOrderToShop.execute(shopId, orderDTO)).rejects.toThrow('Service method error');
   });
 });

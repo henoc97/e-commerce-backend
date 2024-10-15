@@ -19,8 +19,8 @@ describe('DeleteVendor', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const vendorId: number = 1;
+  
+     const vendorId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -82,11 +82,9 @@ describe('DeleteVendor', () => {
    */
   it('should throw an error when deleteVendor execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.deleteVendor.mockRejectedValue('Service method error');
+    mockVendorService.deleteVendor.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deleteVendor.execute(vendorId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deleteVendor.execute(vendorId)).rejects.toThrow('Service method error');
   });
 });

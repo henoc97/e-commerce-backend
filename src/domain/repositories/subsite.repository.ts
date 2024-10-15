@@ -69,12 +69,6 @@ export interface ISubsiteRepository {
   getLatest(): Promise<Subsite>;
 
   /**
-   * Lists all active Subsites.
-   * @returns An array of currently active Subsite entities.
-   */
-  getActive(): Promise<Subsite[]>;
-
-  /**
    * Counts the number of Subsites for a specific user.
    * @param userId - Unique identifier of the user.
    * @returns The total number of Subsites for the user.

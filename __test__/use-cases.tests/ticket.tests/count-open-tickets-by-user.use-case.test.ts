@@ -19,8 +19,8 @@ describe('CountOpenTicketsByUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
+  
+     const userId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockTicketDTO: TicketDTO = {
@@ -42,9 +42,7 @@ describe('CountOpenTicketsByUser', () => {
       ],
     }).compile();
 
-    countOpenTicketsByUser = module.get<CountOpenTicketsByUser>(
-      CountOpenTicketsByUser,
-    );
+    countOpenTicketsByUser = module.get<CountOpenTicketsByUser>(CountOpenTicketsByUser);
     ticketService = module.get<TicketService>(TicketService);
   });
 
@@ -69,9 +67,7 @@ describe('CountOpenTicketsByUser', () => {
     const result = await countOpenTicketsByUser.execute(userId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockTicketService.countOpenTicketsByUser).toHaveBeenCalledWith(
-      userId,
-    );
+    expect(mockTicketService.countOpenTicketsByUser).toHaveBeenCalledWith(userId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toTicketDTO).toHaveBeenCalledWith(mockTicketDTO);
@@ -86,13 +82,9 @@ describe('CountOpenTicketsByUser', () => {
    */
   it('should throw an error when countOpenTicketsByUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockTicketService.countOpenTicketsByUser.mockRejectedValue(
-      'Service method error',
-    );
+    mockTicketService.countOpenTicketsByUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(countOpenTicketsByUser.execute(userId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(countOpenTicketsByUser.execute(userId)).rejects.toThrow('Service method error');
   });
 });

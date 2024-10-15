@@ -1,15 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { CartItem } from 'src/domain/entities/cart-item.entity';
 import { ICartItemRepository } from 'src/domain/repositories/cart-item.repository';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
 import { fromCartItemDTO } from '../helper/to-entity/to.cart-item.entity';
+
 /**
  * Service for managing cart items.
  * Implements business logic and interacts with the CartItem repository.
  */
 @Injectable()
 export class CartItemService {
-  constructor(private readonly cartItemRepository: ICartItemRepository) {}
+  constructor(
+    @Inject('ICartItemRepository')
+    private readonly cartItemRepository: ICartItemRepository,
+  ) {}
 
   /**
    * Creates a new CartItem.
@@ -18,7 +25,7 @@ export class CartItemService {
    */
   async createCartItem(cartItemDTO: CartItemDTO): Promise<CartItem> {
     const cartItem = fromCartItemDTO(cartItemDTO);
-    return this.cartItemRepository.create(cartItem);
+    return await this.cartItemRepository.create(cartItem);
   }
 
   /**
@@ -27,7 +34,7 @@ export class CartItemService {
    * @returns A promise that resolves to the CartItem if found, otherwise null.
    */
   async getCartItemById(id: number): Promise<CartItem | null> {
-    return this.cartItemRepository.getById(id);
+    return await this.cartItemRepository.getById(id);
   }
 
   /**
@@ -41,7 +48,7 @@ export class CartItemService {
     cartItemDTO: CartItemDTO,
   ): Promise<CartItem> {
     const updatedCartItem = fromCartItemDTO(cartItemDTO);
-    return this.cartItemRepository.update(id, updatedCartItem);
+    return await this.cartItemRepository.update(id, updatedCartItem);
   }
 
   /**
@@ -50,7 +57,7 @@ export class CartItemService {
    * @returns A promise that resolves to true if deletion was successful, otherwise false.
    */
   async deleteCartItem(id: number): Promise<boolean> {
-    return this.cartItemRepository.remove(id);
+    return await this.cartItemRepository.remove(id);
   }
 
   /**
@@ -59,7 +66,7 @@ export class CartItemService {
    * @returns A promise that resolves to an array of CartItems.
    */
   async getCartItemsByCartId(cartId: number): Promise<CartItem[]> {
-    return this.cartItemRepository.getByCartId(cartId);
+    return await this.cartItemRepository.getByCartId(cartId);
   }
 
   /**
@@ -72,7 +79,7 @@ export class CartItemService {
     productId: number,
     cartId: number,
   ): Promise<CartItem | null> {
-    return this.cartItemRepository.getByProductAndCart(productId, cartId);
+    return await this.cartItemRepository.getByProductAndCart(productId, cartId);
   }
 
   /**
@@ -85,7 +92,7 @@ export class CartItemService {
     id: number,
     quantity: number,
   ): Promise<CartItem> {
-    return this.cartItemRepository.updateQuantity(id, quantity);
+    return await this.cartItemRepository.updateQuantity(id, quantity);
   }
 
   /**
@@ -94,7 +101,7 @@ export class CartItemService {
    * @returns A promise that resolves to true if all items were removed, otherwise false.
    */
   async clearCart(cartId: number): Promise<boolean> {
-    return this.cartItemRepository.clearCart(cartId);
+    return await this.cartItemRepository.clearCart(cartId);
   }
 
   /**
@@ -103,7 +110,16 @@ export class CartItemService {
    * @returns A promise that resolves to the total value of the CartItems.
    */
   async calculateCartTotal(cartId: number): Promise<number> {
-    return this.cartItemRepository.calculateCartTotal(cartId);
+    return await this.cartItemRepository.calculateCartTotal(cartId);
+  }
+
+  /**
+   * Retrieves the total count of CartItems in a specific Cart.
+   * @param cartId - The unique ID of the Cart.
+   * @returns A promise that resolves to the total value of the CartItems.
+   */
+  async getItemCount(cartId: number): Promise<number> {
+    return await this.cartItemRepository.getItemCount(cartId);
   }
 
   /**
@@ -112,6 +128,6 @@ export class CartItemService {
    * @returns A promise that resolves to the CartItem with the highest quantity, or null if no items are found.
    */
   async getHighestQuantityItem(cartId: number): Promise<CartItem | null> {
-    return this.cartItemRepository.getHighestQuantityItem(cartId);
+    return await this.cartItemRepository.getHighestQuantityItem(cartId);
   }
 }

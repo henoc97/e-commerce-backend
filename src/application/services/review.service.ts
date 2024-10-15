@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Review } from 'src/domain/entities/review.entity';
 import { IReviewRepository } from 'src/domain/repositories/review.repository';
 import { ReviewDTO } from 'src/presentation/dtos/review.dto';
@@ -9,7 +9,10 @@ import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
  */
 @Injectable()
 export class ReviewService {
-  constructor(private readonly reviewRepository: IReviewRepository) {}
+  constructor(
+    @Inject('IReviewRepository')
+    private readonly reviewRepository: IReviewRepository
+  ) {}
 
   /**
    * Creates a new review.

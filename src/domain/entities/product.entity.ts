@@ -75,7 +75,7 @@ export class Product {
   /**
    * The shop where the product is listed.
    */
-  shop: Shop;
+  shop?: Shop;
 
   /**
    * The ID of the shop where the product is listed.
@@ -95,17 +95,17 @@ export class Product {
   /**
    * An array of cart items associated with the product.
    */
-  CartItem: CartItem[];
+  cartItem: CartItem[];
 
   /**
    * An array of order items associated with the product.
    */
-  OrderItem: OrderItem[];
+  orderItem: OrderItem[];
 
   /**
    * An array of reviews for the product.
    */
-  Review: Review[];
+  review: Review[];
 
   /**
    * Creates a new instance of Product.
@@ -118,13 +118,13 @@ export class Product {
    * @param images - An optional array of images associated with the product.
    * @param variants - An optional array of variants for the product.
    * @param stock - The stock quantity of the product.
-   * @param shop - The shop where the product is listed.
    * @param shopId - The ID of the shop where the product is listed.
    * @param createdAt - The date and time when the product was created.
    * @param updatedAt - The date and time when the product was last updated.
-   * @param CartItem - An optional array of cart items associated with the product.
-   * @param OrderItem - An optional array of order items associated with the product.
-   * @param Review - An optional array of reviews for the product.
+   * @param cartItem - An optional array of cart items associated with the product.
+   * @param orderItem - An optional array of order items associated with the product.
+   * @param review - An optional array of reviews for the product.
+   * @param shop - The shop where the product is listed.
    * @param description - An optional description of the product.
    * @param vendor - An optional vendor associated with the product.
    * @param vendorId - An optional ID of the vendor associated with the product.
@@ -139,13 +139,13 @@ export class Product {
     images: ProductImage[] = [],
     variants: ProductVariant[] = [],
     stock: number,
-    shop: Shop,
     shopId: number,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
-    CartItem: CartItem[] = [],
-    OrderItem: OrderItem[] = [],
-    Review: Review[] = [],
+    cartItem: CartItem[] = [],
+    orderItem: OrderItem[] = [],
+    review: Review[] = [],
+    shop?: Shop,
     description?: string,
     vendor?: Vendor,
     vendorId?: number,
@@ -166,8 +166,8 @@ export class Product {
     this.shopId = shopId;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.CartItem = CartItem;
-    this.OrderItem = OrderItem;
-    this.Review = Review;
+    this.cartItem = cartItem;
+    this.orderItem = orderItem;
+    this.review = review;
   }
 }

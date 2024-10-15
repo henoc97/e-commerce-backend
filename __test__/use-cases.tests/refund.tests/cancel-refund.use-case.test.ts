@@ -19,8 +19,8 @@ describe('CancelRefund', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockRefundDTO: RefundDTO = {
@@ -82,11 +82,9 @@ describe('CancelRefund', () => {
    */
   it('should throw an error when cancelRefund execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockRefundService.cancelRefund.mockRejectedValue('Service method error');
+    mockRefundService.cancelRefund.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(cancelRefund.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(cancelRefund.execute(id)).rejects.toThrow('Service method error');
   });
 });

@@ -19,8 +19,8 @@ describe('FetchRecentNotifications', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
+  
+     const userId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockNotificationDTO: NotificationDTO = {
@@ -42,9 +42,7 @@ describe('FetchRecentNotifications', () => {
       ],
     }).compile();
 
-    fetchRecentNotifications = module.get<FetchRecentNotifications>(
-      FetchRecentNotifications,
-    );
+    fetchRecentNotifications = module.get<FetchRecentNotifications>(FetchRecentNotifications);
     notificationService = module.get<NotificationService>(NotificationService);
   });
 
@@ -62,18 +60,14 @@ describe('FetchRecentNotifications', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNotificationService.fetchRecentNotifications.mockResolvedValue(
-      mockNotificationDTO,
-    );
+    mockNotificationService.fetchRecentNotifications.mockResolvedValue(mockNotificationDTO);
     (toNotificationDTO as jest.Mock).mockReturnValue(mockNotificationDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchRecentNotifications.execute(userId);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockNotificationService.fetchRecentNotifications,
-    ).toHaveBeenCalledWith(userId);
+    expect(mockNotificationService.fetchRecentNotifications).toHaveBeenCalledWith(userId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toNotificationDTO).toHaveBeenCalledWith(mockNotificationDTO);
@@ -88,13 +82,9 @@ describe('FetchRecentNotifications', () => {
    */
   it('should throw an error when fetchRecentNotifications execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNotificationService.fetchRecentNotifications.mockRejectedValue(
-      'Service method error',
-    );
+    mockNotificationService.fetchRecentNotifications.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchRecentNotifications.execute(userId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchRecentNotifications.execute(userId)).rejects.toThrow('Service method error');
   });
 });

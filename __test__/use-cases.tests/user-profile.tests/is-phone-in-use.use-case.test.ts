@@ -19,8 +19,8 @@ describe('IsPhoneInUse', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const phone: string = 'phone';
+  
+     const phone: string = 'phone';
 
   // Mock version of  to be used as input and expected output
   const mockUserProfileDTO: UserProfileDTO = {
@@ -82,13 +82,9 @@ describe('IsPhoneInUse', () => {
    */
   it('should throw an error when isPhoneInUse execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserProfileService.isPhoneInUse.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserProfileService.isPhoneInUse.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(isPhoneInUse.execute(phone)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(isPhoneInUse.execute(phone)).rejects.toThrow('Service method error');
   });
 });

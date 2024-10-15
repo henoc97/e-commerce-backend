@@ -19,8 +19,8 @@ describe('FetchReviewsByProduct', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
+  
+     const productId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockReviewDTO: ReviewDTO = {
@@ -42,9 +42,7 @@ describe('FetchReviewsByProduct', () => {
       ],
     }).compile();
 
-    fetchReviewsByProduct = module.get<FetchReviewsByProduct>(
-      FetchReviewsByProduct,
-    );
+    fetchReviewsByProduct = module.get<FetchReviewsByProduct>(FetchReviewsByProduct);
     reviewService = module.get<ReviewService>(ReviewService);
   });
 
@@ -69,9 +67,7 @@ describe('FetchReviewsByProduct', () => {
     const result = await fetchReviewsByProduct.execute(productId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockReviewService.fetchReviewsByProduct).toHaveBeenCalledWith(
-      productId,
-    );
+    expect(mockReviewService.fetchReviewsByProduct).toHaveBeenCalledWith(productId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toReviewDTO).toHaveBeenCalledWith(mockReviewDTO);
@@ -86,13 +82,9 @@ describe('FetchReviewsByProduct', () => {
    */
   it('should throw an error when fetchReviewsByProduct execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockReviewService.fetchReviewsByProduct.mockRejectedValue(
-      'Service method error',
-    );
+    mockReviewService.fetchReviewsByProduct.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchReviewsByProduct.execute(productId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchReviewsByProduct.execute(productId)).rejects.toThrow('Service method error');
   });
 });

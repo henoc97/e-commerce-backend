@@ -19,8 +19,8 @@ describe('ListExpiringSubscriptions', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const days: number = 1;
+  
+     const days: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockSubscriptionDTO: SubscriptionDTO = {
@@ -42,9 +42,7 @@ describe('ListExpiringSubscriptions', () => {
       ],
     }).compile();
 
-    listExpiringSubscriptions = module.get<ListExpiringSubscriptions>(
-      ListExpiringSubscriptions,
-    );
+    listExpiringSubscriptions = module.get<ListExpiringSubscriptions>(ListExpiringSubscriptions);
     subscriptionService = module.get<SubscriptionService>(SubscriptionService);
   });
 
@@ -62,18 +60,14 @@ describe('ListExpiringSubscriptions', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockSubscriptionService.listExpiringSubscriptions.mockResolvedValue(
-      mockSubscriptionDTO,
-    );
+    mockSubscriptionService.listExpiringSubscriptions.mockResolvedValue(mockSubscriptionDTO);
     (toSubscriptionDTO as jest.Mock).mockReturnValue(mockSubscriptionDTO);
 
     // Execute the use case with provided parameters
     const result = await listExpiringSubscriptions.execute(days);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockSubscriptionService.listExpiringSubscriptions,
-    ).toHaveBeenCalledWith(days);
+    expect(mockSubscriptionService.listExpiringSubscriptions).toHaveBeenCalledWith(days);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toSubscriptionDTO).toHaveBeenCalledWith(mockSubscriptionDTO);
@@ -88,13 +82,9 @@ describe('ListExpiringSubscriptions', () => {
    */
   it('should throw an error when listExpiringSubscriptions execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubscriptionService.listExpiringSubscriptions.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubscriptionService.listExpiringSubscriptions.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listExpiringSubscriptions.execute(days)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listExpiringSubscriptions.execute(days)).rejects.toThrow('Service method error');
   });
 });

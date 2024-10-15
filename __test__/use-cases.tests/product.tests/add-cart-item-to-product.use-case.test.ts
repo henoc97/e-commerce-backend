@@ -19,11 +19,9 @@ describe('AddCartItemToProduct', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
-  const cartItemDTO: CartItemDTO = {
-    /* data */
-  };
+  
+     const productId: number = 1;
+     const cartItemDTO: CartItemDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -45,8 +43,7 @@ describe('AddCartItemToProduct', () => {
       ],
     }).compile();
 
-    addCartItemToProduct =
-      module.get<AddCartItemToProduct>(AddCartItemToProduct);
+    addCartItemToProduct = module.get<AddCartItemToProduct>(AddCartItemToProduct);
     productService = module.get<ProductService>(ProductService);
   });
 
@@ -68,13 +65,12 @@ describe('AddCartItemToProduct', () => {
     (toProductDTO as jest.Mock).mockReturnValue(mockProductDTO);
 
     // Execute the use case with provided parameters
-    const result = await addCartItemToProduct.execute(productId, cartItemDTO);
+    const result = await addCartItemToProduct.execute(productId,
+    cartItemDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductService.addCartItemToProduct).toHaveBeenCalledWith(
-      productId,
-      cartItemDTO,
-    );
+    expect(mockProductService.addCartItemToProduct).toHaveBeenCalledWith(productId,
+    cartItemDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductDTO).toHaveBeenCalledWith(mockProductDTO);
@@ -89,13 +85,10 @@ describe('AddCartItemToProduct', () => {
    */
   it('should throw an error when addCartItemToProduct execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.addCartItemToProduct.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.addCartItemToProduct.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      addCartItemToProduct.execute(productId, cartItemDTO),
-    ).rejects.toThrow('Service method error');
+    await expect(addCartItemToProduct.execute(productId,
+    cartItemDTO,)).rejects.toThrow('Service method error');
   });
 });

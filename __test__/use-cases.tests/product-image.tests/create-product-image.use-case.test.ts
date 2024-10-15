@@ -19,10 +19,8 @@ describe('CreateProductImage', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const imageDTO: ProductImageDTO = {
-    /* data */
-  };
+  
+     const imageDTO: ProductImageDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockProductImageDTO: ProductImageDTO = {
@@ -62,18 +60,14 @@ describe('CreateProductImage', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductImageService.createProductImage.mockResolvedValue(
-      mockProductImageDTO,
-    );
+    mockProductImageService.createProductImage.mockResolvedValue(mockProductImageDTO);
     (toProductImageDTO as jest.Mock).mockReturnValue(mockProductImageDTO);
 
     // Execute the use case with provided parameters
     const result = await createProductImage.execute(imageDTO);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductImageService.createProductImage).toHaveBeenCalledWith(
-      imageDTO,
-    );
+    expect(mockProductImageService.createProductImage).toHaveBeenCalledWith(imageDTO);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductImageDTO).toHaveBeenCalledWith(mockProductImageDTO);
@@ -88,13 +82,9 @@ describe('CreateProductImage', () => {
    */
   it('should throw an error when createProductImage execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductImageService.createProductImage.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductImageService.createProductImage.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createProductImage.execute(imageDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createProductImage.execute(imageDTO)).rejects.toThrow('Service method error');
   });
 });

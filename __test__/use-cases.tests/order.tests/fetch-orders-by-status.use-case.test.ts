@@ -19,10 +19,8 @@ describe('FetchOrdersByStatus', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const status: OrderStatus = {
-    /* data */
-  };
+  
+     const status: OrderStatus = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockOrderDTO: OrderDTO = {
@@ -84,13 +82,9 @@ describe('FetchOrdersByStatus', () => {
    */
   it('should throw an error when fetchOrdersByStatus execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockOrderService.fetchOrdersByStatus.mockRejectedValue(
-      'Service method error',
-    );
+    mockOrderService.fetchOrdersByStatus.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchOrdersByStatus.execute(status)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchOrdersByStatus.execute(status)).rejects.toThrow('Service method error');
   });
 });

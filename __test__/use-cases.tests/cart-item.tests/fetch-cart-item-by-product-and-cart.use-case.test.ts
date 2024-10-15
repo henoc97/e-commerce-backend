@@ -19,9 +19,9 @@ describe('FetchCartItemByProductAndCart', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
-  const cartId: number = 1;
+  
+     const productId: number = 1;
+     const cartId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockCartItemDTO: CartItemDTO = {
@@ -43,9 +43,7 @@ describe('FetchCartItemByProductAndCart', () => {
       ],
     }).compile();
 
-    fetchCartItemByProductAndCart = module.get<FetchCartItemByProductAndCart>(
-      FetchCartItemByProductAndCart,
-    );
+    fetchCartItemByProductAndCart = module.get<FetchCartItemByProductAndCart>(FetchCartItemByProductAndCart);
     cartItemService = module.get<CartItemService>(CartItemService);
   });
 
@@ -63,21 +61,16 @@ describe('FetchCartItemByProductAndCart', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockCartItemService.fetchCartItemByProductAndCart.mockResolvedValue(
-      mockCartItemDTO,
-    );
+    mockCartItemService.fetchCartItemByProductAndCart.mockResolvedValue(mockCartItemDTO);
     (toCartItemDTO as jest.Mock).mockReturnValue(mockCartItemDTO);
 
     // Execute the use case with provided parameters
-    const result = await fetchCartItemByProductAndCart.execute(
-      productId,
-      cartId,
-    );
+    const result = await fetchCartItemByProductAndCart.execute(productId,
+    cartId,);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockCartItemService.fetchCartItemByProductAndCart,
-    ).toHaveBeenCalledWith(productId, cartId);
+    expect(mockCartItemService.fetchCartItemByProductAndCart).toHaveBeenCalledWith(productId,
+    cartId,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toCartItemDTO).toHaveBeenCalledWith(mockCartItemDTO);
@@ -92,13 +85,10 @@ describe('FetchCartItemByProductAndCart', () => {
    */
   it('should throw an error when fetchCartItemByProductAndCart execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCartItemService.fetchCartItemByProductAndCart.mockRejectedValue(
-      'Service method error',
-    );
+    mockCartItemService.fetchCartItemByProductAndCart.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchCartItemByProductAndCart.execute(productId, cartId),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchCartItemByProductAndCart.execute(productId,
+    cartId,)).rejects.toThrow('Service method error');
   });
 });

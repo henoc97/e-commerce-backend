@@ -63,12 +63,12 @@ export class CartItemDTO {
 
   /**
    * Creates a new CartItemDTO instance.
-   * @param id - Unique identifier for the CartItem (optional).
    * @param cartId - Unique identifier for the Cart to which this item belongs.
-   * @param cart - The Cart to which this item belongs (optional).
    * @param productId - Unique identifier for the Product associated with this CartItem.
-   * @param product - The Product associated with this CartItem (optional).
    * @param quantity - Quantity of the Product in the CartItem.
+   * @param id - Unique identifier for the CartItem (optional).
+   * @param cart - The Cart to which this item belongs (optional).
+   * @param product - The Product associated with this CartItem (optional).
    */
   constructor(
     cartId: number,

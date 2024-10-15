@@ -19,11 +19,9 @@ describe('AddAddressToUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const addressDTO: AddressDTO = {
-    /* data */
-  };
+  
+     const userId: number = 1;
+     const addressDTO: AddressDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -67,13 +65,12 @@ describe('AddAddressToUser', () => {
     (toUserDTO as jest.Mock).mockReturnValue(mockUserDTO);
 
     // Execute the use case with provided parameters
-    const result = await addAddressToUser.execute(userId, addressDTO);
+    const result = await addAddressToUser.execute(userId,
+    addressDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserService.addAddressToUser).toHaveBeenCalledWith(
-      userId,
-      addressDTO,
-    );
+    expect(mockUserService.addAddressToUser).toHaveBeenCalledWith(userId,
+    addressDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserDTO).toHaveBeenCalledWith(mockUserDTO);
@@ -88,11 +85,10 @@ describe('AddAddressToUser', () => {
    */
   it('should throw an error when addAddressToUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.addAddressToUser.mockRejectedValue('Service method error');
+    mockUserService.addAddressToUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(addAddressToUser.execute(userId, addressDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(addAddressToUser.execute(userId,
+    addressDTO,)).rejects.toThrow('Service method error');
   });
 });

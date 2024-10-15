@@ -19,6 +19,7 @@ describe('FetchActivePromotions', () => {
   };
 
   // Define parameters for the use case to be used during testing
+  
 
   // Mock version of  to be used as input and expected output
   const mockPromotionDTO: PromotionDTO = {
@@ -40,9 +41,7 @@ describe('FetchActivePromotions', () => {
       ],
     }).compile();
 
-    fetchActivePromotions = module.get<FetchActivePromotions>(
-      FetchActivePromotions,
-    );
+    fetchActivePromotions = module.get<FetchActivePromotions>(FetchActivePromotions);
     promotionService = module.get<PromotionService>(PromotionService);
   });
 
@@ -60,9 +59,7 @@ describe('FetchActivePromotions', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockPromotionService.fetchActivePromotions.mockResolvedValue(
-      mockPromotionDTO,
-    );
+    mockPromotionService.fetchActivePromotions.mockResolvedValue(mockPromotionDTO);
     (toPromotionDTO as jest.Mock).mockReturnValue(mockPromotionDTO);
 
     // Execute the use case with provided parameters
@@ -84,13 +81,9 @@ describe('FetchActivePromotions', () => {
    */
   it('should throw an error when fetchActivePromotions execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPromotionService.fetchActivePromotions.mockRejectedValue(
-      'Service method error',
-    );
+    mockPromotionService.fetchActivePromotions.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchActivePromotions.execute()).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchActivePromotions.execute()).rejects.toThrow('Service method error');
   });
 });

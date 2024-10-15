@@ -19,9 +19,9 @@ describe('FetchAddressByUserAndId', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const addressId: number = 1;
+  
+     const userId: number = 1;
+     const addressId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockAddressDTO: AddressDTO = {
@@ -43,9 +43,7 @@ describe('FetchAddressByUserAndId', () => {
       ],
     }).compile();
 
-    fetchAddressByUserAndId = module.get<FetchAddressByUserAndId>(
-      FetchAddressByUserAndId,
-    );
+    fetchAddressByUserAndId = module.get<FetchAddressByUserAndId>(FetchAddressByUserAndId);
     addressService = module.get<AddressService>(AddressService);
   });
 
@@ -63,19 +61,14 @@ describe('FetchAddressByUserAndId', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockAddressService.fetchAddressByUserAndId.mockResolvedValue(
-      mockAddressDTO,
-    );
+    mockAddressService.fetchAddressByUserAndId.mockResolvedValue(mockAddressDTO);
     (toAddressDTO as jest.Mock).mockReturnValue(mockAddressDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchAddressByUserAndId.execute(userId, addressId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockAddressService.fetchAddressByUserAndId).toHaveBeenCalledWith(
-      userId,
-      addressId,
-    );
+    expect(mockAddressService.fetchAddressByUserAndId).toHaveBeenCalledWith(userId, addressId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toAddressDTO).toHaveBeenCalledWith(mockAddressDTO);
@@ -90,13 +83,9 @@ describe('FetchAddressByUserAndId', () => {
    */
   it('should throw an error when fetchAddressByUserAndId execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAddressService.fetchAddressByUserAndId.mockRejectedValue(
-      'Service method error',
-    );
+    mockAddressService.fetchAddressByUserAndId.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchAddressByUserAndId.execute(userId, addressId),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchAddressByUserAndId.execute(userId, addressId)).rejects.toThrow('Service method error');
   });
 });

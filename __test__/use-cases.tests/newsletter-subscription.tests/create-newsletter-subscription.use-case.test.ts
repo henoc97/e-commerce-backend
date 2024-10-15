@@ -19,10 +19,8 @@ describe('CreateNewsletterSubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const dto: NewsletterSubscriptionDTO = {
-    /* data */
-  };
+  
+     const dto: NewsletterSubscriptionDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockNewsletterSubscriptionDTO: NewsletterSubscriptionDTO = {
@@ -44,12 +42,8 @@ describe('CreateNewsletterSubscription', () => {
       ],
     }).compile();
 
-    createNewsletterSubscription = module.get<CreateNewsletterSubscription>(
-      CreateNewsletterSubscription,
-    );
-    newsletterSubscriptionService = module.get<NewsletterSubscriptionService>(
-      NewsletterSubscriptionService,
-    );
+    createNewsletterSubscription = module.get<CreateNewsletterSubscription>(CreateNewsletterSubscription);
+    newsletterSubscriptionService = module.get<NewsletterSubscriptionService>(NewsletterSubscriptionService);
   });
 
   /**
@@ -66,25 +60,17 @@ describe('CreateNewsletterSubscription', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNewsletterSubscriptionService.createNewsletterSubscription.mockResolvedValue(
-      mockNewsletterSubscriptionDTO,
-    );
-    (toNewsletterSubscriptionDTO as jest.Mock).mockReturnValue(
-      mockNewsletterSubscriptionDTO,
-    );
+    mockNewsletterSubscriptionService.createNewsletterSubscription.mockResolvedValue(mockNewsletterSubscriptionDTO);
+    (toNewsletterSubscriptionDTO as jest.Mock).mockReturnValue(mockNewsletterSubscriptionDTO);
 
     // Execute the use case with provided parameters
-    const result = await createNewsletterSubscription.execute(dto);
+    const result = await createNewsletterSubscription.execute(dto,);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockNewsletterSubscriptionService.createNewsletterSubscription,
-    ).toHaveBeenCalledWith(dto);
+    expect(mockNewsletterSubscriptionService.createNewsletterSubscription).toHaveBeenCalledWith(dto,);
 
     // Verify that the transformation to DTO was called with the service result
-    expect(toNewsletterSubscriptionDTO).toHaveBeenCalledWith(
-      mockNewsletterSubscriptionDTO,
-    );
+    expect(toNewsletterSubscriptionDTO).toHaveBeenCalledWith(mockNewsletterSubscriptionDTO);
 
     // Ensure the result matches the expected DTO
     expect(result).toEqual(mockNewsletterSubscriptionDTO);
@@ -96,13 +82,9 @@ describe('CreateNewsletterSubscription', () => {
    */
   it('should throw an error when createNewsletterSubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNewsletterSubscriptionService.createNewsletterSubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockNewsletterSubscriptionService.createNewsletterSubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createNewsletterSubscription.execute(dto)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createNewsletterSubscription.execute(dto,)).rejects.toThrow('Service method error');
   });
 });

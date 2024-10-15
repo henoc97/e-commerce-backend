@@ -50,9 +50,9 @@ export class CartDTO {
    */
   constructor(
     userId: number,
+    id?: number,
     user?: UserDTO,
     items?: CartItemDTO[],
-    id?: number,
   ) {
     this.id = id;
     this.userId = userId;

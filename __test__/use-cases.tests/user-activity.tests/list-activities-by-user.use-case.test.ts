@@ -19,8 +19,8 @@ describe('ListActivitiesByUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
+  
+     const userId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserActivityDTO: UserActivityDTO = {
@@ -42,8 +42,7 @@ describe('ListActivitiesByUser', () => {
       ],
     }).compile();
 
-    listActivitiesByUser =
-      module.get<ListActivitiesByUser>(ListActivitiesByUser);
+    listActivitiesByUser = module.get<ListActivitiesByUser>(ListActivitiesByUser);
     userActivityService = module.get<UserActivityService>(UserActivityService);
   });
 
@@ -61,18 +60,14 @@ describe('ListActivitiesByUser', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserActivityService.listActivitiesByUser.mockResolvedValue(
-      mockUserActivityDTO,
-    );
+    mockUserActivityService.listActivitiesByUser.mockResolvedValue(mockUserActivityDTO);
     (toUserActivityDTO as jest.Mock).mockReturnValue(mockUserActivityDTO);
 
     // Execute the use case with provided parameters
     const result = await listActivitiesByUser.execute(userId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserActivityService.listActivitiesByUser).toHaveBeenCalledWith(
-      userId,
-    );
+    expect(mockUserActivityService.listActivitiesByUser).toHaveBeenCalledWith(userId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserActivityDTO).toHaveBeenCalledWith(mockUserActivityDTO);
@@ -87,13 +82,9 @@ describe('ListActivitiesByUser', () => {
    */
   it('should throw an error when listActivitiesByUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserActivityService.listActivitiesByUser.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserActivityService.listActivitiesByUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listActivitiesByUser.execute(userId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listActivitiesByUser.execute(userId)).rejects.toThrow('Service method error');
   });
 });

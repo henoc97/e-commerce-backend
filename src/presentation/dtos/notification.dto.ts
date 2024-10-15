@@ -6,6 +6,7 @@ import {
   IsDateString,
   IsOptional,
   ValidateNested,
+  IsBoolean,
 } from 'class-validator';
 import { NotificationType } from 'src/domain/enums/notification-type.enum';
 import { UserDTO } from './user.dto';
@@ -53,6 +54,12 @@ export class NotificationDTO {
   content: string;
 
   /**
+   * The content of the notification is read or not.
+   */
+  @IsBoolean()
+  read: boolean;
+
+  /**
    * The date and time when the notification was sent.
    * Must be in ISO date format.
    * Optional during creation, will be set automatically if not provided.
@@ -74,6 +81,7 @@ export class NotificationDTO {
     userId: number,
     type: NotificationType,
     content: string,
+    read: boolean = false,
     sentAt?: Date,
     id?: number,
     user?: UserDTO,
@@ -82,6 +90,7 @@ export class NotificationDTO {
     this.userId = userId;
     this.type = type;
     this.content = content;
+    this.read = read;
     this.sentAt = sentAt;
     this.user = user;
   }

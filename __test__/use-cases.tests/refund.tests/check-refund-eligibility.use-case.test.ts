@@ -19,10 +19,8 @@ describe('CheckRefundEligibility', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const refund: RefundDTO = {
-    /* data */
-  };
+  
+     const refund: RefundDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockRefundDTO: RefundDTO = {
@@ -44,9 +42,7 @@ describe('CheckRefundEligibility', () => {
       ],
     }).compile();
 
-    checkRefundEligibility = module.get<CheckRefundEligibility>(
-      CheckRefundEligibility,
-    );
+    checkRefundEligibility = module.get<CheckRefundEligibility>(CheckRefundEligibility);
     refundService = module.get<RefundService>(RefundService);
   });
 
@@ -71,9 +67,7 @@ describe('CheckRefundEligibility', () => {
     const result = await checkRefundEligibility.execute(refund);
 
     // Verify that the service was called with the expected arguments
-    expect(mockRefundService.checkRefundEligibility).toHaveBeenCalledWith(
-      refund,
-    );
+    expect(mockRefundService.checkRefundEligibility).toHaveBeenCalledWith(refund);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toRefundDTO).toHaveBeenCalledWith(mockRefundDTO);
@@ -88,13 +82,9 @@ describe('CheckRefundEligibility', () => {
    */
   it('should throw an error when checkRefundEligibility execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockRefundService.checkRefundEligibility.mockRejectedValue(
-      'Service method error',
-    );
+    mockRefundService.checkRefundEligibility.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(checkRefundEligibility.execute(refund)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(checkRefundEligibility.execute(refund)).rejects.toThrow('Service method error');
   });
 });

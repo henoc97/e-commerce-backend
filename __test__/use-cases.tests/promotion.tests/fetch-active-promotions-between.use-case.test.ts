@@ -19,13 +19,9 @@ describe('FetchActivePromotionsBetween', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const start: Date = {
-    /* data */
-  };
-  const end: Date = {
-    /* data */
-  };
+  
+     const start: Date = { /* data */ };
+     const end: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockPromotionDTO: PromotionDTO = {
@@ -47,9 +43,7 @@ describe('FetchActivePromotionsBetween', () => {
       ],
     }).compile();
 
-    fetchActivePromotionsBetween = module.get<FetchActivePromotionsBetween>(
-      FetchActivePromotionsBetween,
-    );
+    fetchActivePromotionsBetween = module.get<FetchActivePromotionsBetween>(FetchActivePromotionsBetween);
     promotionService = module.get<PromotionService>(PromotionService);
   });
 
@@ -67,18 +61,14 @@ describe('FetchActivePromotionsBetween', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockPromotionService.fetchActivePromotionsBetween.mockResolvedValue(
-      mockPromotionDTO,
-    );
+    mockPromotionService.fetchActivePromotionsBetween.mockResolvedValue(mockPromotionDTO);
     (toPromotionDTO as jest.Mock).mockReturnValue(mockPromotionDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchActivePromotionsBetween.execute(start, end);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockPromotionService.fetchActivePromotionsBetween,
-    ).toHaveBeenCalledWith(start, end);
+    expect(mockPromotionService.fetchActivePromotionsBetween).toHaveBeenCalledWith(start, end);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPromotionDTO).toHaveBeenCalledWith(mockPromotionDTO);
@@ -93,13 +83,9 @@ describe('FetchActivePromotionsBetween', () => {
    */
   it('should throw an error when fetchActivePromotionsBetween execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPromotionService.fetchActivePromotionsBetween.mockRejectedValue(
-      'Service method error',
-    );
+    mockPromotionService.fetchActivePromotionsBetween.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchActivePromotionsBetween.execute(start, end),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchActivePromotionsBetween.execute(start, end)).rejects.toThrow('Service method error');
   });
 });

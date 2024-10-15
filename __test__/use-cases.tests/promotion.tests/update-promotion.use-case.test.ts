@@ -19,11 +19,9 @@ describe('UpdatePromotion', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const promotionId: number = 1;
-  const promotionDTO: PromotionDTO = {
-    /* data */
-  };
+  
+     const promotionId: number = 1;
+     const promotionDTO: PromotionDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockPromotionDTO: PromotionDTO = {
@@ -67,13 +65,12 @@ describe('UpdatePromotion', () => {
     (toPromotionDTO as jest.Mock).mockReturnValue(mockPromotionDTO);
 
     // Execute the use case with provided parameters
-    const result = await updatePromotion.execute(promotionId, promotionDTO);
+    const result = await updatePromotion.execute(promotionId,
+    promotionDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockPromotionService.updatePromotion).toHaveBeenCalledWith(
-      promotionId,
-      promotionDTO,
-    );
+    expect(mockPromotionService.updatePromotion).toHaveBeenCalledWith(promotionId,
+    promotionDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPromotionDTO).toHaveBeenCalledWith(mockPromotionDTO);
@@ -88,13 +85,10 @@ describe('UpdatePromotion', () => {
    */
   it('should throw an error when updatePromotion execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPromotionService.updatePromotion.mockRejectedValue(
-      'Service method error',
-    );
+    mockPromotionService.updatePromotion.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      updatePromotion.execute(promotionId, promotionDTO),
-    ).rejects.toThrow('Service method error');
+    await expect(updatePromotion.execute(promotionId,
+    promotionDTO,)).rejects.toThrow('Service method error');
   });
 });

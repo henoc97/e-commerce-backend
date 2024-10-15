@@ -3,116 +3,137 @@ import { Product } from 'src/domain/entities/product.entity';
 import { ICategoryRepository } from 'src/domain/repositories/category.repository';
 import { CategoryDTO } from 'src/presentation/dtos/category.dto';
 import { fromCategoryDTO } from '../helper/to-entity/to.category.entity';
+import {
+  Inject,
+  NotFoundException
+} from '@nestjs/common';
+import { ProductService } from './product.service';
 
 /**
  * Service class for managing categories.
  * Implements business logic and interacts with the category repository.
  */
 export class CategoryService {
-  private categoryRepository: ICategoryRepository;
+  constructor(
+    @Inject('ICategoryRepository')
+    private readonly categoryRepository: ICategoryRepository,
+    private readonly productService: ProductService,
+  ) {}
 
   /**
-   * Creates an instance of CategoryService.
-   * @param categoryRepository - The repository to manage Category entities.
-   */
-  constructor(categoryRepository: ICategoryRepository) {
-    this.categoryRepository = categoryRepository;
-  }
-
-  /**
-   * Creates a new Category and stores it in the repository.
-   * @param categoryDTO - Data Transfer Object for creating a Category.
-   * @returns A promise that resolves to the created Category entity.
+   * Creates a new category.
+   * @param categoryDTO - The data transfer object containing category details.
+   * @returns The created Category object.
+   * @throws InternalServerErrorException if the creation fails.
    */
   async createCategory(categoryDTO: CategoryDTO): Promise<Category> {
     const category = fromCategoryDTO(categoryDTO);
-    return this.categoryRepository.create(category);
+    return await this.categoryRepository.create(category);
   }
 
   /**
-   * Retrieves a Category by its ID.
-   * @param id - The unique identifier of the Category to retrieve.
-   * @returns A promise that resolves to the Category entity if found, otherwise null.
+   * Retrieves a category by its ID.
+   * @param id - The ID of the category to retrieve.
+   * @returns The Category object if found, otherwise null.
+   * @throws NotFoundException if the category is not found.
+   * @throws InternalServerErrorException if retrieval fails.
    */
   async getCategoryById(id: number): Promise<Category | null> {
-    return this.categoryRepository.getById(id);
+    const category = await this.categoryRepository.getById(id);
+    if (!category) {
+      throw new NotFoundException(`Category with ID ${id} not found`);
+    }
+    return category;
   }
 
   /**
-   * Updates an existing Category with new data.
-   * @param id - The unique identifier of the Category to update.
-   * @param categoryDTO - Data Transfer Object containing updated information for the Category.
-   * @returns A promise that resolves to the updated Category entity.
+   * Updates an existing category by its ID.
+   * @param id - The ID of the category to update.
+   * @param categoryDTO - The data transfer object containing updated category details.
+   * @returns The updated Category object.
+   * @throws InternalServerErrorException if the update fails.
    */
   async updateCategory(
     id: number,
     categoryDTO: Partial<CategoryDTO>,
   ): Promise<Category> {
     const category = fromCategoryDTO(categoryDTO);
-    return this.categoryRepository.update(id, category);
+    return await this.categoryRepository.update(id, category);
   }
 
   /**
-   * Deletes a Category by its ID.
-   * @param id - The unique identifier of the Category to delete.
-   * @returns A promise that resolves to true if deletion was successful, otherwise false.
+   * Deletes a category by its ID.
+   * @param id - The ID of the category to delete.
+   * @returns A boolean indicating whether the deletion was successful.
+   * @throws NotFoundException if the category is not found.
+   * @throws InternalServerErrorException if the deletion fails.
    */
   async deleteCategory(id: number): Promise<boolean> {
-    return this.categoryRepository.delete(id);
+    const deleted = await this.categoryRepository.delete(id);
+    if (!deleted) {
+      throw new NotFoundException(`Category with ID ${id} not found`);
+    }
+    return deleted;
   }
 
   /**
-   * Retrieves all child categories of a specific parent category.
-   * @param parentId - The unique identifier of the parent Category.
-   * @returns A promise that resolves to an array of child Categories.
+   * Retrieves child categories of a given parent category.
+   * @param parentId - The ID of the parent category.
+   * @returns An array of child Category objects.
+   * @throws InternalServerErrorException if retrieval fails.
    */
   async getChildren(parentId: number): Promise<Category[]> {
-    return this.categoryRepository.getChildren(parentId);
+    return await this.categoryRepository.getChildren(parentId);
   }
 
   /**
-   * Retrieves all products associated with a specific Category.
-   * @param categoryId - The unique identifier of the Category.
-   * @returns A promise that resolves to an array of Products.
+   * Retrieves products associated with a specific category.
+   * @param categoryId - The ID of the category.
+   * @returns An array of Product objects associated with the category.
+   * @throws InternalServerErrorException if retrieval fails.
    */
   async getProducts(categoryId: number): Promise<Product[]> {
-    return this.categoryRepository.getProducts(categoryId);
+    return await this.productService.findProductsByCategory(categoryId);
   }
 
   /**
-   * Updates the parent category of a specific Category.
-   * @param id - The unique identifier of the Category to update.
-   * @param newParentId - The unique identifier of the new parent Category.
-   * @returns A promise that resolves to the updated Category entity.
+   * Sets a new parent for the specified category.
+   * @param id - The ID of the category to update.
+   * @param newParentId - The ID of the new parent category.
+   * @returns The updated Category object.
+   * @throws InternalServerErrorException if the operation fails.
    */
   async setCategoryParent(id: number, newParentId: number): Promise<Category> {
-    return this.categoryRepository.setParent(id, newParentId);
+    return await this.categoryRepository.setParent(id, newParentId);
   }
 
   /**
-   * Checks if a Category with a specific name exists within a given shop.
-   * @param name - The name of the Category to check.
-   * @param shopId - The unique identifier of the Shop.
-   * @returns A promise that resolves to true if the Category exists, otherwise false.
+   * Checks if a category exists by its name and associated shop ID.
+   * @param name - The name of the category.
+   * @param shopId - The ID of the shop.
+   * @returns A boolean indicating whether the category exists.
+   * @throws InternalServerErrorException if the check fails.
    */
   async categoryExists(name: string, shopId: number): Promise<boolean> {
-    return this.categoryRepository.exists(name, shopId);
+    return await this.categoryRepository.exists(name, shopId);
   }
 
   /**
-   * Retrieves all top-level categories (categories without a parent).
-   * @returns A promise that resolves to an array of top-level Categories.
+   * Retrieves top-level categories.
+   * @returns An array of top-level Category objects.
+   * @throws InternalServerErrorException if retrieval fails.
    */
   async getTopLevelCategories(): Promise<Category[]> {
-    return this.categoryRepository.getTopLevelCategories();
+    return await this.categoryRepository.getTopLevelCategories();
   }
 
   /**
-   * Retrieves the category hierarchy (including all children) of a specific Category.
-   * @param categoryId - The unique identifier of the Category to retrieve the hierarchy for.
-   * @returns A promise that resolves to an array of Categories representing the hierarchy.
+   * Retrieves the hierarchy of categories for a specific category ID.
+   * @param categoryId - The ID of the category.
+   * @returns An array of Category objects representing the hierarchy.
+   * @throws InternalServerErrorException if retrieval fails.
    */
   async getCategoryHierarchy(categoryId: number): Promise<Category[]> {
-    return this.categoryRepository.getCategoryHierarchy(categoryId);
+    return await this.categoryRepository.getCategoryHierarchy(categoryId);
   }
 }

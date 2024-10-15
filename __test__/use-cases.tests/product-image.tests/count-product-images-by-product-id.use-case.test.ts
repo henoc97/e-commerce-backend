@@ -19,8 +19,8 @@ describe('CountProductImagesByProductId', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
+  
+     const productId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductImageDTO: ProductImageDTO = {
@@ -42,9 +42,7 @@ describe('CountProductImagesByProductId', () => {
       ],
     }).compile();
 
-    countProductImagesByProductId = module.get<CountProductImagesByProductId>(
-      CountProductImagesByProductId,
-    );
+    countProductImagesByProductId = module.get<CountProductImagesByProductId>(CountProductImagesByProductId);
     productImageService = module.get<ProductImageService>(ProductImageService);
   });
 
@@ -62,18 +60,14 @@ describe('CountProductImagesByProductId', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockProductImageService.countProductImagesByProductId.mockResolvedValue(
-      mockProductImageDTO,
-    );
+    mockProductImageService.countProductImagesByProductId.mockResolvedValue(mockProductImageDTO);
     (toProductImageDTO as jest.Mock).mockReturnValue(mockProductImageDTO);
 
     // Execute the use case with provided parameters
     const result = await countProductImagesByProductId.execute(productId);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockProductImageService.countProductImagesByProductId,
-    ).toHaveBeenCalledWith(productId);
+    expect(mockProductImageService.countProductImagesByProductId).toHaveBeenCalledWith(productId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductImageDTO).toHaveBeenCalledWith(mockProductImageDTO);
@@ -88,13 +82,9 @@ describe('CountProductImagesByProductId', () => {
    */
   it('should throw an error when countProductImagesByProductId execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductImageService.countProductImagesByProductId.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductImageService.countProductImagesByProductId.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      countProductImagesByProductId.execute(productId),
-    ).rejects.toThrow('Service method error');
+    await expect(countProductImagesByProductId.execute(productId)).rejects.toThrow('Service method error');
   });
 });

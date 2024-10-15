@@ -19,8 +19,8 @@ describe('FetchMarketplaceById', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
+  
+     const id: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockMarketplaceDTO: MarketplaceDTO = {
@@ -42,8 +42,7 @@ describe('FetchMarketplaceById', () => {
       ],
     }).compile();
 
-    fetchMarketplaceById =
-      module.get<FetchMarketplaceById>(FetchMarketplaceById);
+    fetchMarketplaceById = module.get<FetchMarketplaceById>(FetchMarketplaceById);
     marketplaceService = module.get<MarketplaceService>(MarketplaceService);
   });
 
@@ -61,18 +60,14 @@ describe('FetchMarketplaceById', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockMarketplaceService.fetchMarketplaceById.mockResolvedValue(
-      mockMarketplaceDTO,
-    );
+    mockMarketplaceService.fetchMarketplaceById.mockResolvedValue(mockMarketplaceDTO);
     (toMarketplaceDTO as jest.Mock).mockReturnValue(mockMarketplaceDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchMarketplaceById.execute(id);
 
     // Verify that the service was called with the expected arguments
-    expect(mockMarketplaceService.fetchMarketplaceById).toHaveBeenCalledWith(
-      id,
-    );
+    expect(mockMarketplaceService.fetchMarketplaceById).toHaveBeenCalledWith(id);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toMarketplaceDTO).toHaveBeenCalledWith(mockMarketplaceDTO);
@@ -87,13 +82,9 @@ describe('FetchMarketplaceById', () => {
    */
   it('should throw an error when fetchMarketplaceById execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockMarketplaceService.fetchMarketplaceById.mockRejectedValue(
-      'Service method error',
-    );
+    mockMarketplaceService.fetchMarketplaceById.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchMarketplaceById.execute(id)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchMarketplaceById.execute(id)).rejects.toThrow('Service method error');
   });
 });

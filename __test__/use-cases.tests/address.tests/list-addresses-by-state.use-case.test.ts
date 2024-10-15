@@ -19,8 +19,8 @@ describe('ListAddressesByState', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const state: string = 'state';
+  
+     const state: string = 'state';
 
   // Mock version of  to be used as input and expected output
   const mockAddressDTO: AddressDTO = {
@@ -42,8 +42,7 @@ describe('ListAddressesByState', () => {
       ],
     }).compile();
 
-    listAddressesByState =
-      module.get<ListAddressesByState>(ListAddressesByState);
+    listAddressesByState = module.get<ListAddressesByState>(ListAddressesByState);
     addressService = module.get<AddressService>(AddressService);
   });
 
@@ -83,13 +82,9 @@ describe('ListAddressesByState', () => {
    */
   it('should throw an error when listAddressesByState execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockAddressService.listAddressesByState.mockRejectedValue(
-      'Service method error',
-    );
+    mockAddressService.listAddressesByState.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(listAddressesByState.execute(state)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(listAddressesByState.execute(state)).rejects.toThrow('Service method error');
   });
 });

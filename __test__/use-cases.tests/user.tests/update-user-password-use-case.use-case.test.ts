@@ -19,9 +19,9 @@ describe('UpdateUserPasswordUseCase', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const newPassword: string = 'newPassword';
+  
+     const userId: number = 1;
+     const newPassword: string = 'newPassword';
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -43,9 +43,7 @@ describe('UpdateUserPasswordUseCase', () => {
       ],
     }).compile();
 
-    updateUserPasswordUseCase = module.get<UpdateUserPasswordUseCase>(
-      UpdateUserPasswordUseCase,
-    );
+    updateUserPasswordUseCase = module.get<UpdateUserPasswordUseCase>(UpdateUserPasswordUseCase);
     userService = module.get<UserService>(UserService);
   });
 
@@ -70,10 +68,7 @@ describe('UpdateUserPasswordUseCase', () => {
     const result = await updateUserPasswordUseCase.execute(userId, newPassword);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserService.updateUserPasswordUseCase).toHaveBeenCalledWith(
-      userId,
-      newPassword,
-    );
+    expect(mockUserService.updateUserPasswordUseCase).toHaveBeenCalledWith(userId, newPassword);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserDTO).toHaveBeenCalledWith(mockUserDTO);
@@ -88,13 +83,9 @@ describe('UpdateUserPasswordUseCase', () => {
    */
   it('should throw an error when updateUserPasswordUseCase execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.updateUserPasswordUseCase.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserService.updateUserPasswordUseCase.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      updateUserPasswordUseCase.execute(userId, newPassword),
-    ).rejects.toThrow('Service method error');
+    await expect(updateUserPasswordUseCase.execute(userId, newPassword)).rejects.toThrow('Service method error');
   });
 });

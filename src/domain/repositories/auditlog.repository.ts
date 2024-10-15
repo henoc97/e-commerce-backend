@@ -1,4 +1,5 @@
 import { AuditLog } from '../entities/audit-log.entity';
+import { AuditLogAction } from '../enums/audit-log-action.enum';
 
 /**
  * Interface defining operations for managing audit logs.
@@ -57,14 +58,6 @@ export interface IAuditLogRepository {
   getByDateRange(startDate: Date, endDate: Date): Promise<AuditLog[]>;
 
   /**
-   * Validates an audit log entry before creation.
-   * Ensures all necessary fields are correctly set.
-   * @param log - The audit log entry to validate.
-   * @returns A promise that resolves to true if the log is valid, otherwise false.
-   */
-  validate(log: AuditLog): Promise<boolean>;
-
-  /**
    * Retrieves the most recent audit logs.
    * @param limit - The maximum number of logs to retrieve.
    * @returns A promise that resolves to an array of the most recent audit logs.
@@ -76,5 +69,5 @@ export interface IAuditLogRepository {
    * @param action - The action type to filter logs by.
    * @returns A promise that resolves to an array of audit logs matching the specified action type.
    */
-  getByAction(action: string): Promise<AuditLog[]>;
+  getByAction(action: AuditLogAction): Promise<AuditLog[]>;
 }

@@ -19,9 +19,9 @@ describe('RemoveProductFromVendor', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const vendorId: number = 1;
-  const productId: number = 1;
+  
+     const vendorId: number = 1;
+     const productId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -43,9 +43,7 @@ describe('RemoveProductFromVendor', () => {
       ],
     }).compile();
 
-    removeProductFromVendor = module.get<RemoveProductFromVendor>(
-      RemoveProductFromVendor,
-    );
+    removeProductFromVendor = module.get<RemoveProductFromVendor>(RemoveProductFromVendor);
     vendorService = module.get<VendorService>(VendorService);
   });
 
@@ -67,13 +65,12 @@ describe('RemoveProductFromVendor', () => {
     (toVendorDTO as jest.Mock).mockReturnValue(mockVendorDTO);
 
     // Execute the use case with provided parameters
-    const result = await removeProductFromVendor.execute(vendorId, productId);
+    const result = await removeProductFromVendor.execute(vendorId,
+    productId,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockVendorService.removeProductFromVendor).toHaveBeenCalledWith(
-      vendorId,
-      productId,
-    );
+    expect(mockVendorService.removeProductFromVendor).toHaveBeenCalledWith(vendorId,
+    productId,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toVendorDTO).toHaveBeenCalledWith(mockVendorDTO);
@@ -88,13 +85,10 @@ describe('RemoveProductFromVendor', () => {
    */
   it('should throw an error when removeProductFromVendor execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.removeProductFromVendor.mockRejectedValue(
-      'Service method error',
-    );
+    mockVendorService.removeProductFromVendor.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      removeProductFromVendor.execute(vendorId, productId),
-    ).rejects.toThrow('Service method error');
+    await expect(removeProductFromVendor.execute(vendorId,
+    productId,)).rejects.toThrow('Service method error');
   });
 });

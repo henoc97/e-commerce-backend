@@ -19,10 +19,8 @@ describe('CreateTicket', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const ticketDTO: TicketDTO = {
-    /* data */
-  };
+  
+     const ticketDTO: TicketDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockTicketDTO: TicketDTO = {
@@ -84,11 +82,9 @@ describe('CreateTicket', () => {
    */
   it('should throw an error when createTicket execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockTicketService.createTicket.mockRejectedValue('Service method error');
+    mockTicketService.createTicket.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createTicket.execute(ticketDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createTicket.execute(ticketDTO)).rejects.toThrow('Service method error');
   });
 });

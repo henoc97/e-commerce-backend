@@ -19,13 +19,9 @@ describe('ListTicketsByDateRange', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const startDate: Date = {
-    /* data */
-  };
-  const endDate: Date = {
-    /* data */
-  };
+  
+     const startDate: Date = { /* data */ };
+     const endDate: Date = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockTicketDTO: TicketDTO = {
@@ -47,9 +43,7 @@ describe('ListTicketsByDateRange', () => {
       ],
     }).compile();
 
-    listTicketsByDateRange = module.get<ListTicketsByDateRange>(
-      ListTicketsByDateRange,
-    );
+    listTicketsByDateRange = module.get<ListTicketsByDateRange>(ListTicketsByDateRange);
     ticketService = module.get<TicketService>(TicketService);
   });
 
@@ -74,10 +68,7 @@ describe('ListTicketsByDateRange', () => {
     const result = await listTicketsByDateRange.execute(startDate, endDate);
 
     // Verify that the service was called with the expected arguments
-    expect(mockTicketService.listTicketsByDateRange).toHaveBeenCalledWith(
-      startDate,
-      endDate,
-    );
+    expect(mockTicketService.listTicketsByDateRange).toHaveBeenCalledWith(startDate, endDate);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toTicketDTO).toHaveBeenCalledWith(mockTicketDTO);
@@ -92,13 +83,9 @@ describe('ListTicketsByDateRange', () => {
    */
   it('should throw an error when listTicketsByDateRange execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockTicketService.listTicketsByDateRange.mockRejectedValue(
-      'Service method error',
-    );
+    mockTicketService.listTicketsByDateRange.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      listTicketsByDateRange.execute(startDate, endDate),
-    ).rejects.toThrow('Service method error');
+    await expect(listTicketsByDateRange.execute(startDate, endDate)).rejects.toThrow('Service method error');
   });
 });

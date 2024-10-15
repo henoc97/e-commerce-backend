@@ -19,11 +19,9 @@ describe('AddNotificationToUser', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const notificationDTO: NotificationDTO = {
-    /* data */
-  };
+  
+     const userId: number = 1;
+     const notificationDTO: NotificationDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -45,9 +43,7 @@ describe('AddNotificationToUser', () => {
       ],
     }).compile();
 
-    addNotificationToUser = module.get<AddNotificationToUser>(
-      AddNotificationToUser,
-    );
+    addNotificationToUser = module.get<AddNotificationToUser>(AddNotificationToUser);
     userService = module.get<UserService>(UserService);
   });
 
@@ -69,13 +65,12 @@ describe('AddNotificationToUser', () => {
     (toUserDTO as jest.Mock).mockReturnValue(mockUserDTO);
 
     // Execute the use case with provided parameters
-    const result = await addNotificationToUser.execute(userId, notificationDTO);
+    const result = await addNotificationToUser.execute(userId,
+    notificationDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserService.addNotificationToUser).toHaveBeenCalledWith(
-      userId,
-      notificationDTO,
-    );
+    expect(mockUserService.addNotificationToUser).toHaveBeenCalledWith(userId,
+    notificationDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserDTO).toHaveBeenCalledWith(mockUserDTO);
@@ -90,13 +85,10 @@ describe('AddNotificationToUser', () => {
    */
   it('should throw an error when addNotificationToUser execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.addNotificationToUser.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserService.addNotificationToUser.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      addNotificationToUser.execute(userId, notificationDTO),
-    ).rejects.toThrow('Service method error');
+    await expect(addNotificationToUser.execute(userId,
+    notificationDTO,)).rejects.toThrow('Service method error');
   });
 });

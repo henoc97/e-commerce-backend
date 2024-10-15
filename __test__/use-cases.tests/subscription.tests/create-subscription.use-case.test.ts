@@ -19,10 +19,8 @@ describe('CreateSubscription', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const subscriptionDTO: SubscriptionDTO = {
-    /* data */
-  };
+  
+     const subscriptionDTO: SubscriptionDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockSubscriptionDTO: SubscriptionDTO = {
@@ -62,18 +60,14 @@ describe('CreateSubscription', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockSubscriptionService.createSubscription.mockResolvedValue(
-      mockSubscriptionDTO,
-    );
+    mockSubscriptionService.createSubscription.mockResolvedValue(mockSubscriptionDTO);
     (toSubscriptionDTO as jest.Mock).mockReturnValue(mockSubscriptionDTO);
 
     // Execute the use case with provided parameters
-    const result = await createSubscription.execute(subscriptionDTO);
+    const result = await createSubscription.execute(subscriptionDTO,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockSubscriptionService.createSubscription).toHaveBeenCalledWith(
-      subscriptionDTO,
-    );
+    expect(mockSubscriptionService.createSubscription).toHaveBeenCalledWith(subscriptionDTO,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toSubscriptionDTO).toHaveBeenCalledWith(mockSubscriptionDTO);
@@ -88,13 +82,9 @@ describe('CreateSubscription', () => {
    */
   it('should throw an error when createSubscription execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockSubscriptionService.createSubscription.mockRejectedValue(
-      'Service method error',
-    );
+    mockSubscriptionService.createSubscription.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createSubscription.execute(subscriptionDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createSubscription.execute(subscriptionDTO,)).rejects.toThrow('Service method error');
   });
 });

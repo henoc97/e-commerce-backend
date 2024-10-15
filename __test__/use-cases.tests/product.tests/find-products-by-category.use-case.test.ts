@@ -19,8 +19,8 @@ describe('FindProductsByCategory', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const categoryId: number = 1;
+  
+     const categoryId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockProductDTO: ProductDTO = {
@@ -42,9 +42,7 @@ describe('FindProductsByCategory', () => {
       ],
     }).compile();
 
-    findProductsByCategory = module.get<FindProductsByCategory>(
-      FindProductsByCategory,
-    );
+    findProductsByCategory = module.get<FindProductsByCategory>(FindProductsByCategory);
     productService = module.get<ProductService>(ProductService);
   });
 
@@ -69,9 +67,7 @@ describe('FindProductsByCategory', () => {
     const result = await findProductsByCategory.execute(categoryId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockProductService.findProductsByCategory).toHaveBeenCalledWith(
-      categoryId,
-    );
+    expect(mockProductService.findProductsByCategory).toHaveBeenCalledWith(categoryId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toProductDTO).toHaveBeenCalledWith(mockProductDTO);
@@ -86,13 +82,9 @@ describe('FindProductsByCategory', () => {
    */
   it('should throw an error when findProductsByCategory execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockProductService.findProductsByCategory.mockRejectedValue(
-      'Service method error',
-    );
+    mockProductService.findProductsByCategory.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(findProductsByCategory.execute(categoryId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(findProductsByCategory.execute(categoryId)).rejects.toThrow('Service method error');
   });
 });

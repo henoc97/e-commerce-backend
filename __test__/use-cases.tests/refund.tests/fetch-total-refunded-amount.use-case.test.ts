@@ -19,8 +19,8 @@ describe('FetchTotalRefundedAmount', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const orderId: number = 1;
+  
+     const orderId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockRefundDTO: RefundDTO = {
@@ -42,9 +42,7 @@ describe('FetchTotalRefundedAmount', () => {
       ],
     }).compile();
 
-    fetchTotalRefundedAmount = module.get<FetchTotalRefundedAmount>(
-      FetchTotalRefundedAmount,
-    );
+    fetchTotalRefundedAmount = module.get<FetchTotalRefundedAmount>(FetchTotalRefundedAmount);
     refundService = module.get<RefundService>(RefundService);
   });
 
@@ -69,9 +67,7 @@ describe('FetchTotalRefundedAmount', () => {
     const result = await fetchTotalRefundedAmount.execute(orderId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockRefundService.fetchTotalRefundedAmount).toHaveBeenCalledWith(
-      orderId,
-    );
+    expect(mockRefundService.fetchTotalRefundedAmount).toHaveBeenCalledWith(orderId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toRefundDTO).toHaveBeenCalledWith(mockRefundDTO);
@@ -86,13 +82,9 @@ describe('FetchTotalRefundedAmount', () => {
    */
   it('should throw an error when fetchTotalRefundedAmount execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockRefundService.fetchTotalRefundedAmount.mockRejectedValue(
-      'Service method error',
-    );
+    mockRefundService.fetchTotalRefundedAmount.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchTotalRefundedAmount.execute(orderId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchTotalRefundedAmount.execute(orderId)).rejects.toThrow('Service method error');
   });
 });

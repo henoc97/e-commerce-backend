@@ -19,8 +19,8 @@ describe('DeletePromotion', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const promotionId: number = 1;
+  
+     const promotionId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockPromotionDTO: PromotionDTO = {
@@ -67,9 +67,7 @@ describe('DeletePromotion', () => {
     const result = await deletePromotion.execute(promotionId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockPromotionService.deletePromotion).toHaveBeenCalledWith(
-      promotionId,
-    );
+    expect(mockPromotionService.deletePromotion).toHaveBeenCalledWith(promotionId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPromotionDTO).toHaveBeenCalledWith(mockPromotionDTO);
@@ -84,13 +82,9 @@ describe('DeletePromotion', () => {
    */
   it('should throw an error when deletePromotion execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPromotionService.deletePromotion.mockRejectedValue(
-      'Service method error',
-    );
+    mockPromotionService.deletePromotion.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(deletePromotion.execute(promotionId)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(deletePromotion.execute(promotionId)).rejects.toThrow('Service method error');
   });
 });

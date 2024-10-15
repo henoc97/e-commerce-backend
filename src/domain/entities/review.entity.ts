@@ -48,6 +48,16 @@ export class Review {
   createdAt: Date;
 
   /**
+   * Indicates whether the review has been flagged for inspection.
+   */
+  flagged: boolean;
+
+  /**
+   * Indicates whether the review has been verified.
+   */
+  verified: boolean;
+
+  /**
    * Creates a new Review instance.
    * @param id - Unique identifier for the Review.
    * @param productId - Unique identifier for the Product.
@@ -57,6 +67,8 @@ export class Review {
    * @param rating - The rating given in the review.
    * @param comment - (Optional) Comment provided by the user.
    * @param createdAt - (Optional) Date and time of review creation.
+   * @param flagged - (Optional) Indicates if the review is flagged.
+   * @param verified - (Optional) Indicates if the review is verified.
    */
   constructor(
     id: number,
@@ -67,6 +79,8 @@ export class Review {
     rating: number,
     comment?: string,
     createdAt: Date = new Date(),
+    flagged: boolean = false,
+    verified: boolean = false,
   ) {
     this.id = id;
     this.productId = productId;
@@ -76,5 +90,7 @@ export class Review {
     this.rating = rating;
     this.comment = comment;
     this.createdAt = createdAt;
+    this.flagged = flagged;
+    this.verified = verified;
   }
 }

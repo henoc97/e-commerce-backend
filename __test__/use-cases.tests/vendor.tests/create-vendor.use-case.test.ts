@@ -19,10 +19,8 @@ describe('CreateVendor', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const vendorDTO: VendorDTO = {
-    /* data */
-  };
+  
+     const vendorDTO: VendorDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockVendorDTO: VendorDTO = {
@@ -84,11 +82,9 @@ describe('CreateVendor', () => {
    */
   it('should throw an error when createVendor execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockVendorService.createVendor.mockRejectedValue('Service method error');
+    mockVendorService.createVendor.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createVendor.execute(vendorDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createVendor.execute(vendorDTO)).rejects.toThrow('Service method error');
   });
 });

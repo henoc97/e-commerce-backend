@@ -19,10 +19,8 @@ describe('CreatePayment', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const paymentDTO: PaymentDTO = {
-    /* data */
-  };
+  
+     const paymentDTO: PaymentDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockPaymentDTO: PaymentDTO = {
@@ -84,11 +82,9 @@ describe('CreatePayment', () => {
    */
   it('should throw an error when createPayment execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPaymentService.createPayment.mockRejectedValue('Service method error');
+    mockPaymentService.createPayment.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createPayment.execute(paymentDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createPayment.execute(paymentDTO)).rejects.toThrow('Service method error');
   });
 });

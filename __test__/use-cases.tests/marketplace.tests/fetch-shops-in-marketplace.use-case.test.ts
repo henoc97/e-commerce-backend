@@ -19,8 +19,8 @@ describe('FetchShopsInMarketplace', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const marketplaceId: number = 1;
+  
+     const marketplaceId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockMarketplaceDTO: MarketplaceDTO = {
@@ -42,9 +42,7 @@ describe('FetchShopsInMarketplace', () => {
       ],
     }).compile();
 
-    fetchShopsInMarketplace = module.get<FetchShopsInMarketplace>(
-      FetchShopsInMarketplace,
-    );
+    fetchShopsInMarketplace = module.get<FetchShopsInMarketplace>(FetchShopsInMarketplace);
     marketplaceService = module.get<MarketplaceService>(MarketplaceService);
   });
 
@@ -62,18 +60,14 @@ describe('FetchShopsInMarketplace', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockMarketplaceService.fetchShopsInMarketplace.mockResolvedValue(
-      mockMarketplaceDTO,
-    );
+    mockMarketplaceService.fetchShopsInMarketplace.mockResolvedValue(mockMarketplaceDTO);
     (toMarketplaceDTO as jest.Mock).mockReturnValue(mockMarketplaceDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchShopsInMarketplace.execute(marketplaceId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockMarketplaceService.fetchShopsInMarketplace).toHaveBeenCalledWith(
-      marketplaceId,
-    );
+    expect(mockMarketplaceService.fetchShopsInMarketplace).toHaveBeenCalledWith(marketplaceId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toMarketplaceDTO).toHaveBeenCalledWith(mockMarketplaceDTO);
@@ -88,13 +82,9 @@ describe('FetchShopsInMarketplace', () => {
    */
   it('should throw an error when fetchShopsInMarketplace execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockMarketplaceService.fetchShopsInMarketplace.mockRejectedValue(
-      'Service method error',
-    );
+    mockMarketplaceService.fetchShopsInMarketplace.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      fetchShopsInMarketplace.execute(marketplaceId),
-    ).rejects.toThrow('Service method error');
+    await expect(fetchShopsInMarketplace.execute(marketplaceId)).rejects.toThrow('Service method error');
   });
 });

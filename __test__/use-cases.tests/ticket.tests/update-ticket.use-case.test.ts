@@ -19,11 +19,9 @@ describe('UpdateTicket', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const id: number = 1;
-  const updates: Partial<TicketDTO> = {
-    /* data */
-  };
+  
+     const id: number = 1;
+     const updates: Partial<TicketDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockTicketDTO: TicketDTO = {
@@ -67,10 +65,12 @@ describe('UpdateTicket', () => {
     (toTicketDTO as jest.Mock).mockReturnValue(mockTicketDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateTicket.execute(id, updates);
+    const result = await updateTicket.execute(id,
+    updates,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockTicketService.updateTicket).toHaveBeenCalledWith(id, updates);
+    expect(mockTicketService.updateTicket).toHaveBeenCalledWith(id,
+    updates,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toTicketDTO).toHaveBeenCalledWith(mockTicketDTO);
@@ -85,11 +85,10 @@ describe('UpdateTicket', () => {
    */
   it('should throw an error when updateTicket execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockTicketService.updateTicket.mockRejectedValue('Service method error');
+    mockTicketService.updateTicket.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(updateTicket.execute(id, updates)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(updateTicket.execute(id,
+    updates,)).rejects.toThrow('Service method error');
   });
 });

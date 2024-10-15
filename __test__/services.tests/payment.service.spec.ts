@@ -6,18 +6,21 @@ import { PaymentDTO } from '../../src/presentation/dtos/payment.dto';
 
 
 const mockPaymentRepository = {
-  createPayment: jest.fn(),
-getPaymentById: jest.fn(),
-updatePayment: jest.fn(),
-deletePayment: jest.fn(),
-getPaymentsByOrderId: jest.fn(),
-getPaymentsByMethod: jest.fn(),
-getPaymentsByStatus: jest.fn(),
-getPaymentsByDateRange: jest.fn(),
+  create: jest.fn(),
+getById: jest.fn(),
+update: jest.fn(),
+delete: jest.fn(),
+getByOrderId: jest.fn(),
+getByMethod: jest.fn(),
+getByStatus: jest.fn(),
+getByDateRange: jest.fn(),
 getTotalAmountByDateRange: jest.fn(),
-getMostRecentPaymentByOrderId: jest.fn(),
-getPaymentsGroupedByMethod: jest.fn()
+getMostRecentPaymentByOrderId: jest.fn()
 };
+
+// Mock console.error
+const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
+
 
 describe('PaymentService', () => {
     let service: PaymentService;
@@ -29,7 +32,7 @@ describe('PaymentService', () => {
       providers: [
         PaymentService,
         {
-          provide: 'PaymentRepository',
+          provide: 'IPaymentRepository',
           useValue: mockPaymentRepository, // Use the mock
         },
       ],
@@ -37,8 +40,13 @@ describe('PaymentService', () => {
 
     // Retrieve instances of the service and repository
     service = module.get<PaymentService>(PaymentService);
-    paymentRepository = module.get<IPaymentRepository>('PaymentRepository');
+    paymentRepository = module.get<IPaymentRepository>('IPaymentRepository');
   });
+
+afterEach(() => {
+    jest.clearAllMocks();
+  });
+
 
     /* create payment success and failure tests */
 it('should create payment', async () => {
@@ -50,13 +58,13 @@ it('should create payment', async () => {
     
      const paymentDTO: PaymentDTO = { /* data */ };
 
-    const returnOject: Payment = { id: 1, /* others data */ }
+    const returnOject: Payment = { id: 1, /* others data */ };
     
-    mockPaymentRepository.createPayment.mockResolvedValue(returnOject);
+    mockPaymentRepository.create.mockResolvedValue(returnOject);
 
     const result = await service.createPayment(paymentDTO);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.createPayment).toHaveBeenCalledWith(paymentDTO);
+    expect(mockPaymentRepository.create).toHaveBeenCalledWith(paymentDTO);
 });
 
 it('should throw an error when create payment method fails', async () => {
@@ -64,10 +72,12 @@ it('should throw an error when create payment method fails', async () => {
      const paymentDTO: PaymentDTO = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.createPayment.mockResolvedValue(" Repository error");
+    mockPaymentRepository.create.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.createPayment(paymentDTO);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.createPayment(paymentDTO)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get payment by id success and failure tests */
@@ -80,13 +90,13 @@ it('should get payment by id', async () => {
     
      const id: number = 1;
 
-    const returnOject: Payment | null = { id: 1, /* others data */ }
+    const returnOject: Payment | null = { id: 1, /* others data */ };
     
-    mockPaymentRepository.getPaymentById.mockResolvedValue(returnOject);
+    mockPaymentRepository.getById.mockResolvedValue(returnOject);
 
     const result = await service.getPaymentById(id);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.getPaymentById).toHaveBeenCalledWith(id);
+    expect(mockPaymentRepository.getById).toHaveBeenCalledWith(id);
 });
 
 it('should throw an error when get payment by id method fails', async () => {
@@ -94,10 +104,12 @@ it('should throw an error when get payment by id method fails', async () => {
      const id: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.getPaymentById.mockResolvedValue(" Repository error");
+    mockPaymentRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getPaymentById(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getPaymentById(id)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* update payment success and failure tests */
@@ -111,14 +123,14 @@ it('should update payment', async () => {
      const id: number = 1;
      const updates: Partial<PaymentDTO> = { /* data */ };
 
-    const returnOject: Payment = { id: 1, /* others data */ }
+    const returnOject: Payment = { id: 1, /* others data */ };
     
-    mockPaymentRepository.updatePayment.mockResolvedValue(returnOject);
+    mockPaymentRepository.update.mockResolvedValue(returnOject);
 
     const result = await service.updatePayment(id,
     updates,);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.updatePayment).toHaveBeenCalledWith(id,
+    expect(mockPaymentRepository.update).toHaveBeenCalledWith(id,
     updates,);
 });
 
@@ -128,11 +140,13 @@ it('should throw an error when update payment method fails', async () => {
      const updates: Partial<PaymentDTO> = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.updatePayment.mockResolvedValue(" Repository error");
+    mockPaymentRepository.update.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.updatePayment(id,
-    updates,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.updatePayment(id,
+    updates,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* delete payment success and failure tests */
@@ -147,11 +161,11 @@ it('should delete payment', async () => {
 
     const returnOject: boolean = true
     
-    mockPaymentRepository.deletePayment.mockResolvedValue(returnOject);
+    mockPaymentRepository.delete.mockResolvedValue(returnOject);
 
     const result = await service.deletePayment(id);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.deletePayment).toHaveBeenCalledWith(id);
+    expect(mockPaymentRepository.delete).toHaveBeenCalledWith(id);
 });
 
 it('should throw an error when delete payment method fails', async () => {
@@ -159,10 +173,12 @@ it('should throw an error when delete payment method fails', async () => {
      const id: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.deletePayment.mockResolvedValue(" Repository error");
+    mockPaymentRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.deletePayment(id);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.deletePayment(id)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get payments by order id success and failure tests */
@@ -175,13 +191,13 @@ it('should get payments by order id', async () => {
     
      const orderId: number = 1;
 
-    const returnOject: Payment[] = [{ id: 1, /* others data */ }]
+    const returnOject: Payment[] = [{ id: 1, /* others data */ }];
     
-    mockPaymentRepository.getPaymentsByOrderId.mockResolvedValue(returnOject);
+    mockPaymentRepository.getByOrderId.mockResolvedValue(returnOject);
 
     const result = await service.getPaymentsByOrderId(orderId);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.getPaymentsByOrderId).toHaveBeenCalledWith(orderId);
+    expect(mockPaymentRepository.getByOrderId).toHaveBeenCalledWith(orderId);
 });
 
 it('should throw an error when get payments by order id method fails', async () => {
@@ -189,10 +205,12 @@ it('should throw an error when get payments by order id method fails', async () 
      const orderId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.getPaymentsByOrderId.mockResolvedValue(" Repository error");
+    mockPaymentRepository.getByOrderId.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getPaymentsByOrderId(orderId);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getPaymentsByOrderId(orderId)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get payments by method success and failure tests */
@@ -205,13 +223,13 @@ it('should get payments by method', async () => {
     
      const method: string = 'method';
 
-    const returnOject: Payment[] = [{ id: 1, /* others data */ }]
+    const returnOject: Payment[] = [{ id: 1, /* others data */ }];
     
-    mockPaymentRepository.getPaymentsByMethod.mockResolvedValue(returnOject);
+    mockPaymentRepository.getByMethod.mockResolvedValue(returnOject);
 
     const result = await service.getPaymentsByMethod(method);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.getPaymentsByMethod).toHaveBeenCalledWith(method);
+    expect(mockPaymentRepository.getByMethod).toHaveBeenCalledWith(method);
 });
 
 it('should throw an error when get payments by method method fails', async () => {
@@ -219,10 +237,12 @@ it('should throw an error when get payments by method method fails', async () =>
      const method: string = 'method';
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.getPaymentsByMethod.mockResolvedValue(" Repository error");
+    mockPaymentRepository.getByMethod.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getPaymentsByMethod(method);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getPaymentsByMethod(method)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get payments by status success and failure tests */
@@ -235,13 +255,13 @@ it('should get payments by status', async () => {
     
      const status: PaymentStatus = { /* data */ };
 
-    const returnOject: Payment[] = [{ id: 1, /* others data */ }]
+    const returnOject: Payment[] = [{ id: 1, /* others data */ }];
     
-    mockPaymentRepository.getPaymentsByStatus.mockResolvedValue(returnOject);
+    mockPaymentRepository.getByStatus.mockResolvedValue(returnOject);
 
     const result = await service.getPaymentsByStatus(status);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.getPaymentsByStatus).toHaveBeenCalledWith(status);
+    expect(mockPaymentRepository.getByStatus).toHaveBeenCalledWith(status);
 });
 
 it('should throw an error when get payments by status method fails', async () => {
@@ -249,10 +269,12 @@ it('should throw an error when get payments by status method fails', async () =>
      const status: PaymentStatus = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.getPaymentsByStatus.mockResolvedValue(" Repository error");
+    mockPaymentRepository.getByStatus.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getPaymentsByStatus(status);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getPaymentsByStatus(status)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get payments by date range success and failure tests */
@@ -266,14 +288,14 @@ it('should get payments by date range', async () => {
      const startDate: Date = { /* data */ };
      const endDate: Date = { /* data */ };
 
-    const returnOject: Payment[] = [{ id: 1, /* others data */ }]
+    const returnOject: Payment[] = [{ id: 1, /* others data */ }];
     
-    mockPaymentRepository.getPaymentsByDateRange.mockResolvedValue(returnOject);
+    mockPaymentRepository.getByDateRange.mockResolvedValue(returnOject);
 
     const result = await service.getPaymentsByDateRange(startDate,
     endDate,);
     expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.getPaymentsByDateRange).toHaveBeenCalledWith(startDate,
+    expect(mockPaymentRepository.getByDateRange).toHaveBeenCalledWith(startDate,
     endDate,);
 });
 
@@ -283,11 +305,13 @@ it('should throw an error when get payments by date range method fails', async (
      const endDate: Date = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.getPaymentsByDateRange.mockResolvedValue(" Repository error");
+    mockPaymentRepository.getByDateRange.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getPaymentsByDateRange(startDate,
-    endDate,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getPaymentsByDateRange(startDate,
+    endDate,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get total amount by date range success and failure tests */
@@ -318,11 +342,13 @@ it('should throw an error when get total amount by date range method fails', asy
      const endDate: Date = { /* data */ };
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.getTotalAmountByDateRange.mockResolvedValue(" Repository error");
+    mockPaymentRepository.getTotalAmountByDateRange.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getTotalAmountByDateRange(startDate,
-    endDate,);
-    expect(result).rejects.toThrow('Repository error');
+    await expect(service.getTotalAmountByDateRange(startDate,
+    endDate,)).rejects.toThrow('Repository error');
+
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 /* get most recent payment by order id success and failure tests */
@@ -335,7 +361,7 @@ it('should get most recent payment by order id', async () => {
     
      const orderId: number = 1;
 
-    const returnOject: Payment | null = { id: 1, /* others data */ }
+    const returnOject: Payment | null = { id: 1, /* others data */ };
     
     mockPaymentRepository.getMostRecentPaymentByOrderId.mockResolvedValue(returnOject);
 
@@ -349,38 +375,12 @@ it('should throw an error when get most recent payment by order id method fails'
      const orderId: number = 1;
     
     // Simulate a failure when calling the repository 
-    mockPaymentRepository.getMostRecentPaymentByOrderId.mockResolvedValue(" Repository error");
+    mockPaymentRepository.getMostRecentPaymentByOrderId.mockRejectedValue(new Error('Repository error'));
 
-    const result = await service.getMostRecentPaymentByOrderId(orderId,);
-    expect(result).rejects.toThrow('Repository error');
-});
+    await expect(service.getMostRecentPaymentByOrderId(orderId,)).rejects.toThrow('Repository error');
 
-/* get payments grouped by method success and failure tests */
-it('should get payments grouped by method', async () => {
-    /** 
-     * Tests the get payments grouped by method method.
-     * Verifies that the returned payment matches the expected one 
-     * and that the repository's getPaymentsGroupedByMethod method is called with the correct data.
-     */
-    
-
-    const returnOject: Map<string, Payment[] = string-value
-    
-    mockPaymentRepository.getPaymentsGroupedByMethod.mockResolvedValue(returnOject);
-
-    const result = await service.getPaymentsGroupedByMethod();
-    expect(result).toEqual(returnOject);
-    expect(mockPaymentRepository.getPaymentsGroupedByMethod).toHaveBeenCalledWith();
-});
-
-it('should throw an error when get payments grouped by method method fails', async () => {
-    
-    
-    // Simulate a failure when calling the repository 
-    mockPaymentRepository.getPaymentsGroupedByMethod.mockResolvedValue(" Repository error");
-
-    const result = await service.getPaymentsGroupedByMethod();
-    expect(result).rejects.toThrow('Repository error');
+    // Restore console.error
+    consoleErrorMock.mockRestore();
 });
 
 })

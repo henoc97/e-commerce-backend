@@ -51,66 +51,20 @@ export interface IProductRepository {
   findByName(name: string): Promise<Product[]>;
 
   /**
+   * Finds products by their vendor.
+   * @param vendor - The vendor of the product to search for.
+   * @returns A promise that resolves to an array of Product entities matching the vendor.
+   * @throws Error if retrieval fails.
+   */
+  findByVendor(vendorId: number): Promise<Product[]>;
+
+  /**
    * Finds products within a specific category.
    * @param categoryId - The unique ID of the category.
    * @returns A promise that resolves to an array of Product entities in the category.
    * @throws Error if retrieval fails.
    */
   findByCategory(categoryId: number): Promise<Product[]>;
-
-  /**
-   * Associates a promotion with a product.
-   * @param productId - The unique ID of the product.
-   * @param promotion - The promotion to associate with the product.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if association fails.
-   */
-  addPromotion(productId: number, promotion: Promotion): Promise<Product>;
-
-  /**
-   * Disassociates a promotion from a product.
-   * @param productId - The unique ID of the product.
-   * @param promotionId - The unique ID of the promotion to disassociate.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if disassociation fails.
-   */
-  removePromotion(productId: number, promotionId: number): Promise<Product>;
-
-  /**
-   * Adds an image to a product.
-   * @param productId - The unique ID of the product.
-   * @param image - The image to add.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if addition fails.
-   */
-  addImage(productId: number, image: ProductImage): Promise<Product>;
-
-  /**
-   * Removes an image from a product.
-   * @param productId - The unique ID of the product.
-   * @param imageId - The unique ID of the image to remove.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if removal fails.
-   */
-  removeImage(productId: number, imageId: number): Promise<Product>;
-
-  /**
-   * Adds a variant to a product.
-   * @param productId - The unique ID of the product.
-   * @param variant - The variant to add.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if addition fails.
-   */
-  addVariant(productId: number, variant: ProductVariant): Promise<Product>;
-
-  /**
-   * Removes a variant from a product.
-   * @param productId - The unique ID of the product.
-   * @param variantId - The unique ID of the variant to remove.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if removal fails.
-   */
-  removeVariant(productId: number, variantId: number): Promise<Product>;
 
   /**
    * Updates the stock quantity of a product.
@@ -120,32 +74,6 @@ export interface IProductRepository {
    * @throws Error if update fails.
    */
   updateStock(productId: number, quantity: number): Promise<Product>;
-
-  /**
-   * Adds a review to a product.
-   * @param productId - The unique ID of the product.
-   * @param review - The review to add.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if addition fails.
-   */
-  addReview(productId: number, review: Review): Promise<Product>;
-
-  /**
-   * Retrieves all reviews for a product.
-   * @param productId - The unique ID of the product.
-   * @returns A promise that resolves to an array of Review entities.
-   * @throws Error if retrieval fails.
-   */
-  getReviews(productId: number): Promise<Review[]>;
-
-  /**
-   * Adds a cart item for a product.
-   * @param productId - The unique ID of the product.
-   * @param cartItem - The cart item to add.
-   * @returns A promise that resolves to the updated Product entity.
-   * @throws Error if addition fails.
-   */
-  addCartItem(productId: number, cartItem: CartItem): Promise<Product>;
 
   /**
    * Finds all products within a price range.
@@ -161,5 +89,5 @@ export interface IProductRepository {
    * @returns A promise that resolves to an array of featured Product entities.
    * @throws Error if retrieval fails.
    */
-  getFeaturedProducts(): Promise<Product[]>;
+  // getFeaturedProducts(): Promise<Product[]>;
 }

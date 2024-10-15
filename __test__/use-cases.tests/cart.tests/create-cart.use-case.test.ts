@@ -19,10 +19,8 @@ describe('CreateCart', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const cartDTO: CartDTO = {
-    /* data */
-  };
+  
+     const cartDTO: CartDTO = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockCartDTO: CartDTO = {
@@ -84,11 +82,9 @@ describe('CreateCart', () => {
    */
   it('should throw an error when createCart execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockCartService.createCart.mockRejectedValue('Service method error');
+    mockCartService.createCart.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(createCart.execute(cartDTO)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(createCart.execute(cartDTO)).rejects.toThrow('Service method error');
   });
 });

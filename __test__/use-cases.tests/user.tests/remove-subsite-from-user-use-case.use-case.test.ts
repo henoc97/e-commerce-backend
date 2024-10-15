@@ -19,9 +19,9 @@ describe('RemoveSubsiteFromUserUseCase', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const userId: number = 1;
-  const SubsiteId: number = 1;
+  
+     const userId: number = 1;
+     const SubsiteId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockUserDTO: UserDTO = {
@@ -43,9 +43,7 @@ describe('RemoveSubsiteFromUserUseCase', () => {
       ],
     }).compile();
 
-    removeSubsiteFromUserUseCase = module.get<RemoveSubsiteFromUserUseCase>(
-      RemoveSubsiteFromUserUseCase,
-    );
+    removeSubsiteFromUserUseCase = module.get<RemoveSubsiteFromUserUseCase>(RemoveSubsiteFromUserUseCase);
     userService = module.get<UserService>(UserService);
   });
 
@@ -67,16 +65,10 @@ describe('RemoveSubsiteFromUserUseCase', () => {
     (toUserDTO as jest.Mock).mockReturnValue(mockUserDTO);
 
     // Execute the use case with provided parameters
-    const result = await removeSubsiteFromUserUseCase.execute(
-      userId,
-      SubsiteId,
-    );
+    const result = await removeSubsiteFromUserUseCase.execute(userId, SubsiteId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockUserService.removeSubsiteFromUserUseCase).toHaveBeenCalledWith(
-      userId,
-      SubsiteId,
-    );
+    expect(mockUserService.removeSubsiteFromUserUseCase).toHaveBeenCalledWith(userId, SubsiteId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserDTO).toHaveBeenCalledWith(mockUserDTO);
@@ -91,13 +83,9 @@ describe('RemoveSubsiteFromUserUseCase', () => {
    */
   it('should throw an error when removeSubsiteFromUserUseCase execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserService.removeSubsiteFromUserUseCase.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserService.removeSubsiteFromUserUseCase.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      removeSubsiteFromUserUseCase.execute(userId, SubsiteId),
-    ).rejects.toThrow('Service method error');
+    await expect(removeSubsiteFromUserUseCase.execute(userId, SubsiteId)).rejects.toThrow('Service method error');
   });
 });

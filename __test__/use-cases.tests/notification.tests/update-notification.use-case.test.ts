@@ -19,11 +19,9 @@ describe('UpdateNotification', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const notificationId: number = 1;
-  const updates: Partial<NotificationDTO> = {
-    /* data */
-  };
+  
+     const notificationId: number = 1;
+     const updates: Partial<NotificationDTO> = { /* data */ };
 
   // Mock version of  to be used as input and expected output
   const mockNotificationDTO: NotificationDTO = {
@@ -63,19 +61,16 @@ describe('UpdateNotification', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockNotificationService.updateNotification.mockResolvedValue(
-      mockNotificationDTO,
-    );
+    mockNotificationService.updateNotification.mockResolvedValue(mockNotificationDTO);
     (toNotificationDTO as jest.Mock).mockReturnValue(mockNotificationDTO);
 
     // Execute the use case with provided parameters
-    const result = await updateNotification.execute(notificationId, updates);
+    const result = await updateNotification.execute(notificationId,
+    updates,);
 
     // Verify that the service was called with the expected arguments
-    expect(mockNotificationService.updateNotification).toHaveBeenCalledWith(
-      notificationId,
-      updates,
-    );
+    expect(mockNotificationService.updateNotification).toHaveBeenCalledWith(notificationId,
+    updates,);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toNotificationDTO).toHaveBeenCalledWith(mockNotificationDTO);
@@ -90,13 +85,10 @@ describe('UpdateNotification', () => {
    */
   it('should throw an error when updateNotification execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockNotificationService.updateNotification.mockRejectedValue(
-      'Service method error',
-    );
+    mockNotificationService.updateNotification.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      updateNotification.execute(notificationId, updates),
-    ).rejects.toThrow('Service method error');
+    await expect(updateNotification.execute(notificationId,
+    updates,)).rejects.toThrow('Service method error');
   });
 });

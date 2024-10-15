@@ -19,8 +19,8 @@ describe('FetchUserProfilesByGender', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const gender: string = 'gender';
+  
+     const gender: string = 'gender';
 
   // Mock version of  to be used as input and expected output
   const mockUserProfileDTO: UserProfileDTO = {
@@ -42,9 +42,7 @@ describe('FetchUserProfilesByGender', () => {
       ],
     }).compile();
 
-    fetchUserProfilesByGender = module.get<FetchUserProfilesByGender>(
-      FetchUserProfilesByGender,
-    );
+    fetchUserProfilesByGender = module.get<FetchUserProfilesByGender>(FetchUserProfilesByGender);
     userProfileService = module.get<UserProfileService>(UserProfileService);
   });
 
@@ -62,18 +60,14 @@ describe('FetchUserProfilesByGender', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockUserProfileService.fetchUserProfilesByGender.mockResolvedValue(
-      mockUserProfileDTO,
-    );
+    mockUserProfileService.fetchUserProfilesByGender.mockResolvedValue(mockUserProfileDTO);
     (toUserProfileDTO as jest.Mock).mockReturnValue(mockUserProfileDTO);
 
     // Execute the use case with provided parameters
     const result = await fetchUserProfilesByGender.execute(gender);
 
     // Verify that the service was called with the expected arguments
-    expect(
-      mockUserProfileService.fetchUserProfilesByGender,
-    ).toHaveBeenCalledWith(gender);
+    expect(mockUserProfileService.fetchUserProfilesByGender).toHaveBeenCalledWith(gender);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toUserProfileDTO).toHaveBeenCalledWith(mockUserProfileDTO);
@@ -88,13 +82,9 @@ describe('FetchUserProfilesByGender', () => {
    */
   it('should throw an error when fetchUserProfilesByGender execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockUserProfileService.fetchUserProfilesByGender.mockRejectedValue(
-      'Service method error',
-    );
+    mockUserProfileService.fetchUserProfilesByGender.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(fetchUserProfilesByGender.execute(gender)).rejects.toThrow(
-      'Service method error',
-    );
+    await expect(fetchUserProfilesByGender.execute(gender)).rejects.toThrow('Service method error');
   });
 });

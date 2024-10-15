@@ -19,7 +19,7 @@ export class CartItem {
   /**
    * The Cart to which this item belongs.
    */
-  cart: Cart;
+  cart?: Cart;
 
   /**
    * Unique identifier for the Product associated with this CartItem.
@@ -29,7 +29,7 @@ export class CartItem {
   /**
    * The Product associated with this CartItem.
    */
-  product: Product;
+  product?: Product;
 
   /**
    * Quantity of the Product in the CartItem.
@@ -48,10 +48,10 @@ export class CartItem {
   constructor(
     id: number,
     cartId: number,
-    cart: Cart,
     productId: number,
-    product: Product,
     quantity: number,
+    cart?: Cart,
+    product?: Product,
   ) {
     this.id = id;
     this.cartId = cartId;

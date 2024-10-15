@@ -19,9 +19,9 @@ describe('ApplyPromotionToProduct', () => {
   };
 
   // Define parameters for the use case to be used during testing
-
-  const productId: number = 1;
-  const promotionId: number = 1;
+  
+     const productId: number = 1;
+     const promotionId: number = 1;
 
   // Mock version of  to be used as input and expected output
   const mockPromotionDTO: PromotionDTO = {
@@ -43,9 +43,7 @@ describe('ApplyPromotionToProduct', () => {
       ],
     }).compile();
 
-    applyPromotionToProduct = module.get<ApplyPromotionToProduct>(
-      ApplyPromotionToProduct,
-    );
+    applyPromotionToProduct = module.get<ApplyPromotionToProduct>(ApplyPromotionToProduct);
     promotionService = module.get<PromotionService>(PromotionService);
   });
 
@@ -63,22 +61,14 @@ describe('ApplyPromotionToProduct', () => {
    */
   it('should create and return an address DTO', async () => {
     // Mock service returning the expected DTO
-    mockPromotionService.applyPromotionToProduct.mockResolvedValue(
-      mockPromotionDTO,
-    );
+    mockPromotionService.applyPromotionToProduct.mockResolvedValue(mockPromotionDTO);
     (toPromotionDTO as jest.Mock).mockReturnValue(mockPromotionDTO);
 
     // Execute the use case with provided parameters
-    const result = await applyPromotionToProduct.execute(
-      productId,
-      promotionId,
-    );
+    const result = await applyPromotionToProduct.execute(productId, promotionId);
 
     // Verify that the service was called with the expected arguments
-    expect(mockPromotionService.applyPromotionToProduct).toHaveBeenCalledWith(
-      productId,
-      promotionId,
-    );
+    expect(mockPromotionService.applyPromotionToProduct).toHaveBeenCalledWith(productId, promotionId);
 
     // Verify that the transformation to DTO was called with the service result
     expect(toPromotionDTO).toHaveBeenCalledWith(mockPromotionDTO);
@@ -93,13 +83,9 @@ describe('ApplyPromotionToProduct', () => {
    */
   it('should throw an error when applyPromotionToProduct execute method fails', async () => {
     // Simulate a failure when calling the service method
-    mockPromotionService.applyPromotionToProduct.mockRejectedValue(
-      'Service method error',
-    );
+    mockPromotionService.applyPromotionToProduct.mockRejectedValue("Service method error");
 
     // Verify that the use case throws an error when service method fails
-    await expect(
-      applyPromotionToProduct.execute(productId, promotionId),
-    ).rejects.toThrow('Service method error');
+    await expect(applyPromotionToProduct.execute(productId, promotionId)).rejects.toThrow('Service method error');
   });
 });
