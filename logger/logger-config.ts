@@ -7,17 +7,14 @@ const logFormat = winston.format.combine(
   winston.format.printf(({ timestamp, level, message, ...meta }) => {
     // Ajoutez des informations de contexte ici si nécessaire
     return `${timestamp} [${level}]: ${message} ${meta && Object.keys(meta).length ? JSON.stringify(meta) : ''}`;
-  })
+  }),
 );
 
 export const loggerConfig = WinstonModule.forRoot({
   transports: [
     // Console logging (for development purposes)
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        logFormat,
-      ),
+      format: winston.format.combine(winston.format.colorize(), logFormat),
       level: 'debug', // Log everything to the console in development mode
     }),
 

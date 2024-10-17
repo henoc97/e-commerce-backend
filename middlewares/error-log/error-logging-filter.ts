@@ -9,13 +9,19 @@ import {
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { Response, Request } from 'express';
+import * as Sentry from '@sentry/node';
+import { WithSentry } from '@sentry/nestjs';
+import { SentryInit } from 'src/infrastructure/external-servicies/sentry/instrument';
 
 @Catch()
 export class ErrorLoggingFilter implements ExceptionFilter {
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER)
     private readonly logger: Logger,
-  ) {}
+  ) {
+    // Initialize Sentry
+    SentryInit;
+  }
 
   /**
    * Catch any exception and log it properly using Winston.
@@ -23,6 +29,7 @@ export class ErrorLoggingFilter implements ExceptionFilter {
    * @param exception Caught exception
    * @param host Provides access to request/response and context data
    */
+  @WithSentry()
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -51,6 +58,9 @@ export class ErrorLoggingFilter implements ExceptionFilter {
       path: request.url,
       timestamp: errorResponse.timestamp,
     });
+
+    // Capture the exception with Sentry
+    Sentry.captureException(exception);
 
     // Send a generic response to the client
     response.status(status).json({

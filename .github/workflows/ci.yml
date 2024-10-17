@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      SENTRY_AUTH_TOKEN: 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
+
     steps:
       - uses: actions/checkout@v2
         name: Checkout code

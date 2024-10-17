@@ -78,4 +78,3 @@ type Mutation {
   addRefundToOrder(orderId: ID!, refundId: String!): Order
   updateOrderStatus(orderId: ID!, status: OrderStatus!): Order
 }
-

@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "nest build && npm run sentry:sourcemaps",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:unit": "jest --config ./__test__/jest-unit.json",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org none-wyt --project node-nestjs sentry-artifacts && sentry-cli sourcemaps upload --org none-wyt --project node-nestjs sentry-artifacts"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.6",
@@ -31,9 +32,14 @@
     "@nestjs/platform-express": "^10.4.4",
     "@paypal/checkout-server-sdk": "^1.0.3",
     "@prisma/client": "^5.20.0",
+    "@sentry/cli": "^2.37.0",
+    "@sentry/nestjs": "^8.34.0",
+    "@sentry/node": "^8.34.0",
+    "@sentry/profiling-node": "^8.34.0",
     "apollo-server": "^3.13.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "cloudinary": "^2.5.1",
     "graphql": "^16.9.0",
     "jwks-rsa": "^3.1.0",
     "nest-winston": "^1.9.7",

@@ -4,9 +4,11 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { resolvers } from './resolver.index';
 import { AuthResolver } from './resolvers/auth.resolver';
+import { SentryModule } from '@sentry/nestjs/setup';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: join(
         process.cwd(),
