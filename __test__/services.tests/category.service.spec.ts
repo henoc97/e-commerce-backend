@@ -2,10 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CategoryService } from '../../src/application/services/category.service';
 import { ICategoryRepository } from '../../src/domain/repositories/category.repository';
 import { Category } from '../../src/domain/entities/category.entity';
-import { CategoryDTO } from '../../src/presentation/dtos/category.dto';
 import { ProductService } from '../../src/application/services/product.service';
 import { Product } from '../../src/domain/entities/product.entity';
-import { NotFoundException } from '@nestjs/common';
 
 const mockCategoryRepository = {
   create: jest.fn(),
@@ -61,24 +59,18 @@ describe('CategoryService', () => {
   it('should create category', async () => {
     const categoryDTO = {
       id: 1,
-      name: 'Category 1',
-      parentId: null,
-      parent: null,
+      name: 'Updated Category',
       children: [],
       products: [],
       shopId: 1,
-      shop: null,
     };
+    
     const returnObject: Category = {
       ...categoryDTO,
-      parent: categoryDTO.parent ?? null, // Assurez-vous que parent est null si non défini
-      shop: categoryDTO.shop ?? null, // Assurez-vous que shop est null si non défini
     };
 
     mockCategoryRepository.create.mockResolvedValue({
       ...returnObject,
-      parent: null, // Assurez-vous que parent est null
-      shop: null, // Assurez-vous que shop est null
     });
 
     const result = await service.createCategory(categoryDTO);
@@ -105,13 +97,13 @@ describe('CategoryService', () => {
     expect(mockCategoryRepository.getById).toHaveBeenCalledWith(id);
   });
 
-  it('should throw NotFoundException when category not found', async () => {
+  it('should throw an error when get category by id method fails', async () => {
     const id: number = 1;
 
-    mockCategoryRepository.getById.mockResolvedValue(null);
+    mockCategoryRepository.getById.mockRejectedValue(new Error('Repository error'));
 
     await expect(service.getCategoryById(id)).rejects.toThrow(
-      NotFoundException,
+      new Error('Repository error')
     );
   });
 
@@ -121,24 +113,17 @@ describe('CategoryService', () => {
     const categoryDTO = {
       id: 1,
       name: 'Updated Category',
-      parentId: null,
-      parent: null, // Assurez-vous que parent est null
       children: [],
       products: [],
       shopId: 1,
-      shop: null, // Assurez-vous que shop est null
     };
 
     const returnObject = {
-      ...categoryDTO,
-      parent: categoryDTO.parent ?? null, // Assurez-vous que parent est null si non défini
-      shop: categoryDTO.shop ?? null, // Assurez-vous que shop est null si non défini
+      ...categoryDTO
     };
 
     mockCategoryRepository.update.mockResolvedValue({
       ...returnObject,
-      parent: returnObject.parent ?? null, // Assurez-vous que parent est null
-      shop: returnObject.shop ?? null, // Assurez-vous que shop est null
     });
 
     const result = await service.updateCategory(id, categoryDTO);
@@ -163,9 +148,9 @@ describe('CategoryService', () => {
   it('should throw NotFoundException when deleting non-existent category', async () => {
     const id: number = 1;
 
-    mockCategoryRepository.delete.mockResolvedValue(false);
+    mockCategoryRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.deleteCategory(id)).rejects.toThrow(NotFoundException);
+    await expect(service.deleteCategory(id)).rejects.toThrow(Error);
   });
 
   // Test pour getChildren

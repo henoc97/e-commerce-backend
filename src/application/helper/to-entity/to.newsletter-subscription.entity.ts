@@ -14,6 +14,8 @@ export function fromNewsletterSubscriptionDTO(
   return new NewsletterSubscription(
     subscriptionDTO.id,
     subscriptionDTO.email,
+    subscriptionDTO.shopId,
+    subscriptionDTO.isActive,
     subscriptionDTO.subscribedAt,
   );
 }

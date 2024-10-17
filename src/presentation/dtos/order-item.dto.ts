@@ -58,6 +58,13 @@ export class OrderItemDTO {
   price: number;
 
   /**
+   * Date and time of order-item creation.
+   * Optional for input, included for output to provide context.
+   */
+  @IsOptional()
+  createdAt?: Date;
+
+  /**
    * Creates a new OrderItemDTO instance.
    * @param orderId - Unique identifier for the Order to which this item belongs.
    * @param productId - Unique identifier for the Product that is included in this order item.
@@ -66,6 +73,7 @@ export class OrderItemDTO {
    * @param id - Unique identifier for the OrderItem (optional).
    * @param order - The Order to which this item belongs (optional).
    * @param product - The Product that is included in this order item (optional).
+   * @param createdAt - Date and time of order-item creation (optional).
    */
   constructor(
     orderId: number,
@@ -75,6 +83,7 @@ export class OrderItemDTO {
     id?: number,
     order?: OrderDTO,
     product?: ProductDTO,
+    createdAt?: Date,
   ) {
     this.id = id;
     this.orderId = orderId;
@@ -83,5 +92,6 @@ export class OrderItemDTO {
     this.price = price;
     this.order = order;
     this.product = product;
+    this.createdAt = createdAt;
   }
 }

@@ -19,7 +19,7 @@ export class Notification {
   /**
    * The user associated with the notification.
    */
-  user: User;
+  user?: User;
 
   /**
    * The type of the notification (e.g., INFO, WARNING, ERROR).
@@ -46,18 +46,18 @@ export class Notification {
    * Creates a new Notification instance.
    * @param id - Unique identifier for the notification.
    * @param userId - Unique identifier for the user receiving the notification.
-   * @param user - The user associated with the notification.
    * @param type - The type of the notification.
    * @param content - The content of the notification.
+   * @param user - The user associated with the notification.
    * @param read - The content is read or not.
    * @param sentAt - (Optional) Date and time of notification creation.
    */
   constructor(
     id: number,
     userId: number,
-    user: User,
     type: NotificationType,
     content: string,
+    user?: User,
     read: boolean = false,
     sentAt: Date = new Date(),
   ) {

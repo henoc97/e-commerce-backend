@@ -14,7 +14,7 @@ export class OrderItemService {
    * @param repository - The repository to interact with the OrderItem data.
    */
   constructor(
-    @Inject('ICartItemRepository')
+    @Inject('IOrderItemRepository')
     private readonly repository: IOrderItemRepository) {}
 
   /**

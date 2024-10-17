@@ -14,10 +14,10 @@ export function fromOrderItemDTO(
   return new OrderItem(
     orderItemDTO.id,
     orderItemDTO.orderId,
-    orderItemDTO.order ? fromOrderDTO(orderItemDTO.order) : undefined,
     orderItemDTO.productId,
-    orderItemDTO.product ? fromProductDTO(orderItemDTO.product) : undefined,
     orderItemDTO.quantity,
     orderItemDTO.price,
+    orderItemDTO.order ? fromOrderDTO(orderItemDTO.order) : undefined,
+    orderItemDTO.product ? fromProductDTO(orderItemDTO.product) : undefined,
   );
 }

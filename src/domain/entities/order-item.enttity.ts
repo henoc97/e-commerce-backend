@@ -19,7 +19,7 @@ export class OrderItem {
   /**
    * The Order to which this item belongs.
    */
-  order: Order;
+  order?: Order;
 
   /**
    * Unique identifier for the Product that is included in this order item.
@@ -29,7 +29,7 @@ export class OrderItem {
   /**
    * The Product that is included in this order item.
    */
-  product: Product;
+  product?: Product;
 
   /**
    * Quantity of the Product included in this order item.
@@ -50,9 +50,9 @@ export class OrderItem {
    * Creates a new OrderItem instance.
    * @param id - Unique identifier for the OrderItem.
    * @param orderId - Unique identifier for the Order to which this item belongs.
-   * @param order - The Order to which this item belongs.
+   * @param order - (Optional) The Order to which this item belongs.
    * @param productId - Unique identifier for the Product that is included in this order item.
-   * @param product - The Product that is included in this order item.
+   * @param product - (Optional) The Product that is included in this order item.
    * @param quantity - Quantity of the Product included in this order item.
    * @param price - Price of the Product at the time of the order.
    * @param createdAt - (Optional) Date and time of order-item creation.
@@ -60,11 +60,11 @@ export class OrderItem {
   constructor(
     id: number,
     orderId: number,
-    order: Order,
     productId: number,
-    product: Product,
     quantity: number,
     price: number,
+    order?: Order,
+    product?: Product,
     createdAt: Date = new Date(),
   ) {
     this.id = id;

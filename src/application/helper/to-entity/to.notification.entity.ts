@@ -13,9 +13,9 @@ export function fromNotificationDTO(
   return new Notification(
     notificationDTO.id,
     notificationDTO.userId,
-    notificationDTO.user ? fromUserDTO(notificationDTO.user) : undefined,
     notificationDTO.type,
     notificationDTO.content,
+    notificationDTO.user ? fromUserDTO(notificationDTO.user) : undefined,
     notificationDTO.read,
     notificationDTO.sentAt,
   );
