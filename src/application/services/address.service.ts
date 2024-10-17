@@ -25,12 +25,8 @@ export class AddressService {
    * @returns A promise that resolves to the created Address entity.
    */
   async createAddress(addressDTO: AddressDTO): Promise<Address> {
-    try {
-      const address = fromAddressDTO(addressDTO);
-      return await this.addressRepository.create(address);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to create address');
-    }
+    const address = fromAddressDTO(addressDTO);
+    return await this.addressRepository.create(address);
   }
 
   /**
@@ -39,11 +35,7 @@ export class AddressService {
    * @returns A promise that resolves to the Address entity if found, otherwise null.
    */
   async getAddressById(id: number): Promise<Address | null> {
-    try {
-      return await this.addressRepository.getById(id);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to get address by id');
-    }
+    return await this.addressRepository.getById(id);
   }
 
   /**
@@ -56,12 +48,8 @@ export class AddressService {
     id: number,
     data: Partial<AddressDTO>,
   ): Promise<Address> {
-    try {
-      const updateData = fromAddressDTO(data);
-      return await this.addressRepository.updateById(id, updateData);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to update address');
-    }
+    const updateData = fromAddressDTO(data);
+    return await this.addressRepository.updateById(id, updateData);
   }
 
   /**
@@ -70,11 +58,7 @@ export class AddressService {
    * @returns A promise that resolves to true if the deletion was successful, otherwise false.
    */
   async deleteAddressById(id: number): Promise<boolean> {
-    try {
-      return await this.addressRepository.deleteById(id);
-    } catch (error) {
-      throw new InternalServerErrorException('Failed to delete address');
-    }
+    return await this.addressRepository.deleteById(id);
   }
 
   /**

@@ -52,6 +52,8 @@ enum TicketStatus {
   OPEN
   IN_PROGRESS
   RESOLVED
+  HIGH
+  CLOSED
 }
 
 """

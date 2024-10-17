@@ -41,6 +41,12 @@ export class VendorResolver {
     private readonly vendorListUseCase: VendorList,
   ) {}
 
+  /**
+   * Adds a product to a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @param productDTO - The product data transfer object.
+   * @returns The updated vendor data transfer object or null.
+   */
   @Mutation(() => VendorDTO, { nullable: true })
   async addProductToVendor(
     @Args('vendorId') vendorId: number,
@@ -49,6 +55,11 @@ export class VendorResolver {
     return this.addProductToVendorUseCase.execute(vendorId, productDTO);
   }
 
+  /**
+   * Creates a new vendor.
+   * @param vendorDTO - The vendor data transfer object.
+   * @returns The created vendor data transfer object or null.
+   */
   @Mutation(() => VendorDTO, { nullable: true })
   async createVendor(
     @Args('vendorDTO') vendorDTO: VendorDTO,
@@ -56,51 +67,101 @@ export class VendorResolver {
     return this.createVendorUseCase.execute(vendorDTO);
   }
 
+  /**
+   * Deletes a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @returns True if the vendor was deleted, otherwise false.
+   */
   @Mutation(() => Boolean)
   async deleteVendor(@Args('vendorId') vendorId: number): Promise<boolean> {
     return this.deleteVendorUseCase.execute(vendorId);
   }
 
+  /**
+   * Finds a vendor by ID.
+   * @param vendorId - The ID of the vendor.
+   * @returns The vendor data transfer object or null.
+   */
   @Query(() => VendorDTO, { nullable: true })
   async findVendorById(@Args('vendorId') vendorId: number): Promise<VendorDTO | null> {
     return this.findVendorByIdUseCase.execute(vendorId);
   }
 
+  /**
+   * Finds vendors by store name.
+   * @param storeName - The name of the store.
+   * @returns A list of vendor data transfer objects.
+   */
   @Query(() => [VendorDTO])
   async findVendorsByStoreName(@Args('storeName') storeName: string): Promise<VendorDTO[]> {
     return this.findVendorsByStoreNameUseCase.execute(storeName);
   }
 
+  /**
+   * Finds vendors by subscription ID.
+   * @param subscriptionId - The ID of the subscription.
+   * @returns A list of vendor data transfer objects.
+   */
   @Query(() => [VendorDTO])
   async findVendorsBySubscription(@Args('subscriptionId') subscriptionId: number): Promise<VendorDTO[]> {
     return this.findVendorsBySubscriptionUseCase.execute(subscriptionId);
   }
 
+  /**
+   * Finds vendors by user ID.
+   * @param userId - The ID of the user.
+   * @returns A list of vendor data transfer objects.
+   */
   @Query(() => [VendorDTO])
   async findVendorsByUser(@Args('userId') userId: number): Promise<VendorDTO[]> {
     return this.findVendorsByUserUseCase.execute(userId);
   }
 
+  /**
+   * Gets the latest vendor.
+   * @returns The latest vendor data transfer object or null.
+   */
   @Query(() => VendorDTO, { nullable: true })
   async getLatestVendor(): Promise<VendorDTO | null> {
     return this.getLatestVendorUseCase.execute();
   }
 
+  /**
+   * Gets products of a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @returns A list of product data transfer objects.
+   */
   @Query(() => [ProductDTO])
   async getVendorProducts(@Args('vendorId') vendorId: number): Promise<ProductDTO[]> {
     return this.getVendorProductsUseCase.execute(vendorId);
   }
 
+  /**
+   * Gets the shop of a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @returns The shop data transfer object or null.
+   */
   @Query(() => ShopDTO, { nullable: true })
   async getVendorShop(@Args('vendorId') vendorId: number): Promise<ShopDTO | null> {
     return this.getVendorShopUseCase.execute(vendorId);
   }
 
+  /**
+   * Gets the subscription of a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @returns The subscription data transfer object or null.
+   */
   @Query(() => SubscriptionDTO, { nullable: true })
   async getVendorSubscription(@Args('vendorId') vendorId: number): Promise<SubscriptionDTO | null> {
     return this.getVendorSubscriptionUseCase.execute(vendorId);
   }
 
+  /**
+   * Removes a product from a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @param productId - The ID of the product.
+   * @returns The updated vendor data transfer object or null.
+   */
   @Mutation(() => VendorDTO, { nullable: true })
   async removeProductFromVendor(
     @Args('vendorId') vendorId: number,
@@ -109,6 +170,12 @@ export class VendorResolver {
     return this.removeProductFromVendorUseCase.execute(vendorId, productId);
   }
 
+  /**
+   * Sets the shop for a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @param shopDTO - The shop data transfer object.
+   * @returns The updated vendor data transfer object or null.
+   */
   @Mutation(() => VendorDTO, { nullable: true })
   async setVendorShop(
     @Args('vendorId') vendorId: number,
@@ -117,6 +184,12 @@ export class VendorResolver {
     return this.setVendorShopUseCase.execute(vendorId, shopDTO);
   }
 
+  /**
+   * Sets the subscription for a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @param subscriptionDTO - The subscription data transfer object.
+   * @returns The updated vendor data transfer object or null.
+   */
   @Mutation(() => VendorDTO, { nullable: true })
   async setVendorSubscription(
     @Args('vendorId') vendorId: number,
@@ -125,6 +198,12 @@ export class VendorResolver {
     return this.setVendorSubscriptionUseCase.execute(vendorId, subscriptionDTO);
   }
 
+  /**
+   * Updates a vendor.
+   * @param vendorId - The ID of the vendor.
+   * @param vendorDTO - The partial vendor data transfer object.
+   * @returns The updated vendor data transfer object or null.
+   */
   @Mutation(() => VendorDTO, { nullable: true })
   async updateVendor(
     @Args('vendorId') vendorId: number,
@@ -133,6 +212,10 @@ export class VendorResolver {
     return this.updateVendorUseCase.execute(vendorId, vendorDTO);
   }
 
+  /**
+   * Retrieves a list of all vendors.
+   * @returns A list of vendor data transfer objects.
+   */
   @Query(() => [VendorDTO])
   async vendorList(): Promise<VendorDTO[]> {
     return this.vendorListUseCase.execute();

@@ -9,6 +9,7 @@ import { ListAddressesByCountry } from 'src/application/use-cases/address.use-ca
 import { ListAddressesByState } from 'src/application/use-cases/address.use-cases/list-addresses-by-state.use-case';
 import { ListAddressesByPostalCode } from 'src/application/use-cases/address.use-cases/list-addresses-by-postal-code.use-case';
 import { ListAddressesByUser } from 'src/application/use-cases/address.use-cases/list-addresses-by-user.use-case';
+import { IResolvers } from '@graphql-tools/utils'; // Assurez-vous d'importer IResolvers
 
 @Resolver(AddressDTO)
 export class AddressResolver {

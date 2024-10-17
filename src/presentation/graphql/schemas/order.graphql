@@ -1,107 +1,81 @@
-# order-item.graphql
+"""
+Represents the status of an order.
+"""
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
 
 """
-Represents an item in an order.
-Contains information about the product, quantity, and price of the item in the order.
+Represents an order placed by a user.
 """
-type OrderItem {
-  """
-  Unique identifier for the OrderItem.
-  """
+type Order {
   id: ID!
-
-  """
-  Unique identifier for the Order to which this item belongs.
-  """
-  orderId: ID!
-
-  """
-  The Order to which this item belongs.
-  """
-  order: Order!
-
-  """
-  Unique identifier for the Product that is included in this order item.
-  """
-  productId: ID!
-
-  """
-  The Product that is included in this order item.
-  """
-  product: Product!
-
-  """
-  Quantity of the Product included in this order item.
-  """
-  quantity: Int!
-
-  """
-  Price of the Product at the time of the order.
-  """
-  price: Float!
+  userId: ID!
+  shopId: ID!
+  status: OrderStatus!
+  totalAmount: Float!
+  paymentId: String
+  trackingNumber: String
+  createdAt: String
+  updatedAt: String
+  items: [OrderItem]
+  payments: [Payment]
+  refunds: [Refund]
 }
 
 """
-Queries related to OrderItems.
+Input type for creating a new order.
 """
-type Query {
-  """
-  Retrieves a list of all OrderItems.
-  """
-  orderItems: [OrderItem!]!
-
-  """
-  Retrieves a single OrderItem by its ID.
-  """
-  orderItem(id: ID!): OrderItem
-
-  """
-  Retrieves OrderItems for a specific Order by order ID.
-  """
-  orderItemsByOrder(orderId: ID!): [OrderItem!]!
+input CreateOrderInput {
+  userId: ID!
+  shopId: ID!
+  status: OrderStatus!
+  totalAmount: Float!
+  items: [OrderItemInput]
 }
 
 """
-Mutations related to OrderItems.
+Input type for updating an order.
 """
-type Mutation {
-  """
-  Creates a new OrderItem.
-  """
-  createOrderItem(input: OrderItemInput!): OrderItem!
-
-  """
-  Updates an existing OrderItem by its ID.
-  """
-  updateOrderItem(id: ID!, quantity: Int, price: Float): OrderItem!
-
-  """
-  Deletes an OrderItem by its ID.
-  """
-  deleteOrderItem(id: ID!): Boolean!
+input UpdateOrderInput {
+  status: OrderStatus
+  totalAmount: Float
+  items: [OrderItemInput]
 }
 
 """
-Input type for creating and updating OrderItems.
+Input type for an order item.
 """
 input OrderItemInput {
-  """
-  Unique identifier for the Order to which this item belongs.
-  """
-  orderId: ID!
-
-  """
-  Unique identifier for the Product that is included in this order item.
-  """
   productId: ID!
-
-  """
-  Quantity of the Product included in this order item.
-  """
   quantity: Int!
-
-  """
-  Price of the Product at the time of the order.
-  """
   price: Float!
 }
+
+"""
+Queries related to orders.
+"""
+type Query {
+  getOrderById(id: ID!): Order
+  getOrdersByUserId(userId: ID!): [Order]
+  getOrdersByShopId(shopId: ID!): [Order]
+  getOrdersByStatus(status: OrderStatus!): [Order]
+  getOrdersByDateRange(startDate: String!, endDate: String!): [Order]
+  getOrderByTrackingNumber(trackingNumber: String!): Order
+}
+
+"""
+Mutations related to orders.
+"""
+type Mutation {
+  createOrder(input: CreateOrderInput!): Order
+  updateOrder(id: ID!, input: UpdateOrderInput!): Order
+  deleteOrder(id: ID!): Boolean
+  addPaymentToOrder(orderId: ID!, paymentId: String!): Order
+  addRefundToOrder(orderId: ID!, refundId: String!): Order
+  updateOrderStatus(orderId: ID!, status: OrderStatus!): Order
+}
+

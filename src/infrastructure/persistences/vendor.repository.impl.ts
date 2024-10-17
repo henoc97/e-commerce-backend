@@ -9,7 +9,7 @@ import { IVendorRepository } from 'src/domain/repositories/vendor.repository';
 /**
  * Repository class for managing vendor-related data operations.
  */
-export class UserRepository implements IVendorRepository {
+export class VendorRepository implements IVendorRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   /**
