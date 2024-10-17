@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { resolvers } from './resolver.index';
+import { AuthResolver } from './resolvers/auth.resolver';
 
 @Module({
   imports: [
@@ -11,8 +12,12 @@ import { resolvers } from './resolver.index';
         process.cwd(),
         'src/presentation/graphql/schema.graphql',
       ),
+      context: ({ req }) => {
+        const token = req.headers.authorization?.split(' ')[1] || '';
+        return { token };
+      },
     }),
   ],
-  providers: [...resolvers],
+  providers: [...resolvers, AuthResolver],
 })
 export class MyGraphQLModule {}

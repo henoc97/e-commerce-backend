@@ -15,7 +15,7 @@ export function fromCartItemPrisma(cartItemPrisma: any): CartItem {
     cartItemPrisma.quantity,
     cartItemPrisma.cart ? fromCartPrisma(cartItemPrisma.cart) : undefined,
     cartItemPrisma.product
-    ? fromProductPrisma(cartItemPrisma.product)
-    : undefined,
+      ? fromProductPrisma(cartItemPrisma.product)
+      : undefined,
   );
 }

@@ -16,7 +16,7 @@ export function fromOrderItemPrisma(orderItemPrisma: any): OrderItem {
     orderItemPrisma.price,
     orderItemPrisma.order ? fromOrderPrisma(orderItemPrisma.order) : undefined,
     orderItemPrisma.product
-    ? fromProductPrisma(orderItemPrisma.product)
-    : undefined,
+      ? fromProductPrisma(orderItemPrisma.product)
+      : undefined,
   );
 }
