@@ -31,7 +31,7 @@ export class Shop {
   /**
    * The vendor associated with the shop.
    */
-  vendor: Vendor;
+  vendor?: Vendor;
 
   /**
    * The ID of the vendor associated with the shop.
@@ -79,12 +79,12 @@ export class Shop {
    * @param name - The name of the shop.
    * @param url - The URL of the shop's website.
    * @param vendorId - The ID of the vendor associated with the shop.
-   * @param vendor - The vendor associated with the shop.
    * @param products - An optional array of products available in the shop.
    * @param orders - An optional array of orders associated with the shop.
    * @param categories - An optional array of categories associated with the shop.
    * @param createdAt - The date and time when the shop was created.
    * @param updatedAt - The date and time when the shop was last updated.
+   * @param vendor - The vendor associated with the shop.
    * @param description - An optional description of the shop.
    * @param marketplaceId - An optional ID of the marketplace where the shop is listed.
    * @param Marketplace - An optional marketplace where the shop is listed.
@@ -94,12 +94,12 @@ export class Shop {
     name: string,
     url: string,
     vendorId: number,
-    vendor: Vendor,
     products: Product[] = [],
     orders: Order[] = [],
     categories: Category[] = [],
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
+    vendor?: Vendor,
     description?: string,
     marketplaceId?: number,
     Marketplace?: Marketplace,

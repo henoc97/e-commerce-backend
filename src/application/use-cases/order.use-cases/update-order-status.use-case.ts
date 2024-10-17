@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { OrderService } from 'src/application/services/order.service';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
+import { OrderStatus } from 'src/domain/enums/order-status.enum';
 
 /**
  * Use case for updating the status of an order.
@@ -16,7 +17,7 @@ export class UpdateOrderStatus {
    * @param status - The new status for the order.
    * @returns A promise that resolves to the updated Order DTO.
    */
-  async execute(orderId: number, status: string): Promise<OrderDTO | null> {
+  async execute(orderId: number, status: OrderStatus): Promise<OrderDTO | null> {
     const updatedOrder = await this.orderService.updateOrderStatus(
       orderId,
       status,

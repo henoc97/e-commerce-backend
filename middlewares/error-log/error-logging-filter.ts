@@ -1,4 +1,11 @@
-import { Catch, ExceptionFilter, ArgumentsHost, HttpException, HttpStatus, Inject } from '@nestjs/common';
+import {
+  Catch,
+  ExceptionFilter,
+  ArgumentsHost,
+  HttpException,
+  HttpStatus,
+  Inject,
+} from '@nestjs/common';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { Response, Request } from 'express';
@@ -7,11 +14,12 @@ import { Response, Request } from 'express';
 export class ErrorLoggingFilter implements ExceptionFilter {
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER)
-    private readonly logger: Logger) {}
+    private readonly logger: Logger,
+  ) {}
 
   /**
    * Catch any exception and log it properly using Winston.
-   * 
+   *
    * @param exception Caught exception
    * @param host Provides access to request/response and context data
    */

@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { toNotificationDTO } from 'src/application/helper/to-dto/to.notification.dto';
 import { NotificationService } from 'src/application/services/notification.service';
+import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
 
 /**
  * Use case for fetching a notification by its ID.

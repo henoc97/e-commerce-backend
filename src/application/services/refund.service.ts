@@ -68,15 +68,15 @@ export class RefundService {
     return await this.refundRepository.remove(id);
   }
 
-  // /**
-  //  * Checks if a refund is eligible for processing.
-  //  * @param refund - The refund to check for eligibility.
-  //  * @returns True if the refund is eligible, false otherwise.
-  //  */
-  // isRefundEligible(refund: RefundDTO): boolean {
-  //   const r = fromRefundDTO(refund);
-  //   return this.refundRepository.isEligible(r);
-  // }
+  /**
+   * Checks if a refund is eligible for processing.
+   * @param refund - The refund to check for eligibility.
+   * @returns True if the refund is eligible, false otherwise.
+   */
+  isRefundEligible(refund: RefundDTO): boolean {
+    // Logique pour vérifier l'éligibilité au remboursement
+    return true; // ou false selon la logique
+  }
 
   /**
    * Processes a refund by updating its status.

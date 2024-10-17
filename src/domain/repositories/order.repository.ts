@@ -123,4 +123,6 @@ export interface IOrderRepository {
    * @throws Error if retrieval fails.
    */
   getTopOrdersByAmount(topN: number): Promise<Order[]>;
+
+  getAll(): Promise<Order[]>;
 }

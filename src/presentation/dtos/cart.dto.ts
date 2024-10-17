@@ -45,14 +45,14 @@ export class CartDTO {
    * Creates a new CartDTO instance.
    * @param id - Unique identifier for the Cart.
    * @param userId - Unique identifier for the User who owns the Cart.
-   * @param user - The User who owns the Cart.
    * @param items - Items in the Cart (optional).
+   * @param user - The User who owns the Cart.
    */
   constructor(
     userId: number,
     id?: number,
-    user?: UserDTO,
     items?: CartItemDTO[],
+    user?: UserDTO,
   ) {
     this.id = id;
     this.userId = userId;

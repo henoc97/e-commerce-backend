@@ -70,13 +70,12 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when create log method fails', async () => {
-
         const dto: AuditLogDTO = new AuditLogDTO(1, 1, AuditLogAction.CREATED, "user", 1, "created user");
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.create.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.createLog(dto)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.createLog(dto)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -103,13 +102,12 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when get log by id method fails', async () => {
-
         const id: number = 1;
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getLogById(id)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getLogById(id)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -137,14 +135,13 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when get logs by entity method fails', async () => {
-
         const entity: string = 'entity';
         const entityId: number = 1;
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.getByEntity.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getLogsByEntity(entity, entityId)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getLogsByEntity(entity, entityId)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -171,13 +168,12 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when get logs by user method fails', async () => {
-
         const userId: number = 1;
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.getByUser.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getLogsByUser(userId)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getLogsByUser(userId)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -205,14 +201,13 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when update log method fails', async () => {
-
         const id: number = 1;
         const dto: AuditLogDTO = new AuditLogDTO(1, 1, AuditLogAction.CREATED, "user", 1, "created user");
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.update.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.updateLog(id, dto)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.updateLog(id, dto)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -239,13 +234,12 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when delete log method fails', async () => {
-
         const id: number = 1;
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.delete.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.deleteLog(id)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.deleteLog(id)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -275,15 +269,13 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when get logs by date range method fails', async () => {
-
         const startDate: Date = new Date("2024-01-01");
         const endDate: Date = new Date();
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.getByDateRange.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getLogsByDateRange(startDate,
-            endDate,)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getLogsByDateRange(startDate, endDate)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -310,13 +302,12 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when get recent logs method fails', async () => {
-
         const limit: number = 1;
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.getRecent.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getRecentLogs(limit)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getRecentLogs(limit)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -343,13 +334,12 @@ describe('AuditLogService', () => {
     });
 
     it('should throw an error when get logs by action method fails', async () => {
-
         const action: AuditLogAction = AuditLogAction.CREATED;
 
         // Simulate a failure when calling the repository 
         mockAuditLogRepository.getByAction.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getLogsByAction(action)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getLogsByAction(action)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();

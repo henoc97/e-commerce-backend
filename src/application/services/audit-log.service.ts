@@ -1,7 +1,6 @@
 import {
   Inject,
   Injectable,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import { AuditLog } from 'src/domain/entities/audit-log.entity';
 import { IAuditLogRepository } from 'src/domain/repositories/auditlog.repository';

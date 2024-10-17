@@ -8,7 +8,6 @@ import { ICartRepository } from 'src/domain/repositories/cart.repository';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
 import { CartDTO } from 'src/presentation/dtos/cart.dto';
 import { fromCartDTO } from '../helper/to-entity/to.cart.entity';
-import { fromCartItemDTO } from '../helper/to-entity/to.cart-item.entity';
 import { CartItemService } from './cart-item.service';
 
 @Injectable()
@@ -70,8 +69,7 @@ export class CartService {
    * @throws InternalServerErrorException if an error occurs while adding the item to the cart.
    */
   async addItemToCart(cartId: number, item: CartItemDTO): Promise<Cart> {
-    const cartItem = fromCartItemDTO(item);
-    await this.cartItemService.createCartItem(cartItem);
+    await this.cartItemService.createCartItem(item);
     return await this.cartRepository.getById(cartId);
   }
 
@@ -129,10 +127,12 @@ export class CartService {
     const sourceItems =
       await this.cartItemService.getCartItemsByCartId(sourceCartId);
     for (const item of sourceItems) {
-      await this.cartItemService.createCartItem({
-        ...item,
-        cartId: targetCartId,
-      });
+      const dto = new CartItemDTO(
+        targetCartId,
+        item.productId,
+        item.quantity,
+      );
+      await this.cartItemService.createCartItem(dto);
     }
     await this.cartRepository.delete(sourceCartId);
     return await this.cartRepository.getById(targetCartId);

@@ -1,9 +1,23 @@
 import { Injectable } from '@nestjs/common';
+import { OrderService } from 'src/application/services/order.service';
+import { OrderDTO } from 'src/presentation/dtos/order.dto';
+import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
 
+/**
+ * Use case for updating an order.
+ */
 @Injectable()
 export class UpdateOrder {
-  // Logic for update-order use case
-  async execute() {
-    // TODO: Implement the use case logic here
+  constructor(private readonly orderService: OrderService) {}
+
+  /**
+   * Updates an existing order.
+   * @param orderId - The unique ID of the order.
+   * @param updates - Partial data to update the order.
+   * @returns A promise that resolves to the updated Order DTO.
+   */
+  async execute(orderId: number, updates: Partial<OrderDTO>): Promise<OrderDTO> {
+    const order = await this.orderService.updateOrder(orderId, updates);
+    return toOrderDTO(order);
   }
 }

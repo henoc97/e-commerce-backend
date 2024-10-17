@@ -24,8 +24,6 @@ import { fromUserProfileDTO } from '../helper/to-entity/to.user-profile.entity';
 import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
 import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
 import { IAddressRepository } from 'src/domain/repositories/address.repository';
 import { IOrderRepository } from 'src/domain/repositories/order.repository';
 import { IUserActivityRepository } from 'src/domain/repositories/user-activity.repository';

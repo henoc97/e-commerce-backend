@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ProductImageService } from 'src/application/services/product-image.service';
 import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
-import { fromProductImageDTO } from 'src/application/helper/to-entity/to.product-image.entity';
+import { toProductImageDTO } from 'src/application/helper/to-dto/to.product-image.dto';
 
 /**
  * Use case class for creating a product image.
@@ -19,6 +19,6 @@ export class CreateProductImage {
     const createdImage =
       await this.productImageService.createProductImage(imageDTO);
     if (!createdImage) return null;
-    return fromProductImageDTO(createdImage);
+    return toProductImageDTO(createdImage);
   }
 }

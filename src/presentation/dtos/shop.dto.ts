@@ -48,7 +48,7 @@ export class ShopDTO {
    */
   @ValidateNested()
   @Type(() => VendorDTO)
-  vendor: VendorDTO;
+  vendor?: VendorDTO;
 
   /**
    * Unique identifier for the vendor associated with the shop.

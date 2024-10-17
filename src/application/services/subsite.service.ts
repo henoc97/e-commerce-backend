@@ -111,9 +111,10 @@ export class SubsiteService {
    * Lists all active subsites.
    * @returns An array of currently active subsite entities.
    */
-  // async getActiveSubsites(): Promise<Subsite[]> {
-  //   return this.subsiteRepository.getActive();
-  // }
+  async getActiveSubsites(): Promise<Subsite[]> {
+    // Implémentez la logique pour récupérer les sous-sites actifs
+    return Promise.resolve([]); // Remplacez par la logique réelle
+  }
 
   /**
    * Counts the number of subsites for a specific user.

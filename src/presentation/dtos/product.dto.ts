@@ -110,7 +110,7 @@ export class ProductDTO {
    */
   @ValidateNested()
   @Type(() => ShopDTO)
-  shop: ShopDTO;
+  shop?: ShopDTO; // Rendre 'shop' optionnel
 
   /**
    * The ID of the Shop where the Product is listed.

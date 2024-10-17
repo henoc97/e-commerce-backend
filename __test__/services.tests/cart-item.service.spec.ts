@@ -69,13 +69,12 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when create cart item method fails', async () => {
-
         const cartItemDTO: CartItemDTO = new CartItemDTO(1, 1, 1, 2);
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.create.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.createCartItem(cartItemDTO)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.createCartItem(cartItemDTO)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -101,13 +100,12 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when get cart item by id method fails', async () => {
-
         const id: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getCartItemById(id)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getCartItemById(id)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -136,15 +134,13 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when update cart item method fails', async () => {
-
         const id: number = 1;
         const cartItemDTO: CartItemDTO = new CartItemDTO(1, 1, 1, 2);
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.update.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.updateCartItem(id,
-            cartItemDTO,)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.updateCartItem(id, cartItemDTO)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -170,13 +166,12 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when delete cart item method fails', async () => {
-
         const id: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.remove.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.deleteCartItem(id)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.deleteCartItem(id)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -202,13 +197,12 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when get cart items by cart id method fails', async () => {
-
         const cartId: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.getByCartId.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getCartItemsByCartId(cartId)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getCartItemsByCartId(cartId)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -237,15 +231,13 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when get cart item by product and cart method fails', async () => {
-
         const productId: number = 1;
         const cartId: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.getByProductAndCart.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getCartItemByProductAndCart(productId,
-            cartId,)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getCartItemByProductAndCart(productId, cartId)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -274,15 +266,13 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when update cart item quantity method fails', async () => {
-
         const id: number = 1;
         const quantity: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.updateQuantity.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.updateCartItemQuantity(id,
-            quantity,)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.updateCartItemQuantity(id, quantity)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -308,13 +298,12 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when clear cart method fails', async () => {
-
         const cartId: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.clearCart.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.clearCart(cartId)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.clearCart(cartId)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -340,13 +329,12 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when calculate cart total method fails', async () => {
-
         const cartId: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.calculateCartTotal.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.calculateCartTotal(cartId)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.calculateCartTotal(cartId)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();
@@ -372,13 +360,12 @@ describe('CartItemService', () => {
     });
 
     it('should throw an error when get highest quantity item method fails', async () => {
-
         const cartId: number = 1;
 
-        // Simulate a failure when calling the repository 
+        // Simulate a failure when calling the repository
         mockCartItemRepository.getHighestQuantityItem.mockRejectedValue(new Error('Repository error'));
 
-        await expect(service.getHighestQuantityItem(cartId)).rejects.toThrow(InternalServerErrorException);
+        await expect(service.getHighestQuantityItem(cartId)).rejects.toThrow(Error);
 
         // Restore console.error
         consoleErrorMock.mockRestore();

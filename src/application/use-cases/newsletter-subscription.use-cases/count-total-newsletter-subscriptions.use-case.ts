@@ -10,9 +10,10 @@ export class CountTotalNewsletterSubscriptions {
 
   /**
    * Execute the use case to count total subscriptions.
+   * @param shopId - The ID of the shop to count the subscriptions for.
    * @returns The total number of subscriptions.
    */
-  async execute(): Promise<number> {
-    return await this.service.countTotalSubscriptions();
+  async execute(shopId: number): Promise<number> {
+    return await this.service.countTotalSubscriptions(shopId);
   }
 }

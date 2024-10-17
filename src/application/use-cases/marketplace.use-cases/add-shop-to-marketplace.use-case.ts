@@ -14,16 +14,16 @@ export class AddShopToMarketplace {
   /**
    * Execute the add-shop-to-marketplace use case.
    * @param marketplaceId - The ID of the marketplace.
-   * @param shopDTO - The DTO containing the shop data to add.
+   * @param shopId - The ID of the shop to add.
    * @returns A promise that resolves to the updated Marketplace DTO.
    */
   async execute(
     marketplaceId: number,
-    shopDTO: ShopDTO,
+    shopId: number,
   ): Promise<MarketplaceDTO | null> {
     const marketplace = await this.service.addShopToMarketplace(
       marketplaceId,
-      shopDTO,
+      shopId,
     );
     if (!marketplace) return null;
     return toMarketplaceDTO(marketplace);

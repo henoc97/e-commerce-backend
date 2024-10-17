@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OrderItemService } from 'src/application/services/order-item.service';
 import { toOrderItemDTO } from 'src/application/helper/to-dto/to.order-item.dto';
+import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
 
 /**
  * Use case class for fetching an OrderItem by its ID.

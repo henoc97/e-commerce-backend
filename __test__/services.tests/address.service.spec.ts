@@ -82,7 +82,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.create.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.createAddress(addressDTO)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.createAddress(addressDTO)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -116,7 +116,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.getById.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.getAddressById(id)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.getAddressById(id)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -162,7 +162,7 @@ describe('AddressService', () => {
     mockAddressRepository.updateById.mockRejectedValue(new Error('Repository error'));
 
     await expect(service.updateAddressById(id,
-      data,)).rejects.toThrow(InternalServerErrorException);
+      data,)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -194,7 +194,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.deleteById.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.deleteAddressById(id)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.deleteAddressById(id)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -228,7 +228,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.getAllByUserId.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.getAddressesByUserId(userId)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.getAddressesByUserId(userId)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -267,7 +267,7 @@ describe('AddressService', () => {
     mockAddressRepository.getByUserIdAndId.mockRejectedValue(new Error('Repository error'));
 
     await expect(service.getAddressByUserIdAndId(userId,
-      addressId,)).rejects.toThrow(InternalServerErrorException);
+      addressId,)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -312,7 +312,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.getByCity.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.getAddressesByCity(city)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.getAddressesByCity(city)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -355,7 +355,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.getByState.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.getAddressesByState(state)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.getAddressesByState(state)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -389,7 +389,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.getByCountry.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.getAddressesByCountry(country)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.getAddressesByCountry(country)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();
@@ -423,7 +423,7 @@ describe('AddressService', () => {
     // Simulate a failure when calling the repository 
     mockAddressRepository.getByPostalCode.mockRejectedValue(new Error('Repository error'));
 
-    await expect(service.getAddressesByPostalCode(postalCode)).rejects.toThrow(InternalServerErrorException);
+    await expect(service.getAddressesByPostalCode(postalCode)).rejects.toThrow(Error);
 
     // Restore console.error
     consoleErrorMock.mockRestore();

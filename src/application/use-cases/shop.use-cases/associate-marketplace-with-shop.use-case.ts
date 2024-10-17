@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
 import { ShopService } from 'src/application/services/shop.service';
-import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 
 /**
@@ -15,16 +14,16 @@ export class AssociateMarketplaceWithShop {
   /**
    * Execute the associate-marketplace-with-shop use case.
    * @param shopId - The ID of the shop.
-   * @param marketplaceDTO - The MarketplaceDTO containing the marketplace data to be associated.
+   * @param marketplaceId - The ID of the marketplace to be associated.
    * @returns A promise that resolves to the updated Shop DTO.
    */
   async execute(
     shopId: number,
-    marketplaceDTO: MarketplaceDTO,
+    marketplaceId: number,
   ): Promise<ShopDTO | null> {
     const updatedShop = await this.shopService.associateMarketplaceWithShop(
       shopId,
-      marketplaceDTO,
+      marketplaceId,
     );
 
     if (!updatedShop) return null;

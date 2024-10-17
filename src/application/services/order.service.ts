@@ -150,4 +150,12 @@ export class OrderService {
   async getTopOrdersByAmount(topN: number): Promise<Order[]> {
     return this.orderRepository.getTopOrdersByAmount(topN);
   }
+
+  /**
+   * Retrieves all Orders.
+   * @returns A promise that resolves to an array of all Orders.
+   */
+  async getAllOrders(): Promise<Order[]> {
+    return this.orderRepository.getAll();
+  }
 }
