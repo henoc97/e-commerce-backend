@@ -1,7 +1,7 @@
 ﻿import { User } from 'src/domain/entities/user.entity';
 import { UserDTO } from 'src/presentation/dtos/user.dto';
 import { toNotificationDTO } from './to.notification.dto';
-import { toSubSiteDTO } from './to.sub-site.dto';
+import { toSubsiteDTO } from './to.sub-site.dto';
 import { toTicketDTO } from './to.ticket.dto';
 import { toAuditLogDTO } from './to.audit-log.dto';
 import { toCartDTO } from './to.cart.dto';
@@ -30,7 +30,7 @@ export function toUserDTO(user: User): UserDTO {
     user.reviews.map((review) => toReviewDTO(review)),
     user.notifications.map((notification) => toNotificationDTO(notification)),
     user.tickets.map((ticket) => toTicketDTO(ticket)),
-    user.subSites.map((subSite) => toSubSiteDTO(subSite)),
+    user.subsites.map((subsite) => toSubsiteDTO(subsite)),
     user.userActivities.map((userActivity) => toUserActivityDTO(userActivity)),
     user.auditLogs.map((auditLog) => toAuditLogDTO(auditLog)),
   );

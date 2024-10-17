@@ -11,7 +11,7 @@ import { fromPaymentDTO } from '../helper/to-entity/to.payment.entity';
 @Injectable()
 export class PaymentService {
   constructor(
-    @Inject('ICartItemRepository')
+    @Inject('IPaymentRepository')
     private readonly paymentRepository: IPaymentRepository,
   ) {}
 

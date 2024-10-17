@@ -10,7 +10,7 @@ import { Inject } from '@nestjs/common';
  */
 export class ProductVariantService {
   constructor(
-    @Inject('IProductImageRepository')
+    @Inject('IProductVariantRepository')
     private readonly repository: IProductVariantRepository,
   ) {}
 

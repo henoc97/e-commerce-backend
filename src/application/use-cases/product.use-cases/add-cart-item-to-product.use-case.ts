@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
-import { ProductService } from 'src/application/services/product.service';
+import ProductService from 'src/application/services/product.service';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 

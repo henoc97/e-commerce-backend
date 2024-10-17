@@ -11,11 +11,11 @@ export function fromCartItemPrisma(cartItemPrisma: any): CartItem {
   return new CartItem(
     cartItemPrisma.id,
     cartItemPrisma.cartId,
-    cartItemPrisma.cart ? fromCartPrisma(cartItemPrisma.cart) : undefined,
     cartItemPrisma.productId,
-    cartItemPrisma.product
-      ? fromProductPrisma(cartItemPrisma.product)
-      : undefined,
     cartItemPrisma.quantity,
+    cartItemPrisma.cart ? fromCartPrisma(cartItemPrisma.cart) : undefined,
+    cartItemPrisma.product
+    ? fromProductPrisma(cartItemPrisma.product)
+    : undefined,
   );
 }

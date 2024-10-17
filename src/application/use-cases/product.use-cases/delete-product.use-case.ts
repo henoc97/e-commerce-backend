@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ProductService } from 'src/application/services/product.service';
+import ProductService from 'src/application/services/product.service';
 
 /**
  * Use case class for deleting a product.

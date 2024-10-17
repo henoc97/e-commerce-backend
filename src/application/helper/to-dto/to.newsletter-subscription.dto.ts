@@ -11,6 +11,8 @@ export function toNewsletterSubscriptionDTO(
 ): NewsletterSubscriptionDTO {
   return new NewsletterSubscriptionDTO(
     subscription.email,
+    subscription.shopId,
+    subscription.isActive,
     subscription.subscribedAt,
     subscription.id,
   );

@@ -7,7 +7,7 @@ import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { CategoryDTO } from 'src/presentation/dtos/category.dto';
-import { ProductService } from './product.service';
+import ProductService from './product.service';
 import { OrderService } from './order.service';
 import { CategoryService } from './category.service';
 

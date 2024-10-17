@@ -11,7 +11,7 @@ export function fromCartPrisma(cartPrisma: any): Cart {
   return new Cart(
     cartPrisma.id,
     cartPrisma.userId,
-    cartPrisma.user ? fromUserPrisma(cartPrisma.user) : undefined,
     cartPrisma.items.map((itemPrisma: any) => fromCartItemPrisma(itemPrisma)),
+    cartPrisma.user ? fromUserPrisma(cartPrisma.user) : undefined,
   );
 }

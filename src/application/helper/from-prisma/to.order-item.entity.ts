@@ -11,12 +11,12 @@ export function fromOrderItemPrisma(orderItemPrisma: any): OrderItem {
   return new OrderItem(
     orderItemPrisma.id,
     orderItemPrisma.orderId,
-    orderItemPrisma.order ? fromOrderPrisma(orderItemPrisma.order) : undefined,
     orderItemPrisma.productId,
-    orderItemPrisma.product
-      ? fromProductPrisma(orderItemPrisma.product)
-      : undefined,
     orderItemPrisma.quantity,
     orderItemPrisma.price,
+    orderItemPrisma.order ? fromOrderPrisma(orderItemPrisma.order) : undefined,
+    orderItemPrisma.product
+    ? fromProductPrisma(orderItemPrisma.product)
+    : undefined,
   );
 }

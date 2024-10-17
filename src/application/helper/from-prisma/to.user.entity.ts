@@ -35,7 +35,7 @@ export function fromUserPrisma(userPrisma: any): User {
       fromNotificationPrisma(notification),
     ),
     userPrisma.tickets.map((ticket: any) => fromTicketPrisma(ticket)),
-    userPrisma.subSites.map((subSite: any) => fromSubsitePrisma(subSite)),
+    userPrisma.subsites.map((subsite: any) => fromSubsitePrisma(subsite)),
     userPrisma.userActivities.map((userActivity: any) =>
       fromUserActivityPrisma(userActivity),
     ),

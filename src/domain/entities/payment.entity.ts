@@ -1,3 +1,4 @@
+import { Currency } from '../enums/currencies.enum';
 import { PaymentStatus } from '../enums/payment-status.enum';
 import { Order } from './order.entity';
 
@@ -49,6 +50,11 @@ export class Payment {
   metadata?: any;
 
   /**
+   * The currency of the payment.
+   */
+  currency: Currency;
+
+  /**
    * The date and time when the payment was created.
    * Automatically set to the current date and time when a Payment is created.
    */
@@ -62,6 +68,7 @@ export class Payment {
    * @param method - The payment method used.
    * @param status - The current status of the payment.
    * @param amount - The total amount paid.
+   * @param currency - The currency of the payment.
    * @param providerId - (Optional) Provider identifier for the payment.
    * @param metadata - (Optional) Metadata related to the payment.
    * @param createdAt - (Optional) Date and time of payment creation.
@@ -73,6 +80,7 @@ export class Payment {
     method: string,
     status: PaymentStatus,
     amount: number,
+    currency: Currency,
     providerId?: string,
     metadata?: any,
     createdAt: Date = new Date(),
@@ -85,6 +93,7 @@ export class Payment {
     this.amount = amount;
     this.providerId = providerId;
     this.metadata = metadata;
+    this.currency = currency;
     this.createdAt = createdAt;
   }
 }

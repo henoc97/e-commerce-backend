@@ -16,7 +16,6 @@ export function fromShopPrisma(shopPrisma: any): Shop {
     shopPrisma.name,
     shopPrisma.url,
     shopPrisma.vendorId,
-    shopPrisma.vendor ? fromVendorPrisma(shopPrisma.vendor) : undefined,
     shopPrisma.products.map((productPrisma: any) =>
       fromProductPrisma(productPrisma),
     ),
@@ -26,6 +25,7 @@ export function fromShopPrisma(shopPrisma: any): Shop {
     ),
     shopPrisma.createdAt,
     shopPrisma.updatedAt,
+    shopPrisma.vendor ? fromVendorPrisma(shopPrisma.vendor) : undefined,
     shopPrisma.description,
     shopPrisma.marketplaceId,
     shopPrisma.Marketplace

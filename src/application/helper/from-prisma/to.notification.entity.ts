@@ -10,11 +10,11 @@ export function fromNotificationPrisma(notificationPrisma: any): Notification {
   return new Notification(
     notificationPrisma.id,
     notificationPrisma.userId,
+    notificationPrisma.type,
+    notificationPrisma.content,
     notificationPrisma.user
       ? fromUserPrisma(notificationPrisma.user)
       : undefined,
-    notificationPrisma.type,
-    notificationPrisma.content,
     notificationPrisma.read,
     notificationPrisma.sentAt,
   );

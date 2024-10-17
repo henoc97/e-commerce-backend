@@ -10,6 +10,7 @@ import {
 import { Type } from 'class-transformer';
 import { OrderDTO } from './order.dto';
 import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
+import { Currency } from 'src/domain/enums/currencies.enum';
 
 /**
  * Represents the data transfer object for a payment.
@@ -71,6 +72,12 @@ export class PaymentDTO {
   metadata?: any;
 
   /**
+   * The currency of the payment.
+   */
+  @IsEnum(Currency)
+  currency: Currency;
+
+  /**
    * The date and time when the payment was created.
    */
   @IsDate()
@@ -84,6 +91,7 @@ export class PaymentDTO {
    * @param method - The payment method used.
    * @param status - The current status of the payment.
    * @param amount - The total amount paid.
+   * @param currency - The currency of the payment.
    * @param providerId - (Optional) Provider identifier for the payment.
    * @param metadata - (Optional) Metadata related to the payment.
    * @param createdAt - (Optional) Date and time of payment creation.
@@ -95,6 +103,7 @@ export class PaymentDTO {
     method: string,
     status: PaymentStatus,
     amount: number,
+    currency: Currency,
     providerId?: string,
     metadata?: any,
     createdAt: Date = new Date(),
@@ -107,6 +116,7 @@ export class PaymentDTO {
     this.amount = amount;
     this.providerId = providerId;
     this.metadata = metadata;
+    this.currency = currency;
     this.createdAt = createdAt;
   }
 }

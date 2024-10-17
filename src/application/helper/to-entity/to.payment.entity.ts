@@ -17,6 +17,7 @@ export function fromPaymentDTO(
     paymentDTO.method,
     paymentDTO.status,
     paymentDTO.amount,
+    paymentDTO.currency,
     paymentDTO.providerId,
     paymentDTO.metadata,
     paymentDTO.createdAt,

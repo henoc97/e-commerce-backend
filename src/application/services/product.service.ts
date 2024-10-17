@@ -17,7 +17,7 @@ import { CartItemService } from './cart-item.service';
  * Service class for managing product-related operations.
  */
 @Injectable()
-export class ProductService {
+export default class ProductService {
   constructor(
     @Inject('IProductRepository')
     private readonly productRepository: IProductRepository,
@@ -239,7 +239,7 @@ export class ProductService {
    * Retrieves a list of featured products.
    * @returns A promise that resolves to an array of featured Product entities.
    */
-  // async getFeaturedProducts(): Promise<Product[]> {
-  //   return this.productRepository.getFeaturedProducts();
-  // }
+  async getFeaturedProducts(): Promise<Product[]> {
+    return this.productRepository.getFeaturedProducts();
+  }
 }

@@ -11,8 +11,8 @@ import { toUserDTO } from './to.user.dto';
 export function toCartDTO(cart: Cart): CartDTO {
   return new CartDTO(
     cart.userId,
-    cart.user ? toUserDTO(cart.user) : undefined,
-    cart.items.map((item) => toCartItemDTO(item)),
     cart.id,
+    cart.items.map((item) => toCartItemDTO(item)),
+    cart.user ? toUserDTO(cart.user) : undefined,
   );
 }

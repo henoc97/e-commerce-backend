@@ -89,5 +89,5 @@ export interface IProductRepository {
    * @returns A promise that resolves to an array of featured Product entities.
    * @throws Error if retrieval fails.
    */
-  // getFeaturedProducts(): Promise<Product[]>;
+  getFeaturedProducts(): Promise<Product[]>;
 }

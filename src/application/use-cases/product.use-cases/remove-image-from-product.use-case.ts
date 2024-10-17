@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ProductService } from 'src/application/services/product.service';
+import ProductService from 'src/application/services/product.service';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
 

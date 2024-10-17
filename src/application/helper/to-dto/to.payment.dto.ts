@@ -15,6 +15,7 @@ export function toPaymentDTO(payment: Payment): PaymentDTO {
     payment.method,
     payment.status,
     payment.amount,
+    payment.currency,
     payment.providerId,
     payment.metadata,
     payment.createdAt,
