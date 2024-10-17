@@ -10,14 +10,13 @@ import { Inject } from '@nestjs/common';
  * Implements business logic related to refund processing.
  */
 export class RefundService {
-
   /**
    * Creates an instance of RefundService.
    * @param refundRepository - The repository for managing refunds.
    */
   constructor(
     @Inject('IRefundRepository')
-    private readonly refundRepository: IRefundRepository
+    private readonly refundRepository: IRefundRepository,
   ) {}
 
   /**

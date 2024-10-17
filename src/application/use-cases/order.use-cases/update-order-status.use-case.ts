@@ -17,7 +17,10 @@ export class UpdateOrderStatus {
    * @param status - The new status for the order.
    * @returns A promise that resolves to the updated Order DTO.
    */
-  async execute(orderId: number, status: OrderStatus): Promise<OrderDTO | null> {
+  async execute(
+    orderId: number,
+    status: OrderStatus,
+  ): Promise<OrderDTO | null> {
     const updatedOrder = await this.orderService.updateOrderStatus(
       orderId,
       status,

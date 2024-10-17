@@ -15,4 +15,3 @@ import { PrismaService } from 'prisma/prisma.service';
   exports: [ProductImageService],
 })
 export class ProductImageModule {}
-

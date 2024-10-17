@@ -36,7 +36,8 @@ export class PromotionResolver {
 
   @Mutation(() => PromotionDTO, { nullable: true })
   async combinePromotions(
-    @Args({ name: 'promotions', type: () => [PromotionDTO] }) promotions: PromotionDTO[],
+    @Args({ name: 'promotions', type: () => [PromotionDTO] })
+    promotions: PromotionDTO[],
   ): Promise<PromotionDTO | null> {
     return this.combinePromotionsUseCase.execute(promotions);
   }
@@ -49,7 +50,9 @@ export class PromotionResolver {
   }
 
   @Mutation(() => Boolean)
-  async deletePromotion(@Args('promotionId') promotionId: number): Promise<boolean> {
+  async deletePromotion(
+    @Args('promotionId') promotionId: number,
+  ): Promise<boolean> {
     return this.deletePromotionUseCase.execute(promotionId);
   }
 
@@ -67,17 +70,23 @@ export class PromotionResolver {
   }
 
   @Query(() => PromotionDTO, { nullable: true })
-  async fetchBestPromotionForProduct(@Args('productId') productId: number): Promise<PromotionDTO | null> {
+  async fetchBestPromotionForProduct(
+    @Args('productId') productId: number,
+  ): Promise<PromotionDTO | null> {
     return this.fetchBestPromotionForProductUseCase.execute(productId);
   }
 
   @Query(() => PromotionDTO, { nullable: true })
-  async fetchPromotionById(@Args('id') id: number): Promise<PromotionDTO | null> {
+  async fetchPromotionById(
+    @Args('id') id: number,
+  ): Promise<PromotionDTO | null> {
     return this.fetchPromotionByIdUseCase.execute(id);
   }
 
   @Query(() => [PromotionDTO])
-  async fetchPromotionsByProduct(@Args('productId') productId: number): Promise<PromotionDTO[]> {
+  async fetchPromotionsByProduct(
+    @Args('productId') productId: number,
+  ): Promise<PromotionDTO[]> {
     return this.fetchPromotionsByProductUseCase.execute(productId);
   }
 

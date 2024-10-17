@@ -219,5 +219,4 @@ export class VendorRepository implements IVendorRepository {
       throw new Error('Failed to fetch all vendors.');
     }
   }
-
 }

@@ -96,4 +96,3 @@ export class CartResolver {
     return this.updateCartUseCase.execute(cartId, data);
   }
 }
-

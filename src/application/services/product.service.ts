@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Product } from 'src/domain/entities/product.entity';
 import { IProductRepository } from 'src/domain/repositories/product.repository';
 import { fromProductDTO } from '../helper/to-entity/to.product.entity';
@@ -216,14 +213,14 @@ export class ProductService {
     return this.productRepository.getById(productId);
   }
 
-    /**
+  /**
    * Retrieves all products associated with a vendor.
    * @param vendorId - The unique identifier of the vendor.
    * @returns An array of Product entities associated with the vendor.
    */
-    async getVendorProducts(vendorId: number): Promise<Product[]> {
-      return this.productRepository.findByVendor(vendorId);
-    }
+  async getVendorProducts(vendorId: number): Promise<Product[]> {
+    return this.productRepository.findByVendor(vendorId);
+  }
 
   /**
    * Finds all products within a price range.

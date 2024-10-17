@@ -9,10 +9,9 @@ import { Inject } from '@nestjs/common';
  * Utilizes repository methods to perform CRUD operations and implement use case logic.
  */
 export class ProductVariantService {
-  
   constructor(
     @Inject('IProductImageRepository')
-    private readonly repository: IProductVariantRepository
+    private readonly repository: IProductVariantRepository,
   ) {}
 
   /**

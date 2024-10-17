@@ -33,7 +33,7 @@ import { ITicketRepository } from 'src/domain/repositories/ticket.repository';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('IUserRepository') 
+    @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
     private readonly addressService: IAddressRepository,
     private readonly orderService: IOrderRepository,
@@ -98,7 +98,7 @@ export class UserService {
    */
   async addAddressToUser(userId: number, address: AddressDTO): Promise<User> {
     const ad = fromAddressDTO(address);
-    await this.addressService.create(ad)
+    await this.addressService.create(ad);
     return await this.userRepository.getById(userId);
   }
 
@@ -112,7 +112,7 @@ export class UserService {
     userId: number,
     addressId: number,
   ): Promise<User> {
-    await this.addressService.deleteById(addressId)
+    await this.addressService.deleteById(addressId);
     return await this.userRepository.getById(userId);
   }
 

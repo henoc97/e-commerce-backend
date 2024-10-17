@@ -55,4 +55,3 @@ import { VendorModule } from './application/modules/vendor.module';
   // ... autres configurations si nécessaire ...
 })
 export class AppModule {}
-

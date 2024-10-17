@@ -48,7 +48,9 @@ export class OrderResolver {
   }
 
   @Mutation(() => OrderDTO)
-  async createOrder(@Args('orderDTO') orderDTO: OrderDTO): Promise<OrderDTO | null> {
+  async createOrder(
+    @Args('orderDTO') orderDTO: OrderDTO,
+  ): Promise<OrderDTO | null> {
     return this.createOrderUseCase.execute(orderDTO);
   }
 
@@ -82,7 +84,9 @@ export class OrderResolver {
   }
 
   @Query(() => OrderDTO, { nullable: true })
-  async getOrderByTrackingNumber(@Args('trackingNumber') trackingNumber: string): Promise<OrderDTO | null> {
+  async getOrderByTrackingNumber(
+    @Args('trackingNumber') trackingNumber: string,
+  ): Promise<OrderDTO | null> {
     return this.fetchOrderByTrackingNumberUseCase.execute(trackingNumber);
   }
 
@@ -100,7 +104,9 @@ export class OrderResolver {
   }
 
   @Query(() => [OrderDTO])
-  async getOrdersByStatus(@Args('status') status: OrderStatus): Promise<OrderDTO[]> {
+  async getOrdersByStatus(
+    @Args('status') status: OrderStatus,
+  ): Promise<OrderDTO[]> {
     return this.fetchOrdersByStatusUseCase.execute(status);
   }
 

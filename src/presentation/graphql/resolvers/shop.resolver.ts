@@ -81,7 +81,10 @@ export class ShopResolver {
     @Args('shopId') shopId: number,
     @Args('marketplaceId') marketplaceId: number,
   ): Promise<ShopDTO | null> {
-    return this.associateMarketplaceWithShopUseCase.execute(shopId, marketplaceId);
+    return this.associateMarketplaceWithShopUseCase.execute(
+      shopId,
+      marketplaceId,
+    );
   }
 
   @Mutation(() => Boolean)
@@ -105,7 +108,9 @@ export class ShopResolver {
   }
 
   @Query(() => [ShopDTO])
-  async listShopsByVendor(@Args('vendorId') vendorId: number): Promise<ShopDTO[]> {
+  async listShopsByVendor(
+    @Args('vendorId') vendorId: number,
+  ): Promise<ShopDTO[]> {
     return this.listShopsByVendorUseCase.execute(vendorId);
   }
 
@@ -128,7 +133,11 @@ export class ShopResolver {
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
   ): Promise<any> {
-    return this.fetchOrderReportForShopUseCase.execute(shopId, startDate, endDate);
+    return this.fetchOrderReportForShopUseCase.execute(
+      shopId,
+      startDate,
+      endDate,
+    );
   }
 
   @Query(() => [ShopDTO])
@@ -137,7 +146,11 @@ export class ShopResolver {
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
   ): Promise<any> {
-    return this.fetchShopRevenueReportUseCase.execute(shopId, startDate, endDate);
+    return this.fetchShopRevenueReportUseCase.execute(
+      shopId,
+      startDate,
+      endDate,
+    );
   }
 
   @Query(() => [ShopDTO])
@@ -150,12 +163,16 @@ export class ShopResolver {
   }
 
   @Query(() => ProductDTO, { nullable: true })
-  async fetchTopProductForShop(@Args('shopId') shopId: number): Promise<ProductDTO | null> {
+  async fetchTopProductForShop(
+    @Args('shopId') shopId: number,
+  ): Promise<ProductDTO | null> {
     return this.fetchTopProductForShopUseCase.execute(shopId);
   }
 
   @Query(() => Number)
-  async fetchTotalSalesForShop(@Args('shopId') shopId: number): Promise<number> {
+  async fetchTotalSalesForShop(
+    @Args('shopId') shopId: number,
+  ): Promise<number> {
     return this.fetchTotalSalesForShopUseCase.execute(shopId);
   }
 
@@ -174,5 +191,4 @@ export class ShopResolver {
   ): Promise<boolean> {
     return this.removeProductFromShopUseCase.execute(shopId, productId);
   }
-
 }

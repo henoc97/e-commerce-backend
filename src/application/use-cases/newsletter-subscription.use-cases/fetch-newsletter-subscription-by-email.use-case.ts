@@ -16,8 +16,14 @@ export class FetchNewsletterSubscriptionByEmail {
    * @param shopId - The ID of the shop to fetch the subscription for.
    * @returns The subscription data as a DTO, or null if not found.
    */
-  async execute(email: string, shopId: number): Promise<NewsletterSubscriptionDTO | null> {
-    const subscription = await this.service.getSubscriptionByEmail(email, shopId);
+  async execute(
+    email: string,
+    shopId: number,
+  ): Promise<NewsletterSubscriptionDTO | null> {
+    const subscription = await this.service.getSubscriptionByEmail(
+      email,
+      shopId,
+    );
     if (!subscription) return null;
     return toNewsletterSubscriptionDTO(subscription);
   }

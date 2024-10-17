@@ -32,16 +32,12 @@ export class OrderItemResolver {
   }
 
   @Query(() => OrderItemDTO, { nullable: true })
-  async orderItemById(
-    @Args('id') id: number,
-  ): Promise<OrderItemDTO | null> {
+  async orderItemById(@Args('id') id: number): Promise<OrderItemDTO | null> {
     return await this.fetchOrderItemById.execute(id);
   }
 
   @Mutation(() => Boolean)
-  async deleteOrderItem(
-    @Args('id') id: number,
-  ): Promise<boolean> {
+  async deleteOrderItem(@Args('id') id: number): Promise<boolean> {
     return await this.deleteOrderItemUseCase.execute(id);
   }
 
@@ -82,9 +78,7 @@ export class OrderItemResolver {
   }
 
   @Query(() => Number)
-  async totalPriceForOrder(
-    @Args('orderId') orderId: number,
-  ): Promise<number> {
+  async totalPriceForOrder(@Args('orderId') orderId: number): Promise<number> {
     return await this.calculateTotalPriceForOrder.execute(orderId);
   }
 }

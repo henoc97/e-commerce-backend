@@ -93,4 +93,3 @@ export class UserActivityResolver {
     return this.validateActivityUseCase.execute(activityDTO);
   }
 }
-

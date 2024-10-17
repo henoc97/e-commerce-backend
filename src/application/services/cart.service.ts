@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CartItem } from 'src/domain/entities/cart-item.entity';
 import { Cart } from 'src/domain/entities/cart.entity';
 import { ICartRepository } from 'src/domain/repositories/cart.repository';
@@ -13,7 +10,7 @@ import { CartItemService } from './cart-item.service';
 @Injectable()
 export class CartService {
   constructor(
-    @Inject('ICartRepository') 
+    @Inject('ICartRepository')
     private readonly cartRepository: ICartRepository,
     private readonly cartItemService: CartItemService,
   ) {}
@@ -127,11 +124,7 @@ export class CartService {
     const sourceItems =
       await this.cartItemService.getCartItemsByCartId(sourceCartId);
     for (const item of sourceItems) {
-      const dto = new CartItemDTO(
-        targetCartId,
-        item.productId,
-        item.quantity,
-      );
+      const dto = new CartItemDTO(targetCartId, item.productId, item.quantity);
       await this.cartItemService.createCartItem(dto);
     }
     await this.cartRepository.delete(sourceCartId);

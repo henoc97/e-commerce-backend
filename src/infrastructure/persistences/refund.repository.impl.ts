@@ -6,7 +6,7 @@ import { IRefundRepository } from 'src/domain/repositories/refund.repository';
 
 export class RefundRepository implements IRefundRepository {
   constructor(private readonly prisma: PrismaService) {}
-  
+
   /**
    * Creates a new refund record in the database.
    * @param refund - The refund entity to be created.

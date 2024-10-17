@@ -41,7 +41,9 @@ export class AuditLogResolver {
   }
 
   @Query(() => [AuditLogDTO])
-  async auditLogsByAction(@Args('action') action: AuditLogAction): Promise<AuditLogDTO[]> {
+  async auditLogsByAction(
+    @Args('action') action: AuditLogAction,
+  ): Promise<AuditLogDTO[]> {
     return this.fetchLogsByAction.execute(action);
   }
 
@@ -62,7 +64,9 @@ export class AuditLogResolver {
   }
 
   @Query(() => [AuditLogDTO])
-  async auditLogsByUser(@Args('userId') userId: number): Promise<AuditLogDTO[]> {
+  async auditLogsByUser(
+    @Args('userId') userId: number,
+  ): Promise<AuditLogDTO[]> {
     return this.fetchLogsByUser.execute(userId);
   }
 
@@ -79,4 +83,3 @@ export class AuditLogResolver {
     return this.updateLog.execute(id, dto);
   }
 }
-

@@ -15,7 +15,8 @@ export class OrderItemService {
    */
   constructor(
     @Inject('IOrderItemRepository')
-    private readonly repository: IOrderItemRepository) {}
+    private readonly repository: IOrderItemRepository,
+  ) {}
 
   /**
    * Creates a new OrderItem.

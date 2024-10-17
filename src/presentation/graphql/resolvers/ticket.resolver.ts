@@ -30,7 +30,9 @@ export class TicketResolver {
   ) {}
 
   @Mutation(() => TicketDTO, { nullable: true })
-  async createTicket(@Args('ticketDTO') ticketDTO: TicketDTO): Promise<TicketDTO | null> {
+  async createTicket(
+    @Args('ticketDTO') ticketDTO: TicketDTO,
+  ): Promise<TicketDTO | null> {
     return this.createTicketUseCase.execute(ticketDTO);
   }
 
@@ -45,7 +47,9 @@ export class TicketResolver {
   }
 
   @Query(() => [TicketDTO])
-  async listTicketsByUser(@Args('userId') userId: number): Promise<TicketDTO[]> {
+  async listTicketsByUser(
+    @Args('userId') userId: number,
+  ): Promise<TicketDTO[]> {
     return this.listTicketsByUserUseCase.execute(userId);
   }
 
@@ -73,7 +77,9 @@ export class TicketResolver {
   }
 
   @Query(() => [TicketDTO])
-  async listTicketsByStatus(@Args('status') status: TicketStatus): Promise<TicketDTO[]> {
+  async listTicketsByStatus(
+    @Args('status') status: TicketStatus,
+  ): Promise<TicketDTO[]> {
     return this.listTicketsByStatusUseCase.execute(status);
   }
 
@@ -86,7 +92,9 @@ export class TicketResolver {
   }
 
   @Query(() => Number)
-  async countOpenTicketsByUser(@Args('userId') userId: number): Promise<number> {
+  async countOpenTicketsByUser(
+    @Args('userId') userId: number,
+  ): Promise<number> {
     return this.countOpenTicketsByUserUseCase.execute(userId);
   }
 }

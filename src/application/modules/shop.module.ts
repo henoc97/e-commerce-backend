@@ -15,4 +15,3 @@ import { PrismaService } from 'prisma/prisma.service';
   exports: [ShopService],
 })
 export class ShopModule {}
-

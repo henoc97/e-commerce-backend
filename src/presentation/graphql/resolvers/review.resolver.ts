@@ -33,7 +33,9 @@ export class ReviewResolver {
   ) {}
 
   @Mutation(() => ReviewDTO)
-  async createReview(@Args('reviewDTO') reviewDTO: ReviewDTO): Promise<ReviewDTO | null> {
+  async createReview(
+    @Args('reviewDTO') reviewDTO: ReviewDTO,
+  ): Promise<ReviewDTO | null> {
     return this.createReviewUseCase.execute(reviewDTO);
   }
 
@@ -43,7 +45,9 @@ export class ReviewResolver {
   }
 
   @Query(() => Number)
-  async fetchAverageRating(@Args('productId') productId: number): Promise<number> {
+  async fetchAverageRating(
+    @Args('productId') productId: number,
+  ): Promise<number> {
     return this.fetchAverageRatingUseCase.execute(productId);
   }
 
@@ -53,7 +57,9 @@ export class ReviewResolver {
   }
 
   @Query(() => [ReviewDTO])
-  async fetchPopularReviews(@Args('limit') limit: number): Promise<ReviewDTO[]> {
+  async fetchPopularReviews(
+    @Args('limit') limit: number,
+  ): Promise<ReviewDTO[]> {
     return this.fetchPopularReviewsUseCase.execute(limit);
   }
 
@@ -63,22 +69,31 @@ export class ReviewResolver {
   }
 
   @Query(() => [ReviewDTO])
-  async fetchReviewsByDateRange(@Args('startDate') startDate: Date, @Args('endDate') endDate: Date): Promise<ReviewDTO[]> {
+  async fetchReviewsByDateRange(
+    @Args('startDate') startDate: Date,
+    @Args('endDate') endDate: Date,
+  ): Promise<ReviewDTO[]> {
     return this.fetchReviewsByDateRangeUseCase.execute(startDate, endDate);
   }
 
   @Query(() => [ReviewDTO])
-  async fetchReviewsByProduct(@Args('productId') productId: number): Promise<ReviewDTO[]> {
+  async fetchReviewsByProduct(
+    @Args('productId') productId: number,
+  ): Promise<ReviewDTO[]> {
     return this.fetchReviewsByProductUseCase.execute(productId);
   }
 
   @Query(() => [ReviewDTO])
-  async fetchReviewsByRating(@Args('rating') rating: number): Promise<ReviewDTO[]> {
+  async fetchReviewsByRating(
+    @Args('rating') rating: number,
+  ): Promise<ReviewDTO[]> {
     return this.fetchReviewsByRatingUseCase.execute(rating);
   }
 
   @Query(() => [ReviewDTO])
-  async fetchReviewsByUser(@Args('userId') userId: number): Promise<ReviewDTO[]> {
+  async fetchReviewsByUser(
+    @Args('userId') userId: number,
+  ): Promise<ReviewDTO[]> {
     return this.fetchReviewsByUserUseCase.execute(userId);
   }
 
@@ -88,7 +103,10 @@ export class ReviewResolver {
   }
 
   @Mutation(() => ReviewDTO, { nullable: true })
-  async updateReview(@Args('id') id: number, @Args('reviewDTO') reviewDTO: ReviewDTO): Promise<ReviewDTO | null> {
+  async updateReview(
+    @Args('id') id: number,
+    @Args('reviewDTO') reviewDTO: ReviewDTO,
+  ): Promise<ReviewDTO | null> {
     return this.updateReviewUseCase.execute(id, reviewDTO);
   }
 
@@ -97,4 +115,3 @@ export class ReviewResolver {
     return this.verifyReviewUseCase.execute(id);
   }
 }
-

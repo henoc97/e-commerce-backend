@@ -102,7 +102,9 @@ export class UserResolver {
   }
 
   @Query(() => UserDTO, { name: 'getDetailedInfo' })
-  async getDetailedInfo(@Args('userId') userId: number): Promise<UserDTO | null> {
+  async getDetailedInfo(
+    @Args('userId') userId: number,
+  ): Promise<UserDTO | null> {
     return this.getDetailedInfoUseCase.execute(userId);
   }
 
@@ -139,7 +141,10 @@ export class UserResolver {
     @Args('userId') userId: number,
     @Args('notificationId') notificationId: number,
   ): Promise<UserDTO> {
-    return this.removeNotificationFromUserUseCase.execute(userId, notificationId);
+    return this.removeNotificationFromUserUseCase.execute(
+      userId,
+      notificationId,
+    );
   }
 
   @Mutation(() => UserDTO, { name: 'removeOrderFromUser' })

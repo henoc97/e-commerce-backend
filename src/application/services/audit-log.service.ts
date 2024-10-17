@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { AuditLog } from 'src/domain/entities/audit-log.entity';
 import { IAuditLogRepository } from 'src/domain/repositories/auditlog.repository';
 import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';

@@ -37,7 +37,9 @@ export class CartItemResolver {
   }
 
   @Mutation(() => CartItemDTO)
-  async createCartItem(@Args('cartItemDTO') cartItemDTO: CartItemDTO): Promise<CartItemDTO> {
+  async createCartItem(
+    @Args('cartItemDTO') cartItemDTO: CartItemDTO,
+  ): Promise<CartItemDTO> {
     return this.createCartItemUseCase.execute(cartItemDTO);
   }
 
@@ -60,12 +62,16 @@ export class CartItemResolver {
   }
 
   @Query(() => [CartItemDTO])
-  async fetchCartItemsByCartId(@Args('cartId') cartId: number): Promise<CartItemDTO[]> {
+  async fetchCartItemsByCartId(
+    @Args('cartId') cartId: number,
+  ): Promise<CartItemDTO[]> {
     return this.fetchCartItemsByCartIdUseCase.execute(cartId);
   }
 
   @Query(() => CartItemDTO, { nullable: true })
-  async fetchHighestQuantityItem(@Args('cartId') cartId: number): Promise<CartItemDTO | null> {
+  async fetchHighestQuantityItem(
+    @Args('cartId') cartId: number,
+  ): Promise<CartItemDTO | null> {
     return this.fetchHighestQuantityItemUseCase.execute(cartId);
   }
 

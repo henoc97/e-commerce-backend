@@ -81,7 +81,9 @@ export class SubsiteResolver {
   }
 
   @Query(() => [SubsiteDTO])
-  async listSubsitesByUser(@Args('userId') userId: number): Promise<SubsiteDTO[]> {
+  async listSubsitesByUser(
+    @Args('userId') userId: number,
+  ): Promise<SubsiteDTO[]> {
     return this.listSubsitesByUserUseCase.execute(userId);
   }
 
@@ -92,5 +94,4 @@ export class SubsiteResolver {
   ): Promise<any> {
     return this.updateSubsiteConfigUseCase.execute(id, config);
   }
-
 }

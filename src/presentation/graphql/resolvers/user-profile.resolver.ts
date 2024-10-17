@@ -46,12 +46,16 @@ export class UserProfileResolver {
   }
 
   @Query(() => UserProfileDTO, { nullable: true })
-  async fetchUserProfileById(@Args('id') id: number): Promise<UserProfileDTO | null> {
+  async fetchUserProfileById(
+    @Args('id') id: number,
+  ): Promise<UserProfileDTO | null> {
     return this.fetchUserProfileByIdUseCase.execute(id);
   }
 
   @Query(() => UserProfileDTO, { nullable: true })
-  async fetchUserProfileByUserId(@Args('userId') userId: number): Promise<UserProfileDTO | null> {
+  async fetchUserProfileByUserId(
+    @Args('userId') userId: number,
+  ): Promise<UserProfileDTO | null> {
     return this.fetchUserProfileByUserIdUseCase.execute(userId);
   }
 
@@ -60,11 +64,16 @@ export class UserProfileResolver {
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
   ): Promise<UserProfileDTO[]> {
-    return this.fetchUserProfilesByBirthdayRangeUseCase.execute(startDate, endDate);
+    return this.fetchUserProfilesByBirthdayRangeUseCase.execute(
+      startDate,
+      endDate,
+    );
   }
 
   @Query(() => [UserProfileDTO])
-  async fetchUserProfilesByGender(@Args('gender') gender: string): Promise<UserProfileDTO[]> {
+  async fetchUserProfilesByGender(
+    @Args('gender') gender: string,
+  ): Promise<UserProfileDTO[]> {
     return this.fetchUserProfilesByGenderUseCase.execute(gender);
   }
 

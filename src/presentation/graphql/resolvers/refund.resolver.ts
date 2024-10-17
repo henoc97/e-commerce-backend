@@ -42,12 +42,16 @@ export class RefundResolver {
   }
 
   @Query(() => Boolean)
-  async checkRefundEligibility(@Args('refund') refund: RefundDTO): Promise<boolean> {
+  async checkRefundEligibility(
+    @Args('refund') refund: RefundDTO,
+  ): Promise<boolean> {
     return this.checkRefundEligibilityUseCase.execute(refund);
   }
 
   @Mutation(() => RefundDTO, { nullable: true })
-  async createRefund(@Args('refundDTO') refundDTO: RefundDTO): Promise<RefundDTO | null> {
+  async createRefund(
+    @Args('refundDTO') refundDTO: RefundDTO,
+  ): Promise<RefundDTO | null> {
     return this.createRefundUseCase.execute(refundDTO);
   }
 
@@ -62,33 +66,47 @@ export class RefundResolver {
   }
 
   @Query(() => [RefundDTO])
-  async fetchRefundsByOrder(@Args('orderId') orderId: number): Promise<RefundDTO[]> {
+  async fetchRefundsByOrder(
+    @Args('orderId') orderId: number,
+  ): Promise<RefundDTO[]> {
     return this.fetchRefundsByOrderUseCase.execute(orderId);
   }
 
   @Query(() => [RefundDTO])
-  async fetchRefundsByStatus(@Args('status') status: RefundStatus): Promise<RefundDTO[]> {
+  async fetchRefundsByStatus(
+    @Args('status') status: RefundStatus,
+  ): Promise<RefundDTO[]> {
     return this.fetchRefundsByStatusUseCase.execute(status);
   }
 
   @Query(() => Number)
-  async fetchTotalRefundedAmount(@Args('orderId') orderId: number): Promise<number> {
+  async fetchTotalRefundedAmount(
+    @Args('orderId') orderId: number,
+  ): Promise<number> {
     return this.fetchTotalRefundedAmountUseCase.execute(orderId);
   }
 
   @Mutation(() => RefundDTO)
-  async issuePartialRefund(@Args('id') id: number, @Args('amount') amount: number): Promise<RefundDTO> {
+  async issuePartialRefund(
+    @Args('id') id: number,
+    @Args('amount') amount: number,
+  ): Promise<RefundDTO> {
     return this.issuePartialRefundUseCase.execute(id, amount);
   }
 
   @Mutation(() => RefundDTO)
-  async processRefund(@Args('id') id: number, @Args('status') status: RefundStatus): Promise<RefundDTO> {
+  async processRefund(
+    @Args('id') id: number,
+    @Args('status') status: RefundStatus,
+  ): Promise<RefundDTO> {
     return this.processRefundUseCase.execute(id, status);
   }
 
   @Mutation(() => RefundDTO)
-  async updateRefund(@Args('id') id: number, @Args('updates') updates: Partial<RefundDTO>): Promise<RefundDTO> {
+  async updateRefund(
+    @Args('id') id: number,
+    @Args('updates') updates: Partial<RefundDTO>,
+  ): Promise<RefundDTO> {
     return this.updateRefundUseCase.execute(id, updates);
   }
 }
-

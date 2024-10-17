@@ -25,7 +25,7 @@ export class VendorService {
     @Inject('IVendorRepository')
     private readonly vendorRepository: IVendorRepository,
     private readonly subscriptionService: SubscriptionService,
-    private readonly shopService: ShopService
+    private readonly shopService: ShopService,
   ) {}
 
   /**

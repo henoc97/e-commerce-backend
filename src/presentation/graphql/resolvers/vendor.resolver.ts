@@ -83,7 +83,9 @@ export class VendorResolver {
    * @returns The vendor data transfer object or null.
    */
   @Query(() => VendorDTO, { nullable: true })
-  async findVendorById(@Args('vendorId') vendorId: number): Promise<VendorDTO | null> {
+  async findVendorById(
+    @Args('vendorId') vendorId: number,
+  ): Promise<VendorDTO | null> {
     return this.findVendorByIdUseCase.execute(vendorId);
   }
 
@@ -93,7 +95,9 @@ export class VendorResolver {
    * @returns A list of vendor data transfer objects.
    */
   @Query(() => [VendorDTO])
-  async findVendorsByStoreName(@Args('storeName') storeName: string): Promise<VendorDTO[]> {
+  async findVendorsByStoreName(
+    @Args('storeName') storeName: string,
+  ): Promise<VendorDTO[]> {
     return this.findVendorsByStoreNameUseCase.execute(storeName);
   }
 
@@ -103,7 +107,9 @@ export class VendorResolver {
    * @returns A list of vendor data transfer objects.
    */
   @Query(() => [VendorDTO])
-  async findVendorsBySubscription(@Args('subscriptionId') subscriptionId: number): Promise<VendorDTO[]> {
+  async findVendorsBySubscription(
+    @Args('subscriptionId') subscriptionId: number,
+  ): Promise<VendorDTO[]> {
     return this.findVendorsBySubscriptionUseCase.execute(subscriptionId);
   }
 
@@ -113,7 +119,9 @@ export class VendorResolver {
    * @returns A list of vendor data transfer objects.
    */
   @Query(() => [VendorDTO])
-  async findVendorsByUser(@Args('userId') userId: number): Promise<VendorDTO[]> {
+  async findVendorsByUser(
+    @Args('userId') userId: number,
+  ): Promise<VendorDTO[]> {
     return this.findVendorsByUserUseCase.execute(userId);
   }
 
@@ -132,7 +140,9 @@ export class VendorResolver {
    * @returns A list of product data transfer objects.
    */
   @Query(() => [ProductDTO])
-  async getVendorProducts(@Args('vendorId') vendorId: number): Promise<ProductDTO[]> {
+  async getVendorProducts(
+    @Args('vendorId') vendorId: number,
+  ): Promise<ProductDTO[]> {
     return this.getVendorProductsUseCase.execute(vendorId);
   }
 
@@ -142,7 +152,9 @@ export class VendorResolver {
    * @returns The shop data transfer object or null.
    */
   @Query(() => ShopDTO, { nullable: true })
-  async getVendorShop(@Args('vendorId') vendorId: number): Promise<ShopDTO | null> {
+  async getVendorShop(
+    @Args('vendorId') vendorId: number,
+  ): Promise<ShopDTO | null> {
     return this.getVendorShopUseCase.execute(vendorId);
   }
 
@@ -152,7 +164,9 @@ export class VendorResolver {
    * @returns The subscription data transfer object or null.
    */
   @Query(() => SubscriptionDTO, { nullable: true })
-  async getVendorSubscription(@Args('vendorId') vendorId: number): Promise<SubscriptionDTO | null> {
+  async getVendorSubscription(
+    @Args('vendorId') vendorId: number,
+  ): Promise<SubscriptionDTO | null> {
     return this.getVendorSubscriptionUseCase.execute(vendorId);
   }
 

@@ -11,7 +11,7 @@ import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
 export class ReviewService {
   constructor(
     @Inject('IReviewRepository')
-    private readonly reviewRepository: IReviewRepository
+    private readonly reviewRepository: IReviewRepository,
   ) {}
 
   /**

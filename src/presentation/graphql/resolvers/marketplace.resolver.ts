@@ -31,22 +31,30 @@ export class MarketplaceResolver {
   }
 
   @Query(() => MarketplaceDTO, { nullable: true })
-  async fetchMarketplaceById(@Args('id') id: number): Promise<MarketplaceDTO | null> {
+  async fetchMarketplaceById(
+    @Args('id') id: number,
+  ): Promise<MarketplaceDTO | null> {
     return this.fetchMarketplaceByIdUseCase.execute(id);
   }
 
   @Query(() => MarketplaceDTO, { nullable: true })
-  async fetchMarketplaceByShopId(@Args('shopId') shopId: number): Promise<MarketplaceDTO | null> {
+  async fetchMarketplaceByShopId(
+    @Args('shopId') shopId: number,
+  ): Promise<MarketplaceDTO | null> {
     return this.fetchMarketplaceByShopIdUseCase.execute(shopId);
   }
 
   @Query(() => [ShopDTO])
-  async fetchShopsInMarketplace(@Args('marketplaceId') marketplaceId: number): Promise<ShopDTO[]> {
+  async fetchShopsInMarketplace(
+    @Args('marketplaceId') marketplaceId: number,
+  ): Promise<ShopDTO[]> {
     return this.fetchShopsInMarketplaceUseCase.execute(marketplaceId);
   }
 
   @Mutation(() => MarketplaceDTO, { nullable: true })
-  async createMarketplace(@Args('dto') dto: MarketplaceDTO): Promise<MarketplaceDTO | null> {
+  async createMarketplace(
+    @Args('dto') dto: MarketplaceDTO,
+  ): Promise<MarketplaceDTO | null> {
     return this.createMarketplaceUseCase.execute(dto);
   }
 
@@ -56,17 +64,26 @@ export class MarketplaceResolver {
   }
 
   @Mutation(() => MarketplaceDTO, { nullable: true })
-  async updateMarketplace(@Args('id') id: number, @Args('data') data: Partial<MarketplaceDTO>): Promise<MarketplaceDTO | null> {
+  async updateMarketplace(
+    @Args('id') id: number,
+    @Args('data') data: Partial<MarketplaceDTO>,
+  ): Promise<MarketplaceDTO | null> {
     return this.updateMarketplaceUseCase.execute(id, data);
   }
 
   @Mutation(() => MarketplaceDTO, { nullable: true })
-  async addShopToMarketplace(@Args('marketplaceId') marketplaceId: number, @Args('shopId') shopId: number): Promise<MarketplaceDTO | null> {
+  async addShopToMarketplace(
+    @Args('marketplaceId') marketplaceId: number,
+    @Args('shopId') shopId: number,
+  ): Promise<MarketplaceDTO | null> {
     return this.addShopToMarketplaceUseCase.execute(marketplaceId, shopId);
   }
 
   @Mutation(() => MarketplaceDTO, { nullable: true })
-  async removeShopFromMarketplace(@Args('marketplaceId') marketplaceId: number, @Args('shopId') shopId: number): Promise<MarketplaceDTO | null> {
+  async removeShopFromMarketplace(
+    @Args('marketplaceId') marketplaceId: number,
+    @Args('shopId') shopId: number,
+  ): Promise<MarketplaceDTO | null> {
     return this.removeShopFromMarketplaceUseCase.execute(marketplaceId, shopId);
   }
 }

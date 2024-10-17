@@ -35,7 +35,9 @@ export class ProductImageResolver {
   }
 
   @Query(() => Number)
-  async countProductImages(@Args('productId') productId: number): Promise<number> {
+  async countProductImages(
+    @Args('productId') productId: number,
+  ): Promise<number> {
     return this.countProductImagesByProductId.execute(productId);
   }
 
@@ -52,22 +54,30 @@ export class ProductImageResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteProductImagesByProductId(@Args('productId') productId: number): Promise<boolean> {
+  async deleteProductImagesByProductId(
+    @Args('productId') productId: number,
+  ): Promise<boolean> {
     return this.deleteProductImagesByProductIdUseCase.execute(productId);
   }
 
   @Query(() => ProductImageDTO, { nullable: true })
-  async fetchPrimaryProductImage(@Args('productId') productId: number): Promise<ProductImageDTO | null> {
+  async fetchPrimaryProductImage(
+    @Args('productId') productId: number,
+  ): Promise<ProductImageDTO | null> {
     return this.fetchPrimaryProductImageUseCase.execute(productId);
   }
 
   @Query(() => ProductImageDTO, { nullable: true })
-  async fetchProductImageById(@Args('id') id: number): Promise<ProductImageDTO | null> {
+  async fetchProductImageById(
+    @Args('id') id: number,
+  ): Promise<ProductImageDTO | null> {
     return this.fetchProductImageByIdUseCase.execute(id);
   }
 
   @Query(() => [ProductImageDTO])
-  async fetchProductImagesByProductId(@Args('productId') productId: number): Promise<ProductImageDTO[]> {
+  async fetchProductImagesByProductId(
+    @Args('productId') productId: number,
+  ): Promise<ProductImageDTO[]> {
     return this.fetchProductImagesByProductIdUseCase.execute(productId);
   }
 
@@ -87,4 +97,3 @@ export class ProductImageResolver {
     return this.updateProductImageUseCase.execute(id, updates);
   }
 }
-

@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Marketplace } from 'src/domain/entities/marketplace.entity';
 import { Shop } from 'src/domain/entities/shop.entity';
 import { IMarketplaceRepository } from 'src/domain/repositories/marketplace.repository';

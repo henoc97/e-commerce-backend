@@ -28,7 +28,6 @@ export class NewsletterSubscriptionDTO {
   @IsString()
   email: string;
 
-  
   /**
    * The identifier of the shop associated with this subscription.
    */
@@ -58,7 +57,13 @@ export class NewsletterSubscriptionDTO {
    * @param subscribedAt - (Optional) Date and time of subscription creation.
    * @param id - Unique identifier for the subscription (optional).
    */
-  constructor(email: string, shopId: number, isActive: boolean, subscribedAt?: Date, id?: number) {
+  constructor(
+    email: string,
+    shopId: number,
+    isActive: boolean,
+    subscribedAt?: Date,
+    id?: number,
+  ) {
     this.id = id;
     this.email = email;
     this.shopId = shopId;

@@ -28,12 +28,17 @@ export class CategoryResolver {
   ) {}
 
   @Query(() => Boolean)
-  async categoryExists(@Args('name') name: string, @Args('shopId') shopId: number): Promise<boolean> {
+  async categoryExists(
+    @Args('name') name: string,
+    @Args('shopId') shopId: number,
+  ): Promise<boolean> {
     return this.checkCategoryExistence.execute(name, shopId);
   }
 
   @Mutation(() => CategoryDTO)
-  async createCategory(@Args('categoryDTO') categoryDTO: CategoryDTO): Promise<CategoryDTO> {
+  async createCategory(
+    @Args('categoryDTO') categoryDTO: CategoryDTO,
+  ): Promise<CategoryDTO> {
     return this.createCategoryUseCase.execute(categoryDTO);
   }
 
@@ -48,7 +53,9 @@ export class CategoryResolver {
   }
 
   @Query(() => [CategoryDTO])
-  async categoryHierarchy(@Args('categoryId') categoryId: number): Promise<CategoryDTO[]> {
+  async categoryHierarchy(
+    @Args('categoryId') categoryId: number,
+  ): Promise<CategoryDTO[]> {
     return this.fetchCategoryHierarchy.execute(categoryId);
   }
 
@@ -58,7 +65,9 @@ export class CategoryResolver {
   }
 
   @Query(() => [ProductDTO])
-  async products(@Args('categoryId') categoryId: number): Promise<ProductDTO[]> {
+  async products(
+    @Args('categoryId') categoryId: number,
+  ): Promise<ProductDTO[]> {
     return this.fetchProducts.execute(categoryId);
   }
 
@@ -68,7 +77,10 @@ export class CategoryResolver {
   }
 
   @Mutation(() => CategoryDTO)
-  async setParent(@Args('id') id: number, @Args('newParentId') newParentId: number): Promise<CategoryDTO> {
+  async setParent(
+    @Args('id') id: number,
+    @Args('newParentId') newParentId: number,
+  ): Promise<CategoryDTO> {
     return this.setParentUseCase.execute(id, newParentId);
   }
 
@@ -80,4 +92,3 @@ export class CategoryResolver {
     return this.updateCategoryUseCase.execute(id, categoryDTO);
   }
 }
-

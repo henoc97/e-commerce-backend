@@ -11,7 +11,7 @@ import { Inject } from '@nestjs/common';
 export class SubsiteService {
   constructor(
     @Inject('ISubsiteRepository')
-    private readonly subsiteRepository: ISubsiteRepository
+    private readonly subsiteRepository: ISubsiteRepository,
   ) {}
 
   /**

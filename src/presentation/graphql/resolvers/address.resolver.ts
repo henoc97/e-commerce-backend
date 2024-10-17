@@ -56,7 +56,9 @@ export class AddressResolver {
   }
 
   @Query(() => [AddressDTO])
-  async addressesByCountry(@Args('country') country: string): Promise<AddressDTO[]> {
+  async addressesByCountry(
+    @Args('country') country: string,
+  ): Promise<AddressDTO[]> {
     return this.listAddressesByCountry.execute(country);
   }
 
@@ -66,7 +68,9 @@ export class AddressResolver {
   }
 
   @Query(() => [AddressDTO])
-  async addressesByPostalCode(@Args('postalCode') postalCode: string): Promise<AddressDTO[]> {
+  async addressesByPostalCode(
+    @Args('postalCode') postalCode: string,
+  ): Promise<AddressDTO[]> {
     return this.listAddressesByPostalCode.execute(postalCode);
   }
 

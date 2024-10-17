@@ -97,9 +97,7 @@ export class ProductResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteProduct(
-    @Args('productId') productId: number,
-  ): Promise<boolean> {
+  async deleteProduct(@Args('productId') productId: number): Promise<boolean> {
     return this.deleteProductUseCase.execute(productId);
   }
 
@@ -135,9 +133,7 @@ export class ProductResolver {
   }
 
   @Query(() => [ProductDTO])
-  async findProductsByName(
-    @Args('name') name: string,
-  ): Promise<ProductDTO[]> {
+  async findProductsByName(@Args('name') name: string): Promise<ProductDTO[]> {
     return this.findProductsByNameUseCase.execute(name);
   }
 
@@ -162,7 +158,10 @@ export class ProductResolver {
     @Args('productId') productId: number,
     @Args('promotionId') promotionId: number,
   ): Promise<ProductDTO | null> {
-    return this.removePromotionFromProductUseCase.execute(productId, promotionId);
+    return this.removePromotionFromProductUseCase.execute(
+      productId,
+      promotionId,
+    );
   }
 
   @Mutation(() => ProductDTO, { nullable: true })

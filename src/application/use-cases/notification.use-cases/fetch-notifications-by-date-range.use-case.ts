@@ -16,10 +16,7 @@ export class FetchNotificationsByDateRange {
    * @param endDate - The end date.
    * @returns The notifications within the date range.
    */
-  async execute(
-    startDate: Date,
-    endDate: Date,
-  ): Promise<NotificationDTO[]> {
+  async execute(startDate: Date, endDate: Date): Promise<NotificationDTO[]> {
     const notifications = await this.service.getNotificationsByDateRange(
       startDate,
       endDate,

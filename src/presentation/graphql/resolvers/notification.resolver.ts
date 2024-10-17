@@ -28,22 +28,30 @@ export class NotificationResolver {
   ) {}
 
   @Query(() => Number)
-  async countUnreadNotifications(@Args('userId') userId: number): Promise<number> {
+  async countUnreadNotifications(
+    @Args('userId') userId: number,
+  ): Promise<number> {
     return this.countUnreadNotificationsUseCase.execute(userId);
   }
 
   @Mutation(() => NotificationDTO)
-  async createNotification(@Args('notificationDTO') notificationDTO: NotificationDTO): Promise<NotificationDTO | null> {
+  async createNotification(
+    @Args('notificationDTO') notificationDTO: NotificationDTO,
+  ): Promise<NotificationDTO | null> {
     return this.createNotificationUseCase.execute(notificationDTO);
   }
 
   @Mutation(() => Boolean)
-  async deleteNotification(@Args('notificationId') notificationId: number): Promise<boolean> {
+  async deleteNotification(
+    @Args('notificationId') notificationId: number,
+  ): Promise<boolean> {
     return this.deleteNotificationUseCase.execute(notificationId);
   }
 
   @Query(() => NotificationDTO, { nullable: true })
-  async fetchNotificationById(@Args('notificationId') notificationId: number): Promise<NotificationDTO | null> {
+  async fetchNotificationById(
+    @Args('notificationId') notificationId: number,
+  ): Promise<NotificationDTO | null> {
     return this.fetchNotificationByIdUseCase.execute(notificationId);
   }
 
@@ -52,26 +60,37 @@ export class NotificationResolver {
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
   ): Promise<NotificationDTO[]> {
-    return this.fetchNotificationsByDateRangeUseCase.execute(startDate, endDate);
+    return this.fetchNotificationsByDateRangeUseCase.execute(
+      startDate,
+      endDate,
+    );
   }
 
   @Query(() => [NotificationDTO])
-  async fetchNotificationsByType(@Args('type') type: NotificationType): Promise<NotificationDTO[]> {
+  async fetchNotificationsByType(
+    @Args('type') type: NotificationType,
+  ): Promise<NotificationDTO[]> {
     return this.fetchNotificationsByTypeUseCase.execute(type);
   }
 
   @Query(() => [NotificationDTO])
-  async fetchNotificationsByUserId(@Args('userId') userId: number): Promise<NotificationDTO[]> {
+  async fetchNotificationsByUserId(
+    @Args('userId') userId: number,
+  ): Promise<NotificationDTO[]> {
     return this.fetchNotificationsByUserIdUseCase.execute(userId);
   }
 
   @Query(() => [NotificationDTO])
-  async fetchRecentNotifications(@Args('userId') userId: number): Promise<NotificationDTO[]> {
+  async fetchRecentNotifications(
+    @Args('userId') userId: number,
+  ): Promise<NotificationDTO[]> {
     return this.fetchRecentNotificationsUseCase.execute(userId);
   }
 
   @Mutation(() => NotificationDTO, { nullable: true })
-  async markNotificationAsRead(@Args('notificationId') notificationId: number): Promise<NotificationDTO | null> {
+  async markNotificationAsRead(
+    @Args('notificationId') notificationId: number,
+  ): Promise<NotificationDTO | null> {
     return this.markNotificationAsReadUseCase.execute(notificationId);
   }
 
@@ -83,4 +102,3 @@ export class NotificationResolver {
     return this.updateNotificationUseCase.execute(notificationId, updates);
   }
 }
-

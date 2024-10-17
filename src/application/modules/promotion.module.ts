@@ -15,4 +15,3 @@ import { PrismaService } from 'prisma/prisma.service';
   exports: [PromotionService],
 })
 export class PromotionModule {}
-

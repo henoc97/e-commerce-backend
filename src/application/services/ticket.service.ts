@@ -10,14 +10,13 @@ import { Inject } from '@nestjs/common';
  * Implements business logic for creating, retrieving, updating, and deleting tickets.
  */
 export class TicketService {
-
   /**
    * Constructs a new TicketService instance.
    * @param ticketRepository - The repository instance for interacting with the ticket data.
    */
   constructor(
     @Inject('ITicketRepository')
-    private readonly ticketRepository: ITicketRepository
+    private readonly ticketRepository: ITicketRepository,
   ) {}
 
   /**

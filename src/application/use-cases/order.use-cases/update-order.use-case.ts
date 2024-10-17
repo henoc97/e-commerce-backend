@@ -16,7 +16,10 @@ export class UpdateOrder {
    * @param updates - Partial data to update the order.
    * @returns A promise that resolves to the updated Order DTO.
    */
-  async execute(orderId: number, updates: Partial<OrderDTO>): Promise<OrderDTO> {
+  async execute(
+    orderId: number,
+    updates: Partial<OrderDTO>,
+  ): Promise<OrderDTO> {
     const order = await this.orderService.updateOrder(orderId, updates);
     return toOrderDTO(order);
   }

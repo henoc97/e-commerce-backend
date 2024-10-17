@@ -48,7 +48,10 @@ export class SubscriptionResolver {
     @Args('minPrice') minPrice: number,
     @Args('maxPrice') maxPrice: number,
   ) {
-    return this.listSubscriptionsByPriceRangeUseCase.execute(minPrice, maxPrice);
+    return this.listSubscriptionsByPriceRangeUseCase.execute(
+      minPrice,
+      maxPrice,
+    );
   }
 
   @Query(() => [SubscriptionDTO])
@@ -67,7 +70,9 @@ export class SubscriptionResolver {
   }
 
   @Mutation(() => SubscriptionDTO, { nullable: true })
-  async createSubscription(@Args('subscriptionDTO') subscriptionDTO: SubscriptionDTO) {
+  async createSubscription(
+    @Args('subscriptionDTO') subscriptionDTO: SubscriptionDTO,
+  ) {
     return this.createSubscriptionUseCase.execute(subscriptionDTO);
   }
 
@@ -89,4 +94,3 @@ export class SubscriptionResolver {
     return this.countSubscriptionsByVendorUseCase.execute(vendorId);
   }
 }
-

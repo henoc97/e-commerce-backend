@@ -11,7 +11,7 @@ import { fromUserProfileDTO } from '../helper/to-entity/to.user-profile.entity';
 export class UserProfileService {
   constructor(
     @Inject('IUserProfileRepository')
-    private readonly userProfileRepository: IUserProfileRepository
+    private readonly userProfileRepository: IUserProfileRepository,
   ) {}
 
   /**

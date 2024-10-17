@@ -16,7 +16,7 @@ import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
 @Resolver(() => PaymentDTO)
 export class PaymentResolver {
   constructor(
-    private readonly createPaymentUseCase   : CreatePayment,
+    private readonly createPaymentUseCase: CreatePayment,
     private readonly deletePaymentUseCase: DeletePayment,
     private readonly fetchMostRecentPaymentByOrderIdUseCase: FetchMostRecentPaymentByOrderId,
     private readonly fetchPaymentByIdUseCase: FetchPaymentById,
@@ -30,7 +30,9 @@ export class PaymentResolver {
   ) {}
 
   @Mutation(() => PaymentDTO)
-  async createPayment(@Args('paymentDTO') paymentDTO: PaymentDTO): Promise<PaymentDTO | null> {
+  async createPayment(
+    @Args('paymentDTO') paymentDTO: PaymentDTO,
+  ): Promise<PaymentDTO | null> {
     return this.createPaymentUseCase.execute(paymentDTO);
   }
 
@@ -40,7 +42,9 @@ export class PaymentResolver {
   }
 
   @Query(() => PaymentDTO, { nullable: true })
-  async fetchMostRecentPaymentByOrderId(@Args('orderId') orderId: number): Promise<PaymentDTO | null> {
+  async fetchMostRecentPaymentByOrderId(
+    @Args('orderId') orderId: number,
+  ): Promise<PaymentDTO | null> {
     return this.fetchMostRecentPaymentByOrderIdUseCase.execute(orderId);
   }
 
@@ -50,22 +54,31 @@ export class PaymentResolver {
   }
 
   @Query(() => [PaymentDTO])
-  async fetchPaymentsByDateRange(@Args('startDate') startDate: Date, @Args('endDate') endDate: Date): Promise<PaymentDTO[]> {
+  async fetchPaymentsByDateRange(
+    @Args('startDate') startDate: Date,
+    @Args('endDate') endDate: Date,
+  ): Promise<PaymentDTO[]> {
     return this.fetchPaymentsByDateRangeUseCase.execute(startDate, endDate);
   }
 
   @Query(() => [PaymentDTO])
-  async fetchPaymentsByMethod(@Args('method') method: string): Promise<PaymentDTO[]> {
+  async fetchPaymentsByMethod(
+    @Args('method') method: string,
+  ): Promise<PaymentDTO[]> {
     return this.fetchPaymentsByMethodUseCase.execute(method);
   }
 
   @Query(() => [PaymentDTO])
-  async fetchPaymentsByOrderId(@Args('orderId') orderId: number): Promise<PaymentDTO[]> {
+  async fetchPaymentsByOrderId(
+    @Args('orderId') orderId: number,
+  ): Promise<PaymentDTO[]> {
     return this.fetchPaymentsByOrderIdUseCase.execute(orderId);
   }
 
   @Query(() => [PaymentDTO])
-  async fetchPaymentsByStatus(@Args('status') status: PaymentStatus): Promise<PaymentDTO[]> {
+  async fetchPaymentsByStatus(
+    @Args('status') status: PaymentStatus,
+  ): Promise<PaymentDTO[]> {
     return this.fetchPaymentsByStatusUseCase.execute(status);
   }
 
@@ -75,13 +88,18 @@ export class PaymentResolver {
   }
 
   @Query(() => Number)
-  async fetchTotalAmountByDateRange(@Args('startDate') startDate: Date, @Args('endDate') endDate: Date): Promise<number> {
+  async fetchTotalAmountByDateRange(
+    @Args('startDate') startDate: Date,
+    @Args('endDate') endDate: Date,
+  ): Promise<number> {
     return this.fetchTotalAmountByDateRangeUseCase.execute(startDate, endDate);
   }
 
   @Mutation(() => PaymentDTO, { nullable: true })
-  async updatePayment(@Args('id') id: number, @Args('updates') updates: Partial<PaymentDTO>): Promise<PaymentDTO | null> {
+  async updatePayment(
+    @Args('id') id: number,
+    @Args('updates') updates: Partial<PaymentDTO>,
+  ): Promise<PaymentDTO | null> {
     return this.updatePaymentUseCase.execute(id, updates);
   }
 }
-

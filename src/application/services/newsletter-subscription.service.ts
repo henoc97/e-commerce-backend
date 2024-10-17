@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { NewsletterSubscription } from 'src/domain/entities/newsletter-subscription.entity';
 import { INewsletterSubscriptionRepository } from 'src/domain/repositories/newsletter-subscription.repository';
 import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
@@ -108,10 +105,7 @@ export class NewsletterSubscriptionService {
    * @throws InternalServerErrorException if retrieval fails.
    */
   async isEmailSubscribed(email: string, shopId: number): Promise<boolean> {
-    return this.newsletterSubscriptionRepository.isSubscribed(
-      email,
-      shopId,
-    );
+    return this.newsletterSubscriptionRepository.isSubscribed(email, shopId);
   }
 
   /**
@@ -141,8 +135,6 @@ export class NewsletterSubscriptionService {
    * @throws InternalServerErrorException if counting fails.
    */
   async countTotalSubscriptions(shopId: number): Promise<number> {
-    return this.newsletterSubscriptionRepository.countAllForShop(
-      shopId,
-    );
+    return this.newsletterSubscriptionRepository.countAllForShop(shopId);
   }
 }

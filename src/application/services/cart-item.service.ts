@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CartItem } from 'src/domain/entities/cart-item.entity';
 import { ICartItemRepository } from 'src/domain/repositories/cart-item.repository';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';

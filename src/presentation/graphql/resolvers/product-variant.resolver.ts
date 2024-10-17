@@ -60,7 +60,9 @@ export class ProductVariantResolver {
   }
 
   @Query(() => ProductVariantDTO, { nullable: true })
-  async fetchProductVariantById(@Args('id') id: number): Promise<ProductVariantDTO | null> {
+  async fetchProductVariantById(
+    @Args('id') id: number,
+  ): Promise<ProductVariantDTO | null> {
     return this.fetchById.execute(id);
   }
 
@@ -87,4 +89,3 @@ export class ProductVariantResolver {
     return this.updateDetails.execute(id, updateData);
   }
 }
-
