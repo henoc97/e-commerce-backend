@@ -79,24 +79,24 @@ export class AuditLogDTO {
 
   /**
    * Constructs a new AuditLogDTO instance.
-   * @param id - Unique identifier for the audit log entry.
    * @param userId - Unique identifier of the user who performed the action.
    * @param action - The type of action performed by the user.
    * @param entity - The entity affected by the action.
    * @param entityId - The unique identifier of the entity affected by the action.
    * @param changes - Details of the changes made.
-   * @param user - The user who performed the action
    * @param createdAt - (Optional) The date and time when the action was performed, defaults to the current date and time.
+   * @param id - (Optional) Unique identifier for the audit log entry.
+   * @param user - (Optional) The user who performed the action
    */
   constructor(
-    id: number,
     userId: number,
     action: AuditLogAction,
     entity: string,
     entityId: number,
     changes: any,
-    user?: UserDTO,
     createdAt: Date = new Date(),
+    id?: number,
+    user?: UserDTO,
   ) {
     this.id = id;
     this.userId = userId;

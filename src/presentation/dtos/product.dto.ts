@@ -136,7 +136,7 @@ export class ProductDTO {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => CartItemDTO)
-  CartItem?: CartItemDTO[];
+  cartItem?: CartItemDTO[];
 
   /**
    * Optional array of OrderItems associated with the Product.
@@ -144,7 +144,7 @@ export class ProductDTO {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => OrderItemDTO)
-  OrderItem?: OrderItemDTO[];
+  orderItem?: OrderItemDTO[];
 
   /**
    * Optional array of Reviews for the Product.
@@ -152,7 +152,7 @@ export class ProductDTO {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ReviewDTO)
-  Review?: ReviewDTO[];
+  review?: ReviewDTO[];
 
   /**
    * Creates a new ProductDTO instance.
@@ -169,10 +169,10 @@ export class ProductDTO {
    * @param shopId - The ID of the Shop.
    * @param createdAt - Date and time of Product creation.
    * @param updatedAt - Date and time of Product last update.
-   * @param CartItem - Optional cart items associated with the Product.
-   * @param OrderItem - Optional order items associated with the Product.
+   * @param cartItem - Optional cart items associated with the Product.
+   * @param orderItem - Optional order items associated with the Product.
    * @param Review - Optional reviews for the Product.
-   * @param description - Optional description of the Product.
+   * @param rescription - Optional description of the Product.
    * @param vendor - Optional Vendor associated with the Product.
    * @param vendorId - Optional ID of the Vendor.
    */
@@ -190,9 +190,9 @@ export class ProductDTO {
     shopId: number,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
-    CartItem: CartItemDTO[] = [],
-    OrderItem: OrderItemDTO[] = [],
-    Review: ReviewDTO[] = [],
+    cartItem: CartItemDTO[] = [],
+    orderItem: OrderItemDTO[] = [],
+    review: ReviewDTO[] = [],
     description?: string,
     vendor?: VendorDTO,
     vendorId?: number,
@@ -210,9 +210,9 @@ export class ProductDTO {
     this.shopId = shopId;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.CartItem = CartItem;
-    this.OrderItem = OrderItem;
-    this.Review = Review;
+    this.cartItem = cartItem;
+    this.orderItem = orderItem;
+    this.review = review;
     this.description = description;
     this.vendor = vendor;
     this.vendorId = vendorId;

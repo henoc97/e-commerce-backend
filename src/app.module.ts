@@ -24,6 +24,7 @@ import { UserActivityModule } from './application/modules/user-activity.module';
 import { UserProfileModule } from './application/modules/user-profile.module';
 import { UserModule } from './application/modules/user.module';
 import { VendorModule } from './application/modules/vendor.module';
+import { MyGraphQLModule } from './presentation/graphql/graphql.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { VendorModule } from './application/modules/vendor.module';
     UserProfileModule,
     UserModule,
     VendorModule,
+    MyGraphQLModule
   ],
   // ... autres configurations si nécessaire ...
 })

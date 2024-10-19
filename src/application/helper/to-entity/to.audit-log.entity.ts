@@ -1,6 +1,7 @@
-﻿import { AuditLog } from 'src/domain/entities/audit-log.entity';
-import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
-import { fromUserDTO } from './to.user.entity';
+﻿import { AuditLogDTO } from "src/presentation/dtos/audit-log.dto";
+import { fromUserDTO } from "./to.user.entity";
+import { AuditLog } from "src/domain/entities/audit-log.entity";
+
 
 /**
  * Converts an AuditLogDTO to an AuditLog entity.

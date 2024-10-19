@@ -10,12 +10,12 @@ import { toUserDTO } from './to.user.dto';
 export function toAuditLogDTO(auditLog: AuditLog): AuditLogDTO {
   return new AuditLogDTO(
     auditLog.id,
-    auditLog.userId,
     auditLog.action,
     auditLog.entity,
     auditLog.entityId,
     auditLog.changes,
-    auditLog.user ? toUserDTO(auditLog.user) : undefined,
     auditLog.createdAt,
+    auditLog.userId,
+    auditLog.user ? toUserDTO(auditLog.user) : undefined,
   );
 }

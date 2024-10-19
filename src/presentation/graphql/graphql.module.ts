@@ -10,6 +10,7 @@ import { SentryModule } from '@sentry/nestjs/setup';
   imports: [
     SentryModule.forRoot(),
     GraphQLModule.forRoot({
+      playground: true,
       autoSchemaFile: join(
         process.cwd(),
         'src/presentation/graphql/schema.graphql',

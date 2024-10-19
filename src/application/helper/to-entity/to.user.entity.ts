@@ -1,16 +1,18 @@
-﻿import { User } from 'src/domain/entities/user.entity';
-import { UserDTO } from 'src/presentation/dtos/user.dto';
-import { fromAuditLogDTO } from './to.audit-log.entity';
-import { fromOrderDTO } from './to.order.entity';
-import { fromUserActivityDTO } from './to.user-activity.entity';
-import { fromUserProfileDTO } from './to.user-profile.entity';
-import { fromVendorDTO } from './to.vendor.entity';
-import { fromReviewDTO } from './to.review.entity';
-import { fromAddressDTO } from './to.address.entity';
-import { fromCartDTO } from './to.cart.entity';
-import { fromSubsiteDTO } from './to.sub-site.entity';
-import { fromTicketDTO } from './to.ticket.entity';
-import { fromNotificationDTO } from './to.notification.entity';
+﻿
+import { UserDTO } from "src/presentation/dtos/user.dto";
+import { fromAddressDTO } from "./to.address.entity";
+import { fromAuditLogDTO } from "./to.audit-log.entity";
+import { fromCartDTO } from "./to.cart.entity";
+import { fromNotificationDTO } from "./to.notification.entity";
+import { fromOrderDTO } from "./to.order.entity";
+import { fromReviewDTO } from "./to.review.entity";
+import { fromSubsiteDTO } from "./to.sub-site.entity";
+import { fromTicketDTO } from "./to.ticket.entity";
+import { fromUserActivityDTO } from "./to.user-activity.entity";
+import { fromUserProfileDTO } from "./to.user-profile.entity";
+import { fromVendorDTO } from "./to.vendor.entity";
+import { User } from "src/domain/entities/user.entity";
+
 
 /**
  * Converts a userDTO to a user entity.
