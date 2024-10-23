@@ -430,7 +430,9 @@ CREATE UNIQUE INDEX "_CarrierToZone_AB_unique" ON "_CarrierToZone"("A", "B");
 -- CreateIndex
 CREATE INDEX "_CarrierToZone_B_index" ON "_CarrierToZone"("B");
 
--- AddForeignKey
+-- Add
+
+
 ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey

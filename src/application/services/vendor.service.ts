@@ -21,12 +21,25 @@ import { ShopService } from './shop.service';
  */
 @Injectable()
 export class VendorService {
+  getVendorProducts(vendorId: number) {
+    throw new Error('Method not implemented.');
+  }
+  getVendorSubscription(vendorId: number) {
+    throw new Error('Method not implemented.');
+  }
+  getVendorShop(vendorId: number) {
+    throw new Error('Method not implemented.');
+  }
+  getLatestVendor() {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @Inject('IVendorRepository')
     private readonly vendorRepository: IVendorRepository,
     private readonly subscriptionService: SubscriptionService,
     private readonly shopService: ShopService,
   ) {}
+
 
   /**
    * Creates a new vendor based on the provided DTO.
@@ -159,3 +172,10 @@ export class VendorService {
     return this.vendorRepository.getAll();
   }
 }
+
+
+let myMap = new Map();
+
+myMap.set('baahir', 'ina');
+
+console.log(myMap.get('baahir'));

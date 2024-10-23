@@ -16,7 +16,6 @@ import { Notification } from '../entities/notification.entity';
  * Interface defining operations for managing User entities.
  */
 export interface IUserRepository {
-  [x: string]: any;
   /**
    * Creates a new user.
    * @param user - The User entity to create.

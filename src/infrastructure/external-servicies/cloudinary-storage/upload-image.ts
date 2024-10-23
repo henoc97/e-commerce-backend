@@ -6,7 +6,7 @@ import {
 } from 'cloudinary';
 
 @Injectable()
-export class ImageService {
+export class UploadImageService {
   constructor(@Inject('CLOUDINARY') private cloudinary) {}
 
   // Upload image with transformations and custom options

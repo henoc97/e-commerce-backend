@@ -7,6 +7,10 @@ import { ProductDTO } from 'src/presentation/dtos/product.dto';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 import { Product } from 'src/domain/entities/product.entity';
 import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
+import { Subscription } from 'src/domain/entities/subscription.entity';
+import { Shop } from 'src/domain/entities/shop.entity';
+import { SubscriptionService } from 'src/application/services/subscription.service';
+import { ShopService } from 'src/application/services/shop.service';
 
 const mockVendorRepository = {
   create: jest.fn(),
@@ -27,6 +31,14 @@ const mockVendorRepository = {
   getLatest: jest.fn(),
 };
 
+const mockSubscriptionService = {
+  createSubscription: jest.fn()
+}
+
+const mockShopService = {
+  createShop: jest.fn()
+}
+
 // Mock console.error
 const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
@@ -42,6 +54,14 @@ describe('VendorService', () => {
         {
           provide: 'IVendorRepository',
           useValue: mockVendorRepository, // Use the mock
+        },
+        {
+          provide: SubscriptionService,
+          useValue: mockSubscriptionService, // Use the mock
+        },
+        {
+          provide: ShopService,
+          useValue: mockShopService, // Use the mock
         },
       ],
     }).compile();
@@ -67,16 +87,20 @@ describe('VendorService', () => {
         id: 1,
         userId: 1,
         user: null,
+        shop: null,
         storeName: 'Nom du magasin',
-        // Ajoutez d'autres propriétés si nécessaire
+        products: [],
+        subscription: null
     };
 
     const returnOject: Vendor = {
         id: 1,
         userId: 1,
         user: null,
+        shop: null,
         storeName: 'Nom du magasin',
-        // Ajoutez d'autres propriétés si nécessaire
+        products: [],
+        subscription: null
     };
 
     mockVendorRepository.create.mockResolvedValue(returnOject);
@@ -295,10 +319,10 @@ describe('VendorService', () => {
     };
 
     const returnOject: Vendor = {
-        id: 1,
-        userId: 1,
-        storeName: 'Nom du magasin',
-        // Ajoutez d'autres propriétés si nécessaire
+      id: 1,
+      userId: 1,
+      storeName: 'Nom du magasin',
+      user: undefined
     };
 
     mockVendorRepository.addProduct.mockResolvedValue(returnOject);
@@ -401,7 +425,23 @@ describe('VendorService', () => {
     const vendorId: number = 1;
 
     const returnOject: Product[] = [
-        { id: 1, /* autres données */ }
+        {
+          id: 1,
+          name: '',
+          price: 0,
+          promotions: [],
+          category: undefined,
+          categoryId: 0,
+          images: [],
+          variants: [],
+          stock: 0,
+          shopId: 0,
+          createdAt: undefined,
+          updatedAt: undefined,
+          cartItem: [],
+          orderItem: [],
+          review: []
+        }
     ];
 
     mockVendorRepository.getProducts.mockResolvedValue(returnOject);
@@ -437,7 +477,14 @@ describe('VendorService', () => {
 
     const vendorId: number = 1;
 
-    const returnOject: Subscription | null = { id: 1 /* others data */ };
+    const returnOject: Subscription | null = { id: 1,
+      name: '',
+      price: 0,
+      duration: 0,
+      vendors: [null],
+      createdAt: undefined,
+      updatedAt: undefined
+    };
 
     mockVendorRepository.getSubscription.mockResolvedValue(returnOject);
 
@@ -475,7 +522,9 @@ describe('VendorService', () => {
       name: 'Basic Plan',
       price: 9.99,
       duration: 30,
-      vendorId: 1
+      vendors: [null],
+      createdAt: undefined,
+      updatedAt: undefined
     };
 
     const returnOject: Vendor = { 
@@ -505,7 +554,9 @@ describe('VendorService', () => {
       name: 'Basic Plan',
       price: 9.99,
       duration: 30,
-      vendors: [null]  
+      vendors: [null],
+      createdAt: undefined,
+      updatedAt: undefined
     };
 
     // Simulate a failure when calling the repository
@@ -531,7 +582,17 @@ describe('VendorService', () => {
 
     const vendorId: number = 1;
 
-    const returnOject: Shop | null = { id: 1 /* others data */ };
+    const returnOject: Shop | null = { id: 1,
+      url: '',
+      vendor: null,
+      vendorId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      name: '',
+      products: [],
+      orders: [],
+      categories: []
+    };
 
     mockVendorRepository.getShop.mockResolvedValue(returnOject);
 
@@ -568,10 +629,16 @@ describe('VendorService', () => {
     const shopDTO: ShopDTO = {
       id: 1,
       url: 'https://example.com',
-      vendor: { id: 1, /* autres données */ },
+      vendor: {
+        id: 1,
+        userId: 0,
+        user: undefined,
+        storeName: ''
+      },
       vendorId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
+      name: ''
     };
 
     const returnOject: Vendor = {
@@ -597,10 +664,11 @@ describe('VendorService', () => {
     const shopDTO: ShopDTO = {
       id: 1,
       url: 'https://example.com',
-      vendor: { id: 1, /* autres données */ },
+      vendor: null,
       vendorId: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
+      name: ''
     };
 
     // Simulate a failure when calling the repository

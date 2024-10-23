@@ -8,7 +8,6 @@ import { CreateProduct } from 'src/application/use-cases/product.use-cases/creat
 import { DeleteProduct } from 'src/application/use-cases/product.use-cases/delete-product.use-case';
 import { FetchFeaturedProducts } from 'src/application/use-cases/product.use-cases/fetch-featured-products.use-case';
 import { FetchProductById } from 'src/application/use-cases/product.use-cases/fetch-product-by-id.use-case';
-import { FetchProductReviews } from 'src/application/use-cases/product.use-cases/fetch-product-reviews.use-case';
 import { FetchProducts } from 'src/application/use-cases/product.use-cases/fetch-products.use-case';
 import { FindProductsByCategory } from 'src/application/use-cases/product.use-cases/find-products-by-category.use-case';
 import { FindProductsByName } from 'src/application/use-cases/product.use-cases/find-products-by-name.use-case';
@@ -37,7 +36,6 @@ export class ProductResolver {
     private readonly deleteProductUseCase: DeleteProduct,
     private readonly fetchFeaturedProductsUseCase: FetchFeaturedProducts,
     private readonly fetchProductByIdUseCase: FetchProductById,
-    private readonly fetchProductReviewsUseCase: FetchProductReviews,
     private readonly fetchProductsUseCase: FetchProducts,
     private readonly findProductsByCategoryUseCase: FindProductsByCategory,
     private readonly findProductsByNameUseCase: FindProductsByName,
