@@ -17,7 +17,7 @@ import { UpdateOrder } from 'src/application/use-cases/order.use-cases/update-or
 import { OrderStatus } from 'src/domain/enums/order-status.enum';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 
-@Resolver()
+@Resolver(() => OrderDTO)
 export class OrderResolver {
   constructor(
     private readonly addPaymentToOrderUseCase: AddPaymentToOrder,

@@ -24,7 +24,7 @@ export class SubsiteService {
     const subsite = fromSubsiteDTO(SubsiteDTO);
 
     // Call repository to create the subsite
-    return this.subsiteRepository.create(subsite);
+    return await this.subsiteRepository.create(subsite);
   }
 
   /**
@@ -33,7 +33,7 @@ export class SubsiteService {
    * @returns The subsite entity if found, otherwise null.
    */
   async getSubsiteById(id: number): Promise<Subsite | null> {
-    return this.subsiteRepository.getById(id);
+    return await this.subsiteRepository.getById(id);
   }
 
   /**
@@ -48,7 +48,7 @@ export class SubsiteService {
   ): Promise<Subsite> {
     // Ensure the provided updates conform to the domain entity
     const subsiteUpdates = fromSubsiteDTO(updates);
-    return this.subsiteRepository.update(id, subsiteUpdates);
+    return await this.subsiteRepository.update(id, subsiteUpdates);
   }
 
   /**
@@ -57,7 +57,7 @@ export class SubsiteService {
    * @returns A boolean indicating the success of the removal.
    */
   async removeSubsite(id: number): Promise<boolean> {
-    return this.subsiteRepository.remove(id);
+    return await this.subsiteRepository.remove(id);
   }
 
   /**
@@ -66,7 +66,7 @@ export class SubsiteService {
    * @returns Array of subsites associated with the user.
    */
   async getSubsitesByUser(userId: number): Promise<Subsite[]> {
-    return this.subsiteRepository.getByUser(userId);
+    return await this.subsiteRepository.getByUser(userId);
   }
 
   /**
@@ -77,7 +77,7 @@ export class SubsiteService {
   async validateSubsite(SubsiteDTO: SubsiteDTO): Promise<boolean> {
     // Implement validation logic if needed
     const subsite = fromSubsiteDTO(SubsiteDTO);
-    return this.subsiteRepository.validate(subsite);
+    return await this.subsiteRepository.validate(subsite);
   }
 
   /**
@@ -86,7 +86,7 @@ export class SubsiteService {
    * @returns The JSON configuration of the subsite.
    */
   async getSubsiteConfig(id: number): Promise<any> {
-    return this.subsiteRepository.getConfig(id);
+    return await this.subsiteRepository.getConfig(id);
   }
 
   /**
@@ -96,7 +96,7 @@ export class SubsiteService {
    * @returns The updated subsite entity with new configuration.
    */
   async updateSubsiteConfig(id: number, config: any): Promise<Subsite> {
-    return this.subsiteRepository.updateConfig(id, config);
+    return await this.subsiteRepository.updateConfig(id, config);
   }
 
   /**
@@ -104,7 +104,7 @@ export class SubsiteService {
    * @returns The latest subsite entity.
    */
   async getLatestSubsite(): Promise<Subsite> {
-    return this.subsiteRepository.getLatest();
+    return await this.subsiteRepository.getLatest();
   }
 
   /**
@@ -122,6 +122,6 @@ export class SubsiteService {
    * @returns The total number of subsites for the user.
    */
   async countSubsitesByUser(userId: number): Promise<number> {
-    return this.subsiteRepository.countByUser(userId);
+    return await this.subsiteRepository.countByUser(userId);
   }
 }

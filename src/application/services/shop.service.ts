@@ -34,7 +34,7 @@ export class ShopService {
     // Convert DTO to Entity
     const shop = fromShopDTO(shopDTO);
     // Call repository method to create the shop
-    return this.shopRepository.create(shop);
+    return await this.shopRepository.create(shop);
   }
 
   /**
@@ -43,7 +43,7 @@ export class ShopService {
    * @returns The Shop entity, or null if not found.
    */
   async getShopById(id: number): Promise<Shop | null> {
-    return this.shopRepository.getById(id);
+    return await this.shopRepository.getById(id);
   }
 
   /**
@@ -54,7 +54,7 @@ export class ShopService {
    */
   async updateShop(id: number, updates: Partial<ShopDTO>): Promise<Shop> {
     const updatedShop = fromShopDTO(updates);
-    return this.shopRepository.update(id, updatedShop);
+    return await this.shopRepository.update(id, updatedShop);
   }
 
   /**
@@ -63,7 +63,7 @@ export class ShopService {
    * @returns True if the shop was successfully deleted.
    */
   async deleteShop(id: number): Promise<boolean> {
-    return this.shopRepository.delete(id);
+    return await this.shopRepository.delete(id);
   }
 
   /**
@@ -72,7 +72,7 @@ export class ShopService {
    * @returns An array of matching Shop entities.
    */
   async searchShopsByName(name: string): Promise<Shop[]> {
-    return this.shopRepository.searchByName(name);
+    return await this.shopRepository.searchByName(name);
   }
 
   /**
@@ -83,7 +83,7 @@ export class ShopService {
    */
   async addProductToShop(shopId: number, product: ProductDTO): Promise<Shop> {
     await this.productService.createProduct(product);
-    return this.shopRepository.getById(shopId);
+    return await this.shopRepository.getById(shopId);
   }
 
   /**
@@ -97,7 +97,7 @@ export class ShopService {
     productId: number,
   ): Promise<Shop> {
     await this.productService.deleteProduct(productId);
-    return this.shopRepository.getById(shopId);
+    return await this.shopRepository.getById(shopId);
   }
 
   /**
@@ -108,7 +108,7 @@ export class ShopService {
    */
   async addOrderToShop(shopId: number, order: OrderDTO): Promise<Shop> {
     await this.orderService.createOrder(order);
-    return this.shopRepository.getById(shopId);
+    return await this.shopRepository.getById(shopId);
   }
 
   /**
@@ -122,7 +122,7 @@ export class ShopService {
     category: CategoryDTO,
   ): Promise<Shop> {
     await this.categoryService.createCategory(category);
-    return this.shopRepository.getById(shopId);
+    return await this.shopRepository.getById(shopId);
   }
 
   /**
@@ -136,7 +136,7 @@ export class ShopService {
     categoryId: number,
   ): Promise<Shop> {
     await this.categoryService.deleteCategory(categoryId);
-    return this.shopRepository.getById(shopId);
+    return await this.shopRepository.getById(shopId);
   }
 
   /**
@@ -149,7 +149,7 @@ export class ShopService {
     shopId: number,
     marketplaceId: number,
   ): Promise<Shop> {
-    return this.shopRepository.associateMarketplace(shopId, marketplaceId);
+    return await this.shopRepository.associateMarketplace(shopId, marketplaceId);
   }
 
   /**
@@ -158,7 +158,7 @@ export class ShopService {
    * @returns An array of Shop entities.
    */
   async listShopsByVendor(vendorId: number): Promise<Shop[]> {
-    return this.shopRepository.listByVendor(vendorId);
+    return await this.shopRepository.listByVendor(vendorId);
   }
 
   /**
@@ -166,7 +166,7 @@ export class ShopService {
    * @returns The most recently updated Shop entity, or null.
    */
   async getMostRecentShop(): Promise<Shop | null> {
-    return this.shopRepository.getMostRecent();
+    return await this.shopRepository.getMostRecent();
   }
 
   /**
@@ -175,7 +175,7 @@ export class ShopService {
    * @returns The total sales amount for the shop.
    */
   async getTotalSalesForShop(shopId: number): Promise<number> {
-    return this.shopRepository.getTotalSales(shopId);
+    return await this.shopRepository.getTotalSales(shopId);
   }
 
   /**
@@ -190,6 +190,6 @@ export class ShopService {
     startDate: Date,
     endDate: Date,
   ): Promise<any> {
-    return this.shopRepository.getOrderReport(shopId, startDate, endDate);
+    return await this.shopRepository.getOrderReport(shopId, startDate, endDate);
   }
 }

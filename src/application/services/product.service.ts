@@ -13,6 +13,8 @@ import { ProductImageService } from './product-image.service';
 import { ProductVariantService } from './product-variant.service';
 import { ReviewService } from './review.service';
 import { CartItemService } from './cart-item.service';
+import { ClientKafka } from '@nestjs/microservices';
+
 /**
  * Service class for managing product-related operations.
  */
@@ -20,6 +22,8 @@ import { CartItemService } from './cart-item.service';
 export default class ProductService {
   constructor(
     @Inject('IProductRepository')
+    @Inject('KAFKA_SERVICE') 
+    private readonly kafkaService: ClientKafka,
     private readonly productRepository: IProductRepository,
     private readonly promotionService: PromotionService,
     private readonly productImageService: ProductImageService,
@@ -35,7 +39,9 @@ export default class ProductService {
    */
   async createProduct(product: ProductDTO): Promise<Product> {
     const p = fromProductDTO(product);
-    return this.productRepository.create(p);
+    const result = await this.productRepository.create(p);
+    if (result) this.kafkaService.emit('product.created', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -44,7 +50,7 @@ export default class ProductService {
    * @returns A promise that resolves to the Product entity if found, otherwise null.
    */
   async getProductById(id: number): Promise<Product | null> {
-    return this.productRepository.getById(id);
+    return await this.productRepository.getById(id);
   }
 
   /**
@@ -58,7 +64,9 @@ export default class ProductService {
     updates: Partial<ProductDTO>,
   ): Promise<Product> {
     const updatedProduct = fromProductDTO(updates);
-    return this.productRepository.update(id, updatedProduct);
+    const result = await this.productRepository.update(id, updatedProduct);
+    if (result) this.kafkaService.emit('product.updated', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -67,7 +75,7 @@ export default class ProductService {
    * @returns A promise that resolves to true if deletion was successful, otherwise false.
    */
   async deleteProduct(id: number): Promise<boolean> {
-    return this.productRepository.delete(id);
+    return await this.productRepository.delete(id);
   }
 
   /**
@@ -76,7 +84,7 @@ export default class ProductService {
    * @returns A promise that resolves to an array of Product entities matching the name.
    */
   async findProductsByName(name: string): Promise<Product[]> {
-    return this.productRepository.findByName(name);
+    return await this.productRepository.findByName(name);
   }
 
   /**
@@ -85,7 +93,7 @@ export default class ProductService {
    * @returns A promise that resolves to an array of Product entities in the category.
    */
   async findProductsByCategory(categoryId: number): Promise<Product[]> {
-    return this.productRepository.findByCategory(categoryId);
+    return await this.productRepository.findByCategory(categoryId);
   }
 
   /**
@@ -99,7 +107,7 @@ export default class ProductService {
     promotion: PromotionDTO,
   ): Promise<Product> {
     await this.promotionService.createPromotion(promotion);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -113,7 +121,7 @@ export default class ProductService {
     promotionId: number,
   ): Promise<Product> {
     await this.promotionService.deletePromotion(promotionId);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -127,7 +135,7 @@ export default class ProductService {
     image: ProductImageDTO,
   ): Promise<Product> {
     await this.productImageService.createProductImage(image);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -141,7 +149,7 @@ export default class ProductService {
     imageId: number,
   ): Promise<Product> {
     await this.productImageService.deleteProductImage(imageId);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -155,7 +163,7 @@ export default class ProductService {
     variant: ProductVariantDTO,
   ): Promise<Product> {
     await this.productVariantService.createProductVariant(variant);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -169,7 +177,7 @@ export default class ProductService {
     variantId: number,
   ): Promise<Product> {
     await this.productVariantService.deleteProductVariant(variantId);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -182,7 +190,9 @@ export default class ProductService {
     productId: number,
     quantity: number,
   ): Promise<Product> {
-    return this.productRepository.updateStock(productId, quantity);
+    const result = await this.productRepository.updateStock(productId, quantity);
+    if (result) this.kafkaService.emit('product.updated', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -196,7 +206,7 @@ export default class ProductService {
     review: ReviewDTO,
   ): Promise<Product> {
     await this.reviewService.createReview(review);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -210,7 +220,7 @@ export default class ProductService {
     cartItem: CartItemDTO,
   ): Promise<Product> {
     await this.cartItemService.createCartItem(cartItem);
-    return this.productRepository.getById(productId);
+    return await this.productRepository.getById(productId);
   }
 
   /**
@@ -219,7 +229,7 @@ export default class ProductService {
    * @returns An array of Product entities associated with the vendor.
    */
   async getVendorProducts(vendorId: number): Promise<Product[]> {
-    return this.productRepository.findByVendor(vendorId);
+    return await this.productRepository.findByVendor(vendorId);
   }
 
   /**
@@ -232,7 +242,7 @@ export default class ProductService {
     minPrice: number,
     maxPrice: number,
   ): Promise<Product[]> {
-    return this.productRepository.findByPriceRange(minPrice, maxPrice);
+    return await this.productRepository.findByPriceRange(minPrice, maxPrice);
   }
 
   /**
@@ -240,6 +250,6 @@ export default class ProductService {
    * @returns A promise that resolves to an array of featured Product entities.
    */
   async getFeaturedProducts(): Promise<Product[]> {
-    return this.productRepository.getFeaturedProducts();
+    return await this.productRepository.getFeaturedProducts();
   }
 }

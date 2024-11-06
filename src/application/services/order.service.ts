@@ -4,6 +4,7 @@ import { IOrderRepository } from 'src/domain/repositories/order.repository';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
 import { Inject } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
 
 /**
  * Service class for managing Order entities.
@@ -12,6 +13,8 @@ import { Inject } from '@nestjs/common';
 export class OrderService {
   constructor(
     @Inject('IOrderRepository')
+    @Inject('KAFKA_SERVICE') 
+    private readonly kafkaService: ClientKafka,
     private readonly orderRepository: IOrderRepository,
   ) {}
 
@@ -22,7 +25,9 @@ export class OrderService {
    */
   async createOrder(orderDTO: OrderDTO): Promise<Order> {
     const order = fromOrderDTO(orderDTO);
-    return this.orderRepository.create(order);
+    const result = await this.orderRepository.create(order);
+    if (result) this.kafkaService.emit('order.created', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -31,7 +36,7 @@ export class OrderService {
    * @returns A promise that resolves to the Order entity if found, otherwise null.
    */
   async getOrderById(id: number): Promise<Order | null> {
-    return this.orderRepository.getById(id);
+    return await this.orderRepository.getById(id);
   }
 
   /**
@@ -42,7 +47,9 @@ export class OrderService {
    */
   async updateOrder(id: number, updates: Partial<OrderDTO>): Promise<Order> {
     const updatedOrder = fromOrderDTO(updates);
-    return this.orderRepository.update(id, updatedOrder);
+    const result = await this.orderRepository.update(id, updatedOrder);
+    if (result) this.kafkaService.emit('order.updated', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -51,7 +58,7 @@ export class OrderService {
    * @returns A promise that resolves to true if the deletion was successful, otherwise false.
    */
   async deleteOrder(id: number): Promise<boolean> {
-    return this.orderRepository.delete(id);
+    return await this.orderRepository.delete(id);
   }
 
   /**
@@ -60,7 +67,7 @@ export class OrderService {
    * @returns A promise that resolves to an array of Orders for the User.
    */
   async getOrdersByUserId(userId: number): Promise<Order[]> {
-    return this.orderRepository.getByUserId(userId);
+    return await this.orderRepository.getByUserId(userId);
   }
 
   /**
@@ -69,7 +76,7 @@ export class OrderService {
    * @returns A promise that resolves to an array of Orders for the Shop.
    */
   async getOrdersByShopId(shopId: number): Promise<Order[]> {
-    return this.orderRepository.getByShopId(shopId);
+    return await this.orderRepository.getByShopId(shopId);
   }
 
   /**
@@ -78,7 +85,7 @@ export class OrderService {
    * @returns A promise that resolves to an array of Orders with the specified status.
    */
   async getOrdersByStatus(status: OrderStatus): Promise<Order[]> {
-    return this.orderRepository.getByStatus(status);
+    return await this.orderRepository.getByStatus(status);
   }
 
   /**
@@ -88,7 +95,9 @@ export class OrderService {
    * @returns A promise that resolves to the updated Order entity.
    */
   async updateOrderStatus(id: number, status: OrderStatus): Promise<Order> {
-    return this.orderRepository.updateStatus(id, status);
+    const result = this.orderRepository.updateStatus(id, status);
+    if (result) this.kafkaService.emit('order.updates', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -98,7 +107,7 @@ export class OrderService {
    * @returns A promise that resolves to the updated Order entity.
    */
   async addPaymentToOrder(orderId: number, paymentId: string): Promise<Order> {
-    return this.orderRepository.addPayment(orderId, paymentId);
+    return await this.orderRepository.addPayment(orderId, paymentId);
   }
 
   /**
@@ -108,7 +117,7 @@ export class OrderService {
    * @returns A promise that resolves to the updated Order entity.
    */
   async addRefundToOrder(orderId: number, refundId: string): Promise<Order> {
-    return this.orderRepository.addRefund(orderId, refundId);
+    return await this.orderRepository.addRefund(orderId, refundId);
   }
 
   /**
@@ -119,7 +128,7 @@ export class OrderService {
   async getOrderByTrackingNumber(
     trackingNumber: string,
   ): Promise<Order | null> {
-    return this.orderRepository.getByTrackingNumber(trackingNumber);
+    return await this.orderRepository.getByTrackingNumber(trackingNumber);
   }
 
   /**
@@ -129,7 +138,7 @@ export class OrderService {
    * @returns A promise that resolves to an array of Orders created within the date range.
    */
   async getOrdersByDateRange(startDate: Date, endDate: Date): Promise<Order[]> {
-    return this.orderRepository.getByDateRange(startDate, endDate);
+    return await this.orderRepository.getByDateRange(startDate, endDate);
   }
 
   /**
@@ -139,7 +148,7 @@ export class OrderService {
    * @returns A promise that resolves to an array of the most recent Orders.
    */
   async getRecentOrdersByShop(shopId: number, limit: number): Promise<Order[]> {
-    return this.orderRepository.getRecentOrdersByShop(shopId, limit);
+    return await this.orderRepository.getRecentOrdersByShop(shopId, limit);
   }
 
   /**
@@ -148,7 +157,7 @@ export class OrderService {
    * @returns A promise that resolves to an array of the top N Orders by total amount.
    */
   async getTopOrdersByAmount(topN: number): Promise<Order[]> {
-    return this.orderRepository.getTopOrdersByAmount(topN);
+    return await this.orderRepository.getTopOrdersByAmount(topN);
   }
 
   /**
@@ -156,6 +165,6 @@ export class OrderService {
    * @returns A promise that resolves to an array of all Orders.
    */
   async getAllOrders(): Promise<Order[]> {
-    return this.orderRepository.getAll();
+    return await this.orderRepository.getAll();
   }
 }

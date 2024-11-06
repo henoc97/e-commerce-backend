@@ -12,7 +12,7 @@ import { UpdateCategory } from 'src/application/use-cases/category.use-cases/upd
 import { CategoryDTO } from 'src/presentation/dtos/category.dto';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 
-@Resolver('Category')
+@Resolver(() => CategoryDTO)
 export class CategoryResolver {
   constructor(
     private readonly checkCategoryExistence: CheckCategoryExistence,

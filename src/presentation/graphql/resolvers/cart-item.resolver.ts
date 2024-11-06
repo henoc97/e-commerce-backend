@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { CalculateCartTotal } from 'src/application/use-cases/cart-item.use-cases/calculate-cart-total.use-case';
 import { ClearCart } from 'src/application/use-cases/cart-item.use-cases/clear-cart.use-case';
@@ -9,9 +10,10 @@ import { FetchCartItemsByCartId } from 'src/application/use-cases/cart-item.use-
 import { FetchHighestQuantityItem } from 'src/application/use-cases/cart-item.use-cases/fetch-highest-quantity-item.use-case';
 import { UpdateCartItemQuantity } from 'src/application/use-cases/cart-item.use-cases/update-cart-item-quantity.use-case';
 import { UpdateCartItem } from 'src/application/use-cases/cart-item.use-cases/update-cart-item.use-case';
+import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
 
-@Resolver('CartItem')
+@Resolver(() => CartItemDTO)
 export class CartItemResolver {
   constructor(
     private readonly calculateCartTotalUseCase: CalculateCartTotal,
@@ -26,16 +28,20 @@ export class CartItemResolver {
     private readonly updateCartItemUseCase: UpdateCartItem,
   ) {}
 
+  
+  @UseGuards(JwtAuthGuard)
   @Query(() => Number)
   async calculateCartTotal(@Args('cartId') cartId: number): Promise<number> {
     return this.calculateCartTotalUseCase.execute(cartId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean)
   async clearCart(@Args('cartId') cartId: number): Promise<boolean> {
     return this.clearCartUseCase.execute(cartId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => CartItemDTO)
   async createCartItem(
     @Args('cartItemDTO') cartItemDTO: CartItemDTO,
@@ -43,16 +49,19 @@ export class CartItemResolver {
     return this.createCartItemUseCase.execute(cartItemDTO);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean)
   async deleteCartItem(@Args('id') id: number): Promise<boolean> {
     return this.deleteCartItemUseCase.execute(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => CartItemDTO, { nullable: true })
   async fetchCartItemById(@Args('id') id: number): Promise<CartItemDTO | null> {
     return this.fetchCartItemByIdUseCase.execute(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => CartItemDTO, { nullable: true })
   async fetchCartItemByProductAndCart(
     @Args('productId') productId: number,
@@ -61,6 +70,7 @@ export class CartItemResolver {
     return this.fetchCartItemByProductAndCartUseCase.execute(productId, cartId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [CartItemDTO])
   async fetchCartItemsByCartId(
     @Args('cartId') cartId: number,
@@ -68,6 +78,7 @@ export class CartItemResolver {
     return this.fetchCartItemsByCartIdUseCase.execute(cartId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => CartItemDTO, { nullable: true })
   async fetchHighestQuantityItem(
     @Args('cartId') cartId: number,
@@ -75,6 +86,7 @@ export class CartItemResolver {
     return this.fetchHighestQuantityItemUseCase.execute(cartId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => CartItemDTO)
   async updateCartItemQuantity(
     @Args('id') id: number,
@@ -83,6 +95,7 @@ export class CartItemResolver {
     return this.updateCartItemQuantityUseCase.execute(id, quantity);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => CartItemDTO)
   async updateCartItem(
     @Args('id') id: number,

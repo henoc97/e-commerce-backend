@@ -22,7 +22,7 @@ export class SubscriptionService {
     subscriptionDto: SubscriptionDTO,
   ): Promise<Subscription> {
     const subscription = fromSubscriptionDTO(subscriptionDto);
-    return this.subscriptionRepository.create(subscription);
+    return await this.subscriptionRepository.create(subscription);
   }
 
   /**
@@ -31,7 +31,7 @@ export class SubscriptionService {
    * @returns The Subscription if found, otherwise null.
    */
   async getSubscriptionById(id: number): Promise<Subscription | null> {
-    return this.subscriptionRepository.getById(id);
+    return await this.subscriptionRepository.getById(id);
   }
 
   /**
@@ -46,7 +46,7 @@ export class SubscriptionService {
   ): Promise<Subscription> {
     const subscriptionUpdates = fromSubscriptionDTO(updates);
 
-    return this.subscriptionRepository.update(id, subscriptionUpdates);
+    return await this.subscriptionRepository.update(id, subscriptionUpdates);
   }
 
   /**
@@ -55,7 +55,7 @@ export class SubscriptionService {
    * @returns A boolean indicating success of the operation.
    */
   async deleteSubscription(id: number): Promise<boolean> {
-    return this.subscriptionRepository.remove(id);
+    return await this.subscriptionRepository.remove(id);
   }
 
   /**
@@ -64,7 +64,7 @@ export class SubscriptionService {
    * @returns Array of Subscriptions associated with the vendor.
    */
   async getSubscriptionsByVendor(vendorId: number): Promise<Subscription[]> {
-    return this.subscriptionRepository.getByVendor(vendorId);
+    return await this.subscriptionRepository.getByVendor(vendorId);
   }
 
   /**
@@ -77,7 +77,7 @@ export class SubscriptionService {
     minPrice: number,
     maxPrice: number,
   ): Promise<Subscription[]> {
-    return this.subscriptionRepository.getByPriceRange(minPrice, maxPrice);
+    return await this.subscriptionRepository.getByPriceRange(minPrice, maxPrice);
   }
 
   /**
@@ -85,7 +85,7 @@ export class SubscriptionService {
    * @returns Array of currently active Subscriptions.
    */
   async getActiveSubscriptions(): Promise<Subscription[]> {
-    return this.subscriptionRepository.getActive();
+    return await this.subscriptionRepository.getActive();
   }
 
   /**
@@ -93,7 +93,7 @@ export class SubscriptionService {
    * @returns Array of expired Subscription entities.
    */
   async getExpiredSubscriptions(): Promise<Subscription[]> {
-    return this.subscriptionRepository.getExpired();
+    return await this.subscriptionRepository.getExpired();
   }
 
   /**
@@ -102,7 +102,7 @@ export class SubscriptionService {
    * @returns Array of Subscriptions expiring within the period.
    */
   async getExpiringSubscriptions(days: number): Promise<Subscription[]> {
-    return this.subscriptionRepository.getExpiringSoon(days);
+    return await this.subscriptionRepository.getExpiringSoon(days);
   }
 
   /**
@@ -110,7 +110,7 @@ export class SubscriptionService {
    * @returns The latest Subscription entity.
    */
   async getLatestSubscription(): Promise<Subscription> {
-    return this.subscriptionRepository.getLatest();
+    return await this.subscriptionRepository.getLatest();
   }
 
   /**
@@ -119,6 +119,6 @@ export class SubscriptionService {
    * @returns The number of subscriptions linked to the vendor.
    */
   async countSubscriptionsByVendor(vendorId: number): Promise<number> {
-    return this.subscriptionRepository.countByVendor(vendorId);
+    return await this.subscriptionRepository.countByVendor(vendorId);
   }
 }

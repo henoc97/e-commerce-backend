@@ -3,6 +3,7 @@ import { Review } from 'src/domain/entities/review.entity';
 import { IReviewRepository } from 'src/domain/repositories/review.repository';
 import { ReviewDTO } from 'src/presentation/dtos/review.dto';
 import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
+import { ClientKafka } from '@nestjs/microservices';
 /**
  * Service for managing product reviews.
  * Provides methods to handle review-related operations such as creation, retrieval, and updating.
@@ -11,8 +12,10 @@ import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
 export class ReviewService {
   constructor(
     @Inject('IReviewRepository')
+    @Inject('KAFKA_SERVICE')
+    private readonly kafkaService: ClientKafka,
     private readonly reviewRepository: IReviewRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new review.
@@ -21,7 +24,9 @@ export class ReviewService {
    */
   async createReview(reviewDTO: ReviewDTO): Promise<Review> {
     const review = fromReviewDTO(reviewDTO);
-    return this.reviewRepository.create(review);
+    const result = await this.reviewRepository.create(review);
+    if (result) this.kafkaService.emit('review.created', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -30,7 +35,7 @@ export class ReviewService {
    * @returns The Review entity if found, otherwise null.
    */
   async getReviewById(id: number): Promise<Review | null> {
-    return this.reviewRepository.getById(id);
+    return await this.reviewRepository.getById(id);
   }
 
   /**
@@ -41,7 +46,9 @@ export class ReviewService {
    */
   async updateReview(id: number, updates: Partial<ReviewDTO>): Promise<Review> {
     const updateReview = fromReviewDTO(updates);
-    return this.reviewRepository.modify(id, updateReview);
+    const result = this.reviewRepository.modify(id, updateReview);
+    if (result) this.kafkaService.emit('review.updated', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -50,7 +57,7 @@ export class ReviewService {
    * @returns True if the deletion was successful, false otherwise.
    */
   async deleteReview(id: number): Promise<boolean> {
-    return this.reviewRepository.remove(id);
+    return await this.reviewRepository.remove(id);
   }
 
   /**
@@ -59,7 +66,7 @@ export class ReviewService {
    * @returns An array of Review entities for the specified product.
    */
   async getReviewsByProduct(productId: number): Promise<Review[]> {
-    return this.reviewRepository.getByProduct(productId);
+    return await this.reviewRepository.getByProduct(productId);
   }
 
   /**
@@ -68,7 +75,7 @@ export class ReviewService {
    * @returns An array of Review entities written by the specified user.
    */
   async getReviewsByUser(userId: number): Promise<Review[]> {
-    return this.reviewRepository.getByUser(userId);
+    return await this.reviewRepository.getByUser(userId);
   }
 
   /**
@@ -77,7 +84,7 @@ export class ReviewService {
    * @returns An array of Review entities with the specified rating.
    */
   async getReviewsByRating(rating: number): Promise<Review[]> {
-    return this.reviewRepository.getByRating(rating);
+    return await this.reviewRepository.getByRating(rating);
   }
 
   /**
@@ -90,7 +97,7 @@ export class ReviewService {
     startDate: Date,
     endDate: Date,
   ): Promise<Review[]> {
-    return this.reviewRepository.getByDateRange(startDate, endDate);
+    return await this.reviewRepository.getByDateRange(startDate, endDate);
   }
 
   /**
@@ -99,7 +106,7 @@ export class ReviewService {
    * @returns The updated Review entity with verified status.
    */
   async verifyReview(id: number): Promise<Review> {
-    return this.reviewRepository.verify(id);
+    return await this.reviewRepository.verify(id);
   }
 
   /**
@@ -108,7 +115,7 @@ export class ReviewService {
    * @returns The flagged Review entity.
    */
   async flagReview(id: number): Promise<Review> {
-    return this.reviewRepository.flag(id);
+    return await this.reviewRepository.flag(id);
   }
 
   /**
@@ -116,7 +123,7 @@ export class ReviewService {
    * @returns An array of flagged Review entities.
    */
   async getFlaggedReviews(): Promise<Review[]> {
-    return this.reviewRepository.getFlagged();
+    return await this.reviewRepository.getFlagged();
   }
 
   /**
@@ -125,7 +132,7 @@ export class ReviewService {
    * @returns An array of the most popular Review entities.
    */
   async getPopularReviews(limit: number): Promise<Review[]> {
-    return this.reviewRepository.getPopular(limit);
+    return await this.reviewRepository.getPopular(limit);
   }
 
   /**
@@ -134,6 +141,6 @@ export class ReviewService {
    * @returns The average rating for the specified product.
    */
   async getAverageRating(productId: number): Promise<number> {
-    return this.reviewRepository.getAverageRating(productId);
+    return await this.reviewRepository.getAverageRating(productId);
   }
 }

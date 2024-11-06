@@ -24,7 +24,7 @@ export class PaymentService {
     // Convert DTO to entity
     const payment = fromPaymentDTO(paymentDTO);
     // Delegate creation to the repository
-    return this.paymentRepository.create(payment);
+    return await this.paymentRepository.create(payment);
   }
 
   /**
@@ -33,7 +33,7 @@ export class PaymentService {
    * @returns A promise that resolves to the Payment entity if found, otherwise null.
    */
   async getPaymentById(id: number): Promise<Payment | null> {
-    return this.paymentRepository.getById(id);
+    return await this.paymentRepository.getById(id);
   }
 
   /**
@@ -47,7 +47,7 @@ export class PaymentService {
     updates: Partial<PaymentDTO>,
   ): Promise<Payment> {
     const updatedPayment = fromPaymentDTO(updates);
-    return this.paymentRepository.update(id, updatedPayment);
+    return await this.paymentRepository.update(id, updatedPayment);
   }
 
   /**
@@ -56,7 +56,7 @@ export class PaymentService {
    * @returns A promise that resolves to true if deletion was successful, otherwise false.
    */
   async deletePayment(id: number): Promise<boolean> {
-    return this.paymentRepository.delete(id);
+    return await this.paymentRepository.delete(id);
   }
 
   /**
@@ -65,7 +65,7 @@ export class PaymentService {
    * @returns A promise that resolves to an array of Payments for the specified Order.
    */
   async getPaymentsByOrderId(orderId: number): Promise<Payment[]> {
-    return this.paymentRepository.getByOrderId(orderId);
+    return await this.paymentRepository.getByOrderId(orderId);
   }
 
   /**
@@ -74,7 +74,7 @@ export class PaymentService {
    * @returns A promise that resolves to an array of Payments for the specified method.
    */
   async getPaymentsByMethod(method: string): Promise<Payment[]> {
-    return this.paymentRepository.getByMethod(method);
+    return await this.paymentRepository.getByMethod(method);
   }
 
   /**
@@ -83,7 +83,7 @@ export class PaymentService {
    * @returns A promise that resolves to an array of Payments with the specified status.
    */
   async getPaymentsByStatus(status: PaymentStatus): Promise<Payment[]> {
-    return this.paymentRepository.getByStatus(status);
+    return await this.paymentRepository.getByStatus(status);
   }
 
   /**
@@ -96,7 +96,7 @@ export class PaymentService {
     startDate: Date,
     endDate: Date,
   ): Promise<Payment[]> {
-    return this.paymentRepository.getByDateRange(startDate, endDate);
+    return await this.paymentRepository.getByDateRange(startDate, endDate);
   }
 
   /**
@@ -109,7 +109,7 @@ export class PaymentService {
     startDate: Date,
     endDate: Date,
   ): Promise<number> {
-    return this.paymentRepository.getTotalAmountByDateRange(startDate, endDate);
+    return await this.paymentRepository.getTotalAmountByDateRange(startDate, endDate);
   }
 
   /**
@@ -120,7 +120,7 @@ export class PaymentService {
   async getMostRecentPaymentByOrderId(
     orderId: number,
   ): Promise<Payment | null> {
-    return this.paymentRepository.getMostRecentPaymentByOrderId(orderId);
+    return await this.paymentRepository.getMostRecentPaymentByOrderId(orderId);
   }
 
   /**
@@ -128,6 +128,6 @@ export class PaymentService {
    * @returns A promise that resolves to a map of payment methods to arrays of Payments.
    */
   async getPaymentsGroupedByMethod(): Promise<Map<string, Payment[]>> {
-    return this.paymentRepository.getPaymentsGroupedByMethod();
+    return await this.paymentRepository.getPaymentsGroupedByMethod();
   }
 }

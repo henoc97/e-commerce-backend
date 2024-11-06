@@ -49,7 +49,7 @@ export class VendorService {
   async createVendor(vendorDTO: VendorDTO): Promise<Vendor> {
     const vendorEntity = fromVendorDTO(vendorDTO);
 
-    return this.vendorRepository.create(vendorEntity);
+    return await this.vendorRepository.create(vendorEntity);
   }
 
   /**
@@ -58,7 +58,7 @@ export class VendorService {
    * @returns The Vendor entity if found, otherwise null.
    */
   async findVendorById(id: number): Promise<Vendor | null> {
-    return this.vendorRepository.findById(id);
+    return await this.vendorRepository.findById(id);
   }
 
   /**
@@ -72,7 +72,7 @@ export class VendorService {
     updateData: Partial<VendorDTO>,
   ): Promise<Vendor> {
     const updatedVendor = fromVendorDTO(updateData);
-    return this.vendorRepository.update(id, updatedVendor);
+    return await this.vendorRepository.update(id, updatedVendor);
   }
 
   /**
@@ -81,7 +81,7 @@ export class VendorService {
    * @returns True if deletion was successful, otherwise false.
    */
   async deleteVendor(id: number): Promise<boolean> {
-    return this.vendorRepository.delete(id);
+    return await this.vendorRepository.delete(id);
   }
 
   /**
@@ -90,7 +90,7 @@ export class VendorService {
    * @returns An array of vendors matching the given store name.
    */
   async findVendorsByStoreName(storeName: string): Promise<Vendor[]> {
-    return this.vendorRepository.findByStoreName(storeName);
+    return await this.vendorRepository.findByStoreName(storeName);
   }
 
   /**
@@ -105,7 +105,7 @@ export class VendorService {
   ): Promise<Vendor> {
     const productEntity = fromProductDTO(productDTO);
 
-    return this.vendorRepository.addProduct(vendorId, productEntity);
+    return await this.vendorRepository.addProduct(vendorId, productEntity);
   }
 
   /**
@@ -118,7 +118,7 @@ export class VendorService {
     vendorId: number,
     productId: number,
   ): Promise<Vendor> {
-    return this.vendorRepository.removeProduct(vendorId, productId);
+    return await this.vendorRepository.removeProduct(vendorId, productId);
   }
 
   /**
@@ -132,7 +132,7 @@ export class VendorService {
     subscriptionDTO: SubscriptionDTO,
   ): Promise<Vendor> {
     await this.subscriptionService.createSubscription(subscriptionDTO);
-    return this.vendorRepository.findById(vendorId);
+    return await this.vendorRepository.findById(vendorId);
   }
 
   /**
@@ -143,7 +143,7 @@ export class VendorService {
    */
   async setVendorShop(vendorId: number, shopDTO: ShopDTO): Promise<Vendor> {
     await this.shopService.createShop(shopDTO);
-    return this.vendorRepository.findById(vendorId);
+    return await this.vendorRepository.findById(vendorId);
   }
 
   /**
@@ -152,7 +152,7 @@ export class VendorService {
    * @returns An array of vendors associated with the user.
    */
   async findVendorsByUser(userId: number): Promise<Vendor[]> {
-    return this.vendorRepository.findByUser(userId);
+    return await this.vendorRepository.findByUser(userId);
   }
 
   /**
@@ -161,7 +161,7 @@ export class VendorService {
    * @returns An array of vendors with the specified subscription.
    */
   async findVendorsBySubscription(subscriptionId: number): Promise<Vendor[]> {
-    return this.vendorRepository.findBySubscription(subscriptionId);
+    return await this.vendorRepository.findBySubscription(subscriptionId);
   }
 
   /**
@@ -169,7 +169,7 @@ export class VendorService {
    * @returns A promise that resolves to an array of Vendors.
    */
   async getAllVendors(): Promise<Vendor[]> {
-    return this.vendorRepository.getAll();
+    return await this.vendorRepository.getAll();
   }
 }
 

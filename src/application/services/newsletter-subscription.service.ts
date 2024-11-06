@@ -25,7 +25,7 @@ export class NewsletterSubscriptionService {
     dto: NewsletterSubscriptionDTO,
   ): Promise<NewsletterSubscription> {
     const subscription = fromNewsletterSubscriptionDTO(dto);
-    return this.newsletterSubscriptionRepository.create(subscription);
+    return await this.newsletterSubscriptionRepository.create(subscription);
   }
 
   /**
@@ -37,7 +37,7 @@ export class NewsletterSubscriptionService {
   async getSubscriptionById(
     id: number,
   ): Promise<NewsletterSubscription | null> {
-    return this.newsletterSubscriptionRepository.getById(id);
+    return await this.newsletterSubscriptionRepository.getById(id);
   }
 
   /**
@@ -52,7 +52,7 @@ export class NewsletterSubscriptionService {
     updates: Partial<NewsletterSubscriptionDTO>,
   ): Promise<NewsletterSubscription> {
     const updatedSubscription = fromNewsletterSubscriptionDTO(updates);
-    return this.newsletterSubscriptionRepository.update(
+    return await this.newsletterSubscriptionRepository.update(
       id,
       updatedSubscription,
     );
@@ -65,7 +65,7 @@ export class NewsletterSubscriptionService {
    * @throws InternalServerErrorException if deletion fails.
    */
   async deleteSubscription(id: number): Promise<boolean> {
-    return this.newsletterSubscriptionRepository.delete(id);
+    return await this.newsletterSubscriptionRepository.delete(id);
   }
 
   /**
@@ -77,7 +77,7 @@ export class NewsletterSubscriptionService {
   async listAllSubscriptions(
     shopId: number,
   ): Promise<NewsletterSubscription[]> {
-    return this.newsletterSubscriptionRepository.listAllByShop(shopId);
+    return await this.newsletterSubscriptionRepository.listAllByShop(shopId);
   }
 
   /**
@@ -91,7 +91,7 @@ export class NewsletterSubscriptionService {
     email: string,
     shopId: number,
   ): Promise<NewsletterSubscription | null> {
-    return this.newsletterSubscriptionRepository.getByEmailAndShop(
+    return await this.newsletterSubscriptionRepository.getByEmailAndShop(
       email,
       shopId,
     );
@@ -105,7 +105,7 @@ export class NewsletterSubscriptionService {
    * @throws InternalServerErrorException if retrieval fails.
    */
   async isEmailSubscribed(email: string, shopId: number): Promise<boolean> {
-    return this.newsletterSubscriptionRepository.isSubscribed(email, shopId);
+    return await this.newsletterSubscriptionRepository.isSubscribed(email, shopId);
   }
 
   /**
@@ -121,7 +121,7 @@ export class NewsletterSubscriptionService {
     startDate: Date,
     endDate: Date,
   ): Promise<NewsletterSubscription[]> {
-    return this.newsletterSubscriptionRepository.getByDateRange(
+    return await this.newsletterSubscriptionRepository.getByDateRange(
       shopId,
       startDate,
       endDate,
@@ -135,6 +135,6 @@ export class NewsletterSubscriptionService {
    * @throws InternalServerErrorException if counting fails.
    */
   async countTotalSubscriptions(shopId: number): Promise<number> {
-    return this.newsletterSubscriptionRepository.countAllForShop(shopId);
+    return await this.newsletterSubscriptionRepository.countAllForShop(shopId);
   }
 }

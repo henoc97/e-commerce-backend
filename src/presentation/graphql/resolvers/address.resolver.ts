@@ -9,8 +9,10 @@ import { ListAddressesByCountry } from 'src/application/use-cases/address.use-ca
 import { ListAddressesByState } from 'src/application/use-cases/address.use-cases/list-addresses-by-state.use-case';
 import { ListAddressesByPostalCode } from 'src/application/use-cases/address.use-cases/list-addresses-by-postal-code.use-case';
 import { ListAddressesByUser } from 'src/application/use-cases/address.use-cases/list-addresses-by-user.use-case';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
 
-@Resolver(AddressDTO)
+@Resolver(() => AddressDTO)
 export class AddressResolver {
   constructor(
     private readonly createAddress: CreateAddress,
@@ -24,16 +26,19 @@ export class AddressResolver {
     private readonly listAddressesByUser: ListAddressesByUser,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => AddressDTO, { nullable: true })
   async address(@Args('id') id: number): Promise<AddressDTO | null> {
     return this.fetchAddressById.execute(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [AddressDTO])
   async addressesByCity(@Args('city') city: string): Promise<AddressDTO[]> {
     return this.listAddressesByCity.execute(city);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => AddressDTO)
   async createNewAddress(
     @Args('addressInput') addressInput: AddressDTO,
@@ -41,6 +46,7 @@ export class AddressResolver {
     return this.createAddress.execute(addressInput);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => AddressDTO)
   async updateAddress(
     @Args('id') id: number,
@@ -49,11 +55,13 @@ export class AddressResolver {
     return this.modifyAddressById.execute(id, addressInput);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean)
   async deleteAddress(@Args('id') id: number): Promise<boolean> {
     return this.removeAddressById.execute(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [AddressDTO])
   async addressesByCountry(
     @Args('country') country: string,
@@ -61,11 +69,13 @@ export class AddressResolver {
     return this.listAddressesByCountry.execute(country);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [AddressDTO])
   async addressesByState(@Args('state') state: string): Promise<AddressDTO[]> {
     return this.listAddressesByState.execute(state);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [AddressDTO])
   async addressesByPostalCode(
     @Args('postalCode') postalCode: string,
@@ -73,6 +83,7 @@ export class AddressResolver {
     return this.listAddressesByPostalCode.execute(postalCode);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [AddressDTO])
   async addressesByUser(@Args('userId') userId: number): Promise<AddressDTO[]> {
     return this.listAddressesByUser.execute(userId);

@@ -23,7 +23,7 @@ export class ProductVariantService {
     variantDTO: ProductVariantDTO,
   ): Promise<ProductVariant> {
     const variant = fromProductVariantDTO(variantDTO);
-    return this.repository.create(variant);
+    return await this.repository.create(variant);
   }
 
   /**
@@ -32,7 +32,7 @@ export class ProductVariantService {
    * @returns A promise that resolves to the ProductVariant if found, otherwise null.
    */
   async getProductVariantById(id: number): Promise<ProductVariant | null> {
-    return this.repository.getById(id);
+    return await this.repository.getById(id);
   }
 
   /**
@@ -47,7 +47,7 @@ export class ProductVariantService {
   ): Promise<ProductVariant> {
     // Convert DTO to entity for the update operation
     const updatedEntity = fromProductVariantDTO(updates);
-    return this.repository.update(id, updatedEntity);
+    return await this.repository.update(id, updatedEntity);
   }
 
   /**
@@ -56,7 +56,7 @@ export class ProductVariantService {
    * @returns A promise that resolves to true if deletion was successful, otherwise false.
    */
   async deleteProductVariant(id: number): Promise<boolean> {
-    return this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 
   /**
@@ -67,7 +67,7 @@ export class ProductVariantService {
   async getProductVariantsByProductId(
     productId: number,
   ): Promise<ProductVariant[]> {
-    return this.repository.getByProductId(productId);
+    return await this.repository.getByProductId(productId);
   }
 
   /**
@@ -76,7 +76,7 @@ export class ProductVariantService {
    * @returns A promise that resolves to true if deletion was successful, otherwise false.
    */
   async deleteProductVariantsByProductId(productId: number): Promise<boolean> {
-    return this.repository.deleteByProductId(productId);
+    return await this.repository.deleteByProductId(productId);
   }
 
   /**
@@ -91,7 +91,7 @@ export class ProductVariantService {
     name: string,
     value: string,
   ): Promise<boolean> {
-    return this.repository.exists(productId, name, value);
+    return await this.repository.exists(productId, name, value);
   }
 
   /**
@@ -106,7 +106,7 @@ export class ProductVariantService {
     name?: string,
     value?: string,
   ): Promise<ProductVariant> {
-    return this.repository.updateDetails(id, name, value);
+    return await this.repository.updateDetails(id, name, value);
   }
 
   /**
@@ -119,7 +119,7 @@ export class ProductVariantService {
     productId: number,
     name: string,
   ): Promise<ProductVariant[]> {
-    return this.repository.getByName(productId, name);
+    return await this.repository.getByName(productId, name);
   }
 
   /**
@@ -130,6 +130,6 @@ export class ProductVariantService {
   async getMostPopularVariant(
     productId: number,
   ): Promise<ProductVariant | null> {
-    return this.repository.getMostPopularVariant(productId);
+    return await this.repository.getMostPopularVariant(productId);
   }
 }

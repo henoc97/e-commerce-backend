@@ -3,6 +3,7 @@ import { IOrderItemRepository } from 'src/domain/repositories/order-item.reposit
 import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
 import { fromOrderItemDTO } from '../helper/to-entity/to.order-item.entity';
 import { Inject } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
 
 /**
  * Service class for managing OrderItems.
@@ -15,17 +16,23 @@ export class OrderItemService {
    */
   constructor(
     @Inject('IOrderItemRepository')
+    @Inject('KAFKA_SERVICE') 
+    private readonly kafkaService: ClientKafka,
     private readonly repository: IOrderItemRepository,
   ) {}
 
   /**
-   * Creates a new OrderItem.
+   * Creates a new OrderItem and emit the OrderItem through kafka.
    * @param dto - The OrderItemDTO containing data for the new OrderItem.
    * @returns A promise that resolves to the created OrderItem entity.
    */
   async create(dto: OrderItemDTO): Promise<OrderItem> {
     const orderItem = fromOrderItemDTO(dto);
-    return await this.repository.create(orderItem);
+    // Create a new OrderItem
+    const result = await this.repository.create(orderItem);
+    // Emit the OrderItem through kafka
+    if (result) this.kafkaService.emit('order-item.created', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -38,14 +45,16 @@ export class OrderItemService {
   }
 
   /**
-   * Updates an existing OrderItem.
+   * Updates an existing OrderItem and emit the OrderItem through kafka.
    * @param id - The unique ID of the OrderItem to update.
    * @param updates - Partial data to update the OrderItem.
    * @returns A promise that resolves to the updated OrderItem entity.
    */
   async update(id: number, updates: Partial<OrderItemDTO>): Promise<OrderItem> {
     const updateData = fromOrderItemDTO(updates);
-    return await this.repository.update(id, updateData);
+    const result = await this.repository.update(id, updateData);
+    if (result) this.kafkaService.emit('order-item.updated', JSON.stringify(result));
+    return result;
   }
 
   /**

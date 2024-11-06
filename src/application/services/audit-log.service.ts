@@ -23,7 +23,7 @@ export class AuditLogService {
    */
   async createLog(dto: AuditLogDTO): Promise<AuditLog> {
     const auditLog = fromAuditLogDTO(dto);
-    return this.auditLogRepository.create(auditLog);
+    return await this.auditLogRepository.create(auditLog);
   }
 
   /**
@@ -32,7 +32,7 @@ export class AuditLogService {
    * @returns A promise that resolves to the audit log entry if found, otherwise null.
    */
   async getLogById(id: number): Promise<AuditLog | null> {
-    return this.auditLogRepository.getById(id);
+    return await this.auditLogRepository.getById(id);
   }
 
   /**
@@ -42,7 +42,7 @@ export class AuditLogService {
    * @returns A promise that resolves to an array of audit logs for the specified entity.
    */
   async getLogsByEntity(entity: string, entityId: number): Promise<AuditLog[]> {
-    return this.auditLogRepository.getByEntity(entity, entityId);
+    return await this.auditLogRepository.getByEntity(entity, entityId);
   }
 
   /**
@@ -51,7 +51,7 @@ export class AuditLogService {
    * @returns A promise that resolves to an array of audit logs created by the specified user.
    */
   async getLogsByUser(userId: number): Promise<AuditLog[]> {
-    return this.auditLogRepository.getByUser(userId);
+    return await this.auditLogRepository.getByUser(userId);
   }
 
   /**
@@ -62,7 +62,7 @@ export class AuditLogService {
    */
   async updateLog(id: number, dto: AuditLogDTO): Promise<AuditLog> {
     const updatedLog = fromAuditLogDTO(dto);
-    return this.auditLogRepository.update(id, updatedLog);
+    return await this.auditLogRepository.update(id, updatedLog);
   }
 
   /**
@@ -71,7 +71,7 @@ export class AuditLogService {
    * @returns A promise that resolves to true if deletion was successful, otherwise false.
    */
   async deleteLog(id: number): Promise<boolean> {
-    return this.auditLogRepository.delete(id);
+    return await this.auditLogRepository.delete(id);
   }
 
   /**
@@ -84,7 +84,7 @@ export class AuditLogService {
     startDate: Date,
     endDate: Date,
   ): Promise<AuditLog[]> {
-    return this.auditLogRepository.getByDateRange(startDate, endDate);
+    return await this.auditLogRepository.getByDateRange(startDate, endDate);
   }
 
   /**
@@ -93,7 +93,7 @@ export class AuditLogService {
    * @returns A promise that resolves to an array of the most recent audit logs.
    */
   async getRecentLogs(limit: number): Promise<AuditLog[]> {
-    return this.auditLogRepository.getRecent(limit);
+    return await this.auditLogRepository.getRecent(limit);
   }
 
   /**
@@ -102,6 +102,6 @@ export class AuditLogService {
    * @returns A promise that resolves to an array of audit logs matching the specified action type.
    */
   async getLogsByAction(action: AuditLogAction): Promise<AuditLog[]> {
-    return this.auditLogRepository.getByAction(action);
+    return await this.auditLogRepository.getByAction(action);
   }
 }

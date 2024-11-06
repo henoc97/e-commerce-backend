@@ -3,6 +3,7 @@ import { IUserActivityRepository } from 'src/domain/repositories/user-activity.r
 import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
 import { fromUserActivityDTO } from '../helper/to-entity/to.user-activity.entity';
 import { Inject } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
 
 /**
  * Service for managing user activities.
@@ -11,20 +12,24 @@ import { Inject } from '@nestjs/common';
 export class UserActivityService {
   constructor(
     @Inject('IUserActivityRepository')
+    @Inject('KAFKA_SERVICE') 
+    private readonly kafkaService: ClientKafka,
     private readonly userActivityRepository: IUserActivityRepository,
   ) {}
 
   /**
-   * Records a new user activity.
+   * Records a new user activity and emit new user activity through kafka.
    * @param activityDTO - Data Transfer Object containing the activity details.
    * @returns The recorded UserActivity entity.
    */
   async recordActivity(activityDTO: UserActivityDTO): Promise<UserActivity> {
     // Convert DTO to entity
     const activity = fromUserActivityDTO(activityDTO);
-
     // Use repository to create a new activity record
-    return await this.userActivityRepository.create(activity);
+    const result = await this.userActivityRepository.create(activity);
+    // Emit user activity through kafka
+    if (result) this.kafkaService.emit('interaction.created', JSON.stringify(result));
+    return result;
   }
 
   /**
@@ -55,7 +60,7 @@ export class UserActivityService {
   }
 
   /**
-   * Updates an existing activity record.
+   * Updates an existing activity record and emit user activity through kafka.
    * @param id - The ID of the activity to update.
    * @param activityDTO - Data Transfer Object containing the updated activity details.
    * @returns The updated UserActivity entity.
@@ -66,9 +71,11 @@ export class UserActivityService {
   ): Promise<UserActivity> {
     // Convert DTO to entity with updated details
     const updatedActivity = fromUserActivityDTO(activityDTO);
-
     // Use repository to update the activity record
-    return await this.userActivityRepository.update(id, updatedActivity);
+    const result = await this.userActivityRepository.update(id, updatedActivity);
+    // Emit user activity through kafka
+    if (result) this.kafkaService.emit('interaction.updated', JSON.stringify(result));
+    return result;
   }
 
   /**

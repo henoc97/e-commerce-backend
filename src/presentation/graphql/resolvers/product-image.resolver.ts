@@ -11,7 +11,7 @@ import { UpdateProductImageUrl } from 'src/application/use-cases/product-image.u
 import { UpdateProductImage } from 'src/application/use-cases/product-image.use-cases/update-product-image.use-case';
 import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
 
-@Resolver('ProductImage')
+@Resolver(() => ProductImageDTO)
 export class ProductImageResolver {
   constructor(
     private readonly checkProductImageExistence: CheckProductImageExistence,

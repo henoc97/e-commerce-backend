@@ -20,7 +20,7 @@ export class PromotionService {
    */
   async createPromotion(promotionDTO: PromotionDTO): Promise<Promotion> {
     const promotion = fromPromotionDTO(promotionDTO);
-    return this.promotionRepository.create(promotion);
+    return await this.promotionRepository.create(promotion);
   }
 
   /**
@@ -29,7 +29,7 @@ export class PromotionService {
    * @returns The promotion if found, or null.
    */
   async getPromotionById(id: number): Promise<Promotion | null> {
-    return this.promotionRepository.getById(id);
+    return await this.promotionRepository.getById(id);
   }
 
   /**
@@ -44,7 +44,7 @@ export class PromotionService {
   ): Promise<Promotion> {
     // Convert DTO updates to entity
     const promotionUpdates = fromPromotionDTO(updates);
-    return this.promotionRepository.modify(id, promotionUpdates);
+    return await this.promotionRepository.modify(id, promotionUpdates);
   }
 
   /**
@@ -53,7 +53,7 @@ export class PromotionService {
    * @returns True if the deletion was successful, false otherwise.
    */
   async deletePromotion(id: number): Promise<boolean> {
-    return this.promotionRepository.remove(id);
+    return await this.promotionRepository.remove(id);
   }
 
   /**
@@ -62,7 +62,7 @@ export class PromotionService {
    * @returns A list of promotions for the product.
    */
   async getPromotionsByProduct(productId: number): Promise<Promotion[]> {
-    return this.promotionRepository.getByProduct(productId);
+    return await this.promotionRepository.getByProduct(productId);
   }
 
   /**
@@ -75,7 +75,7 @@ export class PromotionService {
     start: Date,
     end: Date,
   ): Promise<Promotion[]> {
-    return this.promotionRepository.getActiveBetween(start, end);
+    return await this.promotionRepository.getActiveBetween(start, end);
   }
 
   /**
@@ -83,7 +83,7 @@ export class PromotionService {
    * @returns A list of currently active promotions.
    */
   async getActivePromotions(): Promise<Promotion[]> {
-    return this.promotionRepository.getActive();
+    return await this.promotionRepository.getActive();
   }
 
   /**
@@ -94,7 +94,7 @@ export class PromotionService {
   async getBestPromotionForProduct(
     productId: number,
   ): Promise<Promotion | null> {
-    return this.promotionRepository.getBestForProduct(productId);
+    return await this.promotionRepository.getBestForProduct(productId);
   }
 
   /**
@@ -105,6 +105,6 @@ export class PromotionService {
   async combinePromotions(
     promotions: PromotionDTO[],
   ): Promise<Promotion | null> {
-    return this.promotionRepository.combine(promotions.map(fromPromotionDTO));
+    return await this.promotionRepository.combine(promotions.map(fromPromotionDTO));
   }
 }

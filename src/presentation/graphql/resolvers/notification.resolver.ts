@@ -12,7 +12,7 @@ import { UpdateNotification } from 'src/application/use-cases/notification.use-c
 import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
 import { NotificationType } from 'src/domain/enums/notification-type.enum';
 
-@Resolver('Notification')
+@Resolver(() => NotificationDTO)
 export class NotificationResolver {
   constructor(
     private readonly countUnreadNotificationsUseCase: CountUnreadNotifications,

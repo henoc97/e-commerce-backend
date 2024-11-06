@@ -25,7 +25,7 @@ import { UserProfileResolver } from './resolvers/user-profile.resolver';
 import { UserResolver } from './resolvers/user.resolver';
 import { VendorResolver } from './resolvers/vendor.resolver';
 
-// Exporte simplement toutes les classes de résolveurs sans les fusionner
+// All resolvers merged
 export const resolvers = [
   AddressResolver,
   AuditLogResolver,

@@ -10,7 +10,7 @@ import { UpdateOrderItem } from 'src/application/use-cases/order-item.use-case/u
 import { CalculateTotalPriceForOrder } from 'src/application/use-cases/order-item.use-case/calculate-total-price-for-order.use-case';
 import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
 
-@Resolver('OrderItem')
+@Resolver(() => OrderItemDTO)
 export class OrderItemResolver {
   constructor(
     private readonly createOrderItemUseCase: CreateOrderItem,

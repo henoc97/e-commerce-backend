@@ -11,7 +11,7 @@ import { FetchPromotionById } from 'src/application/use-cases/promotion.use-case
 import { FetchPromotionsByProduct } from 'src/application/use-cases/promotion.use-cases/fetch-promotions-by-product.use-case';
 import { UpdatePromotion } from 'src/application/use-cases/promotion.use-cases/update-promotion.use-case';
 
-@Resolver()
+@Resolver(() => PromotionDTO)
 export class PromotionResolver {
   constructor(
     private readonly applyPromotionToProductUseCase: ApplyPromotionToProduct,

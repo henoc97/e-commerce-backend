@@ -22,7 +22,7 @@ export class UserProfileService {
   async createUserProfile(profileDTO: UserProfileDTO): Promise<UserProfile> {
     // Map DTO to Entity
     const profile = fromUserProfileDTO(profileDTO);
-    return this.userProfileRepository.create(profile);
+    return await this.userProfileRepository.create(profile);
   }
 
   /**
@@ -31,7 +31,7 @@ export class UserProfileService {
    * @returns The UserProfile entity if found, otherwise null.
    */
   async getUserProfileById(id: number): Promise<UserProfile | null> {
-    return this.userProfileRepository.getById(id);
+    return await this.userProfileRepository.getById(id);
   }
 
   /**
@@ -46,7 +46,7 @@ export class UserProfileService {
   ): Promise<UserProfile> {
     // Convert DTO updates to Entity updates
     const updatesProfile = fromUserProfileDTO(updates);
-    return this.userProfileRepository.update(id, updatesProfile);
+    return await this.userProfileRepository.update(id, updatesProfile);
   }
 
   /**
@@ -55,7 +55,7 @@ export class UserProfileService {
    * @returns A boolean indicating if the deletion was successful.
    */
   async deleteUserProfile(id: number): Promise<boolean> {
-    return this.userProfileRepository.remove(id);
+    return await this.userProfileRepository.remove(id);
   }
 
   /**
@@ -64,7 +64,7 @@ export class UserProfileService {
    * @returns The UserProfile entity if found, otherwise null.
    */
   async getUserProfileByUserId(userId: number): Promise<UserProfile | null> {
-    return this.userProfileRepository.getByUserId(userId);
+    return await this.userProfileRepository.getByUserId(userId);
   }
 
   /**
@@ -74,7 +74,7 @@ export class UserProfileService {
    * @returns The updated UserProfile entity.
    */
   async updatePhoneNumber(userId: number, phone: string): Promise<UserProfile> {
-    return this.userProfileRepository.updatePhone(userId, phone);
+    return await this.userProfileRepository.updatePhone(userId, phone);
   }
 
   /**
@@ -84,7 +84,7 @@ export class UserProfileService {
    * @returns The updated UserProfile entity.
    */
   async updateBirthday(userId: number, birthday: Date): Promise<UserProfile> {
-    return this.userProfileRepository.updateBirthday(userId, birthday);
+    return await this.userProfileRepository.updateBirthday(userId, birthday);
   }
 
   /**
@@ -94,7 +94,7 @@ export class UserProfileService {
    * @returns The updated UserProfile entity.
    */
   async updateGender(userId: number, gender: string): Promise<UserProfile> {
-    return this.userProfileRepository.updateGender(userId, gender);
+    return await this.userProfileRepository.updateGender(userId, gender);
   }
 
   /**
@@ -103,7 +103,7 @@ export class UserProfileService {
    * @returns An array of UserProfile entities.
    */
   async getUserProfilesByGender(gender: string): Promise<UserProfile[]> {
-    return this.userProfileRepository.getByGender(gender);
+    return await this.userProfileRepository.getByGender(gender);
   }
 
   /**
@@ -116,7 +116,7 @@ export class UserProfileService {
     startDate: Date,
     endDate: Date,
   ): Promise<UserProfile[]> {
-    return this.userProfileRepository.getByBirthdayRange(startDate, endDate);
+    return await this.userProfileRepository.getByBirthdayRange(startDate, endDate);
   }
 
   /**
@@ -125,7 +125,7 @@ export class UserProfileService {
    * @returns A boolean indicating if the phone number is already associated with another profile.
    */
   async isPhoneInUse(phone: string): Promise<boolean> {
-    return this.userProfileRepository.isPhoneInUse(phone);
+    return await this.userProfileRepository.isPhoneInUse(phone);
   }
 
   /**
@@ -134,7 +134,7 @@ export class UserProfileService {
    * @returns A boolean indicating if a profile exists.
    */
   async profileExists(userId: number): Promise<boolean> {
-    return this.userProfileRepository.exists(userId);
+    return await this.userProfileRepository.exists(userId);
   }
 
   /**
@@ -143,7 +143,7 @@ export class UserProfileService {
    * @returns An array of the most recently updated profiles.
    */
   // async getRecentlyUpdatedProfiles(limit: number): Promise<UserProfile[]> {
-  //   return this.userProfileRepository.getRecentlyUpdated(limit);
+  //   return await this.userProfileRepository.getRecentlyUpdated(limit);
   // }
 
   /**
@@ -156,6 +156,6 @@ export class UserProfileService {
     criteria: Partial<UserProfileDTO>,
   ): Promise<UserProfile[]> {
     const profileCriteria = fromUserProfileDTO(criteria);
-    return this.userProfileRepository.findMatches(profileCriteria);
+    return await this.userProfileRepository.findMatches(profileCriteria);
   }
 }
