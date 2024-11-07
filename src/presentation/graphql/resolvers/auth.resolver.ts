@@ -5,7 +5,7 @@ import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-aut
 
 @Resolver('Auth')
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Mutation(() => String)
   async login(
@@ -16,7 +16,8 @@ export class AuthResolver {
     if (!user) {
       throw new Error('Invalid credentials');
     }
-    return this.authService.login(user);
+    const { access_token } = await this.authService.login(user);
+    return access_token;
   }
 
   @UseGuards(JwtAuthGuard)

@@ -1,7 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Product } from 'src/domain/entities/product.entity';
-import { Shop } from 'src/domain/entities/shop.entity';
-import { Subscription } from 'src/domain/entities/subscription.entity';
 import { Vendor } from 'src/domain/entities/vendor.entity';
 import { IVendorRepository } from 'src/domain/repositories/vendor.repository';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
@@ -10,8 +7,6 @@ import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
 import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
 import { fromVendorDTO } from '../helper/to-entity/to.vendor.entity';
 import { fromProductDTO } from '../helper/to-entity/to.product.entity';
-import { fromSubscriptionDTO } from '../helper/to-entity/to.subscription.entity';
-import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
 import { SubscriptionService } from './subscription.service';
 import { ShopService } from './shop.service';
 
@@ -38,7 +33,7 @@ export class VendorService {
     private readonly vendorRepository: IVendorRepository,
     private readonly subscriptionService: SubscriptionService,
     private readonly shopService: ShopService,
-  ) {}
+  ) { }
 
 
   /**

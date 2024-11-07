@@ -10,7 +10,7 @@ import { AddressDTO } from 'src/presentation/dtos/address.dto';
  */
 @Injectable()
 export class CreateAddress {
-  constructor(private readonly sevice: AddressService) {}
+  constructor(private readonly service: AddressService) { }
 
   /**
    * Execute the create-address use case.
@@ -18,7 +18,7 @@ export class CreateAddress {
    * @returns A promise that resolves to the created Address entity.
    */
   async execute(addressDTO: AddressDTO): Promise<AddressDTO | null> {
-    const address = await this.sevice.createAddress(addressDTO);
+    const address = await this.service.createAddress(addressDTO);
 
     if (!address) return null;
 

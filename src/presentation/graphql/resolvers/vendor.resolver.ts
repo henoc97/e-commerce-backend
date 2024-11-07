@@ -6,10 +6,10 @@ import { FindVendorById } from 'src/application/use-cases/vendor.use-cases/find-
 import { FindVendorsByStoreName } from 'src/application/use-cases/vendor.use-cases/find-vendors-by-store-name.use-case';
 import { FindVendorsBySubscription } from 'src/application/use-cases/vendor.use-cases/find-vendors-by-subscription.use-case';
 import { FindVendorsByUser } from 'src/application/use-cases/vendor.use-cases/find-vendors-by-user.use-case';
-import { GetLatestVendor } from 'src/application/use-cases/vendor.use-cases/get-latest-vendor.use-case';
-import { GetVendorProducts } from 'src/application/use-cases/vendor.use-cases/get-vendor-products.use-case';
-import { GetVendorShop } from 'src/application/use-cases/vendor.use-cases/get-vendor-shop.use-case';
-import { GetVendorSubscription } from 'src/application/use-cases/vendor.use-cases/get-vendor-subscription.use-case';
+// import { GetLatestVendor } from 'src/application/use-cases/vendor.use-cases/get-latest-vendor.use-case';
+// import { GetVendorProducts } from 'src/application/use-cases/vendor.use-cases/get-vendor-products.use-case';
+// import { GetVendorShop } from 'src/application/use-cases/vendor.use-cases/get-vendor-shop.use-case';
+// import { GetVendorSubscription } from 'src/application/use-cases/vendor.use-cases/get-vendor-subscription.use-case';
 import { RemoveProductFromVendor } from 'src/application/use-cases/vendor.use-cases/remove-product-from-vendor.use-case';
 import { SetVendorShop } from 'src/application/use-cases/vendor.use-cases/set-vendor-shop.use-case';
 import { SetVendorSubscription } from 'src/application/use-cases/vendor.use-cases/set-vendor-subscription.use-case';
@@ -30,10 +30,10 @@ export class VendorResolver {
     private readonly findVendorsByStoreNameUseCase: FindVendorsByStoreName,
     private readonly findVendorsBySubscriptionUseCase: FindVendorsBySubscription,
     private readonly findVendorsByUserUseCase: FindVendorsByUser,
-    private readonly getLatestVendorUseCase: GetLatestVendor,
-    private readonly getVendorProductsUseCase: GetVendorProducts,
-    private readonly getVendorShopUseCase: GetVendorShop,
-    private readonly getVendorSubscriptionUseCase: GetVendorSubscription,
+    // private readonly getLatestVendorUseCase: GetLatestVendor,
+    // private readonly getVendorProductsUseCase: GetVendorProducts,
+    // private readonly getVendorShopUseCase: GetVendorShop,
+    // private readonly getVendorSubscriptionUseCase: GetVendorSubscription,
     private readonly removeProductFromVendorUseCase: RemoveProductFromVendor,
     private readonly setVendorShopUseCase: SetVendorShop,
     private readonly setVendorSubscriptionUseCase: SetVendorSubscription,
@@ -125,50 +125,50 @@ export class VendorResolver {
     return this.findVendorsByUserUseCase.execute(userId);
   }
 
-  /**
-   * Gets the latest vendor.
-   * @returns The latest vendor data transfer object or null.
-   */
-  @Query(() => VendorDTO, { nullable: true })
-  async getLatestVendor(): Promise<VendorDTO | null> {
-    return this.getLatestVendorUseCase.execute();
-  }
+  // /**
+  //  * Gets the latest vendor.
+  //  * @returns The latest vendor data transfer object or null.
+  //  */
+  // @Query(() => VendorDTO, { nullable: true })
+  // async getLatestVendor(): Promise<VendorDTO | null> {
+  //   return this.getLatestVendorUseCase.execute();
+  // }
 
-  /**
-   * Gets products of a vendor.
-   * @param vendorId - The ID of the vendor.
-   * @returns A list of product data transfer objects.
-   */
-  @Query(() => [ProductDTO])
-  async getVendorProducts(
-    @Args('vendorId') vendorId: number,
-  ): Promise<ProductDTO[]> {
-    return this.getVendorProductsUseCase.execute(vendorId);
-  }
+  // /**
+  //  * Gets products of a vendor.
+  //  * @param vendorId - The ID of the vendor.
+  //  * @returns A list of product data transfer objects.
+  //  */
+  // @Query(() => [ProductDTO])
+  // async getVendorProducts(
+  //   @Args('vendorId') vendorId: number,
+  // ): Promise<ProductDTO[]> {
+  //   return this.getVendorProductsUseCase.execute(vendorId);
+  // }
 
-  /**
-   * Gets the shop of a vendor.
-   * @param vendorId - The ID of the vendor.
-   * @returns The shop data transfer object or null.
-   */
-  @Query(() => ShopDTO, { nullable: true })
-  async getVendorShop(
-    @Args('vendorId') vendorId: number,
-  ): Promise<ShopDTO | null> {
-    return this.getVendorShopUseCase.execute(vendorId);
-  }
+  // /**
+  //  * Gets the shop of a vendor.
+  //  * @param vendorId - The ID of the vendor.
+  //  * @returns The shop data transfer object or null.
+  //  */
+  // @Query(() => ShopDTO, { nullable: true })
+  // async getVendorShop(
+  //   @Args('vendorId') vendorId: number,
+  // ): Promise<ShopDTO | null> {
+  //   return this.getVendorShopUseCase.execute(vendorId);
+  // }
 
-  /**
-   * Gets the subscription of a vendor.
-   * @param vendorId - The ID of the vendor.
-   * @returns The subscription data transfer object or null.
-   */
-  @Query(() => SubscriptionDTO, { nullable: true })
-  async getVendorSubscription(
-    @Args('vendorId') vendorId: number,
-  ): Promise<SubscriptionDTO | null> {
-    return this.getVendorSubscriptionUseCase.execute(vendorId);
-  }
+  // /**
+  //  * Gets the subscription of a vendor.
+  //  * @param vendorId - The ID of the vendor.
+  //  * @returns The subscription data transfer object or null.
+  //  */
+  // @Query(() => SubscriptionDTO, { nullable: true })
+  // async getVendorSubscription(
+  //   @Args('vendorId') vendorId: number,
+  // ): Promise<SubscriptionDTO | null> {
+  //   return this.getVendorSubscriptionUseCase.execute(vendorId);
+  // }
 
   /**
    * Removes a product from a vendor.

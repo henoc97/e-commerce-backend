@@ -9,18 +9,19 @@ import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
  */
 @Injectable()
 export class FetchTopProductForShop {
-  constructor(private readonly shopService: ShopService) {}
+    constructor(private readonly shopService: ShopService) { }
 
-  /**
-   * Executes the fetch-top-product-for-shop use case.
-   * @param shopId - The ID of the shop to retrieve the top product.
-   * @returns A promise that resolves to the ProductDTO of the top product.
-   */
-  async execute(shopId: number): Promise<ProductDTO | null> {
-    const product = await this.shopService.getTopProductForShop(shopId);
+    /**
+     * Executes the fetch-top-product-for-shop use case.
+     * @param shopId - The ID of the shop to retrieve the top product.
+     * @returns A promise that resolves to the ProductDTO of the top product.
+     */
+    async execute(shopId: number): Promise<ProductDTO | null> {
+        // const product = await this.shopService.getTopProductForShop(shopId);
 
-    if (!product) return null;
+        // if (!product) return null;
 
-    return toProductDTO(product);
-  }
+        // return toProductDTO(product);
+        return null;
+    }
 }

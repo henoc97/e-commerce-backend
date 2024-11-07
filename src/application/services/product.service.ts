@@ -14,6 +14,7 @@ import { ProductVariantService } from './product-variant.service';
 import { ReviewService } from './review.service';
 import { CartItemService } from './cart-item.service';
 import { ClientKafka } from '@nestjs/microservices';
+import { privateDecrypt } from 'crypto';
 
 /**
  * Service class for managing product-related operations.
@@ -21,16 +22,14 @@ import { ClientKafka } from '@nestjs/microservices';
 @Injectable()
 export default class ProductService {
   constructor(
-    @Inject('IProductRepository')
-    @Inject('KAFKA_SERVICE') 
-    private readonly kafkaService: ClientKafka,
-    private readonly productRepository: IProductRepository,
+    @Inject('IProductRepository') private readonly productRepository: IProductRepository,
+    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
     private readonly promotionService: PromotionService,
     private readonly productImageService: ProductImageService,
     private readonly productVariantService: ProductVariantService,
     private readonly reviewService: ReviewService,
     private readonly cartItemService: CartItemService,
-  ) {}
+  ) { }
 
   /**
    * Creates and saves a new product.

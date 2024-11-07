@@ -10,7 +10,7 @@ import { UserDTO } from 'src/presentation/dtos/user.dto';
  */
 @Injectable()
 export class GetDetailedInfo {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Execute the get-detailed-info use case.

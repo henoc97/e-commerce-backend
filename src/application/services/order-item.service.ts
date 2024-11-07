@@ -15,11 +15,9 @@ export class OrderItemService {
    * @param repository - The repository to interact with the OrderItem data.
    */
   constructor(
-    @Inject('IOrderItemRepository')
-    @Inject('KAFKA_SERVICE') 
-    private readonly kafkaService: ClientKafka,
-    private readonly repository: IOrderItemRepository,
-  ) {}
+    @Inject('IOrderItemRepository') private readonly repository: IOrderItemRepository,
+    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+  ) { }
 
   /**
    * Creates a new OrderItem and emit the OrderItem through kafka.

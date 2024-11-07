@@ -8,7 +8,10 @@ import { IOrderRepository } from 'src/domain/repositories/order.repository';
  * Represents the Order repository responsible for handling order-related database operations.
  */
 export class OrderRepository implements IOrderRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
+  getAll(): Promise<Order[]> {
+    throw new Error('Method not implemented.');
+  }
 
   /**
    * Creates a new order in the database.
@@ -25,7 +28,7 @@ export class OrderRepository implements IOrderRepository {
       });
       return fromOrderPrisma(createdOrder);
     } catch (error) {
-      throw new Error(`Failed to create order: ${error.message}`);
+      throw new Error(`Failed to create order: ${error}`);
     }
   }
 
@@ -43,7 +46,7 @@ export class OrderRepository implements IOrderRepository {
       return fromOrderPrisma(order);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve order with ID ${id}: ${error.message}`,
+        `Failed to retrieve order with ID ${id}: ${error}`,
       );
     }
   }
@@ -65,7 +68,7 @@ export class OrderRepository implements IOrderRepository {
       });
       return fromOrderPrisma(updatedOrder);
     } catch (error) {
-      throw new Error(`Failed to update order with ID ${id}: ${error.message}`);
+      throw new Error(`Failed to update order with ID ${id}: ${error}`);
     }
   }
 
@@ -82,7 +85,7 @@ export class OrderRepository implements IOrderRepository {
       });
       return true;
     } catch (error) {
-      console.error(`Failed to delete order with ID ${id}: ${error.message}`);
+      console.error(`Failed to delete order with ID ${id}: ${error}`);
       return false;
     }
   }
@@ -101,7 +104,7 @@ export class OrderRepository implements IOrderRepository {
       return orders.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve orders for user with ID ${userId}: ${error.message}`,
+        `Failed to retrieve orders for user with ID ${userId}: ${error}`,
       );
     }
   }
@@ -120,7 +123,7 @@ export class OrderRepository implements IOrderRepository {
       return orders.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve orders for shop with ID ${shopId}: ${error.message}`,
+        `Failed to retrieve orders for shop with ID ${shopId}: ${error}`,
       );
     }
   }
@@ -139,7 +142,7 @@ export class OrderRepository implements IOrderRepository {
       return orders.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve orders with status ${status}: ${error.message}`,
+        `Failed to retrieve orders with status ${status}: ${error}`,
       );
     }
   }
@@ -160,7 +163,7 @@ export class OrderRepository implements IOrderRepository {
       return fromOrderPrisma(updatedOrder);
     } catch (error) {
       throw new Error(
-        `Failed to update status for order with ID ${id}: ${error.message}`,
+        `Failed to update status for order with ID ${id}: ${error}`,
       );
     }
   }
@@ -187,7 +190,7 @@ export class OrderRepository implements IOrderRepository {
       return fromOrderPrisma(updatedOrder);
     } catch (error) {
       throw new Error(
-        `Failed to add payment to order with ID ${orderId}: ${error.message}`,
+        `Failed to add payment to order with ID ${orderId}: ${error}`,
       );
     }
   }
@@ -212,7 +215,7 @@ export class OrderRepository implements IOrderRepository {
       return fromOrderPrisma(updatedOrder);
     } catch (error) {
       throw new Error(
-        `Failed to add refund to order with ID ${orderId}: ${error.message}`,
+        `Failed to add refund to order with ID ${orderId}: ${error}`,
       );
     }
   }
@@ -231,7 +234,7 @@ export class OrderRepository implements IOrderRepository {
       return fromOrderPrisma(order);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve order with tracking number ${trackingNumber}: ${error.message}`,
+        `Failed to retrieve order with tracking number ${trackingNumber}: ${error}`,
       );
     }
   }
@@ -256,7 +259,7 @@ export class OrderRepository implements IOrderRepository {
       return orders.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve orders within the date range: ${error.message}`,
+        `Failed to retrieve orders within the date range: ${error}`,
       );
     }
   }
@@ -278,7 +281,7 @@ export class OrderRepository implements IOrderRepository {
       return orders.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve recent orders for shop with ID ${shopId}: ${error.message}`,
+        `Failed to retrieve recent orders for shop with ID ${shopId}: ${error}`,
       );
     }
   }
@@ -298,7 +301,7 @@ export class OrderRepository implements IOrderRepository {
       return orders.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve top ${topN} orders by amount: ${error.message}`,
+        `Failed to retrieve top ${topN} orders by amount: ${error}`,
       );
     }
   }

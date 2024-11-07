@@ -6,18 +6,16 @@ import { UserDTO } from 'src/presentation/dtos/user.dto';
 import { fromUserDTO } from '../helper/to-entity/to.user.entity';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
 import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
-import { IAddressRepository } from 'src/domain/repositories/address.repository';
 import { ClientKafka } from '@nestjs/microservices';
+import { AddressService } from './address.service';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('IUserRepository')
-    @Inject('KAFKA_SERVICE') 
-    private readonly kafkaService: ClientKafka,
-    private readonly userRepository: IUserRepository,
-    private readonly addressService: IAddressRepository,
-  ) {}
+    @Inject('IUserRepository') private readonly userRepository: IUserRepository,
+    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    private readonly addressService: AddressService,
+  ) { }
 
   /**
    * Create a new user.
@@ -79,7 +77,7 @@ export class UserService {
    */
   async addAddressToUser(userId: number, address: AddressDTO): Promise<User> {
     const ad = fromAddressDTO(address);
-    await this.addressService.create(ad);
+    await this.addressService.createAddress(ad);
     return await this.userRepository.getById(userId);
   }
 
@@ -93,7 +91,7 @@ export class UserService {
     userId: number,
     addressId: number,
   ): Promise<User> {
-    await this.addressService.deleteById(addressId);
+    await this.addressService.deleteAddressById(addressId);
     return await this.userRepository.getById(userId);
   }
 

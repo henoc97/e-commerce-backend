@@ -12,11 +12,9 @@ import { ClientKafka } from '@nestjs/microservices';
  */
 export class OrderService {
   constructor(
-    @Inject('IOrderRepository')
-    @Inject('KAFKA_SERVICE') 
-    private readonly kafkaService: ClientKafka,
-    private readonly orderRepository: IOrderRepository,
-  ) {}
+    @Inject('IOrderRepository') private readonly orderRepository: IOrderRepository,
+    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+  ) { }
 
   /**
    * Creates a new Order.

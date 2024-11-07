@@ -4,7 +4,7 @@ import { Shop } from 'src/domain/entities/shop.entity';
 import { IShopRepository } from 'src/domain/repositories/shop.repository';
 
 export class ShopRepository implements IShopRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   /**
    * Creates a new shop in the database.
    * @param shop - The shop entity to create.
@@ -19,7 +19,7 @@ export class ShopRepository implements IShopRepository {
       });
       return fromShopPrisma(result);
     } catch (error) {
-      throw new Error(`Failed to create shop: ${error.message}`);
+      throw new Error(`Failed to create shop: ${error}`);
     }
   }
 
@@ -36,7 +36,7 @@ export class ShopRepository implements IShopRepository {
       return fromShopPrisma(result);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve shop with ID ${id}: ${error.message}`,
+        `Failed to retrieve shop with ID ${id}: ${error}`,
       );
     }
   }
@@ -57,7 +57,7 @@ export class ShopRepository implements IShopRepository {
       });
       return fromShopPrisma(result);
     } catch (error) {
-      throw new Error(`Failed to update shop with ID ${id}: ${error.message}`);
+      throw new Error(`Failed to update shop with ID ${id}: ${error}`);
     }
   }
 
@@ -71,7 +71,7 @@ export class ShopRepository implements IShopRepository {
       await this.prisma.shop.delete({ where: { id } });
       return true;
     } catch (error) {
-      console.error(`Failed to delete shop with ID ${id}: ${error.message}`);
+      console.error(`Failed to delete shop with ID ${id}: ${error}`);
       return false;
     }
   }
@@ -89,7 +89,7 @@ export class ShopRepository implements IShopRepository {
       return result.map(fromShopPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to search shops by name "${name}": ${error.message}`,
+        `Failed to search shops by name "${name}": ${error}`,
       );
     }
   }
@@ -106,7 +106,7 @@ export class ShopRepository implements IShopRepository {
       });
       return shops.map(fromShopPrisma);
     } catch (error) {
-      throw new Error(`Failed to list shops for vendor: ${error.message}`);
+      throw new Error(`Failed to list shops for vendor: ${error}`);
     }
   }
 
@@ -121,7 +121,7 @@ export class ShopRepository implements IShopRepository {
       });
       return fromShopPrisma(shop);
     } catch (error) {
-      throw new Error(`Failed to get most recent shop: ${error.message}`);
+      throw new Error(`Failed to get most recent shop: ${error}`);
     }
   }
 
@@ -147,7 +147,7 @@ export class ShopRepository implements IShopRepository {
       return fromShopPrisma(result);
     } catch (error) {
       throw new Error(
-        `Failed to associate shop with marketplace: ${error.message}`,
+        `Failed to associate shop with marketplace: ${error}`,
       );
     }
   }
@@ -175,7 +175,7 @@ export class ShopRepository implements IShopRepository {
       return totalSales;
     } catch (error) {
       throw new Error(
-        `Failed to calculate total sales for shop ID ${shopId}: ${error.message}`,
+        `Failed to calculate total sales for shop ID ${shopId}: ${error}`,
       );
     }
   }
@@ -204,7 +204,7 @@ export class ShopRepository implements IShopRepository {
       });
       return report;
     } catch (error) {
-      throw new Error(`Failed to get order report: ${error.message}`);
+      throw new Error(`Failed to get order report: ${error}`);
     }
   }
 }

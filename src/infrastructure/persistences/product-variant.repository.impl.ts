@@ -4,7 +4,7 @@ import { ProductVariant } from 'src/domain/entities/product-variant.entity';
 import { IProductVariantRepository } from 'src/domain/repositories/product-variant.repository';
 
 export class ProductVariantRepository implements IProductVariantRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   /**
    * Creates a new ProductVariant in the database.
    * @param variant - The product variant to be created.
@@ -19,7 +19,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       });
       return fromProductVariantPrisma(newVariant);
     } catch (error) {
-      throw new Error(`Error creating product variant: ${error.message}`);
+      throw new Error(`Error creating product variant: ${error}`);
     }
   }
 
@@ -37,7 +37,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return fromProductVariantPrisma(variant);
     } catch (error) {
       throw new Error(
-        `Error retrieving product variant with ID ${id}: ${error.message}`,
+        `Error retrieving product variant with ID ${id}: ${error}`,
       );
     }
   }
@@ -62,7 +62,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return fromProductVariantPrisma(updatedVariant);
     } catch (error) {
       throw new Error(
-        `Error updating product variant with ID ${id}: ${error.message}`,
+        `Error updating product variant with ID ${id}: ${error}`,
       );
     }
   }
@@ -81,7 +81,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return true;
     } catch (error) {
       console.error(
-        `Error deleting product variant with ID ${id}: ${error.message}`,
+        `Error deleting product variant with ID ${id}: ${error}`,
       );
       return false;
     }
@@ -101,7 +101,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return variants.map(fromProductVariantPrisma);
     } catch (error) {
       throw new Error(
-        `Error retrieving variants for product with ID ${productId}: ${error.message}`,
+        `Error retrieving variants for product with ID ${productId}: ${error}`,
       );
     }
   }
@@ -120,7 +120,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return true;
     } catch (error) {
       console.error(
-        `Error deleting variants for product with ID ${productId}: ${error.message}`,
+        `Error deleting variants for product with ID ${productId}: ${error}`,
       );
       return true;
     }
@@ -150,7 +150,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return !!variant;
     } catch (error) {
       throw new Error(
-        `Error checking existence of variant for product with ID ${productId}, name ${name}, and value ${value}: ${error.message}`,
+        `Error checking existence of variant for product with ID ${productId}, name ${name}, and value ${value}: ${error}`,
       );
     }
   }
@@ -179,7 +179,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return fromProductVariantPrisma(updatedVariant);
     } catch (error) {
       throw new Error(
-        `Error updating details of variant with ID ${id}: ${error.message}`,
+        `Error updating details of variant with ID ${id}: ${error}`,
       );
     }
   }
@@ -202,7 +202,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return variants.map(fromProductVariantPrisma);
     } catch (error) {
       throw new Error(
-        `Error retrieving variants for product with ID ${productId} and name ${name}: ${error.message}`,
+        `Error retrieving variants for product with ID ${productId} and name ${name}: ${error}`,
       );
     }
   }
@@ -228,7 +228,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       return fromProductVariantPrisma(popularVariant);
     } catch (error) {
       throw new Error(
-        `Error retrieving the most popular variant for product with ID ${productId}: ${error.message}`,
+        `Error retrieving the most popular variant for product with ID ${productId}: ${error}`,
       );
     }
   }

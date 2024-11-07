@@ -11,10 +11,8 @@ import { ClientKafka } from '@nestjs/microservices';
 @Injectable()
 export class ReviewService {
   constructor(
-    @Inject('IReviewRepository')
-    @Inject('KAFKA_SERVICE')
-    private readonly kafkaService: ClientKafka,
-    private readonly reviewRepository: IReviewRepository,
+    @Inject('IReviewRepository') private readonly reviewRepository: IReviewRepository,
+    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
   ) { }
 
   /**

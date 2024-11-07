@@ -7,7 +7,7 @@ import {
 
 @Injectable()
 export class UploadImageService {
-  constructor(@Inject('CLOUDINARY') private cloudinary) {}
+  constructor(@Inject('CLOUDINARY') private cloudinary) { }
 
   // Upload image with transformations and custom options
   async uploadImage(
@@ -65,7 +65,7 @@ export class UploadImageService {
       const result = await this.cloudinary.uploader.destroy(publicId);
       return result;
     } catch (error) {
-      throw new Error(`Failed to delete image: ${error.message}`);
+      throw new Error(`Failed to delete image: ${error}`);
     }
   }
 }

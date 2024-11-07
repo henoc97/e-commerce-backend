@@ -5,6 +5,9 @@ import { IProductRepository } from 'src/domain/repositories/product.repository';
 
 export class ProductRepository implements IProductRepository {
   constructor(private readonly prisma: PrismaService) {}
+  getFeaturedProducts(): Promise<Product[]> {
+    throw new Error('Method not implemented.');
+  }
   /**
    * Creates a new product in the database.
    * @param product - The product entity to create.

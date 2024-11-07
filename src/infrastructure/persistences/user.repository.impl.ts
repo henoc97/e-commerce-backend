@@ -219,7 +219,7 @@ export class UserRepository implements IUserRepository {
           userActivity: {
             every: {
               action: UserActivityAction.LOGIN,
-              timestamp: {
+              createdAt: {
                 lt: dateThreshold,
               },
             },
@@ -268,7 +268,7 @@ export class UserRepository implements IUserRepository {
           userActivity: {
             some: {
               action: UserActivityAction.LOGIN,
-              timestamp: {
+              createdAt: {
                 gte: dateThreshold,
               },
             },

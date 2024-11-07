@@ -4,7 +4,7 @@ import { ProductImage } from 'src/domain/entities/product-image.entity';
 import { IProductImageRepository } from 'src/domain/repositories/product-image.repository';
 
 export class ProductImageRepository implements IProductImageRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   /**
    * Creates a new ProductImage record in the database.
    * @param image - The product image entity to be created.
@@ -19,7 +19,7 @@ export class ProductImageRepository implements IProductImageRepository {
       });
       return fromProductImagePrisma(newImage);
     } catch (error) {
-      throw new Error(`Error creating product image: ${error.message}`);
+      throw new Error(`Error creating product image: ${error}`);
     }
   }
 
@@ -37,7 +37,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return fromProductImagePrisma(image);
     } catch (error) {
       throw new Error(
-        `Error retrieving product image with ID ${id}: ${error.message}`,
+        `Error retrieving product image with ID ${id}: ${error}`,
       );
     }
   }
@@ -62,7 +62,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return fromProductImagePrisma(updatedImage);
     } catch (error) {
       throw new Error(
-        `Error updating product image with ID ${id}: ${error.message}`,
+        `Error updating product image with ID ${id}: ${error}`,
       );
     }
   }
@@ -81,7 +81,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return true;
     } catch (error) {
       console.error(
-        `Error deleting product image with ID ${id}: ${error.message}`,
+        `Error deleting product image with ID ${id}: ${error}`,
       );
       return false;
     }
@@ -101,7 +101,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return images.map(fromProductImagePrisma);
     } catch (error) {
       throw new Error(
-        `Error retrieving images for product with ID ${productId}: ${error.message}`,
+        `Error retrieving images for product with ID ${productId}: ${error}`,
       );
     }
   }
@@ -120,7 +120,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return true;
     } catch (error) {
       console.error(
-        `Error deleting images for product with ID ${productId}: ${error.message}`,
+        `Error deleting images for product with ID ${productId}: ${error}`,
       );
       return true;
     }
@@ -142,7 +142,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return fromProductImagePrisma(updatedImage);
     } catch (error) {
       throw new Error(
-        `Error updating URL for product image with ID ${id}: ${error.message}`,
+        `Error updating URL for product image with ID ${id}: ${error}`,
       );
     }
   }
@@ -165,7 +165,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return !!image;
     } catch (error) {
       throw new Error(
-        `Error checking existence of image for product with ID ${productId} and URL ${url}: ${error.message}`,
+        `Error checking existence of image for product with ID ${productId} and URL ${url}: ${error}`,
       );
     }
   }
@@ -187,7 +187,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return fromProductImagePrisma(image);
     } catch (error) {
       throw new Error(
-        `Error retrieving primary image for product with ID ${productId}: ${error.message}`,
+        `Error retrieving primary image for product with ID ${productId}: ${error}`,
       );
     }
   }
@@ -206,7 +206,7 @@ export class ProductImageRepository implements IProductImageRepository {
       return count;
     } catch (error) {
       throw new Error(
-        `Error counting images for product with ID ${productId}: ${error.message}`,
+        `Error counting images for product with ID ${productId}: ${error}`,
       );
     }
   }

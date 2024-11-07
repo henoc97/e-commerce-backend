@@ -8,10 +8,10 @@ import { DeleteShop } from 'src/application/use-cases/shop.use-cases/delete-shop
 import { FetchMostRecentShop } from 'src/application/use-cases/shop.use-cases/fetch-most-recent-shop.use-case';
 import { FetchOrderReportForShop } from 'src/application/use-cases/shop.use-cases/fetch-order-report-for-shop.use-case';
 import { FetchShopById } from 'src/application/use-cases/shop.use-cases/fetch-shop-by-id.use-case';
-import { FetchShopList } from 'src/application/use-cases/shop.use-cases/fetch-shop-list.use-case';
-import { FetchShopRevenueReport } from 'src/application/use-cases/shop.use-cases/fetch-shop-revenue-report.use-case';
-import { FetchShopSalesReport } from 'src/application/use-cases/shop.use-cases/fetch-shop-sales-report.use-case';
-import { FetchTopProductForShop } from 'src/application/use-cases/shop.use-cases/fetch-top-product-for-shop.use-case';
+// import { FetchShopList } from 'src/application/use-cases/shop.use-cases/fetch-shop-list.use-case';
+// import { FetchShopRevenueReport } from 'src/application/use-cases/shop.use-cases/fetch-shop-revenue-report.use-case';
+// import { FetchShopSalesReport } from 'src/application/use-cases/shop.use-cases/fetch-shop-sales-report.use-case';
+// import { FetchTopProductForShop } from 'src/application/use-cases/shop.use-cases/fetch-top-product-for-shop.use-case';
 import { FetchTotalSalesForShop } from 'src/application/use-cases/shop.use-cases/fetch-total-sales-for-shop.use-case';
 import { ListShopsByVendor } from 'src/application/use-cases/shop.use-cases/list-shops-by-vendor.use-case';
 import { RemoveCategoryFromShop } from 'src/application/use-cases/shop.use-cases/remove-category-from-shop.use-case';
@@ -35,10 +35,10 @@ export class ShopResolver {
     private readonly fetchMostRecentShopUseCase: FetchMostRecentShop,
     private readonly fetchOrderReportForShopUseCase: FetchOrderReportForShop,
     private readonly fetchShopByIdUseCase: FetchShopById,
-    private readonly fetchShopListUseCase: FetchShopList,
-    private readonly fetchShopRevenueReportUseCase: FetchShopRevenueReport,
-    private readonly fetchShopSalesReportUseCase: FetchShopSalesReport,
-    private readonly fetchTopProductForShopUseCase: FetchTopProductForShop,
+    // private readonly fetchShopListUseCase: FetchShopList,
+    // private readonly fetchShopRevenueReportUseCase: FetchShopRevenueReport,
+    // private readonly fetchShopSalesReportUseCase: FetchShopSalesReport,
+    // private readonly fetchTopProductForShopUseCase: FetchTopProductForShop,
     private readonly fetchTotalSalesForShopUseCase: FetchTotalSalesForShop,
     private readonly listShopsByVendorUseCase: ListShopsByVendor,
     private readonly removeCategoryFromShopUseCase: RemoveCategoryFromShop,
@@ -102,10 +102,10 @@ export class ShopResolver {
     return this.fetchShopByIdUseCase.execute(id);
   }
 
-  @Query(() => [ShopDTO])
-  async fetchShopList(): Promise<ShopDTO[]> {
-    return this.fetchShopListUseCase.execute();
-  }
+  // @Query(() => [ShopDTO])
+  // async fetchShopList(): Promise<ShopDTO[]> {
+  //   return this.fetchShopListUseCase.execute();
+  // }
 
   @Query(() => [ShopDTO])
   async listShopsByVendor(
@@ -140,34 +140,34 @@ export class ShopResolver {
     );
   }
 
-  @Query(() => [ShopDTO])
-  async fetchShopRevenueReport(
-    @Args('shopId') shopId: number,
-    @Args('startDate') startDate: Date,
-    @Args('endDate') endDate: Date,
-  ): Promise<any> {
-    return this.fetchShopRevenueReportUseCase.execute(
-      shopId,
-      startDate,
-      endDate,
-    );
-  }
+  // @Query(() => [ShopDTO])
+  // async fetchShopRevenueReport(
+  //   @Args('shopId') shopId: number,
+  //   @Args('startDate') startDate: Date,
+  //   @Args('endDate') endDate: Date,
+  // ): Promise<any> {
+  //   return this.fetchShopRevenueReportUseCase.execute(
+  //     shopId,
+  //     startDate,
+  //     endDate,
+  //   );
+  // }
 
-  @Query(() => [ShopDTO])
-  async fetchShopSalesReport(
-    @Args('shopId') shopId: number,
-    @Args('startDate') startDate: Date,
-    @Args('endDate') endDate: Date,
-  ): Promise<any> {
-    return this.fetchShopSalesReportUseCase.execute(shopId, startDate, endDate);
-  }
+  // @Query(() => [ShopDTO])
+  // async fetchShopSalesReport(
+  //   @Args('shopId') shopId: number,
+  //   @Args('startDate') startDate: Date,
+  //   @Args('endDate') endDate: Date,
+  // ): Promise<any> {
+  //   return this.fetchShopSalesReportUseCase.execute(shopId, startDate, endDate);
+  // }
 
-  @Query(() => ProductDTO, { nullable: true })
-  async fetchTopProductForShop(
-    @Args('shopId') shopId: number,
-  ): Promise<ProductDTO | null> {
-    return this.fetchTopProductForShopUseCase.execute(shopId);
-  }
+  // @Query(() => ProductDTO, { nullable: true })
+  // async fetchTopProductForShop(
+  //   @Args('shopId') shopId: number,
+  // ): Promise<ProductDTO | null> {
+  //   return this.fetchTopProductForShopUseCase.execute(shopId);
+  // }
 
   @Query(() => Number)
   async fetchTotalSalesForShop(

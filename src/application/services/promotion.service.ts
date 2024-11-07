@@ -9,9 +9,9 @@ import { fromPromotionDTO } from '../helper/to-entity/to.promotion.entity';
 @Injectable()
 export class PromotionService {
   constructor(
-    @Inject('ICartItemRepository')
+    @Inject('IPromotionRepository')
     private readonly promotionRepository: IPromotionRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new promotion.

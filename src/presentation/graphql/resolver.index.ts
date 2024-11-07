@@ -1,6 +1,7 @@
 // src/presentation/graphql/resolvers/resolver.index.ts
 import { AddressResolver } from './resolvers/address.resolver';
 import { AuditLogResolver } from './resolvers/audit-log.resolver';
+import { AuthResolver } from './resolvers/auth.resolver';
 import { CartItemResolver } from './resolvers/cart-item.resolver';
 import { CartResolver } from './resolvers/cart.resolver';
 import { CategoryResolver } from './resolvers/category.resolver';
@@ -29,6 +30,7 @@ import { VendorResolver } from './resolvers/vendor.resolver';
 export const resolvers = [
   AddressResolver,
   AuditLogResolver,
+  AuthResolver,
   CartItemResolver,
   CartResolver,
   CategoryResolver,

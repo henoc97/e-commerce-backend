@@ -11,11 +11,9 @@ import { ClientKafka } from '@nestjs/microservices';
  */
 export class UserActivityService {
   constructor(
-    @Inject('IUserActivityRepository')
-    @Inject('KAFKA_SERVICE') 
-    private readonly kafkaService: ClientKafka,
-    private readonly userActivityRepository: IUserActivityRepository,
-  ) {}
+    @Inject('IUserActivityRepository') private readonly userActivityRepository: IUserActivityRepository,
+    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+  ) { }
 
   /**
    * Records a new user activity and emit new user activity through kafka.

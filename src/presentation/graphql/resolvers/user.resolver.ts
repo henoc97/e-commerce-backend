@@ -1,8 +1,8 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { AddAddressToUser } from 'src/application/use-cases/user.use-cases/add-address-to-user.use-case';
-import { AddNotificationToUser } from 'src/application/use-cases/user.use-cases/add-notification-to-user.use-case';
-import { AddOrderToUser } from 'src/application/use-cases/user.use-cases/add-order-to-user.use-case';
-import { AddSubsiteToUser } from 'src/application/use-cases/user.use-cases/add-subsite-to-user.use-case';
+// import { AddNotificationToUser } from 'src/application/use-cases/user.use-cases/add-notification-to-user.use-case';
+// import { AddOrderToUser } from 'src/application/use-cases/user.use-cases/add-order-to-user.use-case';
+// import { AddSubsiteToUser } from 'src/application/use-cases/user.use-cases/add-subsite-to-user.use-case';
 import { CreateUser } from 'src/application/use-cases/user.use-cases/create-user.use-case';
 import { DeleteUser } from 'src/application/use-cases/user.use-cases/delete-user.use-case';
 import { GetActiveCount } from 'src/application/use-cases/user.use-cases/get-active-count.use-case';
@@ -13,9 +13,9 @@ import { GetUserByEmailUseCase } from 'src/application/use-cases/user.use-cases/
 import { GetUser } from 'src/application/use-cases/user.use-cases/get-user.use-case';
 import { GetUsersByRoleUseCase } from 'src/application/use-cases/user.use-cases/get-users-by-role.use-case';
 import { RemoveAddressFromUserUseCase } from 'src/application/use-cases/user.use-cases/remove-address-from-user.use-case';
-import { RemoveNotificationFromUserUseCase } from 'src/application/use-cases/user.use-cases/remove-notification-from-user.use-case';
-import { RemoveOrderFromUserUseCase } from 'src/application/use-cases/user.use-cases/remove-order-from-user.use-case';
-import { RemoveSubsiteFromUserUseCase } from 'src/application/use-cases/user.use-cases/remove-subsite-from-user.use-case';
+// import { RemoveNotificationFromUserUseCase } from 'src/application/use-cases/user.use-cases/remove-notification-from-user.use-case';
+// import { RemoveOrderFromUserUseCase } from 'src/application/use-cases/user.use-cases/remove-order-from-user.use-case';
+// import { RemoveSubsiteFromUserUseCase } from 'src/application/use-cases/user.use-cases/remove-subsite-from-user.use-case';
 import { UpdateUserPasswordUseCase } from 'src/application/use-cases/user.use-cases/update-user-password.use-case';
 import { UpdateUser } from 'src/application/use-cases/user.use-cases/update-user.use-case';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
@@ -29,9 +29,9 @@ import { UserRole } from 'src/domain/enums/user-role.enum';
 export class UserResolver {
   constructor(
     private readonly addAddressToUser: AddAddressToUser,
-    private readonly addNotificationToUser: AddNotificationToUser,
-    private readonly addOrderToUser: AddOrderToUser,
-    private readonly addSubsiteToUser: AddSubsiteToUser,
+    // private readonly addNotificationToUser: AddNotificationToUser,
+    // private readonly addOrderToUser: AddOrderToUser,
+    // private readonly addSubsiteToUser: AddSubsiteToUser,
     private readonly createUserUseCase: CreateUser,
     private readonly deleteUserUseCase: DeleteUser,
     private readonly getActiveCountUseCase: GetActiveCount,
@@ -42,9 +42,9 @@ export class UserResolver {
     private readonly getUser: GetUser,
     private readonly getUsersByRoleUseCase: GetUsersByRoleUseCase,
     private readonly removeAddressFromUserUseCase: RemoveAddressFromUserUseCase,
-    private readonly removeNotificationFromUserUseCase: RemoveNotificationFromUserUseCase,
-    private readonly removeOrderFromUserUseCase: RemoveOrderFromUserUseCase,
-    private readonly removeSubsiteFromUserUseCase: RemoveSubsiteFromUserUseCase,
+    // private readonly removeNotificationFromUserUseCase: RemoveNotificationFromUserUseCase,
+    // private readonly removeOrderFromUserUseCase: RemoveOrderFromUserUseCase,
+    // private readonly removeSubsiteFromUserUseCase: RemoveSubsiteFromUserUseCase,
     private readonly updateUserPasswordUseCase: UpdateUserPasswordUseCase,
     private readonly updateUserUseCase: UpdateUser,
   ) {}
@@ -57,29 +57,29 @@ export class UserResolver {
     return this.addAddressToUser.execute(userId, address);
   }
 
-  @Mutation(() => UserDTO, { name: 'addNotificationToUser' })
-  async addNotification(
-    @Args('userId') userId: number,
-    @Args('notification') notification: NotificationDTO,
-  ): Promise<UserDTO | null> {
-    return this.addNotificationToUser.execute(userId, notification);
-  }
+  // @Mutation(() => UserDTO, { name: 'addNotificationToUser' })
+  // async addNotification(
+  //   @Args('userId') userId: number,
+  //   @Args('notification') notification: NotificationDTO,
+  // ): Promise<UserDTO | null> {
+  //   return this.addNotificationToUser.execute(userId, notification);
+  // }
 
-  @Mutation(() => UserDTO, { name: 'addOrderToUser' })
-  async addOrder(
-    @Args('userId') userId: number,
-    @Args('order') order: OrderDTO,
-  ): Promise<UserDTO | null> {
-    return this.addOrderToUser.execute(userId, order);
-  }
+  // @Mutation(() => UserDTO, { name: 'addOrderToUser' })
+  // async addOrder(
+  //   @Args('userId') userId: number,
+  //   @Args('order') order: OrderDTO,
+  // ): Promise<UserDTO | null> {
+  //   return this.addOrderToUser.execute(userId, order);
+  // }
 
-  @Mutation(() => UserDTO, { name: 'addSubsiteToUser' })
-  async addSubsite(
-    @Args('userId') userId: number,
-    @Args('subsite') subsite: SubsiteDTO,
-  ): Promise<UserDTO | null> {
-    return this.addSubsiteToUser.execute(userId, subsite);
-  }
+  // @Mutation(() => UserDTO, { name: 'addSubsiteToUser' })
+  // async addSubsite(
+  //   @Args('userId') userId: number,
+  //   @Args('subsite') subsite: SubsiteDTO,
+  // ): Promise<UserDTO | null> {
+  //   return this.addSubsiteToUser.execute(userId, subsite);
+  // }
 
   @Mutation(() => UserDTO, { name: 'createUser' })
   async createUser(@Args('user') user: UserDTO): Promise<UserDTO | null> {
@@ -136,32 +136,32 @@ export class UserResolver {
     return this.removeAddressFromUserUseCase.execute(userId, addressId);
   }
 
-  @Mutation(() => UserDTO, { name: 'removeNotificationFromUser' })
-  async removeNotification(
-    @Args('userId') userId: number,
-    @Args('notificationId') notificationId: number,
-  ): Promise<UserDTO> {
-    return this.removeNotificationFromUserUseCase.execute(
-      userId,
-      notificationId,
-    );
-  }
+  // @Mutation(() => UserDTO, { name: 'removeNotificationFromUser' })
+  // async removeNotification(
+  //   @Args('userId') userId: number,
+  //   @Args('notificationId') notificationId: number,
+  // ): Promise<UserDTO> {
+  //   return this.removeNotificationFromUserUseCase.execute(
+  //     userId,
+  //     notificationId,
+  //   );
+  // }
 
-  @Mutation(() => UserDTO, { name: 'removeOrderFromUser' })
-  async removeOrder(
-    @Args('userId') userId: number,
-    @Args('orderId') orderId: number,
-  ): Promise<UserDTO> {
-    return this.removeOrderFromUserUseCase.execute(userId, orderId);
-  }
+  // @Mutation(() => UserDTO, { name: 'removeOrderFromUser' })
+  // async removeOrder(
+  //   @Args('userId') userId: number,
+  //   @Args('orderId') orderId: number,
+  // ): Promise<UserDTO> {
+  //   return this.removeOrderFromUserUseCase.execute(userId, orderId);
+  // }
 
-  @Mutation(() => UserDTO, { name: 'removeSubsiteFromUser' })
-  async removeSubsite(
-    @Args('userId') userId: number,
-    @Args('subsiteId') subsiteId: number,
-  ): Promise<UserDTO> {
-    return this.removeSubsiteFromUserUseCase.execute(userId, subsiteId);
-  }
+  // @Mutation(() => UserDTO, { name: 'removeSubsiteFromUser' })
+  // async removeSubsite(
+  //   @Args('userId') userId: number,
+  //   @Args('subsiteId') subsiteId: number,
+  // ): Promise<UserDTO> {
+  //   return this.removeSubsiteFromUserUseCase.execute(userId, subsiteId);
+  // }
 
   @Mutation(() => UserDTO, { name: 'updateUserPassword' })
   async updateUserPassword(

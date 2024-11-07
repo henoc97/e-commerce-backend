@@ -23,7 +23,7 @@ export class ShopService {
     private readonly productService: ProductService,
     private readonly orderService: OrderService,
     private readonly categoryService: CategoryService,
-  ) {}
+  ) { }
 
   /**
    * Creates a new shop.

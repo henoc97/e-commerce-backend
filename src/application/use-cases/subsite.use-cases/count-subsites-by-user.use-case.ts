@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SubsiteService } from 'src/application/services/Subsite.service';
+import { SubsiteService } from '../../services/subsite.service';
 
 /**
  * Use case class for counting Subsites by user.
@@ -7,7 +7,7 @@ import { SubsiteService } from 'src/application/services/Subsite.service';
  */
 @Injectable()
 export class CountSubsitesByUser {
-  constructor(private readonly SubsiteService: SubsiteService) {}
+  constructor(private readonly SubsiteService: SubsiteService) { }
 
   /**
    * Execute the count-Subsites-by-user use case.

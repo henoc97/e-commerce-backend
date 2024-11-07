@@ -14,6 +14,6 @@ import { AuthService } from './auth.service';
     }),
   ],
   providers: [AuthService, JwtStrategy, GoogleStrategy],
-  exports: [PassportModule],
+  exports: [AuthService, PassportModule],
 })
-export class AuthModule {}
+export class AuthModule { }

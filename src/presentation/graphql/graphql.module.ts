@@ -2,13 +2,17 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { resolvers } from './resolver.index';
-import { AuthResolver } from './resolvers/auth.resolver';
 import { SentryModule } from '@sentry/nestjs/setup';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import allLogicModules from "../../application/modules/all-logic-modules"
+import { AuthModule } from 'src/infrastructure/external-servicies/auth/auth.module';
 
 @Module({
   imports: [
+    ...allLogicModules,
+    AuthModule,
     SentryModule.forRoot(),
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       playground: true,
       autoSchemaFile: join(
         process.cwd(),
@@ -18,8 +22,9 @@ import { SentryModule } from '@sentry/nestjs/setup';
         const token = req.headers.authorization?.split(' ')[1] || '';
         return { token };
       },
+      driver: ApolloDriver,
     }),
   ],
-  providers: [...resolvers, AuthResolver],
+  providers: [...resolvers],
 })
-export class MyGraphQLModule {}
+export class MyGraphQLModule { }

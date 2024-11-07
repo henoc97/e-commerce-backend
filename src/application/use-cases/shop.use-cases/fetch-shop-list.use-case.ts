@@ -9,14 +9,15 @@ import { ShopDTO } from 'src/presentation/dtos/shop.dto';
  */
 @Injectable()
 export class FetchShopList {
-  constructor(private readonly shopService: ShopService) {}
+    constructor(private readonly shopService: ShopService) { }
 
-  /**
-   * Execute the fetch-shop-list use case.
-   * @returns A promise that resolves to an array of Shop DTOs.
-   */
-  async execute(): Promise<ShopDTO[]> {
-    const shops = await this.shopService.getShopList();
-    return shops.map(toShopDTO);
-  }
+    /**
+     * Execute the fetch-shop-list use case.
+     * @returns A promise that resolves to an array of Shop DTOs.
+     */
+    async execute(): Promise<ShopDTO[]> {
+        // const shops = await this.shopService.getShopList();
+        // return shops.map(toShopDTO);
+        return [];
+    }
 }

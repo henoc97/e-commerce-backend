@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Subscription } from 'src/domain/entities/subscription.entity';
 import { ISubscriptionRepository } from 'src/domain/repositories/subscription.repository';
 import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
@@ -10,6 +10,7 @@ import { fromSubscriptionDTO } from '../helper/to-entity/to.subscription.entity'
 @Injectable()
 export class SubscriptionService {
   constructor(
+    @Inject('ISubscriptionRepository')
     private readonly subscriptionRepository: ISubscriptionRepository,
   ) {}
 

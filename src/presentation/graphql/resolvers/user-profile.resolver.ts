@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { CreateUserProfile } from 'src/application/use-cases/user-profile.use-cases/create-user-profile.use-case';
 import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
 import { DeleteUserProfile } from 'src/application/use-cases/user-profile.use-cases/delete-user-profile.use-case';
-import { FetchRecentlyUpdatedProfiles } from 'src/application/use-cases/user-profile.use-cases/fetch-recently-updated-profiles.use-case';
+// import { FetchRecentlyUpdatedProfiles } from 'src/application/use-cases/user-profile.use-cases/fetch-recently-updated-profiles.use-case';
 import { FetchUserProfileById } from 'src/application/use-cases/user-profile.use-cases/fetch-user-profile-by-id.use-case';
 import { FetchUserProfileByUserId } from 'src/application/use-cases/user-profile.use-cases/fetch-user-profile-by-user-id.use-case';
 import { FetchUserProfilesByBirthdayRange } from 'src/application/use-cases/user-profile.use-cases/fetch-user-profiles-by-birthday-range.use-case';
@@ -16,7 +16,7 @@ export class UserProfileResolver {
   constructor(
     private readonly createUserProfileUseCase: CreateUserProfile,
     private readonly deleteUserProfileUseCase: DeleteUserProfile,
-    private readonly fetchRecentlyUpdatedProfilesUseCase: FetchRecentlyUpdatedProfiles,
+    // private readonly fetchRecentlyUpdatedProfilesUseCase: FetchRecentlyUpdatedProfiles,
     private readonly fetchUserProfileByIdUseCase: FetchUserProfileById,
     private readonly fetchUserProfileByUserIdUseCase: FetchUserProfileByUserId,
     private readonly fetchUserProfilesByBirthdayRangeUseCase: FetchUserProfilesByBirthdayRange,
@@ -24,7 +24,7 @@ export class UserProfileResolver {
     private readonly findMatchingProfilesUseCase: FindMatchingProfiles,
     private readonly isPhoneInUseUseCase: IsPhoneInUse,
     private readonly updateUserProfileUseCase: UpdateUserProfile,
-  ) {}
+  ) { }
 
   @Mutation(() => UserProfileDTO, { nullable: true })
   async createUserProfile(
@@ -38,12 +38,12 @@ export class UserProfileResolver {
     return this.deleteUserProfileUseCase.execute(id);
   }
 
-  @Query(() => [UserProfileDTO])
-  async fetchRecentlyUpdatedProfiles(
-    @Args('limit') limit: number,
-  ): Promise<UserProfileDTO[]> {
-    return this.fetchRecentlyUpdatedProfilesUseCase.execute(limit);
-  }
+  // @Query(() => [UserProfileDTO])
+  // async fetchRecentlyUpdatedProfiles(
+  //   @Args('limit') limit: number,
+  // ): Promise<UserProfileDTO[]> {
+  //   return this.fetchRecentlyUpdatedProfilesUseCase.execute(limit);
+  // }
 
   @Query(() => UserProfileDTO, { nullable: true })
   async fetchUserProfileById(

@@ -126,7 +126,7 @@ export class UserActivityRepository implements IUserActivityRepository {
     try {
       const activities = await this.prisma.userActivity.findMany({
         where: {
-          timestamp: {
+          createdAt: {
             gte: start,
             lte: end,
           },
@@ -183,7 +183,7 @@ export class UserActivityRepository implements IUserActivityRepository {
     try {
       const activities = await this.prisma.userActivity.findMany({
         where: { userId },
-        orderBy: { timestamp: 'desc' },
+        orderBy: { createdAt: 'desc' },
         take: limit,
       });
       return activities.map(fromUserActivityPrisma);

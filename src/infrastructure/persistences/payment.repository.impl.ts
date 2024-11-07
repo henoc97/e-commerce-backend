@@ -6,7 +6,7 @@ import { fromPaymentPrisma } from 'src/application/helper/from-prisma/to.payment
 import { PrismaService } from 'prisma/prisma.service';
 
 export class PaymentRepository implements IPaymentRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   /**
    * Creates a new payment record in the database.
@@ -22,7 +22,7 @@ export class PaymentRepository implements IPaymentRepository {
       });
       return fromPaymentPrisma(createdPayment);
     } catch (error) {
-      throw new Error(`Failed to create payment: ${error.message}`);
+      throw new Error(`Failed to create payment: ${error}`);
     }
   }
 
@@ -39,7 +39,7 @@ export class PaymentRepository implements IPaymentRepository {
       });
       return fromPaymentPrisma(payment);
     } catch (error) {
-      throw new Error(`Failed to retrieve payment by id: ${error.message}`);
+      throw new Error(`Failed to retrieve payment by id: ${error}`);
     }
   }
 
@@ -59,7 +59,7 @@ export class PaymentRepository implements IPaymentRepository {
       });
       return fromPaymentPrisma(updatedPayment);
     } catch (error) {
-      throw new Error(`Failed to update payment: ${error.message}`);
+      throw new Error(`Failed to update payment: ${error}`);
     }
   }
 
@@ -76,7 +76,7 @@ export class PaymentRepository implements IPaymentRepository {
       });
       return true;
     } catch (error) {
-      console.error(`Failed to delete payment: ${error.message}`);
+      console.error(`Failed to delete payment: ${error}`);
       return true;
     }
   }
@@ -95,7 +95,7 @@ export class PaymentRepository implements IPaymentRepository {
       return payments.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve payments by order ID: ${error.message}`,
+        `Failed to retrieve payments by order ID: ${error}`,
       );
     }
   }
@@ -114,7 +114,7 @@ export class PaymentRepository implements IPaymentRepository {
       return payments.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve payments by method: ${error.message}`,
+        `Failed to retrieve payments by method: ${error}`,
       );
     }
   }
@@ -133,7 +133,7 @@ export class PaymentRepository implements IPaymentRepository {
       return payments.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve payments by status: ${error.message}`,
+        `Failed to retrieve payments by status: ${error}`,
       );
     }
   }
@@ -158,7 +158,7 @@ export class PaymentRepository implements IPaymentRepository {
       return payments.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve payments by date range: ${error.message}`,
+        `Failed to retrieve payments by date range: ${error}`,
       );
     }
   }
@@ -189,7 +189,7 @@ export class PaymentRepository implements IPaymentRepository {
       return totalAmount._sum.amount ?? 0;
     } catch (error) {
       throw new Error(
-        `Failed to retrieve total amount by date range: ${error.message}`,
+        `Failed to retrieve total amount by date range: ${error}`,
       );
     }
   }
@@ -211,7 +211,7 @@ export class PaymentRepository implements IPaymentRepository {
       return fromPaymentPrisma(recentPayment);
     } catch (error) {
       throw new Error(
-        `Failed to retrieve most recent payment by order ID: ${error.message}`,
+        `Failed to retrieve most recent payment by order ID: ${error}`,
       );
     }
   }
@@ -236,7 +236,7 @@ export class PaymentRepository implements IPaymentRepository {
 
       return groupedPayments;
     } catch (error) {
-      throw new Error(`Failed to group payments by method: ${error.message}`);
+      throw new Error(`Failed to group payments by method: ${error}`);
     }
   }
 }

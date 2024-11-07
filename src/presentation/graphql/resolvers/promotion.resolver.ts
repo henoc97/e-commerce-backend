@@ -1,5 +1,5 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { ApplyPromotionToProduct } from 'src/application/use-cases/promotion.use-cases/apply-promotion-to-product.use-case';
+// import { ApplyPromotionToProduct } from 'src/application/use-cases/promotion.use-cases/apply-promotion-to-product.use-case';
 import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
 import { CombinePromotions } from 'src/application/use-cases/promotion.use-cases/combine-promotions.use-case';
 import { CreatePromotion } from 'src/application/use-cases/promotion.use-cases/create-promotion.use-case';
@@ -14,7 +14,7 @@ import { UpdatePromotion } from 'src/application/use-cases/promotion.use-cases/u
 @Resolver(() => PromotionDTO)
 export class PromotionResolver {
   constructor(
-    private readonly applyPromotionToProductUseCase: ApplyPromotionToProduct,
+    // private readonly applyPromotionToProductUseCase: ApplyPromotionToProduct,
     private readonly combinePromotionsUseCase: CombinePromotions,
     private readonly createPromotionUseCase: CreatePromotion,
     private readonly deletePromotionUseCase: DeletePromotion,
@@ -26,13 +26,13 @@ export class PromotionResolver {
     private readonly updatePromotionUseCase: UpdatePromotion,
   ) {}
 
-  @Mutation(() => PromotionDTO)
-  async applyPromotionToProduct(
-    @Args('productId') productId: number,
-    @Args('promotionId') promotionId: number,
-  ): Promise<PromotionDTO> {
-    return this.applyPromotionToProductUseCase.execute(productId, promotionId);
-  }
+  // @Mutation(() => PromotionDTO)
+  // async applyPromotionToProduct(
+  //   @Args('productId') productId: number,
+  //   @Args('promotionId') promotionId: number,
+  // ): Promise<PromotionDTO> {
+  //   return this.applyPromotionToProductUseCase.execute(productId, promotionId);
+  // }
 
   @Mutation(() => PromotionDTO, { nullable: true })
   async combinePromotions(
