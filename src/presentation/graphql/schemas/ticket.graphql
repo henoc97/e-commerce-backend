@@ -7,17 +7,17 @@ type Ticket {
   """
   Unique identifier for the ticket.
   """
-  id: ID!
+  id: ID
 
   """
   Unique identifier for the user who created the ticket.
   """
-  userId: ID!
+  userId: ID
 
   """
   The user associated with the ticket.
   """
-  user: User!
+  user: User
 
   """
   The subject of the ticket.
@@ -37,12 +37,12 @@ type Ticket {
   """
   The date and time when the ticket was created.
   """
-  createdAt: String!
+  createdAt: String
 
   """
   The date and time when the ticket was last updated.
   """
-  updatedAt: String!
+  updatedAt: String
 }
 
 """

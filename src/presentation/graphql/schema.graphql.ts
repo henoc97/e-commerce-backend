@@ -1,10 +1,16 @@
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 
 // Helper function to read and parse GraphQL files
 const readGraphQLFile = (filePath: string) => {
-  return readFileSync(join(__dirname, 'schemas', filePath), 'utf-8');
+  const fullPath = join(__dirname, 'schemas', filePath);
+  if (existsSync(fullPath)) {
+    return readFileSync(fullPath, 'utf-8');
+  } else {
+    console.error(`File not found: ${fullPath}`);
+    return '';
+  }
 };
 
 // Load all type definitions

@@ -5,12 +5,12 @@ type Address {
   """
   Unique identifier for the address.
   """
-  id: Int!
+  id: ID
 
   """
   Foreign key referring to the User who owns this address.
   """
-  userId: Int!
+  userId: ID
 
   """
   The User object associated with this address.
@@ -66,6 +66,21 @@ type Query {
   List addresses for a specific user.
   """
   addressesByUser(userId: Int!): [Address!]!
+
+  """
+  List addresses filtered by country.
+  """
+  addressesByCountry(country: String!): [Address!]!
+
+  """
+  List addresses filtered by state.
+  """
+  addressesByState(state: String!): [Address!]!
+
+  """
+  List addresses filtered by postal code.
+  """
+  addressesByPostalCode(postalCode: String!): [Address!]!
 
   """
   Get a paginated list of addresses.

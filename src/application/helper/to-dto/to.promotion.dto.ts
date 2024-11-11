@@ -7,7 +7,7 @@ import { toProductDTO } from './to.product.dto';
  * @param promotion - The Promotion entity to convert.
  * @returns The corresponding PromotionDTO.
  */
-export function toPromotionDTO(promotion: Promotion): PromotionDTO {
+export function toPromotionDTO(promotion: any): PromotionDTO {
   return new PromotionDTO(
     promotion.id,
     promotion.name,

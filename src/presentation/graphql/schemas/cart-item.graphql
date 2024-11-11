@@ -6,22 +6,22 @@ type CartItem {
   """
   Unique identifier for the CartItem.
   """
-  id: Int!
+  id: ID
 
   """
   The cart to which this item belongs.
   """
-  cart: Cart!
+  cart: Cart
 
   """
   The product associated with this CartItem.
   """
-  product: Product!
+  product: Product
 
   """
   Quantity of the product in the cart.
   """
-  quantity: Int!
+  quantity: Int
 }
 
 """
@@ -80,4 +80,34 @@ type Mutation {
   Remove a CartItem from the cart by its ID.
   """
   deleteCartItem(id: Int!): Boolean!
+
+  """
+  Clear the cart by its ID.
+  """
+  clearCart(cartId: Int!): Boolean!
+
+  """
+  Calculate the total of the cart by its ID.
+  """
+  calculateCartTotal(cartId: Int!): Int!
+
+  """
+  Fetch a CartItem by its ID.
+  """
+  fetchCartItemById(id: Int!): CartItem
+
+  """
+  Fetch a CartItem by product ID and cart ID.
+  """
+  fetchCartItemByProductAndCart(productId: Int!, cartId: Int!): CartItem
+
+  """
+  Fetch all CartItems in a specific cart.
+  """
+  fetchCartItemsByCart(cartId: Int!): [CartItem!]!
+
+  """
+  Fetch the item with the highest quantity in a cart.
+  """
+  fetchHighestQuantityItem(cartId: Int!): CartItem
 }

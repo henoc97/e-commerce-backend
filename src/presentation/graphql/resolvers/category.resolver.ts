@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { transformCategoryDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { CheckCategoryExistence } from 'src/application/use-cases/category.use-cases/check-category-existence.use-case';
 import { CreateCategory } from 'src/application/use-cases/category.use-cases/create-category.use-case';
 import { DeleteCategory } from 'src/application/use-cases/category.use-cases/delete-category.use-case';
@@ -9,10 +10,11 @@ import { FetchProducts } from 'src/application/use-cases/category.use-cases/fetc
 import { FetchTopLevelCategories } from 'src/application/use-cases/category.use-cases/fetch-top-level-categories.use-case';
 import { SetParent } from 'src/application/use-cases/category.use-cases/set-parent.use-case';
 import { UpdateCategory } from 'src/application/use-cases/category.use-cases/update-category.use-case';
+import { Category } from 'src/generated/graphql';
 import { CategoryDTO } from 'src/presentation/dtos/category.dto';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 
-@Resolver(() => CategoryDTO)
+@Resolver(() => 'Category')
 export class CategoryResolver {
   constructor(
     private readonly checkCategoryExistence: CheckCategoryExistence,
@@ -25,7 +27,7 @@ export class CategoryResolver {
     private readonly fetchTopLevelCategories: FetchTopLevelCategories,
     private readonly setParentUseCase: SetParent,
     private readonly updateCategoryUseCase: UpdateCategory,
-  ) {}
+  ) { }
 
   @Query(() => Boolean)
   async categoryExists(
@@ -35,11 +37,12 @@ export class CategoryResolver {
     return this.checkCategoryExistence.execute(name, shopId);
   }
 
-  @Mutation(() => CategoryDTO)
+  @Mutation(() => 'Category')
   async createCategory(
     @Args('categoryDTO') categoryDTO: CategoryDTO,
-  ): Promise<CategoryDTO> {
-    return this.createCategoryUseCase.execute(categoryDTO);
+  ): Promise<Category> {
+    const result = await this.createCategoryUseCase.execute(categoryDTO);
+    return transformCategoryDTOToGraphQL(result)
   }
 
   @Mutation(() => Boolean)
@@ -47,24 +50,27 @@ export class CategoryResolver {
     return this.deleteCategoryUseCase.execute(id);
   }
 
-  @Query(() => CategoryDTO, { nullable: true })
-  async categoryById(@Args('id') id: number): Promise<CategoryDTO | null> {
-    return this.fetchCategoryById.execute(id);
+  @Query(() => 'Category', { nullable: true })
+  async categoryById(@Args('id') id: number): Promise<Category | null> {
+    const result = await this.fetchCategoryById.execute(id);
+    return transformCategoryDTOToGraphQL(result)
   }
 
   @Query(() => [CategoryDTO])
   async categoryHierarchy(
     @Args('categoryId') categoryId: number,
-  ): Promise<CategoryDTO[]> {
-    return this.fetchCategoryHierarchy.execute(categoryId);
+  ): Promise<Category[]> {
+    const result = await this.fetchCategoryHierarchy.execute(categoryId);
+    return result.map(transformCategoryDTOToGraphQL)
   }
 
   @Query(() => [CategoryDTO])
-  async children(@Args('parentId') parentId: number): Promise<CategoryDTO[]> {
-    return this.fetchChildren.execute(parentId);
+  async children(@Args('parentId') parentId: number): Promise<Category[]> {
+    const result = await this.fetchChildren.execute(parentId);
+    return result.map(transformCategoryDTOToGraphQL)
   }
 
-  @Query(() => [ProductDTO])
+  @Query(() => ['Product'])
   async products(
     @Args('categoryId') categoryId: number,
   ): Promise<ProductDTO[]> {
@@ -72,23 +78,26 @@ export class CategoryResolver {
   }
 
   @Query(() => [CategoryDTO])
-  async topLevelCategories(): Promise<CategoryDTO[]> {
-    return this.fetchTopLevelCategories.execute();
+  async topLevelCategories(): Promise<Category[]> {
+    const result = await this.fetchTopLevelCategories.execute();
+    return result.map(transformCategoryDTOToGraphQL)
   }
 
-  @Mutation(() => CategoryDTO)
+  @Mutation(() => 'Category')
   async setParent(
     @Args('id') id: number,
     @Args('newParentId') newParentId: number,
-  ): Promise<CategoryDTO> {
-    return this.setParentUseCase.execute(id, newParentId);
+  ): Promise<Category> {
+    const result = await this.setParentUseCase.execute(id, newParentId);
+    return transformCategoryDTOToGraphQL(result)
   }
 
-  @Mutation(() => CategoryDTO)
+  @Mutation(() => 'Category')
   async updateCategory(
     @Args('id') id: number,
-    @Args('categoryDTO') categoryDTO: Partial<CategoryDTO>,
-  ): Promise<CategoryDTO> {
-    return this.updateCategoryUseCase.execute(id, categoryDTO);
+    @Args('categoryDTO') categoryDTO: CategoryDTO,
+  ): Promise<Category> {
+    const result = await this.updateCategoryUseCase.execute(id, categoryDTO);
+    return transformCategoryDTOToGraphQL(result)
   }
 }

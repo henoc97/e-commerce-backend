@@ -1,5 +1,4 @@
 ﻿import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
-import { Notification } from 'src/domain/entities/notification.entity';
 import { toUserDTO } from './to.user.dto';
 
 /**
@@ -7,7 +6,7 @@ import { toUserDTO } from './to.user.dto';
  * @param notification - The Notification entity to convert.
  * @returns The corresponding NotificationDTO.
  */
-export function toNotificationDTO(notification: Notification): NotificationDTO {
+export function toNotificationDTO(notification: any): NotificationDTO {
   return new NotificationDTO(
     notification.userId,
     notification.type,

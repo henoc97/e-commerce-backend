@@ -7,7 +7,7 @@ import { toProductDTO } from './to.product.dto';
  * @param productImage - The ProductImage entity to convert.
  * @returns The corresponding ProductImageDTO.
  */
-export function toProductImageDTO(productImage: ProductImage): ProductImageDTO {
+export function toProductImageDTO(productImage: any): ProductImageDTO {
   return new ProductImageDTO(
     productImage.id,
     productImage.productId,

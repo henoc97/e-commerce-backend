@@ -27,7 +27,7 @@ type Product {
   """
   List of promotions associated with the product.
   """
-  promotions: [Promotion!]!
+  promotions: [Promotion]!
 
   """
   Category to which the product belongs.
@@ -42,12 +42,12 @@ type Product {
   """
   List of images associated with the product.
   """
-  images: [ProductImage!]!
+  images: [ProductImage]!
 
   """
   List of variants for the product.
   """
-  variants: [ProductVariant!]!
+  variants: [ProductVariant]!
 
   """
   Stock quantity of the product.
@@ -67,12 +67,12 @@ type Product {
   """
   Shop where the product is listed.
   """
-  shop: Shop!
+  shop: Shop
 
   """
   ID of the shop where the product is listed.
   """
-  shopId: ID!
+  shopId: ID
 
   """
   Date and time when the product was created.
@@ -87,17 +87,17 @@ type Product {
   """
   List of cart items associated with the product.
   """
-  cartItems: [CartItem!]!
+  cartItems: [CartItem]!
 
   """
   List of order items associated with the product.
   """
-  orderItems: [OrderItem!]!
+  orderItems: [OrderItem]!
 
   """
   List of reviews for the product.
   """
-  reviews: [Review!]!
+  reviews: [Review]!
 }
 
 """

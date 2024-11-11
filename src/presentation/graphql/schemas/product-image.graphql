@@ -7,17 +7,17 @@ type ProductImage {
   """
   Unique identifier for the product image.
   """
-  id: ID!
+  id: ID
 
   """
   Unique identifier for the Product to which this image belongs.
   """
-  productId: ID!
+  productId: ID
 
   """
   The Product entity associated with this image.
   """
-  product: Product!
+  product: Product
 
   """
   URL where the image is located.

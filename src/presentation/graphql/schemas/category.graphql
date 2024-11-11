@@ -8,7 +8,7 @@ type Category {
   """
   Unique identifier for the Category.
   """
-  id: ID!
+  id: ID
 
   """
   Name of the Category.
@@ -23,17 +23,17 @@ type Category {
   """
   ID of the parent Category.
   """
-  parentId: Int
+  parentId: ID
 
   """
   Child categories of this category.
   """
-  children: [Category!]!
+  children: [Category]!
 
   """
   Products associated with this Category.
   """
-  products: [Product!]!
+  products: [Product]!
 
   """
   The Shop this category belongs to, if any.
@@ -43,7 +43,7 @@ type Category {
   """
   ID of the Shop this category belongs to.
   """
-  shopId: Int
+  shopId: ID
 }
 
 """
@@ -68,12 +68,12 @@ type Mutation {
   """
   Creates a new Category.
   """
-  createCategory(name: String!, parentId: Int, shopId: Int): Category!
+  createCategory(categoryDTO: CategoryInput!): Category!
 
   """
   Updates an existing Category.
   """
-  updateCategory(id: ID!, name: String, parentId: Int, shopId: Int): Category!
+  updateCategory(id: ID!, categoryDTO: CategoryInput!): Category!
 
   """
   Deletes a Category by its ID.

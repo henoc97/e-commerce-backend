@@ -8,17 +8,17 @@ type Notification {
   """
   Unique identifier for the notification.
   """
-  id: ID!
+  id: ID
 
   """
   Unique identifier for the user who will receive the notification.
   """
-  userId: ID!
+  userId: ID
 
   """
   The user associated with the notification.
   """
-  user: User!
+  user: User
 
   """
   The type of the notification (e.g., INFO, WARNING, etc).
@@ -33,7 +33,7 @@ type Notification {
   """
   The date and time when the notification was sent.
   """
-  sentAt: String!
+  sentAt: String
 }
 
 """

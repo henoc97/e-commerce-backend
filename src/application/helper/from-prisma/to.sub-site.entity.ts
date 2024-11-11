@@ -1,4 +1,4 @@
-﻿import { Subsite } from 'src/domain/entities/Subsite.entity';
+﻿import { Subsite } from 'src/domain/entities/subsite.entity';
 import { fromUserPrisma } from './to.user.entity';
 
 /**

@@ -8,7 +8,7 @@ import { ProductVariant } from 'src/domain/entities/product-variant.entity';
  * @returns The corresponding ProductVariantDTO.
  */
 export function toProductVariantDTO(
-  productVariant: ProductVariant,
+  productVariant: any,
 ): ProductVariantDTO {
   return new ProductVariantDTO(
     productVariant.id,

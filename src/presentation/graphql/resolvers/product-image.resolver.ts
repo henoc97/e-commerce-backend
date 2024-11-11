@@ -24,7 +24,7 @@ export class ProductImageResolver {
     private readonly fetchProductImagesByProductIdUseCase: FetchProductImagesByProductId,
     private readonly updateProductImageUrlUseCase: UpdateProductImageUrl,
     private readonly updateProductImageUseCase: UpdateProductImage,
-  ) {}
+  ) { }
 
   @Query(() => Boolean)
   async doesProductImageExist(
@@ -92,7 +92,7 @@ export class ProductImageResolver {
   @Mutation(() => ProductImageDTO, { nullable: true })
   async updateProductImage(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<ProductImageDTO>,
+    @Args('updates') updates: ProductImageDTO,
   ): Promise<ProductImageDTO | null> {
     return this.updateProductImageUseCase.execute(id, updates);
   }

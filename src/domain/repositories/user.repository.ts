@@ -3,7 +3,7 @@ import { Address } from '../entities/address.entity';
 import { Order } from '../entities/order.entity';
 import { UserRole } from '../enums/user-role.enum';
 import { UserActivityAction } from '../enums/user-activity-action.enum';
-import { Subsite } from '../entities/Subsite.entity';
+import { Subsite } from '../entities/subsite.entity';
 import { Ticket } from '../entities/ticket.entity';
 import { UserActivity } from '../entities/user-activity.entity';
 import { Review } from '../entities/review.entity';

@@ -35,7 +35,7 @@ export class OrderResolver {
     private readonly fetchTopOrdersByAmountUseCase: FetchTopOrdersByAmount,
     private readonly updateOrderStatusUseCase: UpdateOrderStatus,
     private readonly updateOrderUseCase: UpdateOrder,
-  ) {}
+  ) { }
 
   @Query(() => OrderDTO, { nullable: true })
   async getOrderById(@Args('id') id: number): Promise<OrderDTO | null> {
@@ -131,7 +131,7 @@ export class OrderResolver {
   @Mutation(() => OrderDTO)
   async updateOrder(
     @Args('orderId') orderId: number,
-    @Args('updates') updates: Partial<OrderDTO>,
+    @Args('updates') updates: OrderDTO,
   ): Promise<OrderDTO> {
     return this.updateOrderUseCase.execute(orderId, updates);
   }

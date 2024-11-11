@@ -10,9 +10,11 @@ import { FetchRecentNotifications } from 'src/application/use-cases/notification
 import { MarkNotificationAsRead } from 'src/application/use-cases/notification.use-cases/mark-notification-as-read.use-case';
 import { UpdateNotification } from 'src/application/use-cases/notification.use-cases/update-notification.use-case';
 import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
+import { Notification } from 'src/generated/graphql';
 import { NotificationType } from 'src/domain/enums/notification-type.enum';
+import { transformNotificationDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
-@Resolver(() => NotificationDTO)
+@Resolver(() => 'Notification')
 export class NotificationResolver {
   constructor(
     private readonly countUnreadNotificationsUseCase: CountUnreadNotifications,
@@ -25,7 +27,7 @@ export class NotificationResolver {
     private readonly fetchRecentNotificationsUseCase: FetchRecentNotifications,
     private readonly markNotificationAsReadUseCase: MarkNotificationAsRead,
     private readonly updateNotificationUseCase: UpdateNotification,
-  ) {}
+  ) { }
 
   @Query(() => Number)
   async countUnreadNotifications(
@@ -34,11 +36,12 @@ export class NotificationResolver {
     return this.countUnreadNotificationsUseCase.execute(userId);
   }
 
-  @Mutation(() => NotificationDTO)
+  @Mutation(() => 'Notification')
   async createNotification(
     @Args('notificationDTO') notificationDTO: NotificationDTO,
-  ): Promise<NotificationDTO | null> {
-    return this.createNotificationUseCase.execute(notificationDTO);
+  ): Promise<Notification | null> {
+    const result = await this.createNotificationUseCase.execute(notificationDTO);
+    return transformNotificationDTOToGraphQL(result)
   }
 
   @Mutation(() => Boolean)
@@ -48,57 +51,64 @@ export class NotificationResolver {
     return this.deleteNotificationUseCase.execute(notificationId);
   }
 
-  @Query(() => NotificationDTO, { nullable: true })
+  @Query(() => 'Notification', { nullable: true })
   async fetchNotificationById(
     @Args('notificationId') notificationId: number,
-  ): Promise<NotificationDTO | null> {
-    return this.fetchNotificationByIdUseCase.execute(notificationId);
+  ): Promise<Notification | null> {
+    const result = await this.fetchNotificationByIdUseCase.execute(notificationId);
+    return transformNotificationDTOToGraphQL(result)
   }
 
   @Query(() => [NotificationDTO])
   async fetchNotificationsByDateRange(
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
-  ): Promise<NotificationDTO[]> {
-    return this.fetchNotificationsByDateRangeUseCase.execute(
+  ): Promise<Notification[]> {
+    const result = await this.fetchNotificationsByDateRangeUseCase.execute(
       startDate,
       endDate,
     );
+    return result.map(transformNotificationDTOToGraphQL)
   }
 
   @Query(() => [NotificationDTO])
   async fetchNotificationsByType(
     @Args('type') type: NotificationType,
-  ): Promise<NotificationDTO[]> {
-    return this.fetchNotificationsByTypeUseCase.execute(type);
+  ): Promise<Notification[]> {
+    const result = await this.fetchNotificationsByTypeUseCase.execute(type);
+    return result.map(transformNotificationDTOToGraphQL)
   }
 
   @Query(() => [NotificationDTO])
   async fetchNotificationsByUserId(
     @Args('userId') userId: number,
-  ): Promise<NotificationDTO[]> {
-    return this.fetchNotificationsByUserIdUseCase.execute(userId);
+  ): Promise<Notification[]> {
+    const result = await this.fetchNotificationsByUserIdUseCase.execute(userId);
+    return result.map(transformNotificationDTOToGraphQL)
   }
 
   @Query(() => [NotificationDTO])
   async fetchRecentNotifications(
     @Args('userId') userId: number,
-  ): Promise<NotificationDTO[]> {
-    return this.fetchRecentNotificationsUseCase.execute(userId);
+  ): Promise<Notification[]> {
+    const result = await this.fetchRecentNotificationsUseCase.execute(userId);
+    return result.map(transformNotificationDTOToGraphQL)
   }
 
-  @Mutation(() => NotificationDTO, { nullable: true })
+  @Mutation(() => 'Notification', { nullable: true })
   async markNotificationAsRead(
     @Args('notificationId') notificationId: number,
-  ): Promise<NotificationDTO | null> {
-    return this.markNotificationAsReadUseCase.execute(notificationId);
+  ): Promise<Notification | null> {
+    const result = await this.markNotificationAsReadUseCase.execute(notificationId);
+    return transformNotificationDTOToGraphQL(result)
   }
 
-  @Mutation(() => NotificationDTO, { nullable: true })
+  @Mutation(() => 'Notification', { nullable: true })
   async updateNotification(
     @Args('notificationId') notificationId: number,
-    @Args('updates') updates: Partial<NotificationDTO>,
-  ): Promise<NotificationDTO | null> {
-    return this.updateNotificationUseCase.execute(notificationId, updates);
+    @Args('updates') updates: NotificationDTO,
+  ): Promise<Notification | null> {
+    const result = await this.updateNotificationUseCase.execute(notificationId, updates);
+    return transformNotificationDTOToGraphQL(result)
   }
 }

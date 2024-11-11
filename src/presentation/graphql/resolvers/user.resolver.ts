@@ -21,7 +21,7 @@ import { UpdateUser } from 'src/application/use-cases/user.use-cases/update-user
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
 import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { SubsiteDTO } from 'src/presentation/dtos/Subsite.dto';
+import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
 import { UserDTO } from 'src/presentation/dtos/user.dto';
 import { UserRole } from 'src/domain/enums/user-role.enum';
 
@@ -47,7 +47,7 @@ export class UserResolver {
     // private readonly removeSubsiteFromUserUseCase: RemoveSubsiteFromUserUseCase,
     private readonly updateUserPasswordUseCase: UpdateUserPasswordUseCase,
     private readonly updateUserUseCase: UpdateUser,
-  ) {}
+  ) { }
 
   @Mutation(() => UserDTO, { name: 'addAddressToUser' })
   async addAddress(
@@ -174,7 +174,7 @@ export class UserResolver {
   @Mutation(() => UserDTO, { name: 'updateUser' })
   async updateUser(
     @Args('userId') userId: number,
-    @Args('user') user: Partial<UserDTO>,
+    @Args('user') user: UserDTO,
   ): Promise<UserDTO | null> {
     return this.updateUserUseCase.execute(userId, user);
   }

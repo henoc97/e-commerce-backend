@@ -8,7 +8,7 @@ type Marketplace {
   """
   Unique identifier for the marketplace.
   """
-  id: ID!
+  id: ID
 
   """
   Name of the marketplace.
@@ -23,7 +23,7 @@ type Marketplace {
   """
   List of shops within the marketplace.
   """
-  shops: [Shop!]!
+  shops: [Shop]!
 }
 
 """

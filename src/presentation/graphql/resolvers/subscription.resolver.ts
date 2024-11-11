@@ -26,7 +26,7 @@ export class SubscriptionResolver {
     private readonly listSubscriptionsByPriceRangeUseCase: ListSubscriptionsByPriceRange,
     private readonly listSubscriptionsByVendorUseCase: ListSubscriptionsByVendor,
     private readonly updateSubscriptionUseCase: UpdateSubscription,
-  ) {}
+  ) { }
 
   @Query(() => [SubscriptionDTO])
   async listActiveSubscriptions() {
@@ -84,7 +84,7 @@ export class SubscriptionResolver {
   @Mutation(() => SubscriptionDTO, { nullable: true })
   async updateSubscription(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<SubscriptionDTO>,
+    @Args('updates') updates: SubscriptionDTO,
   ) {
     return this.updateSubscriptionUseCase.execute(id, updates);
   }

@@ -1,5 +1,4 @@
-﻿import { AuditLog } from 'src/domain/entities/audit-log.entity';
-import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+﻿import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
 import { toUserDTO } from './to.user.dto';
 
 /**
@@ -7,7 +6,7 @@ import { toUserDTO } from './to.user.dto';
  * @param auditLog - The AuditLog entity to convert.
  * @returns The corresponding AuditLogDTO.
  */
-export function toAuditLogDTO(auditLog: AuditLog): AuditLogDTO {
+export function toAuditLogDTO(auditLog: any): AuditLogDTO {
   return new AuditLogDTO(
     auditLog.id,
     auditLog.action,

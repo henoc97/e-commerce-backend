@@ -7,7 +7,7 @@ import { Subscription } from 'src/domain/entities/subscription.entity';
  * @param subscription - The Subscription entity to convert.
  * @returns The corresponding SubscriptionDTO.
  */
-export function toSubscriptionDTO(subscription: Subscription): SubscriptionDTO {
+export function toSubscriptionDTO(subscription: any): SubscriptionDTO {
   return new SubscriptionDTO(
     subscription.id,
     subscription.name,

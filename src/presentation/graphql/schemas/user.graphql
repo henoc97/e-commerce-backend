@@ -1,13 +1,22 @@
 # user.graphql
 
 """
+Enum for user roles.
+"""
+enum UserRole {
+  CLIENT
+  ADMIN
+  VENDOR
+}
+
+"""
 Represents a user in the system.
 """
 type User {
   """
   Unique identifier for the user.
   """
-  id: ID!
+  id: ID
 
   """
   Email address of the user.
@@ -32,27 +41,27 @@ type User {
   """
   Profile associated with the user.
   """
-  profile: UserProfile!
+  profile: UserProfile
 
   """
   List of addresses associated with the user.
   """
-  addresses: [Address!]!
+  addresses: [Address]!
 
   """
   List of orders placed by the user.
   """
-  orders: [Order!]!
+  orders: [Order]!
 
   """
   Date when the user was created.
   """
-  createdAt: String!
+  createdAt: String
 
   """
   Date when the user was last updated.
   """
-  updatedAt: String!
+  updatedAt: String
 
   """
   Vendor information if the user is a vendor.
@@ -62,37 +71,37 @@ type User {
   """
   List of carts associated with the user.
   """
-  cart: [Cart!]!
+  carts: [Cart]!
 
   """
   Optional list of reviews written by the user.
   """
-  reviews: [Review!]
+  reviews: [Review]
 
   """
   Optional list of notifications for the user.
   """
-  notification: [Notification!]
+  notifications: [Notification]
 
   """
   Optional list of support tickets raised by the user.
   """
-  ticket: [Ticket!]
+  tickets: [Ticket]
 
   """
   Optional list of sub-sites associated with the user.
   """
-  subSite: [SubSite!]
+  subsites: [Subsite]
 
   """
   Optional list of user activities.
   """
-  userActivity: [UserActivity!]
+  userActivities: [UserActivity]
 
   """
   Optional list of audit logs for the user.
   """
-  auditLog: [AuditLog!]
+  auditLogs: [AuditLog]
 }
 
 """
@@ -145,7 +154,7 @@ type Mutation {
     reviews: [ID!]
     notification: [ID!]
     ticket: [ID!]
-    subSite: [ID!]
+    subsite: [ID!]
     userActivity: [ID!]
     auditLog: [ID!]
   ): User!
@@ -167,7 +176,7 @@ type Mutation {
     reviews: [ID!]
     notification: [ID!]
     ticket: [ID!]
-    subSite: [ID!]
+    subsite: [ID!]
     userActivity: [ID!]
     auditLog: [ID!]
   ): User!

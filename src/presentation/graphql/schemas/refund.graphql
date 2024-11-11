@@ -7,23 +7,23 @@ type Refund {
   """
   Unique identifier for the refund.
   """
-  id: ID!
+  id: ID
 
   """
   Unique identifier for the associated order.
   """
-  orderId: ID!
+  orderId: ID
 
   """
   The order associated with this refund.
   """
-  order: Order!
+  order: Order
 
   """
   Reason for the refund.
   Provides the justification or cause for the refund request.
   """
-  reason: String!
+  reason: String
 
   """
   Amount of money to be refunded.
@@ -41,7 +41,7 @@ type Refund {
   The date and time when the refund was created.
   Automatically set to the current date and time when the refund is created.
   """
-  createdAt: String!
+  createdAt: String
 }
 
 """

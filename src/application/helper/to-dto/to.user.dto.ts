@@ -13,7 +13,7 @@ import { toReviewDTO } from './to.review.dto';
  * @param user - The user entity to convert.
  * @returns The userDTO corresponding to the entity.
  */
-export function toUserDTO(user: User): UserDTO {
+export function toUserDTO(user: any): UserDTO {
   return new UserDTO(
     user.id,
     user.email,

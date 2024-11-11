@@ -1,4 +1,4 @@
-import { Subsite } from '../entities/Subsite.entity';
+import { Subsite } from '../entities/subsite.entity';
 
 /**
  * Interface for handling business rules and CRUD operations related to Subsites.

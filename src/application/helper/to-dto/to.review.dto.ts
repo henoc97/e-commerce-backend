@@ -8,7 +8,7 @@ import { toProductDTO } from './to.product.dto';
  * @param review - The Review entity to convert.
  * @returns The corresponding ReviewDTO.
  */
-export function toReviewDTO(review: Review): ReviewDTO {
+export function toReviewDTO(review: any): ReviewDTO {
   return new ReviewDTO(
     review.id,
     review.productId,

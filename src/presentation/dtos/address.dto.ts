@@ -8,15 +8,19 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { UserDTO } from './user.dto';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
 /**
  * Data Transfer Object for Address.
  * Used for data validation and transformation in API requests and responses.
  */
+@ObjectType()
+@InputType()
 export class AddressDTO {
   /**
    * Unique identifier for the address.
    */
+  @Field()
   @IsInt()
   @IsOptional()
   id?: number;
@@ -24,6 +28,7 @@ export class AddressDTO {
   /**
    * Foreign key referring to the User who owns this address.
    */
+  @Field()
   @IsInt()
   @IsNotEmpty()
   userId: number;
@@ -31,6 +36,7 @@ export class AddressDTO {
   /**
    * User associated with the address.
    */
+  @Field()
   @IsOptional()
   @ValidateNested()
   @Type(() => UserDTO)
@@ -39,6 +45,7 @@ export class AddressDTO {
   /**
    * Street address.
    */
+  @Field()
   @IsString()
   @IsNotEmpty()
   street: string;
@@ -46,6 +53,7 @@ export class AddressDTO {
   /**
    * City where the address is located.
    */
+  @Field()
   @IsString()
   @IsNotEmpty()
   city: string;
@@ -53,6 +61,7 @@ export class AddressDTO {
   /**
    * State or region where the address is located.
    */
+  @Field()
   @IsString()
   @IsNotEmpty()
   state: string;
@@ -60,6 +69,7 @@ export class AddressDTO {
   /**
    * Postal code for the address.
    */
+  @Field()
   @IsPostalCode('any')
   @IsNotEmpty()
   postalCode: string;
@@ -67,6 +77,7 @@ export class AddressDTO {
   /**
    * Country where the address is located.
    */
+  @Field()
   @IsString()
   @IsNotEmpty()
   country: string;

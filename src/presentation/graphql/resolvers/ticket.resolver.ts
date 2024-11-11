@@ -27,7 +27,7 @@ export class TicketResolver {
     private readonly listTicketsByStatusUseCase: ListTicketsByStatus,
     private readonly updateTicketUseCase: UpdateTicket,
     private readonly countOpenTicketsByUserUseCase: CountOpenTicketsByUser,
-  ) {}
+  ) { }
 
   @Mutation(() => TicketDTO, { nullable: true })
   async createTicket(
@@ -86,7 +86,7 @@ export class TicketResolver {
   @Mutation(() => TicketDTO, { nullable: true })
   async updateTicket(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<TicketDTO>,
+    @Args('updates') updates: TicketDTO,
   ): Promise<TicketDTO | null> {
     return this.updateTicketUseCase.execute(id, updates);
   }

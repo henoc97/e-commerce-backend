@@ -29,7 +29,7 @@ export class RefundResolver {
     private readonly issuePartialRefundUseCase: IssuePartialRefund,
     private readonly processRefundUseCase: ProcessRefund,
     private readonly updateRefundUseCase: UpdateRefund,
-  ) {}
+  ) { }
 
   @Mutation(() => RefundDTO, { nullable: true })
   async approveRefund(@Args('id') id: number): Promise<RefundDTO | null> {
@@ -105,7 +105,7 @@ export class RefundResolver {
   @Mutation(() => RefundDTO)
   async updateRefund(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<RefundDTO>,
+    @Args('updates') updates: RefundDTO,
   ): Promise<RefundDTO> {
     return this.updateRefundUseCase.execute(id, updates);
   }

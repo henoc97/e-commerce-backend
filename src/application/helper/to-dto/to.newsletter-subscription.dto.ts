@@ -1,5 +1,4 @@
-﻿import { NewsletterSubscription } from 'src/domain/entities/newsletter-subscription.entity';
-import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
+﻿import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
 
 /**
  * Converts a NewsletterSubscription entity to NewsletterSubscriptionDTO.
@@ -7,7 +6,7 @@ import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subs
  * @returns The corresponding NewsletterSubscriptionDTO.
  */
 export function toNewsletterSubscriptionDTO(
-  subscription: NewsletterSubscription,
+  subscription: any,
 ): NewsletterSubscriptionDTO {
   return new NewsletterSubscriptionDTO(
     subscription.email,

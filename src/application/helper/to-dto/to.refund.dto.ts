@@ -7,7 +7,7 @@ import { toOrderDTO } from './to.order.dto';
  * @param refund - The Refund entity to convert.
  * @returns The corresponding RefundDTO.
  */
-export function toRefundDTO(refund: Refund): RefundDTO {
+export function toRefundDTO(refund: any): RefundDTO {
   return new RefundDTO(
     refund.id,
     refund.orderId,

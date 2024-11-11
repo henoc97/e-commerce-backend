@@ -7,17 +7,17 @@ type Vendor {
   """
   Unique identifier for the vendor.
   """
-  id: ID!
+  id: ID
 
   """
   ID of the user associated with the vendor.
   """
-  userId: ID!
+  userId: ID
 
   """
   User associated with the vendor.
   """
-  user: User!
+  user: User
 
   """
   Name of the vendor's store.
@@ -27,7 +27,7 @@ type Vendor {
   """
   Optional array of products associated with the vendor.
   """
-  products: [Product!]
+  products: [Product]
 
   """
   Optional subscription associated with the vendor.

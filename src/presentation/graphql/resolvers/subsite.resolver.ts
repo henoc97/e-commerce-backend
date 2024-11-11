@@ -26,7 +26,7 @@ export class SubsiteResolver {
     private readonly fetchSubsiteConfigUseCase: FetchSubsiteConfig,
     private readonly listSubsitesByUserUseCase: ListSubsitesByUser,
     private readonly updateSubsiteConfigUseCase: UpdateSubsiteConfig,
-  ) {}
+  ) { }
 
   @Query(() => Number)
   async countSubsitesByUser(@Args('userId') userId: number): Promise<number> {
@@ -63,7 +63,7 @@ export class SubsiteResolver {
   @Mutation(() => SubsiteDTO)
   async updateSubsite(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<SubsiteDTO>,
+    @Args('updates') updates: SubsiteDTO,
   ): Promise<SubsiteDTO> {
     return this.updateSubsiteUseCase.execute(id, updates);
   }
@@ -90,7 +90,7 @@ export class SubsiteResolver {
   @Mutation(() => JSON)
   async updateSubsiteConfig(
     @Args('id') id: number,
-    @Args('config') config: any,
+    @Args('config') config: string,
   ): Promise<any> {
     return this.updateSubsiteConfigUseCase.execute(id, config);
   }

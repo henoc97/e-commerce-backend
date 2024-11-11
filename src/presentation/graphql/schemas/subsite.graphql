@@ -3,11 +3,11 @@
 """
 Represents a subsite within the main site.
 """
-type SubSite {
+type Subsite {
   """
   Unique identifier for the subsite.
   """
-  id: ID!
+  id: ID
 
   """
   Title of the subsite.
@@ -17,17 +17,17 @@ type SubSite {
   """
   Unique identifier for the user who owns or manages the subsite.
   """
-  userId: ID!
+  userId: ID
 
   """
   The user associated with this subsite.
   """
-  user: User!
+  user: User
 
   """
   JSON configuration for the subsite.
   """
-  config: JSON!
+  config: JSON
 
   """
   The date and time when the subsite was created.
@@ -36,48 +36,48 @@ type SubSite {
 }
 
 """
-Queries related to SubSites.
+Queries related to subsites.
 """
 type Query {
   """
   Retrieves a list of all subsites.
   """
-  subSites: [SubSite!]!
+  subsites: [DiscountType!]!
 
   """
   Retrieves a single subsite by its ID.
   """
-  subSite(id: ID!): SubSite
+  subsite(id: ID!): DiscountType
 
   """
   Retrieves all subsites associated with a specific user.
   """
-  subSitesByUser(userId: ID!): [SubSite!]!
+  subsitesByUser(userId: ID!): [DiscountType!]!
 }
 
 """
-Mutations related to SubSites.
+Mutations related to subsites.
 """
 type Mutation {
   """
   Creates a new subsite.
   """
-  createSubSite(title: String!, userId: ID!, config: JSON!): SubSite!
+  createsubsite(title: String!, userId: ID!, config: JSON!): Subsite!
 
   """
   Updates an existing subsite by its ID.
   """
-  updateSubSite(id: ID!, title: String, config: JSON): SubSite!
+  updatesubsite(id: ID!, title: String, config: JSON): Subsite!
 
   """
   Deletes a subsite by its ID.
   """
-  deleteSubSite(id: ID!): Boolean!
+  deletesubsite(id: ID!): Boolean!
 
   """
   Updates the configuration of an existing subsite.
   """
-  updateSubSiteConfig(id: ID!, config: JSON!): SubSite!
+  updatesubsiteConfig(id: ID!, config: JSON!): Subsite!
 }
 
 """

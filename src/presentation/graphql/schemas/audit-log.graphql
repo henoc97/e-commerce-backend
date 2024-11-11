@@ -6,7 +6,7 @@ type AuditLog {
   """
   Unique identifier for the audit log entry.
   """
-  id: Int!
+  id: ID
 
   """
   The user who performed the action.
@@ -16,7 +16,7 @@ type AuditLog {
   """
   Type of action performed by the user (e.g., CREATE, UPDATE, DELETE).
   """
-  action: AuditLogAction!
+  action: AuditLogAction
 
   """
   The entity affected by the action (e.g., 'User', 'Order').
@@ -26,7 +26,7 @@ type AuditLog {
   """
   The unique identifier of the entity affected by the action.
   """
-  entityId: Int!
+  entityId: ID
 
   """
   Details of the changes made (before-and-after values, etc.).
@@ -36,7 +36,7 @@ type AuditLog {
   """
   The date and time when the action was performed.
   """
-  createdAt: String!
+  createdAt: String
 }
 
 """
@@ -102,4 +102,9 @@ type Mutation {
   Delete an audit log entry by its ID.
   """
   deleteAuditLog(id: Int!): Boolean!
+
+  """
+  Update an existing audit log entry by its ID.
+  """
+  updateAuditLog(id: Int!, input: auditLogInput!): AuditLog!
 }

@@ -4,7 +4,6 @@ import { toCategoryDTO } from './to.category.dto';
 import { toOrderItemDTO } from './to.order-item.dto';
 import { toPromotionDTO } from './to.promotion.dto';
 import { toVendorDTO } from './to.vendor.dto';
-import { Product } from 'src/domain/entities/product.entity';
 import { toReviewDTO } from './to.review.dto';
 import { toShopDTO } from './to.shop.dto';
 import { toProductImageDTO } from './to.product-image.dto';
@@ -15,7 +14,7 @@ import { toProductVariantDTO } from './to.product-variant.dto';
  * @param product - The Product entity to convert.
  * @returns The corresponding ProductDTO.
  */
-export function toProductDTO(product: Product): ProductDTO {
+export function toProductDTO(product: any): ProductDTO {
   return new ProductDTO(
     product.id,
     product.name,

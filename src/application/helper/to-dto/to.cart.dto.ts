@@ -1,6 +1,5 @@
 ﻿import { CartDTO } from 'src/presentation/dtos/cart.dto';
 import { toCartItemDTO } from './to.cart-item.dto';
-import { Cart } from 'src/domain/entities/cart.entity';
 import { toUserDTO } from './to.user.dto';
 
 /**
@@ -8,7 +7,7 @@ import { toUserDTO } from './to.user.dto';
  * @param cart - The Cart entity to convert.
  * @returns The corresponding CartDTO.
  */
-export function toCartDTO(cart: Cart): CartDTO {
+export function toCartDTO(cart: any): CartDTO {
   return new CartDTO(
     cart.userId,
     cart.id,

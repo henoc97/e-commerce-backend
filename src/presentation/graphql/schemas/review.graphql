@@ -7,27 +7,27 @@ type Review {
   """
   Unique identifier for the Review.
   """
-  id: ID!
+  id: ID
 
   """
   Unique identifier for the Product associated with this review.
   """
-  productId: ID!
+  productId: ID
 
   """
   The Product that this review is associated with.
   """
-  product: Product!
+  product: Product
 
   """
   Unique identifier for the User who wrote the review.
   """
-  userId: ID!
+  userId: ID
 
   """
   The User who wrote the review.
   """
-  user: User!
+  user: User
 
   """
   The rating given in the review, usually on a scale from 1 to 5.
@@ -43,7 +43,7 @@ type Review {
   The date and time when the review was created.
   Automatically set to the current date and time when a Review is created.
   """
-  createdAt: String!
+  createdAt: String
 }
 
 """

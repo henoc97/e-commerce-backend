@@ -1,5 +1,3 @@
-# order-item.graphql
-
 """
 Represents an item in an order.
 Contains information about the product, quantity, and price of the item in the order.
@@ -8,27 +6,27 @@ type OrderItem {
   """
   Unique identifier for the OrderItem.
   """
-  id: ID!
+  id: ID
 
   """
   Unique identifier for the Order to which this item belongs.
   """
-  orderId: ID!
+  orderId: ID
 
   """
   The Order to which this item belongs.
   """
-  order: Order!
+  order: Order
 
   """
   Unique identifier for the Product that is included in this order item.
   """
-  productId: ID!
+  productId: ID
 
   """
   The Product that is included in this order item.
   """
-  product: Product!
+  product: Product
 
   """
   Quantity of the Product included in this order item.

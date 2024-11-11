@@ -7,7 +7,7 @@ import { toUserDTO } from './to.user.dto';
  * @param userProfile - The UserProfile entity to convert.
  * @returns The corresponding UserProfileDTO.
  */
-export function toUserProfileDTO(userProfile: UserProfile): UserProfileDTO {
+export function toUserProfileDTO(userProfile: any): UserProfileDTO {
   return new UserProfileDTO(
     userProfile.id,
     userProfile.userId,

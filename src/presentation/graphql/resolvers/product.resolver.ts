@@ -45,7 +45,7 @@ export class ProductResolver {
     private readonly removeVariantFromProductUseCase: RemoveVariantFromProduct,
     private readonly updateProductStockUseCase: UpdateProductStock,
     private readonly updateProductUseCase: UpdateProduct,
-  ) {}
+  ) { }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async addCartItemToProduct(
@@ -181,7 +181,7 @@ export class ProductResolver {
   @Mutation(() => ProductDTO, { nullable: true })
   async updateProduct(
     @Args('productId') productId: number,
-    @Args('product') productDTO: Partial<ProductDTO>,
+    @Args('product') productDTO: ProductDTO,
   ): Promise<ProductDTO | null> {
     return this.updateProductUseCase.execute(productId, productDTO);
   }

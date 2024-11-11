@@ -7,7 +7,7 @@ import { UserActivity } from 'src/domain/entities/user-activity.entity';
  * @param userActivity - The UserActivity entity to convert.
  * @returns The corresponding UserActivityDTO.
  */
-export function toUserActivityDTO(userActivity: UserActivity): UserActivityDTO {
+export function toUserActivityDTO(userActivity: any): UserActivityDTO {
   return new UserActivityDTO(
     userActivity.id,
     userActivity.userId,

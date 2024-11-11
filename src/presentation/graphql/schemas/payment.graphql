@@ -1,174 +1,134 @@
-# order.graphql
-
 """
-Represents an order placed by a user in a shop.
-Contains information about the order items, status, total amount, and related payment and refund details.
+Represents a payment in the system.
 """
-type Order {
+type Payment {
   """
-  Unique identifier for the Order.
+  Unique identifier for the Payment.
   """
-  id: ID!
+  id: ID
 
   """
-  Unique identifier for the User who placed the order.
+  Unique identifier for the Order associated with this payment.
   """
-  userId: ID!
+  orderId: ID
 
   """
-  The User who placed the order.
+  The method used for the payment (e.g., Stripe, PayPal, Bank Transfer).
   """
-  user: User!
+  method: String!
 
   """
-  Unique identifier for the Shop where the order was placed.
+  The status of the payment (e.g., SUCCESS, FAILED, PENDING).
   """
-  shopId: ID!
+  status: PaymentStatus!
 
   """
-  The Shop where the order was placed.
+  The amount of money that was paid.
   """
-  shop: Shop!
+  amount: Float!
 
   """
-  List of items included in the Order.
+  The currency of the payment.
   """
-  items: [OrderItem!]!
+  currency: Currency!
 
   """
-  Status of the Order (e.g., Pending, Shipped, Delivered).
+  The date and time when the payment was created.
   """
-  status: OrderStatus!
-
-  """
-  Total amount for the Order.
-  """
-  totalAmount: Float!
-
-  """
-  Unique identifier for the Payment associated with the Order.
-  """
-  paymentId: String
-
-  """
-  Tracking number for the Order shipment.
-  """
-  trackingNumber: String
-
-  """
-  Date and time when the Order was created.
-  """
-  createdAt: String!
-
-  """
-  Date and time when the Order was last updated.
-  """
-  updatedAt: String!
-
-  """
-  List of Payments associated with the Order.
-  """
-  payments: [Payment!]!
-
-  """
-  List of Refunds associated with the Order.
-  """
-  refunds: [Refund!]!
+  createdAt: String
 }
 
 """
-Queries related to Orders.
+Enum for payment statuses.
+"""
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+"""
+Enum for currencies.
+"""
+enum Currency {
+  USD
+  EUR
+}
+
+"""
+Queries related to Payments.
 """
 type Query {
   """
-  Retrieves a list of all Orders.
+  Fetches the most recent payment by order ID.
   """
-  orders: [Order!]!
+  fetchMostRecentPaymentByOrderId(orderId: Int!): Payment
 
   """
-  Retrieves a single Order by its ID.
+  Fetches a payment by its ID.
   """
-  order(id: ID!): Order
+  fetchPaymentById(id: Int!): Payment
 
   """
-  Retrieves Orders for a specific User by user ID.
+  Fetches payments within a specified date range.
   """
-  ordersByUser(userId: ID!): [Order!]!
+  fetchPaymentsByDateRange(startDate: String!, endDate: String!): [Payment!]!
 
   """
-  Retrieves Orders for a specific Shop by shop ID.
+  Fetches payments by payment method.
   """
-  ordersByShop(shopId: ID!): [Order!]!
+  fetchPaymentsByMethod(method: String!): [Payment!]!
 
   """
-  Retrieves Orders with a specific status.
+  Fetches payments by order ID.
   """
-  ordersByStatus(status: OrderStatus!): [Order!]!
+  fetchPaymentsByOrderId(orderId: Int!): [Payment!]!
+
+  """
+  Fetches payments by status.
+  """
+  fetchPaymentsByStatus(status: PaymentStatus!): [Payment!]!
+
+  """
+  Fetches payments grouped by method.
+  """
+  fetchPaymentsGroupedByMethod: [Payment!]!
+
+  """
+  Fetches the total amount of payments within a specified date range.
+  """
+  fetchTotalAmountByDateRange(startDate: String!, endDate: String!): Float!
 }
 
 """
-Mutations related to Orders.
+Mutations related to Payments.
 """
 type Mutation {
   """
-  Creates a new Order.
+  Creates a new payment.
   """
-  createOrder(input: OrderInput!): Order!
+  createPayment(paymentDTO: PaymentInput!): Payment!
 
   """
-  Updates an existing Order by its ID.
+  Deletes a payment by its ID.
   """
-  updateOrder(
-    id: ID!
-    items: [OrderItemInput!]
-    status: OrderStatus
-    totalAmount: Float
-    paymentId: String
-    trackingNumber: String
-  ): Order!
+  deletePayment(id: Int!): Boolean!
 
   """
-  Deletes an Order by its ID.
+  Updates an existing payment.
   """
-  deleteOrder(id: ID!): Boolean!
+  updatePayment(id: Int!, updates: PaymentInput!): Payment
 }
 
 """
-Input type for creating and updating Orders.
+Input type for creating or updating a payment.
 """
-input OrderInput {
-  """
-  Unique identifier for the User who placed the order.
-  """
-  userId: ID!
-
-  """
-  Unique identifier for the Shop where the order was placed.
-  """
-  shopId: ID!
-
-  """
-  List of items included in the Order.
-  """
-  items: [OrderItemInput!]!
-
-  """
-  Status of the Order.
-  """
-  status: OrderStatus!
-
-  """
-  Total amount for the Order.
-  """
-  totalAmount: Float!
-
-  """
-  Unique identifier for the Payment associated with the Order.
-  """
-  paymentId: String
-
-  """
-  Tracking number for the Order shipment.
-  """
-  trackingNumber: String
+input PaymentInput {
+  orderId: Int!
+  method: String!
+  status: PaymentStatus!
+  amount: Float!
+  providerId: String
+  metadata: JSON
+  currency: Currency!
 }

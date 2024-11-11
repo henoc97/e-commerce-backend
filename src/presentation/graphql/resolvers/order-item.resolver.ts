@@ -9,8 +9,9 @@ import { FetchRecentOrderItems } from 'src/application/use-cases/order-item.use-
 import { UpdateOrderItem } from 'src/application/use-cases/order-item.use-case/update-order-item.use-case';
 import { CalculateTotalPriceForOrder } from 'src/application/use-cases/order-item.use-case/calculate-total-price-for-order.use-case';
 import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
+import { OrderItemInput } from 'src/generated/graphql';
 
-@Resolver(() => OrderItemDTO)
+@Resolver(() => 'OrderItem')
 export class OrderItemResolver {
   constructor(
     private readonly createOrderItemUseCase: CreateOrderItem,
@@ -22,16 +23,16 @@ export class OrderItemResolver {
     private readonly fetchRecentOrderItems: FetchRecentOrderItems,
     private readonly updateOrderItemUseCase: UpdateOrderItem,
     private readonly calculateTotalPriceForOrder: CalculateTotalPriceForOrder,
-  ) {}
+  ) { }
 
-  @Mutation(() => OrderItemDTO, { nullable: true })
+  @Mutation(() => 'OrderItem', { nullable: true })
   async createOrderItem(
-    @Args('orderItemDTO') orderItemDTO: OrderItemDTO,
+    @Args('orderItem') orderItemDTO: OrderItemInput,
   ): Promise<OrderItemDTO | null> {
     return await this.createOrderItemUseCase.execute(orderItemDTO);
   }
 
-  @Query(() => OrderItemDTO, { nullable: true })
+  @Query(() => 'OrderItem', { nullable: true })
   async orderItemById(@Args('id') id: number): Promise<OrderItemDTO | null> {
     return await this.fetchOrderItemById.execute(id);
   }
@@ -41,38 +42,38 @@ export class OrderItemResolver {
     return await this.deleteOrderItemUseCase.execute(id);
   }
 
-  @Query(() => [OrderItemDTO])
+  @Query(() => ['OrderItem'])
   async lowStockItems(
     @Args('threshold') threshold: number,
   ): Promise<OrderItemDTO[]> {
     return await this.fetchLowStockItems.execute(threshold);
   }
 
-  @Query(() => [OrderItemDTO])
+  @Query(() => ['OrderItem'])
   async orderItemsByOrderId(
     @Args('orderId') orderId: number,
   ): Promise<OrderItemDTO[]> {
     return await this.fetchOrderItemsByOrderId.execute(orderId);
   }
 
-  @Query(() => [OrderItemDTO])
+  @Query(() => ['OrderItem'])
   async orderItemsByProductId(
     @Args('productId') productId: number,
   ): Promise<OrderItemDTO[]> {
     return await this.fetchOrderItemsByProductId.execute(productId);
   }
 
-  @Query(() => [OrderItemDTO])
+  @Query(() => ['OrderItem'])
   async recentOrderItems(
     @Args('orderId') orderId: number,
   ): Promise<OrderItemDTO[]> {
     return await this.fetchRecentOrderItems.execute(orderId);
   }
 
-  @Mutation(() => OrderItemDTO, { nullable: true })
+  @Mutation(() => 'OrderItem', { nullable: true })
   async updateOrderItem(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<OrderItemDTO>,
+    @Args('updates') updates: OrderItemDTO,
   ): Promise<OrderItemDTO | null> {
     return await this.updateOrderItemUseCase.execute(id, updates);
   }

@@ -1,4 +1,4 @@
-﻿import { Shop } from 'src/domain/entities/Shop.entity';
+﻿import { Shop } from 'src/domain/entities/shop.entity';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 import { toCategoryDTO } from './to.category.dto';
 import { toOrderDTO } from './to.order.dto';
@@ -11,7 +11,7 @@ import { toMarketplaceDTO } from './to.marketplace.dto';
  * @param shop - The Shop entity to convert.
  * @returns The corresponding ShopDTO.
  */
-export function toShopDTO(shop: Shop): ShopDTO {
+export function toShopDTO(shop: any): ShopDTO {
   return new ShopDTO(
     shop.id,
     shop.name,

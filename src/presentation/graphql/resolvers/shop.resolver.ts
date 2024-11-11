@@ -45,7 +45,7 @@ export class ShopResolver {
     private readonly removeProductFromShopUseCase: RemoveProductFromShop,
     private readonly searchShopsByNameUseCase: SearchShopsByName,
     private readonly updateShopUseCase: UpdateShop,
-  ) {}
+  ) { }
 
   @Mutation(() => ShopDTO, { nullable: true })
   async createShop(@Args('shop') shop: ShopDTO): Promise<ShopDTO | null> {
@@ -122,7 +122,7 @@ export class ShopResolver {
   @Mutation(() => ShopDTO)
   async updateShop(
     @Args('shopId') shopId: number,
-    @Args('updates') updates: Partial<ShopDTO>,
+    @Args('updates') updates: ShopDTO,
   ): Promise<ShopDTO> {
     return this.updateShopUseCase.execute(shopId, updates);
   }

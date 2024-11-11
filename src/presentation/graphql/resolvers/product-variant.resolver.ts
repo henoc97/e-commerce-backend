@@ -22,7 +22,7 @@ export class ProductVariantResolver {
     private readonly fetchByName: FetchProductVariantsByName,
     private readonly fetchByProductId: FetchProductVariantsByProductId,
     private readonly updateDetails: UpdateProductVariantDetails,
-  ) {}
+  ) { }
 
   @Query(() => Boolean)
   async checkProductVariantExistence(
@@ -84,7 +84,7 @@ export class ProductVariantResolver {
   @Mutation(() => ProductVariantDTO, { nullable: true })
   async updateProductVariantDetails(
     @Args('id') id: number,
-    @Args('updateData') updateData: Partial<ProductVariantDTO>,
+    @Args('updateData') updateData: ProductVariantDTO,
   ): Promise<ProductVariantDTO | null> {
     return this.updateDetails.execute(id, updateData);
   }

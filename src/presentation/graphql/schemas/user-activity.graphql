@@ -7,17 +7,17 @@ type UserActivity {
   """
   Unique identifier for the user activity record.
   """
-  id: ID!
+  id: ID
 
   """
   Unique identifier for the user who performed the activity.
   """
-  userId: ID!
+  userId: ID
 
   """
   The user who performed the activity.
   """
-  user: User!
+  user: User
 
   """
   Type of action performed by the user.
@@ -27,7 +27,7 @@ type UserActivity {
   """
   Optional product ID related to the activity.
   """
-  productId: Int
+  productId: ID
 
   """
   The date and time when the activity was performed.

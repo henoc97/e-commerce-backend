@@ -7,7 +7,7 @@ import { toOrderDTO } from './to.order.dto';
  * @param payment - The Payment entity to convert.
  * @returns The corresponding PaymentDTO.
  */
-export function toPaymentDTO(payment: Payment): PaymentDTO {
+export function toPaymentDTO(payment: any): PaymentDTO {
   return new PaymentDTO(
     payment.id,
     payment.orderId,

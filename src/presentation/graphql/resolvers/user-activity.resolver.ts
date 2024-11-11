@@ -24,7 +24,7 @@ export class UserActivityResolver {
     private readonly recordActivityUseCase: RecordActivity,
     private readonly updateActivityUseCase: UpdateActivity,
     private readonly validateActivityUseCase: ValidateActivity,
-  ) {}
+  ) { }
 
   @Query(() => Number)
   async countActivities(@Args('userId') userId: number): Promise<number> {
@@ -81,7 +81,7 @@ export class UserActivityResolver {
   @Mutation(() => UserActivityDTO, { nullable: true })
   async updateActivity(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<UserActivityDTO>,
+    @Args('updates') updates: UserActivityDTO,
   ): Promise<UserActivityDTO | null> {
     return this.updateActivityUseCase.execute(id, updates);
   }

@@ -1,5 +1,4 @@
-﻿import { OrderItem } from 'src/domain/entities/order-item.enttity';
-import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
+﻿import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
 import { toOrderDTO } from './to.order.dto';
 import { toProductDTO } from './to.product.dto';
 
@@ -8,7 +7,7 @@ import { toProductDTO } from './to.product.dto';
  * @param orderItem - The OrderItem entity to convert.
  * @returns The corresponding OrderItemDTO.
  */
-export function toOrderItemDTO(orderItem: OrderItem): OrderItemDTO {
+export function toOrderItemDTO(orderItem: any): OrderItemDTO {
   return new OrderItemDTO(
     orderItem.orderId,
     orderItem.productId,

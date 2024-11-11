@@ -1,5 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { toAuditLogDTO } from 'src/application/helper/to-dto/to.audit-log.dto';
+import { transformAuditLogDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { CreateLog } from 'src/application/use-cases/audit-log.use-cases/create-log.use-case';
 import { DeleteLog } from 'src/application/use-cases/audit-log.use-cases/delete-log.use-case';
 import { FetchLogById } from 'src/application/use-cases/audit-log.use-cases/fetch-log-by-id.use-case';
@@ -10,10 +12,11 @@ import { FetchLogsByUser } from 'src/application/use-cases/audit-log.use-cases/f
 import { FetchRecentLogs } from 'src/application/use-cases/audit-log.use-cases/fetch-recent-logs.use-case';
 import { UpdateLog } from 'src/application/use-cases/audit-log.use-cases/update-log.use-case';
 import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
+import { AuditLog, AuditLogInput } from 'src/generated/graphql';
 import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
 import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
 
-@Resolver(() => AuditLogDTO)
+@Resolver(() => 'AuditLog')
 export class AuditLogResolver {
   constructor(
     private readonly createLog: CreateLog,
@@ -25,12 +28,14 @@ export class AuditLogResolver {
     private readonly fetchLogsByUser: FetchLogsByUser,
     private readonly fetchRecentLogs: FetchRecentLogs,
     private readonly updateLog: UpdateLog,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => AuditLogDTO)
-  async createAuditLog(@Args('dto') dto: AuditLogDTO): Promise<AuditLogDTO> {
-    return this.createLog.execute(dto);
+  @Mutation(() => 'AuditLog')
+  async createAuditLog(@Args('AuditLogInput') input: AuditLogInput): Promise<AuditLog> {
+    const dto = toAuditLogDTO(input);
+    const result = await this.createLog.execute(dto);
+    return transformAuditLogDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -40,57 +45,65 @@ export class AuditLogResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => AuditLogDTO, { nullable: true })
-  async auditLogById(@Args('id') id: number): Promise<AuditLogDTO | null> {
-    return this.fetchLogById.execute(id);
+  @Query(() => 'AuditLog', { nullable: true })
+  async auditLogById(@Args('id') id: number): Promise<AuditLog | null> {
+    const result = await this.fetchLogById.execute(id);
+    return transformAuditLogDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AuditLogDTO])
+  @Query(() => ['AuditLog'])
   async auditLogsByAction(
     @Args('action') action: AuditLogAction,
-  ): Promise<AuditLogDTO[]> {
-    return this.fetchLogsByAction.execute(action);
+  ): Promise<AuditLog[]> {
+    const result = await this.fetchLogsByAction.execute(action);
+    return result.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AuditLogDTO])
+  @Query(() => ['AuditLog'])
   async auditLogsByDateRange(
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
-  ): Promise<AuditLogDTO[]> {
-    return this.fetchLogsByDateRange.execute(startDate, endDate);
+  ): Promise<AuditLog[]> {
+    const result = await this.fetchLogsByDateRange.execute(startDate, endDate);
+    return result.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AuditLogDTO])
+  @Query(() => ['AuditLog'])
   async auditLogsByEntity(
     @Args('entity') entity: string,
     @Args('entityId') entityId: number,
-  ): Promise<AuditLogDTO[]> {
-    return this.fetchLogsByEntity.execute(entity, entityId);
+  ): Promise<AuditLog[]> {
+    const result = await this.fetchLogsByEntity.execute(entity, entityId);
+    return result.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AuditLogDTO])
+  @Query(() => ['AuditLog'])
   async auditLogsByUser(
     @Args('userId') userId: number,
-  ): Promise<AuditLogDTO[]> {
-    return this.fetchLogsByUser.execute(userId);
+  ): Promise<AuditLog[]> {
+    const result = await this.fetchLogsByUser.execute(userId);
+    return result.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AuditLogDTO])
-  async recentAuditLogs(@Args('limit') limit: number): Promise<AuditLogDTO[]> {
-    return this.fetchRecentLogs.execute(limit);
+  @Query(() => ['AuditLog'])
+  async recentAuditLogs(@Args('limit') limit: number): Promise<AuditLog[]> {
+    const result = await this.fetchRecentLogs.execute(limit);
+    return result.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => AuditLogDTO)
+  @Mutation(() => 'AuditLog')
   async updateAuditLog(
     @Args('id') id: number,
-    @Args('dto') dto: AuditLogDTO,
-  ): Promise<AuditLogDTO> {
-    return this.updateLog.execute(id, dto);
+    @Args('AuditLogInput') input: AuditLogInput,
+  ): Promise<AuditLog> {
+    const dto = toAuditLogDTO(input);
+    const result = await this.updateLog.execute(id, dto);
+    return transformAuditLogDTOToGraphQL(result);
   }
 }

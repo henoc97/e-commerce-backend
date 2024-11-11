@@ -12,9 +12,9 @@ enum OrderStatus {
 Represents an order placed by a user.
 """
 type Order {
-  id: ID!
-  userId: ID!
-  shopId: ID!
+  id: ID
+  userId: ID
+  shopId: ID
   status: OrderStatus!
   totalAmount: Float!
   paymentId: String

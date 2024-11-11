@@ -7,7 +7,7 @@ import { Ticket } from 'src/domain/entities/ticket.entity';
  * @param ticket - The Ticket entity to convert.
  * @returns The corresponding TicketDTO.
  */
-export function toTicketDTO(ticket: Ticket): TicketDTO {
+export function toTicketDTO(ticket: any): TicketDTO {
   return new TicketDTO(
     ticket.id,
     ticket.userId,

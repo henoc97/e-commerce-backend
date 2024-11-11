@@ -1,5 +1,5 @@
-﻿import { Subsite } from 'src/domain/entities/Subsite.entity';
-import { SubsiteDTO } from 'src/presentation/dtos/Subsite.dto';
+﻿import { Subsite } from 'src/domain/entities/subsite.entity';
+import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
 import { toUserDTO } from './to.user.dto';
 
 /**
@@ -7,7 +7,7 @@ import { toUserDTO } from './to.user.dto';
  * @param Subsite - The Subsite entity to convert.
  * @returns The corresponding SubsiteDTO.
  */
-export function toSubsiteDTO(Subsite: Subsite): SubsiteDTO {
+export function toSubsiteDTO(Subsite: any): SubsiteDTO {
   return new SubsiteDTO(
     Subsite.id,
     Subsite.title,

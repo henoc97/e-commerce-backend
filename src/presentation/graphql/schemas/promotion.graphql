@@ -7,7 +7,7 @@ type Promotion {
   """
   Unique identifier for the promotion.
   """
-  id: ID!
+  id: ID
 
   """
   Name of the promotion (e.g., "Summer Sale", "Black Friday Discount").
@@ -37,12 +37,12 @@ type Promotion {
   """
   Unique identifier for the product that the promotion applies to.
   """
-  productId: ID!
+  productId: ID
 
   """
   The product associated with the promotion.
   """
-  product: Product!
+  product: Product
 
   """
   The date and time when the promotion was created.

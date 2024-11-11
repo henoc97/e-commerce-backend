@@ -1,3 +1,6 @@
+
+
+
 import { Module } from '@nestjs/common';
 // Importation des modules
 import { AddressModule } from './application/modules/address.module';
@@ -58,4 +61,4 @@ import { KafkaModule } from './infrastructure/external-servicies/kafka/kafka.mod
   ],
   // ... autres configurations si nécessaire ...
 })
-export class AppModule {}
+export class AppModule { }

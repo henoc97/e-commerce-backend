@@ -7,17 +7,17 @@ type UserProfile {
   """
   Unique identifier for the user profile.
   """
-  id: ID!
+  id: ID
 
   """
   Identifier of the user to whom this profile belongs.
   """
-  userId: ID!
+  userId: ID
 
   """
   User object representing the relationship between the profile and the user.
   """
-  user: User!
+  user: User
 
   """
   Phone number of the user (optional).

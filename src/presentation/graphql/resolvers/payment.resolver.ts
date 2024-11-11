@@ -27,7 +27,7 @@ export class PaymentResolver {
     private readonly fetchPaymentsGroupedByMethodUseCase: FetchPaymentsGroupedByMethod,
     private readonly fetchTotalAmountByDateRangeUseCase: FetchTotalAmountByDateRange,
     private readonly updatePaymentUseCase: UpdatePayment,
-  ) {}
+  ) { }
 
   @Mutation(() => PaymentDTO)
   async createPayment(
@@ -98,7 +98,7 @@ export class PaymentResolver {
   @Mutation(() => PaymentDTO, { nullable: true })
   async updatePayment(
     @Args('id') id: number,
-    @Args('updates') updates: Partial<PaymentDTO>,
+    @Args('updates') updates: PaymentDTO,
   ): Promise<PaymentDTO | null> {
     return this.updatePaymentUseCase.execute(id, updates);
   }

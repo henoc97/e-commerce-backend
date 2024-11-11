@@ -1,5 +1,4 @@
-﻿import { Category } from 'src/domain/entities/category.entity';
-import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+﻿import { CategoryDTO } from 'src/presentation/dtos/category.dto';
 import { toProductDTO } from './to.product.dto';
 import { toShopDTO } from './to.shop.dto';
 
@@ -8,7 +7,7 @@ import { toShopDTO } from './to.shop.dto';
  * @param category - The category entity to convert.
  * @returns The corresponding categoryDTO.
  */
-export function toCategoryDTO(category: Category): CategoryDTO {
+export function toCategoryDTO(category: any): CategoryDTO {
   return new CategoryDTO(
     category.name,
     category.id,

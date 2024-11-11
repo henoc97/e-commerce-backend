@@ -1,5 +1,4 @@
-﻿import { Vendor } from 'src/domain/entities/vendor.entity';
-import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
+﻿import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
 import { toShopDTO } from './to.shop.dto';
 import { toUserDTO } from './to.user.dto';
 import { toProductDTO } from './to.product.dto';
@@ -10,7 +9,7 @@ import { toSubscriptionDTO } from './to.subscription.dto';
  * @param vendor - The Vendor entity to convert.
  * @returns The corresponding VendorDTO.
  */
-export function toVendorDTO(vendor: Vendor): VendorDTO {
+export function toVendorDTO(vendor: any): VendorDTO {
   return new VendorDTO(
     vendor.id,
     vendor.userId,

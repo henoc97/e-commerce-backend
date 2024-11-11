@@ -79,7 +79,7 @@ export class UserProfileResolver {
 
   @Query(() => [UserProfileDTO])
   async findMatchingProfiles(
-    @Args('criteria') criteria: Partial<UserProfileDTO>,
+    @Args('criteria') criteria: UserProfileDTO,
   ): Promise<UserProfileDTO[]> {
     return this.findMatchingProfilesUseCase.execute(criteria);
   }
@@ -92,7 +92,7 @@ export class UserProfileResolver {
   @Mutation(() => UserProfileDTO, { nullable: true })
   async updateUserProfile(
     @Args('id') id: number,
-    @Args('profileDTO') profileDTO: Partial<UserProfileDTO>,
+    @Args('profileDTO') profileDTO: UserProfileDTO,
   ): Promise<UserProfileDTO | null> {
     return this.updateUserProfileUseCase.execute(id, profileDTO);
   }

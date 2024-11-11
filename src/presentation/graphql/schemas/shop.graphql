@@ -7,7 +7,7 @@ type Shop {
   """
   Unique identifier for the Shop.
   """
-  id: ID!
+  id: ID
 
   """
   The name of the shop.
@@ -27,27 +27,27 @@ type Shop {
   """
   The vendor associated with the shop.
   """
-  vendor: Vendor!
+  vendor: Vendor
 
   """
   Unique identifier for the vendor associated with the shop.
   """
-  vendorId: ID!
+  vendorId: ID
 
   """
   List of products available in the shop.
   """
-  products: [Product!]!
+  products: [Product]!
 
   """
   List of orders associated with the shop.
   """
-  orders: [Order!]!
+  orders: [Order]!
 
   """
   List of categories associated with the shop.
   """
-  categories: [Category!]!
+  categories: [Category]!
 
   """
   The date and time when the shop was created.

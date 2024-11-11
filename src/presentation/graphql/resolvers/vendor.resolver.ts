@@ -39,7 +39,7 @@ export class VendorResolver {
     private readonly setVendorSubscriptionUseCase: SetVendorSubscription,
     private readonly updateVendorUseCase: UpdateVendor,
     private readonly vendorListUseCase: VendorList,
-  ) {}
+  ) { }
 
   /**
    * Adds a product to a vendor.
@@ -221,7 +221,7 @@ export class VendorResolver {
   @Mutation(() => VendorDTO, { nullable: true })
   async updateVendor(
     @Args('vendorId') vendorId: number,
-    @Args('vendorDTO') vendorDTO: Partial<VendorDTO>,
+    @Args('vendorDTO') vendorDTO: VendorDTO,
   ): Promise<VendorDTO | null> {
     return this.updateVendorUseCase.execute(vendorId, vendorDTO);
   }

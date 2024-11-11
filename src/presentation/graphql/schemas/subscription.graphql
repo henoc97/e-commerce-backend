@@ -7,7 +7,7 @@ type Subscription {
   """
   Unique identifier for the subscription.
   """
-  id: ID!
+  id: ID
 
   """
   Name of the subscription plan (e.g., "Basic Plan", "Premium Plan").
@@ -32,17 +32,17 @@ type Subscription {
   """
   List of vendors associated with this subscription.
   """
-  vendors: [Vendor!]!
+  vendors: [Vendor]!
 
   """
   The date and time when the subscription was created.
   """
-  createdAt: String!
+  createdAt: String
 
   """
   The date and time when the subscription was last updated.
   """
-  updatedAt: String!
+  updatedAt: String
 }
 
 """

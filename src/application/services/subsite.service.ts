@@ -1,5 +1,5 @@
-import { Subsite } from 'src/domain/entities/Subsite.entity';
-import { SubsiteDTO } from 'src/presentation/dtos/Subsite.dto';
+import { Subsite } from 'src/domain/entities/subsite.entity';
+import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
 import { fromSubsiteDTO } from '../helper/to-entity/to.sub-site.entity';
 import { Inject } from '@nestjs/common';
 import { ISubsiteRepository } from 'src/domain/repositories/subsite.repository';

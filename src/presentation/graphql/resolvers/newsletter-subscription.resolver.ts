@@ -9,8 +9,10 @@ import { FetchNewsletterSubscriptionById } from 'src/application/use-cases/newsl
 import { FetchNewsletterSubscriptionsByDateRange } from 'src/application/use-cases/newsletter-subscription.use-cases/fetch-newsletter-subscriptions-by-date-range.use-case';
 import { ListNewsletterSubscriptions } from 'src/application/use-cases/newsletter-subscription.use-cases/list-newsletter-subscriptions.use-case';
 import { UpdateNewsletterSubscription } from 'src/application/use-cases/newsletter-subscription.use-cases/update-newsletter-subscription.use-case';
+import { NewsletterSubscription } from 'src/generated/graphql';
+import { transformNewsletterDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
-@Resolver(() => NewsletterSubscriptionDTO)
+@Resolver(() => 'NewsletterSubscription')
 export class NewsletterSubscriptionResolver {
   constructor(
     private readonly checkEmailSubscribedUseCase: CheckEmailSubscribed,
@@ -22,7 +24,7 @@ export class NewsletterSubscriptionResolver {
     private readonly fetchNewsletterSubscriptionsByDateRangeUseCase: FetchNewsletterSubscriptionsByDateRange,
     private readonly listNewsletterSubscriptionsUseCase: ListNewsletterSubscriptions,
     private readonly updateNewsletterSubscriptionUseCase: UpdateNewsletterSubscription,
-  ) {}
+  ) { }
 
   @Query(() => Boolean)
   async checkEmailSubscribed(
@@ -39,22 +41,24 @@ export class NewsletterSubscriptionResolver {
     return this.countTotalNewsletterSubscriptionsUseCase.execute(shopId);
   }
 
-  @Query(() => NewsletterSubscriptionDTO, { nullable: true })
+  @Query(() => 'NewsletterSubscription', { nullable: true })
   async fetchNewsletterSubscriptionByEmail(
     @Args('email') email: string,
     @Args('shopId') shopId: number,
-  ): Promise<NewsletterSubscriptionDTO | null> {
-    return this.fetchNewsletterSubscriptionByEmailUseCase.execute(
+  ): Promise<NewsletterSubscription | null> {
+    const result = await this.fetchNewsletterSubscriptionByEmailUseCase.execute(
       email,
       shopId,
     );
+    return transformNewsletterDTOToGraphQL(result);
   }
 
-  @Query(() => NewsletterSubscriptionDTO, { nullable: true })
+  @Query(() => 'NewsletterSubscription', { nullable: true })
   async fetchNewsletterSubscriptionById(
     @Args('id') id: number,
-  ): Promise<NewsletterSubscriptionDTO | null> {
-    return this.fetchNewsletterSubscriptionByIdUseCase.execute(id);
+  ): Promise<NewsletterSubscription | null> {
+    const result = await this.fetchNewsletterSubscriptionByIdUseCase.execute(id);
+    return transformNewsletterDTOToGraphQL(result);
   }
 
   @Query(() => [NewsletterSubscriptionDTO])
@@ -62,26 +66,29 @@ export class NewsletterSubscriptionResolver {
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
     @Args('shopId') shopId: number,
-  ): Promise<NewsletterSubscriptionDTO[]> {
-    return this.fetchNewsletterSubscriptionsByDateRangeUseCase.execute(
+  ): Promise<NewsletterSubscription[]> {
+    const result = await this.fetchNewsletterSubscriptionsByDateRangeUseCase.execute(
       startDate,
       endDate,
       shopId,
     );
+    return result.map(transformNewsletterDTOToGraphQL);
   }
 
   @Query(() => [NewsletterSubscriptionDTO])
   async listNewsletterSubscriptions(
     @Args('shopId') shopId: number,
-  ): Promise<NewsletterSubscriptionDTO[]> {
-    return this.listNewsletterSubscriptionsUseCase.execute(shopId);
+  ): Promise<NewsletterSubscription[]> {
+    const result = await this.listNewsletterSubscriptionsUseCase.execute(shopId);
+    return result.map(transformNewsletterDTOToGraphQL);
   }
 
-  @Mutation(() => NewsletterSubscriptionDTO, { nullable: true })
+  @Mutation(() => 'NewsletterSubscription', { nullable: true })
   async createNewsletterSubscription(
     @Args('dto') dto: NewsletterSubscriptionDTO,
-  ): Promise<NewsletterSubscriptionDTO | null> {
-    return this.createNewsletterSubscriptionUseCase.execute(dto);
+  ): Promise<NewsletterSubscription | null> {
+    const result = await this.createNewsletterSubscriptionUseCase.execute(dto);
+    return transformNewsletterDTOToGraphQL(result);
   }
 
   @Mutation(() => Boolean)
@@ -89,11 +96,12 @@ export class NewsletterSubscriptionResolver {
     return this.deleteNewsletterSubscriptionUseCase.execute(id);
   }
 
-  @Mutation(() => NewsletterSubscriptionDTO, { nullable: true })
+  @Mutation(() => 'NewsletterSubscription', { nullable: true })
   async updateNewsletterSubscription(
     @Args('id') id: number,
-    @Args('dto') dto: Partial<NewsletterSubscriptionDTO>,
-  ): Promise<NewsletterSubscriptionDTO | null> {
-    return this.updateNewsletterSubscriptionUseCase.execute(id, dto);
+    @Args('dto') dto: NewsletterSubscriptionDTO,
+  ): Promise<NewsletterSubscription | null> {
+    const result = await this.updateNewsletterSubscriptionUseCase.execute(id, dto);
+    return transformNewsletterDTOToGraphQL(result);
   }
 }

@@ -42,19 +42,41 @@ export class CartDTO {
   items?: CartItemDTO[];
 
   /**
+   * Total price of the Cart.
+   * Calculated by summing the prices of all items in the Cart.
+   */
+  totalPrice: number;
+
+  totalQuantity: number;
+  estimatedShippingCost: number;
+  lastSaved: Date;
+
+  /**
    * Creates a new CartDTO instance.
-   * @param id - Unique identifier for the Cart.
    * @param userId - Unique identifier for the User who owns the Cart.
+   * @param totalPrice
+   * @param totalQuantity
+   * @param estimatedShippingCost
+   * @param lastSaved
+   * @param id - Unique identifier for the Cart (optional).
    * @param items - Items in the Cart (optional).
-   * @param user - The User who owns the Cart.
+   * @param user - The User who owns the Cart (optional).
    */
   constructor(
     userId: number,
+    totalPrice: number,
+    totalQuantity: number,
+    estimatedShippingCost: number,
+    lastSaved: Date,
     id?: number,
     items?: CartItemDTO[],
     user?: UserDTO,
   ) {
     this.id = id;
+    this.totalPrice = totalPrice;
+    this.totalQuantity = totalQuantity;
+    this.estimatedShippingCost = estimatedShippingCost;
+    this.lastSaved = lastSaved;
     this.userId = userId;
     this.user = user;
     this.items = items;

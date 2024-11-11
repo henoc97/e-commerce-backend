@@ -1,5 +1,4 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { AddressDTO } from 'src/presentation/dtos/address.dto';
 import { CreateAddress } from 'src/application/use-cases/address.use-cases/create-address.use-case';
 import { FetchAddressById } from 'src/application/use-cases/address.use-cases/fetch-address-by-id.use-case';
 import { ListAddressesByCity } from 'src/application/use-cases/address.use-cases/list-addresses-by-city.use-case';
@@ -11,8 +10,10 @@ import { ListAddressesByPostalCode } from 'src/application/use-cases/address.use
 import { ListAddressesByUser } from 'src/application/use-cases/address.use-cases/list-addresses-by-user.use-case';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
+import { Address, AddressInput } from 'src/generated/graphql';
+import { transformAddressDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
-@Resolver(() => AddressDTO)
+@Resolver(() => 'Address')
 export class AddressResolver {
   constructor(
     private readonly createAddress: CreateAddress,
@@ -24,35 +25,39 @@ export class AddressResolver {
     private readonly listAddressesByState: ListAddressesByState,
     private readonly listAddressesByPostalCode: ListAddressesByPostalCode,
     private readonly listAddressesByUser: ListAddressesByUser,
-  ) {}
+  ) { }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => AddressDTO, { nullable: true })
-  async address(@Args('id') id: number): Promise<AddressDTO | null> {
-    return this.fetchAddressById.execute(id);
+  @Query(() => 'Address', { nullable: true })
+  async address(@Args('id') id: number): Promise<Address | null> {
+    const result = await this.fetchAddressById.execute(id)
+    return transformAddressDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AddressDTO])
-  async addressesByCity(@Args('city') city: string): Promise<AddressDTO[]> {
-    return this.listAddressesByCity.execute(city);
+  @Query(() => ['Address'])
+  async addressesByCity(@Args('city') city: string): Promise<Address[]> {
+    const result = await this.listAddressesByCity.execute(city)
+    return result.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => AddressDTO)
+  @Mutation(() => 'Address')
   async createNewAddress(
-    @Args('addressInput') addressInput: AddressDTO,
-  ): Promise<AddressDTO> {
-    return this.createAddress.execute(addressInput);
+    @Args('addressInput') addressInput: AddressInput,
+  ): Promise<Address> {
+    const result = await this.createAddress.execute(addressInput);
+    return transformAddressDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => AddressDTO)
+  @Mutation(() => 'Address')
   async updateAddress(
     @Args('id') id: number,
-    @Args('addressInput') addressInput: AddressDTO,
-  ): Promise<AddressDTO> {
-    return this.modifyAddressById.execute(id, addressInput);
+    @Args('addressInput') addressInput: AddressInput,
+  ): Promise<Address> {
+    const result = await this.modifyAddressById.execute(id, addressInput);
+    return transformAddressDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -62,30 +67,34 @@ export class AddressResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AddressDTO])
+  @Query(() => ['Address'])
   async addressesByCountry(
     @Args('country') country: string,
-  ): Promise<AddressDTO[]> {
-    return this.listAddressesByCountry.execute(country);
+  ): Promise<Address[]> {
+    const result = await this.listAddressesByCountry.execute(country);
+    return result.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AddressDTO])
-  async addressesByState(@Args('state') state: string): Promise<AddressDTO[]> {
-    return this.listAddressesByState.execute(state);
+  @Query(() => ['Address'])
+  async addressesByState(@Args('state') state: string): Promise<Address[]> {
+    const result = await this.listAddressesByState.execute(state);
+    return result.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AddressDTO])
+  @Query(() => ['Address'])
   async addressesByPostalCode(
     @Args('postalCode') postalCode: string,
-  ): Promise<AddressDTO[]> {
-    return this.listAddressesByPostalCode.execute(postalCode);
+  ): Promise<Address[]> {
+    const result = await this.listAddressesByPostalCode.execute(postalCode);
+    return result.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => [AddressDTO])
-  async addressesByUser(@Args('userId') userId: number): Promise<AddressDTO[]> {
-    return this.listAddressesByUser.execute(userId);
+  @Query(() => ['Address'])
+  async addressesByUser(@Args('userId') userId: number): Promise<Address[]> {
+    const result = await this.listAddressesByUser.execute(userId);
+    return result.map(transformAddressDTOToGraphQL);
   }
 }

@@ -1,5 +1,4 @@
-﻿import { Order } from 'src/domain/entities/order.entity';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
+﻿import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { toOrderItemDTO } from './to.order-item.dto';
 import { toShopDTO } from './to.shop.dto';
 import { toUserDTO } from './to.user.dto';
@@ -11,7 +10,7 @@ import { toRefundDTO } from './to.refund.dto';
  * @param order - The Order entity to convert.
  * @returns The corresponding OrderDTO.
  */
-export function toOrderDTO(order: Order): OrderDTO {
+export function toOrderDTO(order: any): OrderDTO {
   return new OrderDTO(
     order.userId,
     order.shopId,
