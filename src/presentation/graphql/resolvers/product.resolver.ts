@@ -23,6 +23,9 @@ import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
 import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
 import { ReviewDTO } from 'src/presentation/dtos/review.dto';
 import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
+import { AddCartItemInput, Product, ProductInput } from 'src/generated/graphql';
+import { transformProductDTOToGraphQL } from 'src/application/helper/utils/transformers';
+import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
 
 @Resolver(() => ProductDTO)
 export class ProductResolver {
@@ -50,48 +53,54 @@ export class ProductResolver {
   @Mutation(() => ProductDTO, { nullable: true })
   async addCartItemToProduct(
     @Args('productId') productId: number,
-    @Args('cartItem') cartItemDTO: CartItemDTO,
-  ): Promise<ProductDTO | null> {
-    return this.addCartItemToProductUseCase.execute(productId, cartItemDTO);
+    @Args('cartItem') cartItemDTO: AddCartItemInput,
+  ): Promise<Product | null> {
+    const result = await this.addCartItemToProductUseCase.execute(productId, cartItemDTO);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async addImageToProduct(
     @Args('productId') productId: number,
     @Args('image') imageDTO: ProductImageDTO,
-  ): Promise<ProductDTO | null> {
-    return this.addImageToProductUseCase.execute(productId, imageDTO);
+  ): Promise<Product | null> {
+    const result = await this.addImageToProductUseCase.execute(productId, imageDTO);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async addPromotionToProduct(
     @Args('productId') productId: number,
     @Args('promotion') promotionDTO: PromotionDTO,
-  ): Promise<ProductDTO | null> {
-    return this.addPromotionToProductUseCase.execute(productId, promotionDTO);
+  ): Promise<Product | null> {
+    const result = await this.addPromotionToProductUseCase.execute(productId, promotionDTO);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async addReviewToProduct(
     @Args('productId') productId: number,
     @Args('review') reviewDTO: ReviewDTO,
-  ): Promise<ProductDTO | null> {
-    return this.addReviewToProductUseCase.execute(productId, reviewDTO);
+  ): Promise<Product | null> {
+    const result = await this.addReviewToProductUseCase.execute(productId, reviewDTO);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async addVariantToProduct(
     @Args('productId') productId: number,
     @Args('variant') variantDTO: ProductVariantDTO,
-  ): Promise<ProductDTO | null> {
-    return this.addVariantToProductUseCase.execute(productId, variantDTO);
+  ): Promise<Product | null> {
+    const result = await this.addVariantToProductUseCase.execute(productId, variantDTO);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async createProduct(
     @Args('product') productDTO: ProductDTO,
-  ): Promise<ProductDTO | null> {
-    return this.createProductUseCase.execute(productDTO);
+  ): Promise<Product | null> {
+    const result = await this.createProductUseCase.execute(productDTO);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => Boolean)
@@ -100,15 +109,17 @@ export class ProductResolver {
   }
 
   @Query(() => [ProductDTO])
-  async fetchFeaturedProducts(): Promise<ProductDTO[]> {
-    return this.fetchFeaturedProductsUseCase.execute();
+  async fetchFeaturedProducts(): Promise<Product[]> {
+    const result = await this.fetchFeaturedProductsUseCase.execute();
+    return result.map(transformProductDTOToGraphQL)
   }
 
   @Query(() => ProductDTO, { nullable: true })
   async fetchProductById(
     @Args('productId') productId: number,
-  ): Promise<ProductDTO | null> {
-    return this.fetchProductByIdUseCase.execute(productId);
+  ): Promise<Product | null> {
+    const result = await this.fetchProductByIdUseCase.execute(productId);
+    return transformProductDTOToGraphQL(result)
   }
 
   // @Query(() => [ReviewDTO])
@@ -119,70 +130,80 @@ export class ProductResolver {
   // }
 
   // @Query(() => [ProductDTO])
-  // async fetchProducts(): Promise<ProductDTO[]> {
-  //   return this.fetchProductsUseCase.execute();
+  // async fetchProducts(): Promise<Product[]> {
+  //   const result = awaiteturn this.fetchProductsUseCase.execute();
+  // return result.map(transformProductDTOToGraphQL)
   // }
 
   @Query(() => [ProductDTO])
   async findProductsByCategory(
     @Args('categoryId') categoryId: number,
-  ): Promise<ProductDTO[]> {
-    return this.findProductsByCategoryUseCase.execute(categoryId);
+  ): Promise<Product[]> {
+    const result = await this.findProductsByCategoryUseCase.execute(categoryId);
+    return result.map(transformProductDTOToGraphQL)
   }
 
   @Query(() => [ProductDTO])
-  async findProductsByName(@Args('name') name: string): Promise<ProductDTO[]> {
-    return this.findProductsByNameUseCase.execute(name);
+  async findProductsByName(@Args('name') name: string): Promise<Product[]> {
+    const result = await this.findProductsByNameUseCase.execute(name);
+    return result.map(transformProductDTOToGraphQL)
   }
 
   @Query(() => [ProductDTO])
   async findProductsByPriceRange(
     @Args('minPrice') minPrice: number,
     @Args('maxPrice') maxPrice: number,
-  ): Promise<ProductDTO[]> {
-    return this.findProductsByPriceRangeUseCase.execute(minPrice, maxPrice);
+  ): Promise<Product[]> {
+    const result = await this.findProductsByPriceRangeUseCase.execute(minPrice, maxPrice);
+    return result.map(transformProductDTOToGraphQL)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async removeImageFromProduct(
     @Args('productId') productId: number,
     @Args('imageId') imageId: number,
-  ): Promise<ProductDTO | null> {
-    return this.removeImageFromProductUseCase.execute(productId, imageId);
+  ): Promise<Product | null> {
+    const result = await this.removeImageFromProductUseCase.execute(productId, imageId);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async removePromotionFromProduct(
     @Args('productId') productId: number,
     @Args('promotionId') promotionId: number,
-  ): Promise<ProductDTO | null> {
-    return this.removePromotionFromProductUseCase.execute(
+  ): Promise<Product | null> {
+    const result = await this.removePromotionFromProductUseCase.execute(
       productId,
       promotionId,
     );
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async removeVariantFromProduct(
     @Args('productId') productId: number,
     @Args('variantId') variantId: number,
-  ): Promise<ProductDTO | null> {
-    return this.removeVariantFromProductUseCase.execute(productId, variantId);
+  ): Promise<Product | null> {
+    const result = await this.removeVariantFromProductUseCase.execute(productId, variantId);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async updateProductStock(
     @Args('productId') productId: number,
     @Args('quantity') quantity: number,
-  ): Promise<ProductDTO | null> {
-    return this.updateProductStockUseCase.execute(productId, quantity);
+  ): Promise<Product | null> {
+    const result = await this.updateProductStockUseCase.execute(productId, quantity);
+    return transformProductDTOToGraphQL(result)
   }
 
   @Mutation(() => ProductDTO, { nullable: true })
   async updateProduct(
     @Args('productId') productId: number,
-    @Args('product') productDTO: ProductDTO,
-  ): Promise<ProductDTO | null> {
-    return this.updateProductUseCase.execute(productId, productDTO);
+    @Args('product') product: ProductInput,
+  ): Promise<Product | null> {
+    const dto = toProductDTO(product)
+    const result = await this.updateProductUseCase.execute(productId, dto);
+    return transformProductDTOToGraphQL(result)
   }
 }

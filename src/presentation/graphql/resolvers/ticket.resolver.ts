@@ -12,6 +12,8 @@ import { UpdateTicket } from 'src/application/use-cases/ticket.use-cases/update-
 import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
 import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
 import { CountOpenTicketsByUser } from 'src/application/use-cases/ticket.use-cases/count-open-tickets-by-user.use-case';
+import { Ticket } from 'src/generated/graphql';
+import { transformTicketDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
 @Resolver(() => TicketDTO)
 export class TicketResolver {
@@ -32,25 +34,29 @@ export class TicketResolver {
   @Mutation(() => TicketDTO, { nullable: true })
   async createTicket(
     @Args('ticketDTO') ticketDTO: TicketDTO,
-  ): Promise<TicketDTO | null> {
-    return this.createTicketUseCase.execute(ticketDTO);
+  ): Promise<Ticket | null> {
+    const result = await this.createTicketUseCase.execute(ticketDTO);
+    return transformTicketDTOToGraphQL(result);
   }
 
   @Mutation(() => TicketDTO, { nullable: true })
-  async closeTicket(@Args('id') id: number): Promise<TicketDTO | null> {
-    return this.closeTicketUseCase.execute(id);
+  async closeTicket(@Args('id') id: number): Promise<Ticket | null> {
+    const result = await this.closeTicketUseCase.execute(id);
+    return transformTicketDTOToGraphQL(result);
   }
 
   @Query(() => TicketDTO, { nullable: true })
-  async fetchTicketById(@Args('id') id: number): Promise<TicketDTO | null> {
-    return this.fetchTicketByIdUseCase.execute(id);
+  async fetchTicketById(@Args('id') id: number): Promise<Ticket | null> {
+    const result = await this.fetchTicketByIdUseCase.execute(id);
+    return transformTicketDTOToGraphQL(result);
   }
 
   @Query(() => [TicketDTO])
   async listTicketsByUser(
     @Args('userId') userId: number,
-  ): Promise<TicketDTO[]> {
-    return this.listTicketsByUserUseCase.execute(userId);
+  ): Promise<Ticket[]> {
+    const result = await this.listTicketsByUserUseCase.execute(userId);
+    return result.map(transformTicketDTOToGraphQL)
   }
 
   @Mutation(() => Boolean)
@@ -59,36 +65,41 @@ export class TicketResolver {
   }
 
   @Query(() => TicketDTO, { nullable: true })
-  async fetchLatestTicket(): Promise<TicketDTO | null> {
-    return this.fetchLatestTicketUseCase.execute();
+  async fetchLatestTicket(): Promise<Ticket | null> {
+    const result = await this.fetchLatestTicketUseCase.execute();
+    return transformTicketDTOToGraphQL(result);
   }
 
   @Query(() => [TicketDTO])
-  async listHighPriorityTickets(): Promise<TicketDTO[]> {
-    return this.listHighPriorityTicketsUseCase.execute();
+  async listHighPriorityTickets(): Promise<Ticket[]> {
+    const result = await this.listHighPriorityTicketsUseCase.execute();
+    return result.map(transformTicketDTOToGraphQL)
   }
 
   @Query(() => [TicketDTO])
   async listTicketsByDateRange(
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
-  ): Promise<TicketDTO[]> {
-    return this.listTicketsByDateRangeUseCase.execute(startDate, endDate);
+  ): Promise<Ticket[]> {
+    const result = await this.listTicketsByDateRangeUseCase.execute(startDate, endDate);
+    return result.map(transformTicketDTOToGraphQL)
   }
 
   @Query(() => [TicketDTO])
   async listTicketsByStatus(
     @Args('status') status: TicketStatus,
-  ): Promise<TicketDTO[]> {
-    return this.listTicketsByStatusUseCase.execute(status);
+  ): Promise<Ticket[]> {
+    const result = await this.listTicketsByStatusUseCase.execute(status);
+    return result.map(transformTicketDTOToGraphQL)
   }
 
   @Mutation(() => TicketDTO, { nullable: true })
   async updateTicket(
     @Args('id') id: number,
     @Args('updates') updates: TicketDTO,
-  ): Promise<TicketDTO | null> {
-    return this.updateTicketUseCase.execute(id, updates);
+  ): Promise<Ticket | null> {
+    const result = await this.updateTicketUseCase.execute(id, updates);
+    return transformTicketDTOToGraphQL(result);
   }
 
   @Query(() => Number)

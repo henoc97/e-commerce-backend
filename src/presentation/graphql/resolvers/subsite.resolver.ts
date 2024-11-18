@@ -11,6 +11,8 @@ import { ValidateSubsite } from 'src/application/use-cases/subsite.use-cases/val
 import { FetchSubsiteConfig } from 'src/application/use-cases/subsite.use-cases/fetch-subsite-config.use-case';
 import { ListSubsitesByUser } from 'src/application/use-cases/subsite.use-cases/list-subsites-by-user.use-case';
 import { UpdateSubsiteConfig } from 'src/application/use-cases/subsite.use-cases/update-subsite-config.use-case';
+import { Subsite } from 'src/generated/graphql';
+import { transformSubsiteDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
 @Resolver('Subsite')
 export class SubsiteResolver {
@@ -36,23 +38,27 @@ export class SubsiteResolver {
   @Mutation(() => SubsiteDTO)
   async createSubsite(
     @Args('subsiteDTO') subsiteDTO: SubsiteDTO,
-  ): Promise<SubsiteDTO | null> {
-    return this.createSubsiteUseCase.execute(subsiteDTO);
+  ): Promise<Subsite | null> {
+    const result = await this.createSubsiteUseCase.execute(subsiteDTO);
+    return transformSubsiteDTOToGraphQL(result)
   }
 
   @Query(() => SubsiteDTO)
-  async fetchLatestSubsite(): Promise<SubsiteDTO | null> {
-    return this.fetchLatestSubsiteUseCase.execute();
+  async fetchLatestSubsite(): Promise<Subsite | null> {
+    const result = await this.fetchLatestSubsiteUseCase.execute();
+    return transformSubsiteDTOToGraphQL(result)
   }
 
   @Query(() => SubsiteDTO)
-  async fetchSubsiteById(@Args('id') id: number): Promise<SubsiteDTO | null> {
-    return this.fetchSubsiteByIdUseCase.execute(id);
+  async fetchSubsiteById(@Args('id') id: number): Promise<Subsite | null> {
+    const result = await this.fetchSubsiteByIdUseCase.execute(id);
+    return transformSubsiteDTOToGraphQL(result)
   }
 
   @Query(() => [SubsiteDTO])
-  async listActiveSubsites(): Promise<SubsiteDTO[]> {
-    return this.listActiveSubsitesUseCase.execute();
+  async listActiveSubsites(): Promise<Subsite[]> {
+    const result = await this.listActiveSubsitesUseCase.execute();
+    return result.map(transformSubsiteDTOToGraphQL)
   }
 
   @Mutation(() => Boolean)
@@ -64,8 +70,9 @@ export class SubsiteResolver {
   async updateSubsite(
     @Args('id') id: number,
     @Args('updates') updates: SubsiteDTO,
-  ): Promise<SubsiteDTO> {
-    return this.updateSubsiteUseCase.execute(id, updates);
+  ): Promise<Subsite> {
+    const result = await this.updateSubsiteUseCase.execute(id, updates);
+    return transformSubsiteDTOToGraphQL(result)
   }
 
   @Mutation(() => Boolean)
@@ -83,8 +90,9 @@ export class SubsiteResolver {
   @Query(() => [SubsiteDTO])
   async listSubsitesByUser(
     @Args('userId') userId: number,
-  ): Promise<SubsiteDTO[]> {
-    return this.listSubsitesByUserUseCase.execute(userId);
+  ): Promise<Subsite[]> {
+    const result = await this.listSubsitesByUserUseCase.execute(userId);
+    return result.map(transformSubsiteDTOToGraphQL)
   }
 
   @Mutation(() => JSON)

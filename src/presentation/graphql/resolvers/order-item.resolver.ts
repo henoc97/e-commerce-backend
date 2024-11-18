@@ -9,7 +9,9 @@ import { FetchRecentOrderItems } from 'src/application/use-cases/order-item.use-
 import { UpdateOrderItem } from 'src/application/use-cases/order-item.use-case/update-order-item.use-case';
 import { CalculateTotalPriceForOrder } from 'src/application/use-cases/order-item.use-case/calculate-total-price-for-order.use-case';
 import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
-import { OrderItemInput } from 'src/generated/graphql';
+import { OrderItem, OrderItemInput } from 'src/generated/graphql';
+import { toOrderItemDTO } from 'src/application/helper/to-dto/to.order-item.dto';
+import { transformOrderItemDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
 @Resolver(() => 'OrderItem')
 export class OrderItemResolver {
@@ -27,14 +29,17 @@ export class OrderItemResolver {
 
   @Mutation(() => 'OrderItem', { nullable: true })
   async createOrderItem(
-    @Args('orderItem') orderItemDTO: OrderItemInput,
-  ): Promise<OrderItemDTO | null> {
-    return await this.createOrderItemUseCase.execute(orderItemDTO);
+    @Args('orderItem') orderItem: OrderItemInput,
+  ): Promise<OrderItem | null> {
+    const dto = toOrderItemDTO(orderItem);
+    const result = await this.createOrderItemUseCase.execute(dto);
+    return transformOrderItemDTOToGraphQL(result);
   }
 
   @Query(() => 'OrderItem', { nullable: true })
-  async orderItemById(@Args('id') id: number): Promise<OrderItemDTO | null> {
-    return await this.fetchOrderItemById.execute(id);
+  async orderItemById(@Args('id') id: number): Promise<OrderItem | null> {
+    const result = await this.fetchOrderItemById.execute(id);
+    return transformOrderItemDTOToGraphQL(result);
   }
 
   @Mutation(() => Boolean)
@@ -45,37 +50,42 @@ export class OrderItemResolver {
   @Query(() => ['OrderItem'])
   async lowStockItems(
     @Args('threshold') threshold: number,
-  ): Promise<OrderItemDTO[]> {
-    return await this.fetchLowStockItems.execute(threshold);
+  ): Promise<OrderItem[]> {
+    const result = await this.fetchLowStockItems.execute(threshold);
+    return result.map(transformOrderItemDTOToGraphQL);
   }
 
   @Query(() => ['OrderItem'])
   async orderItemsByOrderId(
     @Args('orderId') orderId: number,
-  ): Promise<OrderItemDTO[]> {
-    return await this.fetchOrderItemsByOrderId.execute(orderId);
+  ): Promise<OrderItem[]> {
+    const result = await this.fetchOrderItemsByOrderId.execute(orderId);
+    return result.map(transformOrderItemDTOToGraphQL);
   }
 
   @Query(() => ['OrderItem'])
   async orderItemsByProductId(
     @Args('productId') productId: number,
-  ): Promise<OrderItemDTO[]> {
-    return await this.fetchOrderItemsByProductId.execute(productId);
+  ): Promise<OrderItem[]> {
+    const result = await this.fetchOrderItemsByProductId.execute(productId);
+    return result.map(transformOrderItemDTOToGraphQL);
   }
 
   @Query(() => ['OrderItem'])
   async recentOrderItems(
     @Args('orderId') orderId: number,
-  ): Promise<OrderItemDTO[]> {
-    return await this.fetchRecentOrderItems.execute(orderId);
+  ): Promise<OrderItem[]> {
+    const result = await this.fetchRecentOrderItems.execute(orderId);
+    return result.map(transformOrderItemDTOToGraphQL);
   }
 
   @Mutation(() => 'OrderItem', { nullable: true })
   async updateOrderItem(
     @Args('id') id: number,
     @Args('updates') updates: OrderItemDTO,
-  ): Promise<OrderItemDTO | null> {
-    return await this.updateOrderItemUseCase.execute(id, updates);
+  ): Promise<OrderItem | null> {
+    const result = await this.updateOrderItemUseCase.execute(id, updates);
+    return transformOrderItemDTOToGraphQL(result);
   }
 
   @Query(() => Number)

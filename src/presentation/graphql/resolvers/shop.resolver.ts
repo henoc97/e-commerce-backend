@@ -22,6 +22,8 @@ import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 import { CategoryDTO } from 'src/presentation/dtos/category.dto';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
+import { transformShopDTOToGraphQL } from 'src/application/helper/utils/transformers';
+import { Shop } from 'src/generated/graphql';
 
 @Resolver(() => ShopDTO)
 export class ShopResolver {
@@ -48,43 +50,48 @@ export class ShopResolver {
   ) { }
 
   @Mutation(() => ShopDTO, { nullable: true })
-  async createShop(@Args('shop') shop: ShopDTO): Promise<ShopDTO | null> {
-    return this.createShopUseCase.execute(shop);
+  async createShop(@Args('shop') shop: ShopDTO): Promise<Shop | null> {
+    const result = await this.createShopUseCase.execute(shop);
+    return transformShopDTOToGraphQL(result)
   }
 
   @Mutation(() => ShopDTO, { nullable: true })
   async addCategoryToShop(
     @Args('shopId') shopId: number,
     @Args('category') category: CategoryDTO,
-  ): Promise<ShopDTO | null> {
-    return this.addCategoryToShopUseCase.execute(shopId, category);
+  ): Promise<Shop | null> {
+    const result = await this.addCategoryToShopUseCase.execute(shopId, category);
+    return transformShopDTOToGraphQL(result)
   }
 
   @Mutation(() => ShopDTO, { nullable: true })
   async addOrderToShop(
     @Args('shopId') shopId: number,
     @Args('order') order: OrderDTO,
-  ): Promise<ShopDTO | null> {
-    return this.addOrderToShopUseCase.execute(shopId, order);
+  ): Promise<Shop | null> {
+    const result = await this.addOrderToShopUseCase.execute(shopId, order);
+    return transformShopDTOToGraphQL(result)
   }
 
   @Mutation(() => ShopDTO, { nullable: true })
   async addProductToShop(
     @Args('shopId') shopId: number,
     @Args('product') product: ProductDTO,
-  ): Promise<ShopDTO | null> {
-    return this.addProductToShopUseCase.execute(shopId, product);
+  ): Promise<Shop | null> {
+    const result = await this.addProductToShopUseCase.execute(shopId, product);
+    return transformShopDTOToGraphQL(result)
   }
 
   @Mutation(() => ShopDTO, { nullable: true })
   async associateMarketplaceWithShop(
     @Args('shopId') shopId: number,
     @Args('marketplaceId') marketplaceId: number,
-  ): Promise<ShopDTO | null> {
-    return this.associateMarketplaceWithShopUseCase.execute(
+  ): Promise<Shop | null> {
+    const result = await this.associateMarketplaceWithShopUseCase.execute(
       shopId,
       marketplaceId,
     );
+    return transformShopDTOToGraphQL(result)
   }
 
   @Mutation(() => Boolean)
@@ -93,38 +100,44 @@ export class ShopResolver {
   }
 
   @Query(() => ShopDTO, { nullable: true })
-  async fetchMostRecentShop(): Promise<ShopDTO | null> {
-    return this.fetchMostRecentShopUseCase.execute();
+  async fetchMostRecentShop(): Promise<Shop | null> {
+    const result = await this.fetchMostRecentShopUseCase.execute();
+    return transformShopDTOToGraphQL(result)
   }
 
   @Query(() => ShopDTO, { nullable: true })
-  async fetchShopById(@Args('id') id: number): Promise<ShopDTO | null> {
-    return this.fetchShopByIdUseCase.execute(id);
+  async fetchShopById(@Args('id') id: number): Promise<Shop | null> {
+    const result = await this.fetchShopByIdUseCase.execute(id);
+    return transformShopDTOToGraphQL(result)
   }
 
   // @Query(() => [ShopDTO])
-  // async fetchShopList(): Promise<ShopDTO[]> {
-  //   return this.fetchShopListUseCase.execute();
+  // async fetchShopList(): Promise<Shop[]> {
+  //   const result = awaiteturn this.fetchShopListUseCase.execute();
+  // return transformShopDTOToGraphQL(result)
   // }
 
   @Query(() => [ShopDTO])
   async listShopsByVendor(
     @Args('vendorId') vendorId: number,
-  ): Promise<ShopDTO[]> {
-    return this.listShopsByVendorUseCase.execute(vendorId);
+  ): Promise<Shop[]> {
+    const result = await this.listShopsByVendorUseCase.execute(vendorId);
+    return result.map(transformShopDTOToGraphQL)
   }
 
   @Query(() => [ShopDTO])
-  async searchShopsByName(@Args('name') name: string): Promise<ShopDTO[]> {
-    return this.searchShopsByNameUseCase.execute(name);
+  async searchShopsByName(@Args('name') name: string): Promise<Shop[]> {
+    const result = await this.searchShopsByNameUseCase.execute(name);
+    return result.map(transformShopDTOToGraphQL)
   }
 
   @Mutation(() => ShopDTO)
   async updateShop(
     @Args('shopId') shopId: number,
     @Args('updates') updates: ShopDTO,
-  ): Promise<ShopDTO> {
-    return this.updateShopUseCase.execute(shopId, updates);
+  ): Promise<Shop> {
+    const result = await this.updateShopUseCase.execute(shopId, updates);
+    return transformShopDTOToGraphQL(result)
   }
 
   @Query(() => [OrderDTO])

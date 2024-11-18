@@ -19,8 +19,10 @@ import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
+import { transformVendorDTOToGraphQL } from 'src/application/helper/utils/transformers';
+import { Vendor } from 'src/generated/graphql';
 
-@Resolver(() => VendorDTO)
+@Resolver(() => 'Vendor')
 export class VendorResolver {
   constructor(
     private readonly addProductToVendorUseCase: AddProductToVendor,
@@ -47,12 +49,13 @@ export class VendorResolver {
    * @param productDTO - The product data transfer object.
    * @returns The updated vendor data transfer object or null.
    */
-  @Mutation(() => VendorDTO, { nullable: true })
+  @Mutation(() => 'Vendor', { nullable: true })
   async addProductToVendor(
     @Args('vendorId') vendorId: number,
     @Args('productDTO') productDTO: ProductDTO,
-  ): Promise<VendorDTO | null> {
-    return this.addProductToVendorUseCase.execute(vendorId, productDTO);
+  ): Promise<Vendor | null> {
+    const result = await this.addProductToVendorUseCase.execute(vendorId, productDTO);
+    return transformVendorDTOToGraphQL(result)
   }
 
   /**
@@ -60,11 +63,12 @@ export class VendorResolver {
    * @param vendorDTO - The vendor data transfer object.
    * @returns The created vendor data transfer object or null.
    */
-  @Mutation(() => VendorDTO, { nullable: true })
+  @Mutation(() => 'Vendor', { nullable: true })
   async createVendor(
     @Args('vendorDTO') vendorDTO: VendorDTO,
-  ): Promise<VendorDTO | null> {
-    return this.createVendorUseCase.execute(vendorDTO);
+  ): Promise<Vendor | null> {
+    const result = await this.createVendorUseCase.execute(vendorDTO);
+    return transformVendorDTOToGraphQL(result)
   }
 
   /**
@@ -82,11 +86,12 @@ export class VendorResolver {
    * @param vendorId - The ID of the vendor.
    * @returns The vendor data transfer object or null.
    */
-  @Query(() => VendorDTO, { nullable: true })
+  @Query(() => 'Vendor', { nullable: true })
   async findVendorById(
     @Args('vendorId') vendorId: number,
-  ): Promise<VendorDTO | null> {
-    return this.findVendorByIdUseCase.execute(vendorId);
+  ): Promise<Vendor | null> {
+    const result = await this.findVendorByIdUseCase.execute(vendorId);
+    return transformVendorDTOToGraphQL(result)
   }
 
   /**
@@ -97,8 +102,9 @@ export class VendorResolver {
   @Query(() => [VendorDTO])
   async findVendorsByStoreName(
     @Args('storeName') storeName: string,
-  ): Promise<VendorDTO[]> {
-    return this.findVendorsByStoreNameUseCase.execute(storeName);
+  ): Promise<Vendor[]> {
+    const result = await this.findVendorsByStoreNameUseCase.execute(storeName);
+    return result.map(transformVendorDTOToGraphQL)
   }
 
   /**
@@ -109,8 +115,9 @@ export class VendorResolver {
   @Query(() => [VendorDTO])
   async findVendorsBySubscription(
     @Args('subscriptionId') subscriptionId: number,
-  ): Promise<VendorDTO[]> {
-    return this.findVendorsBySubscriptionUseCase.execute(subscriptionId);
+  ): Promise<Vendor[]> {
+    const result = await this.findVendorsBySubscriptionUseCase.execute(subscriptionId);
+    return result.map(transformVendorDTOToGraphQL)
   }
 
   /**
@@ -121,17 +128,19 @@ export class VendorResolver {
   @Query(() => [VendorDTO])
   async findVendorsByUser(
     @Args('userId') userId: number,
-  ): Promise<VendorDTO[]> {
-    return this.findVendorsByUserUseCase.execute(userId);
+  ): Promise<Vendor[]> {
+    const result = await this.findVendorsByUserUseCase.execute(userId);
+    return result.map(transformVendorDTOToGraphQL)
   }
 
   // /**
   //  * Gets the latest vendor.
   //  * @returns The latest vendor data transfer object or null.
   //  */
-  // @Query(() => VendorDTO, { nullable: true })
-  // async getLatestVendor(): Promise<VendorDTO | null> {
-  //   return this.getLatestVendorUseCase.execute();
+  // @Query(() => 'Vendor', { nullable: true })
+  // async getLatestVendor(): Promise<Vendor | null> {
+  // const result = await   return this.getLatestVendorUseCase.execute();
+  // return transformVendorDTOToGraphQL(result)
   // }
 
   // /**
@@ -176,12 +185,13 @@ export class VendorResolver {
    * @param productId - The ID of the product.
    * @returns The updated vendor data transfer object or null.
    */
-  @Mutation(() => VendorDTO, { nullable: true })
+  @Mutation(() => 'Vendor', { nullable: true })
   async removeProductFromVendor(
     @Args('vendorId') vendorId: number,
     @Args('productId') productId: number,
-  ): Promise<VendorDTO | null> {
-    return this.removeProductFromVendorUseCase.execute(vendorId, productId);
+  ): Promise<Vendor | null> {
+    const result = await this.removeProductFromVendorUseCase.execute(vendorId, productId);
+    return transformVendorDTOToGraphQL(result)
   }
 
   /**
@@ -190,12 +200,13 @@ export class VendorResolver {
    * @param shopDTO - The shop data transfer object.
    * @returns The updated vendor data transfer object or null.
    */
-  @Mutation(() => VendorDTO, { nullable: true })
+  @Mutation(() => 'Vendor', { nullable: true })
   async setVendorShop(
     @Args('vendorId') vendorId: number,
     @Args('shopDTO') shopDTO: ShopDTO,
-  ): Promise<VendorDTO | null> {
-    return this.setVendorShopUseCase.execute(vendorId, shopDTO);
+  ): Promise<Vendor | null> {
+    const result = await this.setVendorShopUseCase.execute(vendorId, shopDTO);
+    return transformVendorDTOToGraphQL(result)
   }
 
   /**
@@ -204,12 +215,13 @@ export class VendorResolver {
    * @param subscriptionDTO - The subscription data transfer object.
    * @returns The updated vendor data transfer object or null.
    */
-  @Mutation(() => VendorDTO, { nullable: true })
+  @Mutation(() => 'Vendor', { nullable: true })
   async setVendorSubscription(
     @Args('vendorId') vendorId: number,
     @Args('subscriptionDTO') subscriptionDTO: SubscriptionDTO,
-  ): Promise<VendorDTO | null> {
-    return this.setVendorSubscriptionUseCase.execute(vendorId, subscriptionDTO);
+  ): Promise<Vendor | null> {
+    const result = await this.setVendorSubscriptionUseCase.execute(vendorId, subscriptionDTO);
+    return transformVendorDTOToGraphQL(result)
   }
 
   /**
@@ -218,12 +230,13 @@ export class VendorResolver {
    * @param vendorDTO - The partial vendor data transfer object.
    * @returns The updated vendor data transfer object or null.
    */
-  @Mutation(() => VendorDTO, { nullable: true })
+  @Mutation(() => 'Vendor', { nullable: true })
   async updateVendor(
     @Args('vendorId') vendorId: number,
     @Args('vendorDTO') vendorDTO: VendorDTO,
-  ): Promise<VendorDTO | null> {
-    return this.updateVendorUseCase.execute(vendorId, vendorDTO);
+  ): Promise<Vendor | null> {
+    const result = await this.updateVendorUseCase.execute(vendorId, vendorDTO);
+    return transformVendorDTOToGraphQL(result)
   }
 
   /**
@@ -231,7 +244,8 @@ export class VendorResolver {
    * @returns A list of vendor data transfer objects.
    */
   @Query(() => [VendorDTO])
-  async vendorList(): Promise<VendorDTO[]> {
-    return this.vendorListUseCase.execute();
+  async vendorList(): Promise<Vendor[]> {
+    const result = await this.vendorListUseCase.execute();
+    return result.map(transformVendorDTOToGraphQL)
   }
 }

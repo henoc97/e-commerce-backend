@@ -10,6 +10,8 @@ import { FetchBestPromotionForProduct } from 'src/application/use-cases/promotio
 import { FetchPromotionById } from 'src/application/use-cases/promotion.use-cases/fetch-promotion-by-id.use-case';
 import { FetchPromotionsByProduct } from 'src/application/use-cases/promotion.use-cases/fetch-promotions-by-product.use-case';
 import { UpdatePromotion } from 'src/application/use-cases/promotion.use-cases/update-promotion.use-case';
+import { Promotion } from 'src/generated/graphql';
+import { transformPromotionDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
 @Resolver(() => PromotionDTO)
 export class PromotionResolver {
@@ -24,7 +26,7 @@ export class PromotionResolver {
     private readonly fetchPromotionByIdUseCase: FetchPromotionById,
     private readonly fetchPromotionsByProductUseCase: FetchPromotionsByProduct,
     private readonly updatePromotionUseCase: UpdatePromotion,
-  ) {}
+  ) { }
 
   // @Mutation(() => PromotionDTO)
   // async applyPromotionToProduct(
@@ -38,15 +40,17 @@ export class PromotionResolver {
   async combinePromotions(
     @Args({ name: 'promotions', type: () => [PromotionDTO] })
     promotions: PromotionDTO[],
-  ): Promise<PromotionDTO | null> {
-    return this.combinePromotionsUseCase.execute(promotions);
+  ): Promise<Promotion | null> {
+    const result = await this.combinePromotionsUseCase.execute(promotions);
+    return transformPromotionDTOToGraphQL(result)
   }
 
   @Mutation(() => PromotionDTO, { nullable: true })
   async createPromotion(
     @Args('promotionDTO') promotionDTO: PromotionDTO,
-  ): Promise<PromotionDTO | null> {
-    return this.createPromotionUseCase.execute(promotionDTO);
+  ): Promise<Promotion | null> {
+    const result = await this.createPromotionUseCase.execute(promotionDTO);
+    return transformPromotionDTOToGraphQL(result)
   }
 
   @Mutation(() => Boolean)
@@ -60,41 +64,47 @@ export class PromotionResolver {
   async fetchActivePromotionsBetween(
     @Args('start') start: Date,
     @Args('end') end: Date,
-  ): Promise<PromotionDTO[]> {
-    return this.fetchActivePromotionsBetweenUseCase.execute(start, end);
+  ): Promise<Promotion[]> {
+    const result = await this.fetchActivePromotionsBetweenUseCase.execute(start, end);
+    return result.map(transformPromotionDTOToGraphQL)
   }
 
   @Query(() => [PromotionDTO])
-  async fetchActivePromotions(): Promise<PromotionDTO[]> {
-    return this.fetchActivePromotionsUseCase.execute();
+  async fetchActivePromotions(): Promise<Promotion[]> {
+    const result = await this.fetchActivePromotionsUseCase.execute();
+    return result.map(transformPromotionDTOToGraphQL)
   }
 
   @Query(() => PromotionDTO, { nullable: true })
   async fetchBestPromotionForProduct(
     @Args('productId') productId: number,
-  ): Promise<PromotionDTO | null> {
-    return this.fetchBestPromotionForProductUseCase.execute(productId);
+  ): Promise<Promotion | null> {
+    const result = await this.fetchBestPromotionForProductUseCase.execute(productId);
+    return transformPromotionDTOToGraphQL(result)
   }
 
   @Query(() => PromotionDTO, { nullable: true })
   async fetchPromotionById(
     @Args('id') id: number,
-  ): Promise<PromotionDTO | null> {
-    return this.fetchPromotionByIdUseCase.execute(id);
+  ): Promise<Promotion | null> {
+    const result = await this.fetchPromotionByIdUseCase.execute(id);
+    return transformPromotionDTOToGraphQL(result)
   }
 
   @Query(() => [PromotionDTO])
   async fetchPromotionsByProduct(
     @Args('productId') productId: number,
-  ): Promise<PromotionDTO[]> {
-    return this.fetchPromotionsByProductUseCase.execute(productId);
+  ): Promise<Promotion[]> {
+    const result = await this.fetchPromotionsByProductUseCase.execute(productId);
+    return result.map(transformPromotionDTOToGraphQL)
   }
 
   @Mutation(() => PromotionDTO, { nullable: true })
   async updatePromotion(
     @Args('promotionId') promotionId: number,
     @Args('promotionDTO') promotionDTO: PromotionDTO,
-  ): Promise<PromotionDTO | null> {
-    return this.updatePromotionUseCase.execute(promotionId, promotionDTO);
+  ): Promise<Promotion | null> {
+    const result = await this.updatePromotionUseCase.execute(promotionId, promotionDTO);
+    return transformPromotionDTOToGraphQL(result)
   }
 }

@@ -10,6 +10,8 @@ import { FetchUserProfilesByGender } from 'src/application/use-cases/user-profil
 import { FindMatchingProfiles } from 'src/application/use-cases/user-profile.use-cases/find-matching-profiles.use-case';
 import { IsPhoneInUse } from 'src/application/use-cases/user-profile.use-cases/is-phone-in-use.use-case';
 import { UpdateUserProfile } from 'src/application/use-cases/user-profile.use-cases/update-user-profile.use-case';
+import { UserProfile } from 'src/generated/graphql';
+import { transformUserProfileDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
 @Resolver(() => UserProfileDTO)
 export class UserProfileResolver {
@@ -28,9 +30,10 @@ export class UserProfileResolver {
 
   @Mutation(() => UserProfileDTO, { nullable: true })
   async createUserProfile(
-    @Args('profileDTO') profileDTO: UserProfileDTO,
-  ): Promise<UserProfileDTO | null> {
-    return this.createUserProfileUseCase.execute(profileDTO);
+    @Args('profile') profileDTO: UserProfileDTO,
+  ): Promise<UserProfile | null> {
+    const result = await this.createUserProfileUseCase.execute(profileDTO);
+    return transformUserProfileDTOToGraphQL(result)
   }
 
   @Mutation(() => Boolean)
@@ -41,47 +44,53 @@ export class UserProfileResolver {
   // @Query(() => [UserProfileDTO])
   // async fetchRecentlyUpdatedProfiles(
   //   @Args('limit') limit: number,
-  // ): Promise<UserProfileDTO[]> {
-  //   return this.fetchRecentlyUpdatedProfilesUseCase.execute(limit);
+  // ): Promise<UserProfile[]> {
+  //   const result = awaiteturn this.fetchRecentlyUpdatedProfilesUseCase.execute(limit);
+  // return result.map(transformUserProfileDTOToGraphQL)
   // }
 
   @Query(() => UserProfileDTO, { nullable: true })
   async fetchUserProfileById(
     @Args('id') id: number,
-  ): Promise<UserProfileDTO | null> {
-    return this.fetchUserProfileByIdUseCase.execute(id);
+  ): Promise<UserProfile | null> {
+    const result = await this.fetchUserProfileByIdUseCase.execute(id);
+    return transformUserProfileDTOToGraphQL(result)
   }
 
   @Query(() => UserProfileDTO, { nullable: true })
   async fetchUserProfileByUserId(
     @Args('userId') userId: number,
-  ): Promise<UserProfileDTO | null> {
-    return this.fetchUserProfileByUserIdUseCase.execute(userId);
+  ): Promise<UserProfile | null> {
+    const result = await this.fetchUserProfileByUserIdUseCase.execute(userId);
+    return transformUserProfileDTOToGraphQL(result)
   }
 
   @Query(() => [UserProfileDTO])
   async fetchUserProfilesByBirthdayRange(
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
-  ): Promise<UserProfileDTO[]> {
-    return this.fetchUserProfilesByBirthdayRangeUseCase.execute(
+  ): Promise<UserProfile[]> {
+    const result = await this.fetchUserProfilesByBirthdayRangeUseCase.execute(
       startDate,
       endDate,
     );
+    return result.map(transformUserProfileDTOToGraphQL)
   }
 
   @Query(() => [UserProfileDTO])
   async fetchUserProfilesByGender(
     @Args('gender') gender: string,
-  ): Promise<UserProfileDTO[]> {
-    return this.fetchUserProfilesByGenderUseCase.execute(gender);
+  ): Promise<UserProfile[]> {
+    const result = await this.fetchUserProfilesByGenderUseCase.execute(gender);
+    return result.map(transformUserProfileDTOToGraphQL)
   }
 
   @Query(() => [UserProfileDTO])
   async findMatchingProfiles(
     @Args('criteria') criteria: UserProfileDTO,
-  ): Promise<UserProfileDTO[]> {
-    return this.findMatchingProfilesUseCase.execute(criteria);
+  ): Promise<UserProfile[]> {
+    const result = await this.findMatchingProfilesUseCase.execute(criteria);
+    return result.map(transformUserProfileDTOToGraphQL)
   }
 
   @Query(() => Boolean)
@@ -92,9 +101,10 @@ export class UserProfileResolver {
   @Mutation(() => UserProfileDTO, { nullable: true })
   async updateUserProfile(
     @Args('id') id: number,
-    @Args('profileDTO') profileDTO: UserProfileDTO,
-  ): Promise<UserProfileDTO | null> {
-    return this.updateUserProfileUseCase.execute(id, profileDTO);
+    @Args('profile') profileDTO: UserProfileDTO,
+  ): Promise<UserProfile | null> {
+    const result = await this.updateUserProfileUseCase.execute(id, profileDTO);
+    return transformUserProfileDTOToGraphQL(result)
   }
 
   // ... autres résolveurs pour chaque use-case ...

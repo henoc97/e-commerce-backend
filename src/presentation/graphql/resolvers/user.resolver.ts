@@ -19,11 +19,10 @@ import { RemoveAddressFromUserUseCase } from 'src/application/use-cases/user.use
 import { UpdateUserPasswordUseCase } from 'src/application/use-cases/user.use-cases/update-user-password.use-case';
 import { UpdateUser } from 'src/application/use-cases/user.use-cases/update-user.use-case';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
-import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
 import { UserDTO } from 'src/presentation/dtos/user.dto';
 import { UserRole } from 'src/domain/enums/user-role.enum';
+import { AddressInput, User } from 'src/generated/graphql';
+import { transformUserDTOToGraphQL } from 'src/application/helper/utils/transformers';
 
 @Resolver(() => UserDTO)
 export class UserResolver {
@@ -52,38 +51,43 @@ export class UserResolver {
   @Mutation(() => UserDTO, { name: 'addAddressToUser' })
   async addAddress(
     @Args('userId') userId: number,
-    @Args('address') address: AddressDTO,
-  ): Promise<UserDTO | null> {
-    return this.addAddressToUser.execute(userId, address);
+    @Args('AddressInput') address: AddressInput,
+  ): Promise<User | null> {
+    const result = await this.addAddressToUser.execute(userId, address);
+    return transformUserDTOToGraphQL(result);
   }
 
   // @Mutation(() => UserDTO, { name: 'addNotificationToUser' })
   // async addNotification(
   //   @Args('userId') userId: number,
   //   @Args('notification') notification: NotificationDTO,
-  // ): Promise<UserDTO | null> {
-  //   return this.addNotificationToUser.execute(userId, notification);
+  // ): Promise<User | null> {
+  //   const result = await this.addNotificationToUser.execute(userId, notification);
+  // return transformUserDTOToGraphQL(result);
   // }
 
   // @Mutation(() => UserDTO, { name: 'addOrderToUser' })
   // async addOrder(
   //   @Args('userId') userId: number,
   //   @Args('order') order: OrderDTO,
-  // ): Promise<UserDTO | null> {
-  //   return this.addOrderToUser.execute(userId, order);
+  // ): Promise<User | null> {
+  //   const result = await this.addOrderToUser.execute(userId, order);
+  // return transformUserDTOToGraphQL(result);
   // }
 
   // @Mutation(() => UserDTO, { name: 'addSubsiteToUser' })
   // async addSubsite(
   //   @Args('userId') userId: number,
   //   @Args('subsite') subsite: SubsiteDTO,
-  // ): Promise<UserDTO | null> {
-  //   return this.addSubsiteToUser.execute(userId, subsite);
+  // ): Promise<User | null> {
+  //   const result = await this.addSubsiteToUser.execute(userId, subsite);
+  // return transformUserDTOToGraphQL(result);
   // }
 
   @Mutation(() => UserDTO, { name: 'createUser' })
-  async createUser(@Args('user') user: UserDTO): Promise<UserDTO | null> {
-    return this.createUserUseCase.execute(user);
+  async createUser(@Args('user') user: UserDTO): Promise<User | null> {
+    const result = await this.createUserUseCase.execute(user);
+    return transformUserDTOToGraphQL(result);
   }
 
   @Mutation(() => Boolean, { name: 'deleteUser' })
@@ -104,44 +108,51 @@ export class UserResolver {
   @Query(() => UserDTO, { name: 'getDetailedInfo' })
   async getDetailedInfo(
     @Args('userId') userId: number,
-  ): Promise<UserDTO | null> {
-    return this.getDetailedInfoUseCase.execute(userId);
+  ): Promise<User | null> {
+    const result = await this.getDetailedInfoUseCase.execute(userId);
+    return transformUserDTOToGraphQL(result);
   }
 
   @Query(() => [UserDTO], { name: 'getInactiveUsers' })
-  async getInactiveUsers(@Args('days') days: number): Promise<UserDTO[]> {
-    return this.getInactiveUsersUseCase.execute(days);
+  async getInactiveUsers(@Args('days') days: number): Promise<User[]> {
+    const result = await this.getInactiveUsersUseCase.execute(days);
+    return result.map(transformUserDTOToGraphQL);
   }
 
   @Query(() => UserDTO, { name: 'getUserByEmail' })
-  async getUserByEmail(@Args('email') email: string): Promise<UserDTO | null> {
-    return this.getUserByEmailUseCase.execute(email);
+  async getUserByEmail(@Args('email') email: string): Promise<User | null> {
+    const result = await this.getUserByEmailUseCase.execute(email);
+    return transformUserDTOToGraphQL(result);
   }
 
   @Query(() => UserDTO, { name: 'getUser' })
-  async getUserById(@Args('userId') userId: number): Promise<UserDTO | null> {
-    return this.getUser.execute(userId);
+  async getUserById(@Args('userId') userId: number): Promise<User | null> {
+    const result = await this.getUser.execute(userId);
+    return transformUserDTOToGraphQL(result);
   }
 
   @Query(() => [UserDTO], { name: 'getUsersByRole' })
-  async getUsersByRole(@Args('role') role: UserRole): Promise<UserDTO[]> {
-    return this.getUsersByRoleUseCase.execute(role);
+  async getUsersByRole(@Args('role') role: UserRole): Promise<User[]> {
+    const result = await this.getUsersByRoleUseCase.execute(role);
+    return result.map(transformUserDTOToGraphQL);
   }
 
   @Mutation(() => UserDTO, { name: 'removeAddressFromUser' })
   async removeAddress(
     @Args('userId') userId: number,
     @Args('addressId') addressId: number,
-  ): Promise<UserDTO> {
-    return this.removeAddressFromUserUseCase.execute(userId, addressId);
+  ): Promise<User> {
+    const result = await this.removeAddressFromUserUseCase.execute(userId, addressId);
+    return transformUserDTOToGraphQL(result);
   }
 
   // @Mutation(() => UserDTO, { name: 'removeNotificationFromUser' })
   // async removeNotification(
   //   @Args('userId') userId: number,
   //   @Args('notificationId') notificationId: number,
-  // ): Promise<UserDTO> {
-  //   return this.removeNotificationFromUserUseCase.execute(
+  // ): Promise<User> {
+  //   const result = await this.removeNotificationFromUserUseCase.execute(
+  // return transformUserDTOToGraphQL(result);
   //     userId,
   //     notificationId,
   //   );
@@ -151,31 +162,35 @@ export class UserResolver {
   // async removeOrder(
   //   @Args('userId') userId: number,
   //   @Args('orderId') orderId: number,
-  // ): Promise<UserDTO> {
-  //   return this.removeOrderFromUserUseCase.execute(userId, orderId);
+  // ): Promise<User> {
+  //   const result = await this.removeOrderFromUserUseCase.execute(userId, orderId);
+  // return transformUserDTOToGraphQL(result);
   // }
 
   // @Mutation(() => UserDTO, { name: 'removeSubsiteFromUser' })
   // async removeSubsite(
   //   @Args('userId') userId: number,
   //   @Args('subsiteId') subsiteId: number,
-  // ): Promise<UserDTO> {
-  //   return this.removeSubsiteFromUserUseCase.execute(userId, subsiteId);
+  // ): Promise<User> {
+  //   const result = await this.removeSubsiteFromUserUseCase.execute(userId, subsiteId);
+  // return transformUserDTOToGraphQL(result);
   // }
 
   @Mutation(() => UserDTO, { name: 'updateUserPassword' })
   async updateUserPassword(
     @Args('userId') userId: number,
     @Args('newPassword') newPassword: string,
-  ): Promise<UserDTO> {
-    return this.updateUserPasswordUseCase.execute(userId, newPassword);
+  ): Promise<User> {
+    const result = await this.updateUserPasswordUseCase.execute(userId, newPassword);
+    return transformUserDTOToGraphQL(result);
   }
 
   @Mutation(() => UserDTO, { name: 'updateUser' })
   async updateUser(
     @Args('userId') userId: number,
     @Args('user') user: UserDTO,
-  ): Promise<UserDTO | null> {
-    return this.updateUserUseCase.execute(userId, user);
+  ): Promise<User | null> {
+    const result = await this.updateUserUseCase.execute(userId, user);
+    return transformUserDTOToGraphQL(result);
   }
 }
