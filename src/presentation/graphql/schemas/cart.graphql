@@ -101,7 +101,7 @@ type Mutation {
   """
   Clears all items in the cart.
   """
-  clearCart(cartId: Int!): Cart!
+  clearCart(userId: ID!): Boolean
 
   """
   Auto-saves the current state of the cart.

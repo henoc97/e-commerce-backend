@@ -1,79 +1,59 @@
-import { Type } from 'class-transformer';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsString,
-  IsPostalCode,
-  IsOptional,
-  ValidateNested,
-} from 'class-validator';
-import { UserDTO } from './user.dto';
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { UserOutput } from './user.output';
 
-/**
- * Data Transfer Object for Address.
- * Used for data validation and transformation in API requests and responses.
- */
-export class AddressDTO {
+
+@ObjectType()
+export class AddressOutput {
   /**
    * Unique identifier for the address.
    */
-  @IsInt()
-  @IsOptional()
+  @Field({ nullable: true }) // Nullable car `id` est optionnel.
   id?: number;
 
   /**
    * Foreign key referring to the User who owns this address.
    */
-  @IsInt()
-  @IsNotEmpty()
+  @Field()
   userId: number;
 
   /**
    * User associated with the address.
    */
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => UserDTO)
-  user?: UserDTO;
+  @Field(() => UserOutput, { nullable: true }) // Relation avec UserOutput.
+  user?: UserOutput;
 
   /**
    * Street address.
    */
-  @IsString()
-  @IsNotEmpty()
+  @Field()
   street: string;
 
   /**
    * City where the address is located.
    */
-  @IsString()
-  @IsNotEmpty()
+  @Field()
   city: string;
 
   /**
    * State or region where the address is located.
    */
-  @IsString()
-  @IsNotEmpty()
+  @Field()
   state: string;
 
   /**
    * Postal code for the address.
    */
-  @IsPostalCode('any')
-  @IsNotEmpty()
+  @Field()
   postalCode: string;
 
   /**
    * Country where the address is located.
    */
-  @IsString()
-  @IsNotEmpty()
+  @Field()
   country: string;
 
   /**
-   * Constructs an AddressDTO instance.
+   * Constructs an AddressOutput instance.
    *
    * @param id - Unique identifier for the address.
    * @param userId - Foreign key referring to the User.
@@ -82,7 +62,7 @@ export class AddressDTO {
    * @param state - State or region where the address is located.
    * @param postalCode - Postal code for the address.
    * @param country - Country where the address is located.
-   * @param user - User to whom the address (optional)
+   * @param user - User to whom the address (optional).
    */
   constructor(
     id: number,
@@ -92,7 +72,7 @@ export class AddressDTO {
     state: string,
     postalCode: string,
     country: string,
-    user?: UserDTO,
+    user?: UserOutput,
   ) {
     this.id = id;
     this.userId = userId;

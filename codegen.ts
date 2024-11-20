@@ -5,6 +5,9 @@ const config: CodegenConfig = {
   generates: {
     './src/generated/graphql.ts': {
       plugins: ['typescript'],
+      config: {
+        decorators: true, // Générer des décorateurs pour les classes
+      },
     },
   },
 };

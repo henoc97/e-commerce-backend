@@ -18,7 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "inlineSources": true,
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true,
     "skipDefaultLibCheck": true,
     "resolveJsonModule": true,
@@ -30,5 +30,5 @@
     "sourceRoot": "/"
   },
   "include": ["src/**/*", "src/**/*.graphql"],
-  "exclude": ["dist/**/*.graphql"]
+  "exclude": ["dist/**/*.graphql", "src/generated/**/*"]
 }

@@ -5,7 +5,6 @@ import { IUserRepository } from 'src/domain/repositories/user.repository';
 import { UserDTO } from 'src/presentation/dtos/user.dto';
 import { fromUserDTO } from '../helper/to-entity/to.user.entity';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
-import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
 import { ClientKafka } from '@nestjs/microservices';
 import { AddressService } from './address.service';
 
@@ -76,8 +75,7 @@ export class UserService {
    * @returns The updated User entity.
    */
   async addAddressToUser(userId: number, address: AddressDTO): Promise<User> {
-    const ad = fromAddressDTO(address);
-    await this.addressService.createAddress(ad);
+    await this.addressService.createAddress(address);
     return await this.userRepository.getById(userId);
   }
 
