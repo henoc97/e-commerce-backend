@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { UserActivityAction } from 'src/domain/enums/user-activity-action.enum';
 import { UserOutput } from './user.output';
+import { Type } from 'class-transformer';
 
 /**
  * Data Transfer Object for UserActivity.
@@ -25,6 +26,7 @@ export class UserActivityOutput {
    * Provides details about the user who initiated the action.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user: UserOutput;
 
   /**
@@ -56,10 +58,10 @@ export class UserActivityOutput {
    * @param timestamp - (Optional) The date and time when the activity was performed, defaults to the current date and time.
    */
   constructor(
-    id: number,
-    userId: number,
-    user: UserOutput,
-    action: UserActivityAction,
+    id?: number,
+    userId?: number,
+    user?: UserOutput,
+    action?: UserActivityAction,
     productId?: number,
     timestamp: Date = new Date(),
   ) {

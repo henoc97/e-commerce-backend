@@ -9,11 +9,12 @@ import { FetchProductVariantById } from 'src/application/use-cases/product-varia
 import { FetchProductVariantsByName } from 'src/application/use-cases/product-variant.use-cases/fetch-product-variants-by-name.use-case';
 import { FetchProductVariantsByProductId } from 'src/application/use-cases/product-variant.use-cases/fetch-product-variants-by-product-id.use-case';
 import { UpdateProductVariantDetails } from 'src/application/use-cases/product-variant.use-cases/update-product-variant-details.use-case';
-import { ProductVariant, ProductVariantInput } from 'src/generated/graphql';
 import { transformProductVariantDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { toProductVariantDTO } from 'src/application/helper/to-dto/to.product-variant.dto';
+import { ProductVariantOutput } from 'src/presentation/output/product-variant.output';
+import { ProductVariantInput } from 'src/presentation/input/product-variant.input';
 
-@Resolver(() => ProductVariantDTO)
+@Resolver(() => ProductVariantOutput)
 export class ProductVariantResolver {
   constructor(
     private readonly checkExistence: CheckProductVariantExistence,
@@ -36,10 +37,10 @@ export class ProductVariantResolver {
     return this.checkExistence.execute(productId, name, value);
   }
 
-  @Mutation(() => ProductVariantDTO, { nullable: true })
+  @Mutation(() => ProductVariantOutput, { nullable: true })
   async createProductVariant(
     @Args('variant') variant: ProductVariantInput,
-  ): Promise<ProductVariant | null> {
+  ): Promise<ProductVariantOutput | null> {
     const dto = toProductVariantDTO(variant)
     const result = await this.createVariant.execute(dto);
     return transformProductVariantDTOToGraphQL(result)
@@ -57,44 +58,44 @@ export class ProductVariantResolver {
     return this.deleteVariantsByProductId.execute(productId);
   }
 
-  @Query(() => ProductVariantDTO, { nullable: true })
+  @Query(() => ProductVariantOutput, { nullable: true })
   async fetchMostPopularVariant(
     @Args('productId') productId: number,
-  ): Promise<ProductVariant | null> {
+  ): Promise<ProductVariantOutput | null> {
     const result = await this.fetchMostPopular.execute(productId);
     return transformProductVariantDTOToGraphQL(result)
   }
 
-  @Query(() => ProductVariantDTO, { nullable: true })
+  @Query(() => ProductVariantOutput, { nullable: true })
   async fetchProductVariantById(
     @Args('id') id: number,
-  ): Promise<ProductVariant | null> {
+  ): Promise<ProductVariantOutput | null> {
     const result = await this.fetchById.execute(id);
     return transformProductVariantDTOToGraphQL(result)
   }
 
-  @Query(() => [ProductVariantDTO])
+  @Query(() => [ProductVariantOutput])
   async fetchProductVariantsByName(
     @Args('productId') productId: number,
     @Args('name') name: string,
-  ): Promise<ProductVariant[]> {
+  ): Promise<ProductVariantOutput[]> {
     const result = await this.fetchByName.execute(productId, name);
     return result.map(transformProductVariantDTOToGraphQL);
   }
 
-  @Query(() => [ProductVariantDTO])
+  @Query(() => [ProductVariantOutput])
   async fetchProductVariantsByProductId(
     @Args('productId') productId: number,
-  ): Promise<ProductVariant[]> {
+  ): Promise<ProductVariantOutput[]> {
     const result = await this.fetchByProductId.execute(productId);
     return result.map(transformProductVariantDTOToGraphQL);
   }
 
-  @Mutation(() => ProductVariantDTO, { nullable: true })
+  @Mutation(() => ProductVariantOutput, { nullable: true })
   async updateProductVariantDetails(
     @Args('id') id: number,
     @Args('updateData') updateData: ProductVariantInput,
-  ): Promise<ProductVariant | null> {
+  ): Promise<ProductVariantOutput | null> {
     const dto = toProductVariantDTO(updateData)
     const result = await this.updateDetails.execute(id, dto);
     return transformProductVariantDTOToGraphQL(result)

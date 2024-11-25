@@ -1,7 +1,7 @@
-
 import { Field, ObjectType } from '@nestjs/graphql';
 import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
 import { UserOutput } from './user.output';
+import { Type } from 'class-transformer';
 
 /**
  * Data Transfer Object for AuditLog.
@@ -25,6 +25,7 @@ export class AuditLogOutput {
    * User associated with the address.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user?: UserOutput;
 
   /**
@@ -46,11 +47,11 @@ export class AuditLogOutput {
   entityId: number;
 
   /**
-   * Details of the changes made.
-   * Can include before-and-after values or other relevant change information.
+   * Détails des modifications apportées.
+   * Peut inclure des valeurs avant et après ou d'autres informations pertinentes sur le changement.
    */
-  @Field()
-  changes: any;
+  @Field(() => String, { nullable: true })
+  changes?: string;
 
   /**
    * The date and time when the action was performed.
@@ -71,11 +72,11 @@ export class AuditLogOutput {
    * @param user - (Optional) The user who performed the action
    */
   constructor(
-    userId: number,
-    action: AuditLogAction,
-    entity: string,
-    entityId: number,
-    changes: any,
+    userId?: number,
+    action?: AuditLogAction,
+    entity?: string,
+    entityId?: number,
+    changes?: string,
     createdAt: Date = new Date(),
     id?: number,
     user?: UserOutput,

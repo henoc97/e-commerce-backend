@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { Type } from "class-transformer/types/decorators/type.decorator";
+import { Type } from "class-transformer"
 import { AuditLogAction } from "src/domain/enums/audit-log-action.enum";
 
 
@@ -45,6 +45,6 @@ export class AuditLogInput {
    * Details of the changes made.
    * Can include before-and-after values or other relevant change information.
    */
-  @Field()
-  changes: any;
+  @Field({ nullable: true })
+  changes: string;
 }

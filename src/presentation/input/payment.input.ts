@@ -49,8 +49,8 @@ export class PaymentInput {
    * Optional metadata associated with the payment.
    * This can include any additional information or details provided by the payment provider.
    */
-  @Field()
-  metadata?: any;
+  @Field({ nullable: true })
+  metadata?: string;
 
   /**
    * The currency of the payment.

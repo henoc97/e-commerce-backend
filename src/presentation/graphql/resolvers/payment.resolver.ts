@@ -12,12 +12,13 @@ import { FetchPaymentsGroupedByMethod } from 'src/application/use-cases/payment.
 import { FetchTotalAmountByDateRange } from 'src/application/use-cases/payment.use-cases/fetch-total-amount-by-date-range.use-case';
 import { UpdatePayment } from 'src/application/use-cases/payment.use-cases/update-payment.use-case';
 import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
-import { PaymentInput, Payment } from 'src/generated/graphql';
 import { transformPaymentDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { toPaymentDTO } from 'src/application/helper/to-dto/to.payment.dto';
+import { PaymentOutput } from 'src/presentation/output/payment.output';
+import { PaymentInput } from 'src/presentation/input/payment.input';
 
 
-@Resolver(() => PaymentDTO)
+@Resolver(() => PaymentOutput)
 export class PaymentResolver {
   constructor(
     private readonly createPaymentUseCase: CreatePayment,
@@ -33,10 +34,10 @@ export class PaymentResolver {
     private readonly updatePaymentUseCase: UpdatePayment,
   ) { }
 
-  @Mutation(() => PaymentDTO)
+  @Mutation(() => PaymentOutput)
   async createPayment(
     @Args('paymentInput') payment: PaymentInput,
-  ): Promise<Payment | null> {
+  ): Promise<PaymentOutput | null> {
     const dto = toPaymentDTO(payment);
     const result = await this.createPaymentUseCase.execute(dto);
     return transformPaymentDTOToGraphQL(result);
@@ -47,55 +48,55 @@ export class PaymentResolver {
     return this.deletePaymentUseCase.execute(id);
   }
 
-  @Query(() => PaymentDTO, { nullable: true })
+  @Query(() => PaymentOutput, { nullable: true })
   async fetchMostRecentPaymentByOrderId(
     @Args('orderId') orderId: number,
-  ): Promise<Payment | null> {
+  ): Promise<PaymentOutput | null> {
     const result = await this.fetchMostRecentPaymentByOrderIdUseCase.execute(orderId);
     return transformPaymentDTOToGraphQL(result);
   }
 
-  @Query(() => PaymentDTO, { nullable: true })
-  async fetchPaymentById(@Args('id') id: number): Promise<Payment | null> {
+  @Query(() => PaymentOutput, { nullable: true })
+  async fetchPaymentById(@Args('id') id: number): Promise<PaymentOutput | null> {
     const result = await this.fetchPaymentByIdUseCase.execute(id);
     return transformPaymentDTOToGraphQL(result);
   }
 
-  @Query(() => [PaymentDTO])
+  @Query(() => [PaymentOutput])
   async fetchPaymentsByDateRange(
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
-  ): Promise<Payment[]> {
+  ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByDateRangeUseCase.execute(startDate, endDate);
     return result.map(transformPaymentDTOToGraphQL);
   }
 
-  @Query(() => [PaymentDTO])
+  @Query(() => [PaymentOutput])
   async fetchPaymentsByMethod(
     @Args('method') method: string,
-  ): Promise<Payment[]> {
+  ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByMethodUseCase.execute(method);
     return result.map(transformPaymentDTOToGraphQL);
   }
 
-  @Query(() => [PaymentDTO])
+  @Query(() => [PaymentOutput])
   async fetchPaymentsByOrderId(
     @Args('orderId') orderId: number,
-  ): Promise<Payment[]> {
+  ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByOrderIdUseCase.execute(orderId);
     return result.map(transformPaymentDTOToGraphQL);
   }
 
-  @Query(() => [PaymentDTO])
+  @Query(() => [PaymentOutput])
   async fetchPaymentsByStatus(
     @Args('status') status: PaymentStatus,
-  ): Promise<Payment[]> {
+  ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByStatusUseCase.execute(status);
     return result.map(transformPaymentDTOToGraphQL);
   }
 
-  @Query(() => Map)
-  async fetchPaymentsGroupedByMethod(): Promise<Map<string, PaymentDTO[]>> {
+  @Query(() => String)
+  async fetchPaymentsGroupedByMethod(): Promise<Map<string, PaymentOutput[]>> {
     return this.fetchPaymentsGroupedByMethodUseCase.execute();
   }
 
@@ -107,11 +108,11 @@ export class PaymentResolver {
     return this.fetchTotalAmountByDateRangeUseCase.execute(startDate, endDate);
   }
 
-  @Mutation(() => PaymentDTO, { nullable: true })
+  @Mutation(() => PaymentOutput, { nullable: true })
   async updatePayment(
     @Args('id') id: number,
     @Args('updates') updates: PaymentInput,
-  ): Promise<Payment | null> {
+  ): Promise<PaymentOutput | null> {
     const dto = toPaymentDTO(updates);
     const result = await this.updatePaymentUseCase.execute(id, dto);
     return transformPaymentDTOToGraphQL(result);

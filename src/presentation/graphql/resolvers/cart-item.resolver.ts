@@ -12,10 +12,11 @@ import { FetchCartItemsByCartId } from 'src/application/use-cases/cart-item.use-
 import { FetchHighestQuantityItem } from 'src/application/use-cases/cart-item.use-cases/fetch-highest-quantity-item.use-case';
 import { UpdateCartItemQuantity } from 'src/application/use-cases/cart-item.use-cases/update-cart-item-quantity.use-case';
 import { UpdateCartItem } from 'src/application/use-cases/cart-item.use-cases/update-cart-item.use-case';
-import { CartItem, CreateCartItemInput, UpdateCartItemQuantityInput } from 'src/generated/graphql';
 import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
+import { CartItemInput } from 'src/presentation/input/cart-item.input';
+import { CartItemOutput } from 'src/presentation/output/cart-item.output';
 
-@Resolver(() => 'CartItem')
+@Resolver(() => CartItemOutput)
 export class CartItemResolver {
   constructor(
     private readonly calculateCartTotalUseCase: CalculateCartTotal,
@@ -44,10 +45,10 @@ export class CartItemResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'CartItem')
+  @Mutation(() => CartItemOutput)
   async createCartItem(
-    @Args('CartItemInput') input: CreateCartItemInput,
-  ): Promise<CartItem> {
+    @Args('CartItemInput') input: CartItemInput,
+  ): Promise<CartItemOutput> {
     const dto = toCartItemDTO(input);
     const result = await this.createCartItemUseCase.execute(dto);
     return transformCartItemDTOToGraphQL(result);
@@ -60,56 +61,56 @@ export class CartItemResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => 'CartItem', { nullable: true })
-  async fetchCartItemById(@Args('id') id: number): Promise<CartItem | null> {
+  @Query(() => CartItemOutput, { nullable: true })
+  async fetchCartItemById(@Args('id') id: number): Promise<CartItemOutput | null> {
     const result = await this.fetchCartItemByIdUseCase.execute(id);
     return transformCartItemDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => 'CartItem', { nullable: true })
+  @Query(() => CartItemOutput, { nullable: true })
   async fetchCartItemByProductAndCart(
     @Args('productId') productId: number,
     @Args('cartId') cartId: number,
-  ): Promise<CartItem | null> {
+  ): Promise<CartItemOutput | null> {
     const result = await this.fetchCartItemByProductAndCartUseCase.execute(productId, cartId);
     return transformCartItemDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => ['CartItem'])
+  @Query(() => [CartItemOutput])
   async fetchCartItemsByCartId(
     @Args('cartId') cartId: number,
-  ): Promise<CartItem[]> {
+  ): Promise<CartItemOutput[]> {
     const result = await this.fetchCartItemsByCartIdUseCase.execute(cartId);
     return result.map(transformCartItemDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => 'CartItem', { nullable: true })
+  @Query(() => CartItemOutput, { nullable: true })
   async fetchHighestQuantityItem(
     @Args('cartId') cartId: number,
-  ): Promise<CartItem | null> {
+  ): Promise<CartItemOutput | null> {
     const result = await this.fetchHighestQuantityItemUseCase.execute(cartId);
     return transformCartItemDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'CartItem')
+  @Mutation(() => CartItemOutput)
   async updateCartItemQuantity(
     @Args('id') id: number,
     @Args('quantity') quantity: number,
-  ): Promise<CartItem> {
+  ): Promise<CartItemOutput> {
     const result = await this.updateCartItemQuantityUseCase.execute(id, quantity);
     return transformCartItemDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'CartItem')
+  @Mutation(() => CartItemOutput)
   async updateCartItem(
     @Args('id') id: number,
-    @Args('UpdateCartItemQuantityInput') input: UpdateCartItemQuantityInput,
-  ): Promise<CartItem> {
+    @Args('UpdateCartItemQuantityInput') input: CartItemInput,
+  ): Promise<CartItemOutput> {
     const cartItemDTO = toCartItemDTO(input);
     const result = await this.updateCartItemUseCase.execute(id, cartItemDTO);
     return transformCartItemDTOToGraphQL(result);

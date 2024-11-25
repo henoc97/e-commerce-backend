@@ -1,3 +1,5 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export enum Currency {
   USD = 'USD',
   EUR = 'EUR',
@@ -12,3 +14,7 @@ export enum Currency {
   BRL = 'BRL',
   ZAR = 'ZAR',
 }
+
+registerEnumType(Currency, {
+  name: 'Currency', // le nom utilisé dans GraphQL
+});

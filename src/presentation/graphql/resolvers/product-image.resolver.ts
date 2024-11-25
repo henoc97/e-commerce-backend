@@ -11,10 +11,11 @@ import { FetchProductImagesByProductId } from 'src/application/use-cases/product
 import { UpdateProductImageUrl } from 'src/application/use-cases/product-image.use-cases/update-product-image-url.use-case';
 import { UpdateProductImage } from 'src/application/use-cases/product-image.use-cases/update-product-image.use-case';
 import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
-import { ProductImage } from 'src/generated/graphql';
 import { toProductImageDTO } from 'src/application/helper/to-dto/to.product-image.dto';
+import { ProductImageOutput } from 'src/presentation/output/product-image.output';
+import { ProductImageInput } from 'src/presentation/input/product-image.input';
 
-@Resolver(() => ProductImageDTO)
+@Resolver(() => ProductImageOutput)
 export class ProductImageResolver {
   constructor(
     private readonly checkProductImageExistence: CheckProductImageExistence,
@@ -44,11 +45,12 @@ export class ProductImageResolver {
     return this.countProductImagesByProductId.execute(productId);
   }
 
-  @Mutation(() => ProductImageDTO)
+  @Mutation(() => ProductImageOutput)
   async createProductImage(
-    @Args('imageDTO') imageDTO: ProductImageDTO,
-  ): Promise<ProductImage | null> {
-    const result = await this.createProductImageUseCase.execute(imageDTO);
+    @Args('imageDTO') image: ProductImageInput,
+  ): Promise<ProductImageOutput | null> {
+    const dto = toProductImageDTO(image);
+    const result = await this.createProductImageUseCase.execute(dto);
     return transformProductImageDTOToGraphQL(result);
   }
 
@@ -64,44 +66,44 @@ export class ProductImageResolver {
     return this.deleteProductImagesByProductIdUseCase.execute(productId);
   }
 
-  @Query(() => ProductImageDTO, { nullable: true })
+  @Query(() => ProductImageOutput, { nullable: true })
   async fetchPrimaryProductImage(
     @Args('productId') productId: number,
-  ): Promise<ProductImage | null> {
+  ): Promise<ProductImageOutput | null> {
     const result = await this.fetchPrimaryProductImageUseCase.execute(productId);
     return transformProductImageDTOToGraphQL(result);
   }
 
-  @Query(() => ProductImageDTO, { nullable: true })
+  @Query(() => ProductImageOutput, { nullable: true })
   async fetchProductImageById(
     @Args('id') id: number,
-  ): Promise<ProductImage | null> {
+  ): Promise<ProductImageOutput | null> {
     const result = await this.fetchProductImageByIdUseCase.execute(id);
     return transformProductImageDTOToGraphQL(result);
   }
 
-  @Query(() => [ProductImageDTO])
+  @Query(() => [ProductImageOutput])
   async fetchProductImagesByProductId(
     @Args('productId') productId: number,
-  ): Promise<ProductImage[]> {
+  ): Promise<ProductImageOutput[]> {
     const result = await this.fetchProductImagesByProductIdUseCase.execute(productId);
     return result.map(transformProductImageDTOToGraphQL);
   }
 
-  @Mutation(() => ProductImageDTO)
+  @Mutation(() => ProductImageOutput)
   async updateProductImageUrl(
     @Args('id') id: number,
     @Args('url') url: string,
-  ): Promise<ProductImage> {
+  ): Promise<ProductImageOutput> {
     const result = await this.updateProductImageUrlUseCase.execute(id, url);
     return transformProductImageDTOToGraphQL(result);
   }
 
-  @Mutation(() => ProductImageDTO, { nullable: true })
+  @Mutation(() => ProductImageOutput, { nullable: true })
   async updateProductImage(
     @Args('id') id: number,
-    @Args('updates') updates: ProductImage,
-  ): Promise<ProductImage | null> {
+    @Args('updates') updates: ProductImageInput,
+  ): Promise<ProductImageOutput | null> {
     const dto = toProductImageDTO(updates);
     const result = await this.updateProductImageUseCase.execute(id, dto);
     return transformProductImageDTOToGraphQL(result);

@@ -12,9 +12,11 @@ import { ListSubscriptionsByPriceRange } from 'src/application/use-cases/subscri
 import { ListSubscriptionsByVendor } from 'src/application/use-cases/subscription.use-cases/list-subscriptions-by-vendor.use-case';
 import { UpdateSubscription } from 'src/application/use-cases/subscription.use-cases/update-subscription.use-case';
 import { transformSubscriptionDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { Subscription } from 'src/generated/graphql';
+import { SubscriptionOutput } from 'src/presentation/output/subscription.output';
+import { NewsletterSubscriptionInput } from 'src/presentation/input/newsletter-subscription.input';
+import { toSubscriptionDTO } from 'src/application/helper/to-dto/to.subscription.dto';
 
-@Resolver(() => SubscriptionDTO)
+@Resolver(() => SubscriptionOutput)
 export class SubscriptionResolver {
   constructor(
     private readonly countSubscriptionsByVendorUseCase: CountSubscriptionsByVendor,
@@ -30,56 +32,57 @@ export class SubscriptionResolver {
     private readonly updateSubscriptionUseCase: UpdateSubscription,
   ) { }
 
-  @Query(() => [SubscriptionDTO])
-  async listActiveSubscriptions(): Promise<Subscription[]> {
+  @Query(() => [SubscriptionOutput])
+  async listActiveSubscriptions(): Promise<SubscriptionOutput[]> {
     const result = await this.listActiveSubscriptionsUseCase.execute();
     return result.map(transformSubscriptionDTOToGraphQL);
   }
 
-  @Query(() => [SubscriptionDTO])
-  async listExpiredSubscriptions(): Promise<Subscription[]> {
+  @Query(() => [SubscriptionOutput])
+  async listExpiredSubscriptions(): Promise<SubscriptionOutput[]> {
     const result = await this.listExpiredSubscriptionsUseCase.execute();
     return result.map(transformSubscriptionDTOToGraphQL);
   }
 
-  @Query(() => [SubscriptionDTO])
-  async listExpiringSubscriptions(@Args('days') days: number): Promise<Subscription[]> {
+  @Query(() => [SubscriptionOutput])
+  async listExpiringSubscriptions(@Args('days') days: number): Promise<SubscriptionOutput[]> {
     const result = await this.listExpiringSubscriptionsUseCase.execute(days);
     return result.map(transformSubscriptionDTOToGraphQL);
   }
 
-  @Query(() => [SubscriptionDTO])
+  @Query(() => [SubscriptionOutput])
   async listSubscriptionsByPriceRange(
     @Args('minPrice') minPrice: number,
     @Args('maxPrice') maxPrice: number,
-  ): Promise<Subscription[]> {
+  ): Promise<SubscriptionOutput[]> {
     const result = await this.listSubscriptionsByPriceRangeUseCase.execute(minPrice, maxPrice);
     return result.map(transformSubscriptionDTOToGraphQL);
   }
 
-  @Query(() => [SubscriptionDTO])
-  async listSubscriptionsByVendor(@Args('vendorId') vendorId: number): Promise<Subscription[]> {
+  @Query(() => [SubscriptionOutput])
+  async listSubscriptionsByVendor(@Args('vendorId') vendorId: number): Promise<SubscriptionOutput[]> {
     const result = await this.listSubscriptionsByVendorUseCase.execute(vendorId);
     return result.map(transformSubscriptionDTOToGraphQL);
   }
 
-  @Query(() => SubscriptionDTO, { nullable: true })
-  async fetchSubscriptionById(@Args('id') id: number): Promise<Subscription | null> {
+  @Query(() => SubscriptionOutput, { nullable: true })
+  async fetchSubscriptionById(@Args('id') id: number): Promise<SubscriptionOutput | null> {
     const result = await this.fetchSubscriptionByIdUseCase.execute(id);
     return transformSubscriptionDTOToGraphQL(result);
   }
 
-  @Query(() => SubscriptionDTO, { nullable: true })
-  async fetchLatestSubscription(): Promise<Subscription | null> {
+  @Query(() => SubscriptionOutput, { nullable: true })
+  async fetchLatestSubscription(): Promise<SubscriptionOutput | null> {
     const result = await this.fetchLatestSubscriptionUseCase.execute();
     return transformSubscriptionDTOToGraphQL(result);
   }
 
-  @Mutation(() => SubscriptionDTO, { nullable: true })
+  @Mutation(() => SubscriptionOutput, { nullable: true })
   async createSubscription(
-    @Args('subscriptionDTO') subscriptionDTO: SubscriptionDTO,
-  ): Promise<Subscription | null> {
-    const result = await this.createSubscriptionUseCase.execute(subscriptionDTO);
+    @Args('subscription') subscription: NewsletterSubscriptionInput,
+  ): Promise<SubscriptionOutput | null> {
+    const dto = toSubscriptionDTO(subscription)
+    const result = await this.createSubscriptionUseCase.execute(dto);
     return transformSubscriptionDTOToGraphQL(result);
   }
 
@@ -88,11 +91,11 @@ export class SubscriptionResolver {
     return this.deleteSubscriptionUseCase.execute(id);
   }
 
-  @Mutation(() => SubscriptionDTO, { nullable: true })
+  @Mutation(() => SubscriptionOutput, { nullable: true })
   async updateSubscription(
     @Args('id') id: number,
-    @Args('updates') updates: SubscriptionDTO,
-  ): Promise<Subscription | null> {
+    @Args('updates') updates: NewsletterSubscriptionInput,
+  ): Promise<SubscriptionOutput | null> {
     const result = await this.updateSubscriptionUseCase.execute(id, updates);
     return transformSubscriptionDTOToGraphQL(result);
   }

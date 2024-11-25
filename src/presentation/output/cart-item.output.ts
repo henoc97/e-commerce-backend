@@ -1,6 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { CartOutput } from "./cart.output";
 import { ProductOutput } from "./product.output";
+import { Type } from "class-transformer";
 
 /**
  * Data Transfer Object for CartItem.
@@ -25,6 +26,7 @@ export class CartItemOutput {
    * Cart associated with the cart-item.
    */
   @Field(() => CartOutput, { nullable: true })
+  @Type(() => CartOutput)
   cart?: CartOutput;
 
   /**
@@ -37,6 +39,7 @@ export class CartItemOutput {
    * User associated with the address.
    */
   @Field(() => ProductOutput, { nullable: true })
+  @Type(() => ProductOutput)
   product?: ProductOutput;
 
   /**
@@ -56,9 +59,9 @@ export class CartItemOutput {
    * @param product - The Product associated with this CartItem (optional).
    */
   constructor(
-    cartId: number,
-    productId: number,
-    quantity: number,
+    cartId?: number,
+    productId?: number,
+    quantity?: number,
     id?: number,
     cart?: CartOutput,
     product?: ProductOutput,

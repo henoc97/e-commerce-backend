@@ -5,7 +5,7 @@ import { InputType, Field } from "@nestjs/graphql";
  * Used as input data for GraphQL mutations.
  */
 @InputType()
-export class SubscriptionDTO {
+export class SubscriptionInput {
   /**
    * Unique identifier for the subscription.
    */

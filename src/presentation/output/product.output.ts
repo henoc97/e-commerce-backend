@@ -8,7 +8,7 @@ import { ShopOutput } from "./shop.output";
 import { CartItemOutput } from "./cart-item.output";
 import { OrderItemOutput } from "./order-item.output";
 import { ReviewOutput } from "./review.output";
-
+import { Type } from "class-transformer"
 
 /**
  * Data Transfer Object for Product.
@@ -44,12 +44,14 @@ export class ProductOutput {
    * Optional array of promotions associated with the Product.
    */
   @Field(() => PromotionOutput, { nullable: true })
+  @Type(() => PromotionOutput)
   promotions?: PromotionOutput[];
 
   /**
    * The category to which the Product belongs.
    */
   @Field(() => CategoryOutput, { nullable: true })
+  @Type(() => CategoryOutput)
   category: CategoryOutput;
 
   /**
@@ -62,12 +64,14 @@ export class ProductOutput {
    * Optional array of images associated with the Product.
    */
   @Field(() => [ProductImageOutput], { nullable: true })
+  @Type(() => ProductImageOutput)
   images?: ProductImageOutput[];
 
   /**
    * Optional array of variants for the Product.
    */
   @Field(() => [ProductVariantOutput], { nullable: true })
+  @Type(() => ProductVariantOutput)
   variants?: ProductVariantOutput[];
 
   /**
@@ -80,6 +84,7 @@ export class ProductOutput {
    * Optional Vendor associated with the Product.
    */
   @Field(() => VendorOutput, { nullable: true })
+  @Type(() => VendorOutput)
   vendor?: VendorOutput;
 
   /**
@@ -92,6 +97,7 @@ export class ProductOutput {
    * The Shop where the Product is listed.
    */
   @Field(() => ShopOutput, { nullable: true })
+  @Type(() => ShopOutput)
   shop?: ShopOutput; // Rendre 'shop' optionnel
 
   /**
@@ -116,18 +122,21 @@ export class ProductOutput {
    * Optional array of CartItems associated with the Product.
    */
   @Field(() => CartItemOutput, { nullable: true })
+  @Type(() => CartItemOutput)
   cartItem?: CartItemOutput[];
 
   /**
    * Optional array of OrderItems associated with the Product.
    */
   @Field(() => OrderItemOutput, { nullable: true })
+  @Type(() => OrderItemOutput)
   orderItem?: OrderItemOutput[];
 
   /**
    * Optional array of Reviews for the Product.
    */
   @Field(() => ReviewOutput, { nullable: true })
+  @Type(() => ReviewOutput)
   review?: ReviewOutput[];
 
   /**
@@ -153,22 +162,22 @@ export class ProductOutput {
    * @param vendorId - Optional ID of the Vendor.
    */
   constructor(
-    id: number,
-    name: string,
-    price: number,
+    id?: number,
+    name?: string,
+    price?: number,
     promotions: PromotionOutput[] = [],
-    category: CategoryOutput,
-    categoryId: number,
+    category?: CategoryOutput,
+    categoryId?: number,
     images: ProductImageOutput[] = [],
     variants: ProductVariantOutput[] = [],
-    stock: number,
-    shop: ShopOutput,
-    shopId: number,
+    stock?: number,
+    shopId?: number,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
     cartItem: CartItemOutput[] = [],
     orderItem: OrderItemOutput[] = [],
     review: ReviewOutput[] = [],
+    shop?: ShopOutput,
     description?: string,
     vendor?: VendorOutput,
     vendorId?: number,

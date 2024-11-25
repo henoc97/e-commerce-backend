@@ -1,10 +1,11 @@
-import { Field } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 import { VendorOutput } from "./vendor.output";
-
+import { Type } from "class-transformer"
 /**
  * Data Transfer Object for Subscription.
  * Used for validating and transforming subscription data in API requests and responses.
  */
+@ObjectType()
 export class SubscriptionOutput {
   /**
    * Unique identifier for the subscription.
@@ -44,6 +45,7 @@ export class SubscriptionOutput {
    * Represents vendors that have subscribed to this plan.
    */
   @Field(() => [VendorOutput], { nullable: true })
+  @Type(() => VendorOutput)
   vendors?: VendorOutput[];
 
   /**
@@ -70,10 +72,10 @@ export class SubscriptionOutput {
    * @param updatedAt - (Optional) Date and time of the last update.
    */
   constructor(
-    id: number,
-    name: string,
-    price: number,
-    duration: number,
+    id?: number,
+    name?: string,
+    price?: number,
+    duration?: number,
     description?: string,
     vendors: VendorOutput[] = [],
     createdAt: Date = new Date(),

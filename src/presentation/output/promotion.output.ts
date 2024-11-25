@@ -1,12 +1,14 @@
 
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { DiscountType } from 'src/domain/enums/discount-type.enum';
 import { ProductOutput } from './product.output';
+import { Type } from 'class-transformer';
 
 /**
  * Data Transfer Object for Promotion.
  * Used for validating and transforming promotion data in API requests and responses.
  */
+@ObjectType()
 export class PromotionOutput {
   /**
    * Unique identifier for the promotion.
@@ -55,6 +57,7 @@ export class PromotionOutput {
    * The product associated with the promotion.
    */
   @Field(() => ProductOutput, { nullable: true })
+  @Type(() => ProductOutput)
   product: ProductOutput;
 
   /**
@@ -83,14 +86,14 @@ export class PromotionOutput {
    * @param updatedAt - (Optional) Date and time of the last update.
    */
   constructor(
-    id: number,
-    name: string,
-    discountValue: number,
-    discountType: DiscountType,
-    startDate: Date,
-    endDate: Date,
-    productId: number,
-    product: ProductOutput,
+    id?: number,
+    name?: string,
+    discountValue?: number,
+    discountType?: DiscountType,
+    startDate?: Date,
+    endDate?: Date,
+    productId?: number,
+    product?: ProductOutput,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
   ) {

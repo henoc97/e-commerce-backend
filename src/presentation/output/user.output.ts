@@ -11,7 +11,7 @@ import { AuditLogOutput } from "./audit-log.output";
 import { ReviewOutput } from "./review.output";
 import { UserActivityOutput } from "./user-activity.output";
 import { VendorOutput } from "./vendor.output";
-
+import { Type } from "class-transformer"
 /**
  * Data Transfer Object for User.
  * Used for validating and transforming user data in API requests and responses.
@@ -53,18 +53,21 @@ export class UserOutput {
    * Profile associated with the user.
    */
   @Field(() => UserProfileOutput, { nullable: true })
+  @Type(() => UserProfileOutput)
   profile: UserProfileOutput;
 
   /**
    * List of addresses associated with the user.
    */
   @Field(() => [AddressOutput], { nullable: true })
+  @Type(() => AddressOutput)
   addresses: AddressOutput[];
 
   /**
    * List of orders placed by the user.
    */
   @Field(() => [OrderOutput], { nullable: true })
+  @Type(() => OrderOutput)
   orders: OrderOutput[];
 
   /**
@@ -83,48 +86,56 @@ export class UserOutput {
    * Vendor information if the user is a vendor.
    */
   @Field(() => VendorOutput, { nullable: true })
+  @Type(() => VendorOutput)
   vendor: VendorOutput;
 
   /**
    * List of carts associated with the user.
    */
   @Field(() => [CartOutput], { nullable: true })
+  @Type(() => CartOutput)
   carts: CartOutput[];
 
   /**
    * Optional list of reviews written by the user.
    */
   @Field(() => [ReviewOutput], { nullable: true })
+  @Type(() => ReviewOutput)
   reviews?: ReviewOutput[];
 
   /**
    * Optional list of notifications for the user.
    */
   @Field(() => [NotificationOutput], { nullable: true })
+  @Type(() => NotificationOutput)
   notifications?: NotificationOutput[];
 
   /**
    * Optional list of support tickets raised by the user.
    */
   @Field(() => [TicketOutput], { nullable: true })
+  @Type(() => TicketOutput)
   tickets?: TicketOutput[];
 
   /**
    * Optional list of sub-sites associated with the user.
    */
   @Field(() => [SubsiteOutput], { nullable: true })
+  @Type(() => SubsiteOutput)
   subsites?: SubsiteOutput[];
 
   /**
    * Optional list of user activities.
    */
   @Field(() => [UserActivityOutput], { nullable: true })
+  @Type(() => UserActivityOutput)
   userActivities?: UserActivityOutput[];
 
   /**
    * Optional list of audit logs for the user.
    */
   @Field(() => [AuditLogOutput], { nullable: true })
+  @Type(() => AuditLogOutput)
   auditLogs?: AuditLogOutput[];
 
   /**
@@ -149,17 +160,17 @@ export class UserOutput {
    * @param auditLogs - Optional list of audit logs for the user.
    */
   constructor(
-    id: number,
-    email: string,
-    password: string,
-    role: UserRole,
-    profile: UserProfileOutput,
-    addresses: AddressOutput[],
-    orders: OrderOutput[],
-    createdAt: Date,
-    updatedAt: Date,
-    vendor: VendorOutput,
-    carts: CartOutput[],
+    id?: number,
+    email?: string,
+    password?: string,
+    role?: UserRole,
+    profile?: UserProfileOutput,
+    addresses?: AddressOutput[],
+    orders?: OrderOutput[],
+    createdAt?: Date,
+    updatedAt?: Date,
+    vendor?: VendorOutput,
+    carts?: CartOutput[],
     name?: string,
     reviews?: ReviewOutput[],
     notifications?: NotificationOutput[],

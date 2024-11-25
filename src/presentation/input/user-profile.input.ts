@@ -1,11 +1,12 @@
-import { Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 
 
 /**
  * Data Transfer Object for UserProfile.
  * Used for validating and transforming user profile data in API requests and responses.
  */
-export class UserProfileDTO {
+@InputType()
+export class UserProfileInput {
   /**
    * Unique identifier for the user profile.
    */

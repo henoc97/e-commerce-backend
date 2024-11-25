@@ -3,7 +3,7 @@ import { ProductOutput } from "./product.output";
 import { SubscriptionOutput } from "./subscription.output";
 import { ShopOutput } from "./shop.output";
 import { UserOutput } from "./user.output";
-
+import { Type } from "class-transformer"
 
 /**
  * Data Transfer Object for Vendor.
@@ -27,6 +27,7 @@ export class VendorOutput {
    * User associated with the vendor.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user: UserOutput;
 
   /**
@@ -39,12 +40,14 @@ export class VendorOutput {
    * Optional list of products associated with the vendor.
    */
   @Field(() => [ProductOutput], { nullable: true })
+  @Type(() => ProductOutput)
   products?: ProductOutput[];
 
   /**
    * Optional subscription associated with the vendor.
    */
   @Field(() => SubscriptionOutput, { nullable: true })
+  @Type(() => SubscriptionOutput)
   subscription?: SubscriptionOutput;
 
   /**
@@ -57,6 +60,7 @@ export class VendorOutput {
    * Optional shop associated with the vendor.
    */
   @Field(() => ShopOutput, { nullable: true })
+  @Type(() => ShopOutput)
   shop?: ShopOutput;
 
   /**
@@ -71,10 +75,10 @@ export class VendorOutput {
    * @param shop - Optional shop associated with the vendor.
    */
   constructor(
-    id: number,
-    userId: number,
-    user: UserOutput,
-    storeName: string,
+    id?: number,
+    userId?: number,
+    user?: UserOutput,
+    storeName?: string,
     products?: ProductOutput[],
     subscriptionId?: number,
     subscription?: SubscriptionOutput,

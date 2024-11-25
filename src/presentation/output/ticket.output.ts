@@ -1,7 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { UserOutput } from "./user.output";
 import { TicketStatus } from "src/domain/enums/ticket-status.enum";
-
+import { Type } from "class-transformer"
 /**
  * Data Transfer Object for Ticket.
  * Used for validating and transforming ticket data in API requests and responses.
@@ -25,6 +25,7 @@ export class TicketOutput {
    * Provides details about the user who created the ticket.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user: UserOutput;
 
   /**
@@ -42,7 +43,7 @@ export class TicketOutput {
   /**
    * The current status of the ticket (e.g., OPEN, IN_PROGRESS, CLOSED).
    */
-  @Field(() => TicketStatus)
+  @Field()
   status: TicketStatus;
 
   /**
@@ -69,12 +70,12 @@ export class TicketOutput {
    * @param updatedAt - (Optional) Date and time of the last update, defaults to the current date and time.
    */
   constructor(
-    id: number,
-    userId: number,
-    user: UserOutput,
-    subject: string,
-    description: string,
-    status: TicketStatus,
+    id?: number,
+    userId?: number,
+    user?: UserOutput,
+    subject?: string,
+    description?: string,
+    status?: TicketStatus,
     createdAt: Date = new Date(),
     updatedAt: Date = new Date(),
   ) {

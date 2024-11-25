@@ -6,7 +6,7 @@ import { Field, InputType } from "@nestjs/graphql";
  * Used as input data for GraphQL mutations.
  */
 @InputType()
-export class CartItemDTO {
+export class CartItemInput {
   /**
    * Unique identifier for the CartItem.
    * Optional during creation, required for updates.

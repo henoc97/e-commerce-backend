@@ -2,9 +2,11 @@ import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
 import { Currency } from 'src/domain/enums/currencies.enum';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { OrderOutput } from './order.output';
+import { Type } from 'class-transformer';
+
 
 /**
- * Represents the data transfer object for a payment.
+ * Représente l'objet de transfert de données pour un paiement.
  * Used for validation and transformation of payment data.
  */
 @ObjectType()
@@ -26,6 +28,7 @@ export class PaymentOutput {
    * This is a nested object that will be validated separately.
    */
   @Field(() => OrderOutput, { nullable: true })
+  @Type(() => OrderOutput)
   order: OrderOutput;
 
   /**
@@ -57,8 +60,8 @@ export class PaymentOutput {
    * Optional metadata associated with the payment.
    * This can include any additional information or details provided by the payment provider.
    */
-  @Field({ nullable: true })
-  metadata?: any;
+  @Field({ nullable: true }) // Spécification explicite du type JSON
+  metadata?: string;
 
   /**
    * The currency of the payment.
@@ -86,13 +89,13 @@ export class PaymentOutput {
    * @param createdAt - (Optional) Date and time of payment creation.
    */
   constructor(
-    id: number,
-    orderId: number,
-    order: OrderOutput,
-    method: string,
-    status: PaymentStatus,
-    amount: number,
-    currency: Currency,
+    id?: number,
+    orderId?: number,
+    order?: OrderOutput,
+    method?: string,
+    status?: PaymentStatus,
+    amount?: number,
+    currency?: Currency,
     providerId?: string,
     metadata?: any,
     createdAt: Date = new Date(),

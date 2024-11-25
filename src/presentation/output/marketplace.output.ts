@@ -45,7 +45,7 @@ export class MarketplaceOutput {
    * @param id - Unique identifier for the Marketplace (optional).
    */
   constructor(
-    name: string,
+    name?: string,
     description?: string,
     shops?: ShopOutput[],
     id?: number,

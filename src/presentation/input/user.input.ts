@@ -1,10 +1,11 @@
-import { Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 import { UserRole } from "src/domain/enums/user-role.enum";
 
 /**
  * Input Type for User.
  * Used as input data for GraphQL mutations.
  */
+@InputType()
 export class UserInput {
   /**
    * Unique identifier for the user.

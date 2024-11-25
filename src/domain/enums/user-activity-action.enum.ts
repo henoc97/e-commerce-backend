@@ -1,3 +1,5 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export enum UserActivityAction {
   LOGIN = 'LOGIN',
   VIEW_PRODUCT = 'VIEW_PRODUCT',
@@ -8,3 +10,7 @@ export enum UserActivityAction {
   SEARCH = 'SEARCH',
   OTHER = 'OTHER',
 }
+
+registerEnumType(UserActivityAction, {
+  name: 'UserActivityAction', // le nom utilisé dans GraphQL
+});

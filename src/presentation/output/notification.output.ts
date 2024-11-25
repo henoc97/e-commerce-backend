@@ -1,6 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { NotificationType } from "src/domain/enums/notification-type.enum";
 import { UserOutput } from "./user.output";
+import { Type } from "class-transformer";
 
 
 /**
@@ -27,6 +28,7 @@ export class NotificationOutput {
    * User associated with the address.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user?: UserOutput;
 
   /**
@@ -67,9 +69,9 @@ export class NotificationOutput {
    * @param user - User to whom the address (optional)
    */
   constructor(
-    userId: number,
-    type: NotificationType,
-    content: string,
+    userId?: number,
+    type?: NotificationType,
+    content?: string,
     read: boolean = false,
     sentAt?: Date,
     id?: number,

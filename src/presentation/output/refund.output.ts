@@ -1,12 +1,14 @@
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { RefundStatus } from 'src/domain/enums/refund-status.enum';
 import { OrderOutput } from './order.output';
+import { Type } from 'class-transformer';
 
 /**
  * Data Transfer Object for Refund.
  * Used for validating and transforming refund data in API requests and responses.
  */
-export class RefunOutput {
+@ObjectType()
+export class RefundOutput {
   /**
    * Unique identifier for the refund.
    */
@@ -23,6 +25,7 @@ export class RefunOutput {
    * The order associated with this refund.
    */
   @Field(() => OrderOutput, { nullable: true })
+  @Type(() => OrderOutput)
   order?: OrderOutput;
 
   /**
@@ -43,7 +46,7 @@ export class RefunOutput {
    * Current status of the refund.
    * Indicates whether the refund is pending, completed, or rejected.
    */
-  @Field(() => RefundStatus)
+  @Field()
   status: RefundStatus;
 
   /**
@@ -63,12 +66,12 @@ export class RefunOutput {
    * @param createdAt - (Optional) Date and time of refund creation.
    */
   constructor(
-    id: number,
-    orderId: number,
-    order: OrderOutput,
-    reason: string,
-    amount: number,
-    status: RefundStatus,
+    id?: number,
+    orderId?: number,
+    order?: OrderOutput,
+    reason?: string,
+    amount?: number,
+    status?: RefundStatus,
     createdAt: Date = new Date(),
   ) {
     this.id = id;

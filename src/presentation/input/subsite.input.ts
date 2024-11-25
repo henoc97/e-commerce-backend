@@ -32,6 +32,6 @@ export class SubsiteInput {
    * JSON configuration for the Subsite.
    * Stores various settings and parameters for customizing the Subsite.
    */
-  @Field()
-  config: any;
+  @Field({ nullable: true })
+  config: string;
 }

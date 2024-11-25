@@ -1,0 +1,789 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserProfileOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  phone: String!
+  birthday: DateTime
+  gender: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type SubscriptionOutput {
+  id: Float
+  name: String!
+  description: String
+  price: Float!
+  duration: Float!
+  vendors: [VendorOutput!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type VendorOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  storeName: String!
+  products: [ProductOutput!]
+  subscription: SubscriptionOutput
+  subscriptionId: Float!
+  shop: ShopOutput
+}
+
+type MarketplaceOutput {
+  id: Float
+  name: String!
+  description: String
+  shops: [ShopOutput!]
+}
+
+type ShopOutput {
+  id: Float
+  name: String!
+  url: String!
+  description: String!
+  vendor: VendorOutput
+  vendorId: Float!
+  products: [ProductOutput!]
+  orders: [OrderOutput!]
+  categories: [CategoryOutput!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  Marketplace: MarketplaceOutput
+  marketplaceId: Float!
+}
+
+type CategoryOutput {
+  id: Float
+  name: String!
+  parent: CategoryOutput
+  parentId: Float
+  children: [CategoryOutput!]
+  products: [ProductOutput!]
+  shop: ShopOutput
+  shopId: Float
+}
+
+type ProductVariantOutput {
+  id: Float
+  productId: Float!
+  product: ProductOutput
+  name: String!
+  value: String!
+}
+
+type PromotionOutput {
+  id: Float
+  name: String!
+  discountValue: Float!
+  discountType: String!
+  startDate: DateTime!
+  endDate: DateTime
+  productId: Float!
+  product: ProductOutput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type ProductImageOutput {
+  id: Float
+  productId: Float!
+  product: ProductOutput
+  url: String!
+}
+
+type CartOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  items: [CartItemOutput!]
+  totalPrice: Float!
+  totalQuantity: Float!
+  estimatedShippingCost: Float!
+  lastSaved: DateTime
+}
+
+type CartItemOutput {
+  id: Float
+  cartId: Float!
+  cart: CartOutput
+  productId: Float!
+  product: ProductOutput
+  quantity: Float!
+}
+
+type ReviewOutput {
+  id: Float
+  productId: Float!
+  product: ProductOutput
+  userId: Float!
+  user: UserOutput
+  rating: Float!
+  comment: String!
+  flagged: Boolean!
+  verified: Boolean!
+  createdAt: DateTime
+}
+
+type ProductOutput {
+  id: Float
+  name: String!
+  description: String
+  price: Float!
+  promotions: PromotionOutput
+  category: CategoryOutput
+  categoryId: Float!
+  images: [ProductImageOutput!]
+  variants: [ProductVariantOutput!]
+  stock: Float!
+  vendor: VendorOutput
+  vendorId: Float
+  shop: ShopOutput
+  shopId: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  cartItem: CartItemOutput
+  orderItem: OrderItemOutput
+  review: ReviewOutput
+}
+
+type OrderItemOutput {
+  id: Float
+  orderId: Float!
+  order: OrderOutput
+  productId: Float!
+  product: ProductOutput
+  quantity: Float!
+  price: Float!
+  createdAt: DateTime
+}
+
+type PaymentOutput {
+  id: Float!
+  orderId: Float!
+  order: OrderOutput
+  method: String!
+  status: String!
+  amount: Float!
+  providerId: String
+  metadata: String
+  currency: String!
+  createdAt: DateTime
+}
+
+type RefundOutput {
+  id: Float
+  orderId: Float!
+  order: OrderOutput
+  reason: String!
+  amount: Float!
+  status: String!
+  createdAt: DateTime
+}
+
+type OrderOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  shopId: Float!
+  shop: ShopOutput
+  items: [OrderItemOutput!]
+  status: String
+  totalAmount: Float!
+  paymentId: String!
+  trackingNumber: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  payments: [PaymentOutput!]
+  refunds: [RefundOutput!]
+}
+
+type NotificationOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  type: NotificationType
+  content: String!
+  read: Boolean!
+  sentAt: DateTime
+}
+
+enum NotificationType {
+  PROMOTION
+  ORDER_UPDATE
+  INFO
+  WARNING
+}
+
+type TicketOutput {
+  id: Float!
+  userId: Float!
+  user: UserOutput
+  subject: String!
+  description: String!
+  status: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type SubsiteOutput {
+  id: Float
+  title: String!
+  userId: Float!
+  user: UserOutput
+  config: String
+  createdAt: DateTime
+}
+
+type AuditLogOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  action: AuditLogAction!
+  entity: String!
+  entityId: Float!
+  changes: String
+  createdAt: DateTime
+}
+
+enum AuditLogAction {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type UserActivityOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  action: String!
+  productId: Float
+  timestamp: DateTime
+}
+
+type UserOutput {
+  id: Float!
+  email: String!
+  password: String!
+  name: String!
+  role: String!
+  profile: UserProfileOutput
+  addresses: [AddressOutput!]
+  orders: [OrderOutput!]
+  createdAt: DateTime
+  updatedAt: DateTime
+  vendor: VendorOutput
+  carts: [CartOutput!]
+  reviews: [ReviewOutput!]
+  notifications: [NotificationOutput!]
+  tickets: [TicketOutput!]
+  subsites: [SubsiteOutput!]
+  userActivities: [UserActivityOutput!]
+  auditLogs: [AuditLogOutput!]
+}
+
+type AddressOutput {
+  id: Float
+  userId: Float!
+  user: UserOutput
+  street: String!
+  city: String!
+  state: String!
+  postalCode: String!
+  country: String!
+}
+
+type NewsletterSubscriptionOutput {
+  id: Float
+  email: String!
+  shopId: Float!
+  isActive: Boolean!
+  subscribedAt: DateTime
+}
+
+type Query {
+  address(id: Float!): AddressOutput
+  addressesByCity(city: String!): [AddressOutput!]!
+  addressesByCountry(country: String!): [AddressOutput!]!
+  addressesByState(state: String!): [AddressOutput!]!
+  addressesByPostalCode(postalCode: String!): [AddressOutput!]!
+  addressesByUser(userId: Float!): [AddressOutput!]!
+  auditLogById(id: Float!): AuditLogOutput
+  auditLogsByAction(action: String!): [AuditLogOutput!]!
+  auditLogsByDateRange(startDate: DateTime!, endDate: DateTime!): [AuditLogOutput!]!
+  auditLogsByEntity(entity: String!, entityId: Float!): [AuditLogOutput!]!
+  auditLogsByUser(userId: Float!): [AuditLogOutput!]!
+  recentAuditLogs(limit: Float!): [AuditLogOutput!]!
+  calculateCartTotal(cartId: Float!): Float!
+  fetchCartItemById(id: Float!): CartItemOutput
+  fetchCartItemByProductAndCart(productId: Float!, cartId: Float!): CartItemOutput
+  fetchCartItemsByCartId(cartId: Float!): [CartItemOutput!]!
+  fetchHighestQuantityItem(cartId: Float!): CartItemOutput
+  fetchCartById(id: Float!): CartOutput
+  fetchCartByUserId(userId: Float!): [CartOutput!]!
+  fetchItemCount(cartId: Float!): Float!
+  fetchTotalValue(cartId: Float!): Float!
+  categoryExists(name: String!, shopId: Float!): Boolean!
+  categoryById(id: Float!): CategoryOutput
+  categoryHierarchy(categoryId: Float!): [CategoryOutput!]!
+  children(parentId: Float!): [CategoryOutput!]!
+  topLevelCategories: [CategoryOutput!]!
+  listMarketplaces: [MarketplaceOutput!]!
+  fetchMarketplaceById(id: Float!): MarketplaceOutput
+  fetchMarketplaceByShopId(shopId: Float!): MarketplaceOutput
+  fetchShopsInMarketplace(marketplaceId: Float!): [ShopOutput!]!
+  checkEmailSubscribed(email: String!, shopId: Float!): Boolean!
+  countTotalNewsletterSubscriptions(shopId: Float!): Float!
+  fetchNewsletterSubscriptionByEmail(email: String!, shopId: Float!): NewsletterSubscriptionOutput
+  fetchNewsletterSubscriptionById(id: Float!): NewsletterSubscriptionOutput
+  fetchNewsletterSubscriptionsByDateRange(startDate: DateTime!, endDate: DateTime!, shopId: Float!): [NewsletterSubscriptionOutput!]!
+  listNewsletterSubscriptions(shopId: Float!): [NewsletterSubscriptionOutput!]!
+  countUnreadNotifications(userId: Float!): Float!
+  fetchNotificationById(notificationId: Float!): NotificationOutput
+  fetchNotificationsByDateRange(startDate: DateTime!, endDate: DateTime!): [NotificationOutput!]!
+  fetchNotificationsByType(type: String!): [NotificationOutput!]!
+  fetchNotificationsByUserId(userId: Float!): [NotificationOutput!]!
+  fetchRecentNotifications(userId: Float!): [NotificationOutput!]!
+  orderItemById(id: Float!): OrderItemOutput
+  lowStockItems(threshold: Float!): [OrderItemOutput!]!
+  orderItemsByOrderId(orderId: Float!): [OrderItemOutput!]!
+  orderItemsByProductId(productId: Float!): [OrderItemOutput!]!
+  recentOrderItems(orderId: Float!): [OrderItemOutput!]!
+  totalPriceForOrder(orderId: Float!): Float!
+  getOrderById(id: Float!): OrderOutput
+  getOrders: [OrderOutput!]!
+  getOrderByTrackingNumber(trackingNumber: String!): OrderOutput
+  getOrdersByDateRange(startDate: DateTime!, endDate: DateTime!): [OrderOutput!]!
+  getOrdersByShopId(shopId: Float!): [OrderOutput!]!
+  getOrdersByStatus(status: String!): [OrderOutput!]!
+  getOrdersByUserId(userId: Float!): [OrderOutput!]!
+  getRecentOrdersByShop(shopId: Float!, limit: Float!): [OrderOutput!]!
+  getTopOrdersByAmount(topN: Float!): [OrderOutput!]!
+  fetchMostRecentPaymentByOrderId(orderId: Float!): PaymentOutput
+  fetchPaymentById(id: Float!): PaymentOutput
+  fetchPaymentsByDateRange(startDate: DateTime!, endDate: DateTime!): [PaymentOutput!]!
+  fetchPaymentsByMethod(method: String!): [PaymentOutput!]!
+  fetchPaymentsByOrderId(orderId: Float!): [PaymentOutput!]!
+  fetchPaymentsByStatus(status: String!): [PaymentOutput!]!
+  fetchPaymentsGroupedByMethod: String!
+  fetchTotalAmountByDateRange(startDate: DateTime!, endDate: DateTime!): Float!
+  doesProductImageExist(productId: Float!, url: String!): Boolean!
+  countProductImages(productId: Float!): Float!
+  fetchPrimaryProductImage(productId: Float!): ProductImageOutput
+  fetchProductImageById(id: Float!): ProductImageOutput
+  fetchProductImagesByProductId(productId: Float!): [ProductImageOutput!]!
+  checkProductVariantExistence(productId: Float!, name: String!, value: String!): Boolean!
+  fetchMostPopularVariant(productId: Float!): ProductVariantOutput
+  fetchProductVariantById(id: Float!): ProductVariantOutput
+  fetchProductVariantsByName(productId: Float!, name: String!): [ProductVariantOutput!]!
+  fetchProductVariantsByProductId(productId: Float!): [ProductVariantOutput!]!
+  fetchFeaturedProducts: [ProductOutput!]!
+  fetchProductById(productId: Float!): ProductOutput
+  findProductsByCategory(categoryId: Float!): [ProductOutput!]!
+  findProductsByName(name: String!): [ProductOutput!]!
+  findProductsByPriceRange(minPrice: Float!, maxPrice: Float!): [ProductOutput!]!
+  fetchActivePromotionsBetween(start: DateTime!, end: DateTime!): [PromotionOutput!]!
+  fetchActivePromotions: [PromotionOutput!]!
+  fetchBestPromotionForProduct(productId: Float!): PromotionOutput
+  fetchPromotionById(id: Float!): PromotionOutput
+  fetchPromotionsByProduct(productId: Float!): [PromotionOutput!]!
+  checkRefundEligibility(refund: RefundInput!): Boolean!
+  fetchRefundById(id: Float!): RefundOutput
+  fetchRefundsByOrder(orderId: Float!): [RefundOutput!]!
+  fetchRefundsByStatus(status: String!): [RefundOutput!]!
+  fetchTotalRefundedAmount(orderId: Float!): Float!
+  fetchAverageRating(productId: Float!): Float!
+  fetchFlaggedReviews: [ReviewOutput!]!
+  fetchPopularReviews(limit: Float!): [ReviewOutput!]!
+  fetchReviewById(id: Float!): ReviewOutput
+  fetchReviewsByDateRange(startDate: DateTime!, endDate: DateTime!): [ReviewOutput!]!
+  fetchReviewsByProduct(productId: Float!): [ReviewOutput!]!
+  fetchReviewsByRating(rating: Float!): [ReviewOutput!]!
+  fetchReviewsByUser(userId: Float!): [ReviewOutput!]!
+  fetchMostRecentShop: ShopOutput
+  fetchShopById(id: Float!): ShopOutput
+  listShopsByVendor(vendorId: Float!): [ShopOutput!]!
+  searchShopsByName(name: String!): [ShopOutput!]!
+  fetchOrderReportForShop(shopId: Float!, startDate: DateTime!, endDate: DateTime!): [OrderOutput!]!
+  fetchTotalSalesForShop(shopId: Float!): Float!
+  listActiveSubscriptions: [SubscriptionOutput!]!
+  listExpiredSubscriptions: [SubscriptionOutput!]!
+  listExpiringSubscriptions(days: Float!): [SubscriptionOutput!]!
+  listSubscriptionsByPriceRange(minPrice: Float!, maxPrice: Float!): [SubscriptionOutput!]!
+  listSubscriptionsByVendor(vendorId: Float!): [SubscriptionOutput!]!
+  fetchSubscriptionById(id: Float!): SubscriptionOutput
+  fetchLatestSubscription: SubscriptionOutput
+  countSubscriptionsByVendor(vendorId: Float!): Float!
+  countSubsitesByUser(userId: Float!): Float!
+  fetchLatestSubsite: SubsiteOutput!
+  fetchSubsiteById(id: Float!): SubsiteOutput!
+  listActiveSubsites: [SubsiteOutput!]!
+  fetchSubsiteConfig(id: Float!): String!
+  listSubsitesByUser(userId: Float!): [SubsiteOutput!]!
+  fetchTicketById(id: Float!): TicketOutput
+  listTicketsByUser(userId: Float!): [TicketOutput!]!
+  fetchLatestTicket: TicketOutput
+  listHighPriorityTickets: [TicketOutput!]!
+  listTicketsByDateRange(startDate: DateTime!, endDate: DateTime!): [TicketOutput!]!
+  listTicketsByStatus(status: String!): [TicketOutput!]!
+  countOpenTicketsByUser(userId: Float!): Float!
+  countActivities(userId: Float!): Float!
+  fetchActivity(id: Float!): UserActivityOutput
+  getRecentActivities(userId: Float!, limit: Float!): [UserActivityOutput!]!
+  listActivitiesByDateRange(start: DateTime!, end: DateTime!): [UserActivityOutput!]!
+  listActivitiesByProduct(productId: Float!): [UserActivityOutput!]!
+  listActivitiesByUser(userId: Float!): [UserActivityOutput!]!
+  validateActivity(activityDTO: UserActivityInput!): Boolean!
+  fetchUserProfileById(id: Float!): UserProfileOutput
+  fetchUserProfileByUserId(userId: Float!): UserProfileOutput
+  fetchUserProfilesByBirthdayRange(startDate: DateTime!, endDate: DateTime!): [UserProfileOutput!]!
+  fetchUserProfilesByGender(gender: String!): [UserProfileOutput!]!
+  findMatchingProfiles(criteria: UserProfileInput!): [UserProfileOutput!]!
+  isPhoneInUse(phone: String!): Boolean!
+  getActiveCount: Float!
+  getCountByRole(role: String!): Float!
+  getDetailedInfo(userId: Float!): UserOutput!
+  getInactiveUsers(days: Float!): [UserOutput!]!
+  getUserByEmail(email: String!): UserOutput!
+  getUser(userId: Float!): UserOutput!
+  getUsersByRole(role: String!): [UserOutput!]!
+  findVendorById(vendorId: Float!): VendorOutput
+  findVendorsByStoreName(storeName: String!): [VendorOutput!]!
+  findVendorsBySubscription(subscriptionId: Float!): [VendorOutput!]!
+  findVendorsByUser(userId: Float!): [VendorOutput!]!
+  vendorList: [VendorOutput!]!
+}
+
+input RefundInput {
+  id: Float
+  orderId: Float!
+  reason: String!
+  amount: Float!
+  status: String!
+}
+
+input UserActivityInput {
+  id: Float
+  userId: Float!
+  action: String!
+  productId: Float!
+}
+
+input UserProfileInput {
+  id: Float
+  userId: Float!
+  phone: String!
+  birthday: DateTime
+  gender: String
+}
+
+type Mutation {
+  createNewAddress(addressInput: AddressInput!): AddressOutput!
+  updateAddress(id: Float!, addressInput: AddressInput!): AddressOutput!
+  deleteAddress(id: Float!): Boolean!
+  createAuditLog(AuditLogInput: AuditLogInput!): AuditLogOutput!
+  deleteAuditLog(id: Float!): Boolean!
+  updateAuditLog(id: Float!, AuditLogInput: AuditLogInput!): AuditLogOutput!
+  login(username: String!, password: String!): String!
+  protectedResource: String!
+  googleLogin(accessToken: String!): String!
+  facebookLogin(accessToken: String!): String!
+  clearCart(cartId: Float!): CartOutput!
+  createCartItem(CartItemInput: CartItemInput!): CartItemOutput!
+  deleteCartItem(id: Float!): Boolean!
+  updateCartItemQuantity(id: Float!, quantity: Float!): CartItemOutput!
+  updateCartItem(id: Float!, UpdateCartItemQuantityInput: CartItemInput!): CartItemOutput!
+  addItemToCart(cartId: Float!, item: CartItemInput!): CartOutput!
+  createCart(input: CartItemInput!): CartOutput!
+  deleteCart(cartId: Float!): Boolean!
+  mergeCarts(sourceCartId: Float!, targetCartId: Float!): CartOutput!
+  removeItemFromCart(cartId: Float!, itemId: Float!): CartOutput!
+  updateCart(cartId: Float!, data: CartItemInput!): CartOutput!
+  createCategory(categoryInput: CategoryInput!): CategoryOutput!
+  deleteCategory(id: Float!): Boolean!
+  setParent(id: Float!, newParentId: Float!): CategoryOutput!
+  updateCategory(id: Float!, categoryInput: CategoryInput!): CategoryOutput!
+  createMarketplace(dto: MarketplaceInput!): MarketplaceOutput
+  deleteMarketplace(id: Float!): Boolean!
+  updateMarketplace(id: Float!, data: MarketplaceInput!): MarketplaceOutput
+  addShopToMarketplace(marketplaceId: Float!, shopId: Float!): MarketplaceOutput
+  removeShopFromMarketplace(marketplaceId: Float!, shopId: Float!): MarketplaceOutput
+  createNewsletterSubscription(dto: NewsletterSubscriptionInput!): NewsletterSubscriptionOutput
+  deleteNewsletterSubscription(id: Float!): Boolean!
+  updateNewsletterSubscription(id: Float!, dto: NewsletterSubscriptionInput!): NewsletterSubscriptionOutput
+  createNotification(NotificationInput: NotificationInput!): NotificationOutput!
+  deleteNotification(notificationId: Float!): Boolean!
+  markNotificationAsRead(notificationId: Float!): NotificationOutput
+  updateNotification(notificationId: Float!, updates: NotificationInput!): NotificationOutput
+  createOrderItem(orderItem: OrderItemInput!): OrderItemOutput
+  deleteOrderItem(id: Float!): Boolean!
+  updateOrderItem(id: Float!, updates: OrderItemInput!): OrderItemOutput
+  createOrder(order: OrderInput!): OrderOutput!
+  deleteOrder(id: Float!): Boolean!
+  updateOrderStatus(orderId: Float!, status: String!): OrderOutput
+  addPaymentToOrder(orderId: Float!, paymentId: String!): OrderOutput
+  addRefundToOrder(orderId: Float!, refundId: String!): OrderOutput
+  updateOrder(orderId: Float!, updates: OrderInput!): OrderOutput!
+  createPayment(paymentInput: PaymentInput!): PaymentOutput!
+  deletePayment(id: Float!): Boolean!
+  updatePayment(id: Float!, updates: PaymentInput!): PaymentOutput
+  createProductImage(imageDTO: ProductImageInput!): ProductImageOutput!
+  deleteProductImage(id: Float!): Boolean!
+  deleteProductImagesByProductId(productId: Float!): Boolean!
+  updateProductImageUrl(id: Float!, url: String!): ProductImageOutput!
+  updateProductImage(id: Float!, updates: ProductImageInput!): ProductImageOutput
+  createProductVariant(variant: ProductVariantInput!): ProductVariantOutput
+  deleteProductVariant(id: Float!): Boolean!
+  deleteProductVariantsByProductId(productId: Float!): Boolean!
+  updateProductVariantDetails(id: Float!, updateData: ProductVariantInput!): ProductVariantOutput
+  addCartItemToProduct(productId: Float!, cartItem: CartItemInput!): ProductOutput
+  addImageToProduct(productId: Float!, image: ProductImageInput!): ProductOutput
+  addPromotionToProduct(productId: Float!, promotion: PromotionInput!): ProductOutput
+  addReviewToProduct(productId: Float!, review: ReviewInput!): ProductOutput
+  addVariantToProduct(productId: Float!, variant: ProductVariantInput!): ProductOutput
+  createProduct(product: ProductInput!): ProductOutput
+  deleteProduct(productId: Float!): Boolean!
+  removeImageFromProduct(productId: Float!, imageId: Float!): ProductOutput
+  removePromotionFromProduct(productId: Float!, promotionId: Float!): ProductOutput
+  removeVariantFromProduct(productId: Float!, variantId: Float!): ProductOutput
+  updateProductStock(productId: Float!, quantity: Float!): ProductOutput
+  updateProduct(productId: Float!, product: ProductInput!): ProductOutput
+  combinePromotions(promotions: [PromotionInput!]!): PromotionOutput
+  createPromotion(promotion: PromotionInput!): PromotionOutput
+  deletePromotion(promotionId: Float!): Boolean!
+  updatePromotion(promotionId: Float!, promotion: PromotionInput!): PromotionOutput
+  approveRefund(id: Float!): RefundOutput
+  cancelRefund(id: Float!): RefundOutput
+  createRefund(refund: RefundInput!): RefundOutput
+  deleteRefund(id: Float!): Boolean!
+  issuePartialRefund(id: Float!, amount: Float!): RefundOutput!
+  processRefund(id: Float!, status: String!): RefundOutput!
+  updateRefund(id: Float!, updates: RefundInput!): RefundOutput!
+  createReview(reviewDTO: ReviewInput!): ReviewOutput!
+  deleteReview(id: Float!): Boolean!
+  flagReview(id: Float!): ReviewOutput
+  updateReview(id: Float!, review: ReviewInput!): ReviewOutput
+  verifyReview(id: Float!): ReviewOutput
+  createShop(shop: ShopInput!): ShopOutput
+  addCategoryToShop(shopId: Float!, category: CategoryInput!): ShopOutput
+  addOrderToShop(shopId: Float!, order: OrderInput!): ShopOutput
+  addProductToShop(shopId: Float!, product: ProductInput!): ShopOutput
+  associateMarketplaceWithShop(shopId: Float!, marketplaceId: Float!): ShopOutput
+  deleteShop(id: Float!): Boolean!
+  updateShop(shopId: Float!, updates: ShopInput!): ShopOutput!
+  removeCategoryFromShop(shopId: Float!, categoryId: Float!): Boolean!
+  removeProductFromShop(shopId: Float!, productId: Float!): Boolean!
+  createSubscription(subscription: NewsletterSubscriptionInput!): SubscriptionOutput
+  deleteSubscription(id: Float!): Boolean!
+  updateSubscription(id: Float!, updates: NewsletterSubscriptionInput!): SubscriptionOutput
+  createSubsite(subsiteDTO: SubsiteInput!): SubsiteOutput!
+  removeSubsite(id: Float!): Boolean!
+  updateSubsite(id: Float!, updates: SubsiteInput!): SubsiteOutput!
+  validateSubsite(subsiteDTO: SubsiteInput!): Boolean!
+  updateSubsiteConfig(id: Float!, config: String!): String!
+  createTicket(ticket: TicketInput!): TicketOutput
+  closeTicket(id: Float!): TicketOutput
+  deleteTicket(id: Float!): Boolean!
+  updateTicket(id: Float!, updates: TicketInput!): TicketOutput
+  deleteActivity(id: Float!): Boolean!
+  recordActivity(activity: UserActivityInput!): UserActivityOutput!
+  updateActivity(id: Float!, updates: UserActivityInput!): UserActivityOutput
+  createUserProfile(profile: UserProfileInput!): UserProfileOutput
+  deleteUserProfile(id: Float!): Boolean!
+  updateUserProfile(id: Float!, profile: UserProfileInput!): UserProfileOutput
+  addAddressToUser(userId: Float!, AddressInput: AddressInput!): UserOutput!
+  createUser(user: UserInput!): UserOutput!
+  deleteUser(userId: Float!): Boolean!
+  removeAddressFromUser(userId: Float!, addressId: Float!): UserOutput!
+  updateUserPassword(userId: Float!, newPassword: String!): UserOutput!
+  updateUser(userId: Float!, user: UserInput!): UserOutput!
+  addProductToVendor(vendorId: Float!, productDTO: ProductInput!): VendorOutput
+  createVendor(vendorDTO: VendorInput!): VendorOutput
+  deleteVendor(vendorId: Float!): Boolean!
+  removeProductFromVendor(vendorId: Float!, productId: Float!): VendorOutput
+  setVendorShop(vendorId: Float!, shopDTO: ShopInput!): VendorOutput
+  setVendorSubscription(vendorId: Float!, subscriptionDTO: SubscriptionInput!): VendorOutput
+  updateVendor(vendorId: Float!, vendorDTO: VendorInput!): VendorOutput
+}
+
+input AddressInput {
+  id: Float
+  userId: Float!
+  street: String!
+  city: String!
+  state: String!
+  postalCode: String!
+  country: String!
+}
+
+input AuditLogInput {
+  id: Float
+  userId: Float!
+  action: String!
+  entity: String!
+  entityId: Float!
+  changes: String
+}
+
+input CartItemInput {
+  id: Float
+  cartId: Float!
+  productId: Float!
+  quantity: Float!
+}
+
+input CategoryInput {
+  id: Float
+  name: String!
+  parentId: Float
+  shopId: Float
+}
+
+input MarketplaceInput {
+  id: Float
+  name: String!
+  description: String
+}
+
+input NewsletterSubscriptionInput {
+  id: Float
+  email: String!
+  shopId: Float!
+  isActive: Boolean!
+}
+
+input NotificationInput {
+  id: Float
+  userId: Float!
+  type: String!
+  content: String!
+  read: Boolean!
+}
+
+input OrderItemInput {
+  id: Float
+  orderId: Float!
+  productId: Float!
+  quantity: Float!
+  price: Float!
+}
+
+input OrderInput {
+  id: Float
+  userId: Float!
+  shopId: Float!
+  status: String!
+  totalAmount: Float!
+  paymentId: String
+  trackingNumber: String
+}
+
+input PaymentInput {
+  id: Float
+  orderId: Float!
+  method: String!
+  status: String!
+  amount: Float!
+  providerId: String!
+  metadata: String
+  currency: String!
+}
+
+input ProductImageInput {
+  id: Float
+  productId: Float!
+  url: String!
+}
+
+input ProductVariantInput {
+  id: Float
+  productId: Float!
+  name: String!
+  value: String!
+}
+
+input PromotionInput {
+  id: Float
+  name: String!
+  discountValue: Float!
+  discountType: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  productId: Float!
+}
+
+input ReviewInput {
+  id: Float
+  productId: Float!
+  userId: Float!
+  rating: Float!
+  comment: String
+  flagged: Boolean!
+  verified: Boolean!
+}
+
+input ProductInput {
+  id: Float
+  name: String!
+  description: String
+  price: Float!
+  categoryId: Float!
+  stock: Float!
+  vendorId: Float!
+  shopId: Float!
+}
+
+input ShopInput {
+  id: Float
+  name: String!
+  url: String!
+  description: String!
+  vendorId: Float!
+  marketplaceId: Float!
+}
+
+input SubsiteInput {
+  id: Float
+  title: String!
+  userId: Float!
+  config: String
+}
+
+input TicketInput {
+  id: Float
+  userId: Float!
+  subject: String!
+  description: String!
+  status: String!
+}
+
+input UserInput {
+  id: Float
+  email: String!
+  password: String!
+  name: String
+  role: String!
+}
+
+input VendorInput {
+  id: Float
+  userId: Float!
+  storeName: String!
+  subscriptionId: Float!
+}
+
+input SubscriptionInput {
+  id: Float!
+  name: String!
+  description: String!
+  price: Float!
+  duration: Float!
+}

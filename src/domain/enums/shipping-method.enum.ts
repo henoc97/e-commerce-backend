@@ -1,3 +1,5 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export enum ShippingMethod {
   STANDARD = 'STANDARD',
   EXPRESS = 'EXPRESS',
@@ -6,3 +8,7 @@ export enum ShippingMethod {
   ECONOMY = 'ECONOMY',
   TWO_DAY = 'TWO_DAY',
 }
+
+registerEnumType(ShippingMethod, {
+  name: 'ShippingMethod', // le nom utilisé dans GraphQL
+});

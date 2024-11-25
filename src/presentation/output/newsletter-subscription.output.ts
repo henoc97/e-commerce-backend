@@ -6,7 +6,7 @@ import { Field, ObjectType } from "@nestjs/graphql";
  * Used for validating and transforming data in API requests and responses.
  */
 @ObjectType()
-export class NewsletterSubscriptionDTO {
+export class NewsletterSubscriptionOutput {
   /**
    * Unique identifier for the subscription.
    * Optional during creation, required for updates.
@@ -50,9 +50,9 @@ export class NewsletterSubscriptionDTO {
    * @param id - Unique identifier for the subscription (optional).
    */
   constructor(
-    email: string,
-    shopId: number,
-    isActive: boolean,
+    email?: string,
+    shopId?: number,
+    isActive?: boolean,
     subscribedAt?: Date,
     id?: number,
   ) {

@@ -4,7 +4,7 @@ import { ProductOutput } from "./product.output";
 import { CategoryOutput } from "./category.output";
 import { VendorOutput } from "./vendor.output";
 import { MarketplaceOutput } from "./marketplace.output";
-
+import { Type } from "class-transformer"
 /**
  * Data Transfer Object for Shop.
  * Used for validating and transforming shop data in API requests and responses.
@@ -39,6 +39,7 @@ export class ShopOutput {
    * The vendor associated with the shop.
    */
   @Field(() => VendorOutput, { nullable: true })
+  @Type(() => VendorOutput)
   vendor?: VendorOutput;
 
   /**
@@ -51,18 +52,21 @@ export class ShopOutput {
    * Optional array of products available in the shop.
    */
   @Field(() => [ProductOutput], { nullable: true })
+  @Type(() => ProductOutput)
   products?: ProductOutput[];
 
   /**
    * Optional array of orders associated with the shop.
    */
   @Field(() => [OrderOutput], { nullable: true })
+  @Type(() => OrderOutput)
   orders?: OrderOutput[];
 
   /**
    * Optional array of categories associated with the shop.
    */
   @Field(() => [CategoryOutput], { nullable: true })
+  @Type(() => CategoryOutput)
   categories?: CategoryOutput[];
 
   /**
@@ -81,6 +85,7 @@ export class ShopOutput {
    * Optional marketplace where the shop is listed.
    */
   @Field(() => MarketplaceOutput, { nullable: true })
+  @Type(() => MarketplaceOutput)
   Marketplace?: MarketplaceOutput;
 
   /**
@@ -106,11 +111,11 @@ export class ShopOutput {
    * @param marketplaceId - Optional ID of the marketplace where the shop is listed.
    */
   constructor(
-    id: number,
-    name: string,
-    url: string,
-    vendor: VendorOutput,
-    vendorId: number,
+    id?: number,
+    name?: string,
+    url?: string,
+    vendor?: VendorOutput,
+    vendorId?: number,
     products: ProductOutput[] = [],
     orders: OrderOutput[] = [],
     categories: CategoryOutput[] = [],

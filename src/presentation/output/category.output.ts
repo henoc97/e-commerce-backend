@@ -1,7 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { ProductOutput } from "./product.output";
 import { ShopOutput } from "./shop.output";
-
+import { Type } from "class-transformer"
 /**
  * Data Transfer Object for Category.
  * Used for validating and transforming data in API requests and responses.
@@ -28,6 +28,7 @@ export class CategoryOutput {
    * Optional.
    */
   @Field(() => CategoryOutput, { nullable: true })
+  @Type(() => CategoryOutput)
   parent?: CategoryOutput;
 
   /**
@@ -43,6 +44,7 @@ export class CategoryOutput {
    * Optional.
    */
   @Field(() => [CategoryOutput], { nullable: true })
+  @Type(() => CategoryOutput)
   children?: CategoryOutput[];
 
   /**
@@ -51,6 +53,7 @@ export class CategoryOutput {
    * Optional.
    */
   @Field(() => [ProductOutput], { nullable: true })
+  @Type(() => ProductOutput)
   products?: ProductOutput[];
 
   /**
@@ -59,6 +62,7 @@ export class CategoryOutput {
    * Optional.
    */
   @Field(() => ShopOutput, { nullable: true })
+  @Type(() => ShopOutput)
   shop?: ShopOutput;
 
   /**
@@ -80,7 +84,7 @@ export class CategoryOutput {
    * @param shopId - ID of the Shop this category belongs to (optional).
    */
   constructor(
-    name: string,
+    name?: string,
     id?: number,
     parentId?: number,
     parent?: CategoryOutput,

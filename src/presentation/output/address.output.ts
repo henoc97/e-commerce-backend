@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { UserOutput } from './user.output';
+import { Type } from 'class-transformer';
 
 
 @ObjectType()
@@ -20,6 +21,7 @@ export class AddressOutput {
    * User associated with the address.
    */
   @Field(() => UserOutput, { nullable: true }) // Relation avec UserOutput.
+  @Type(() => UserOutput)
   user?: UserOutput;
 
   /**
@@ -55,23 +57,23 @@ export class AddressOutput {
   /**
    * Constructs an AddressOutput instance.
    *
-   * @param id - Unique identifier for the address.
    * @param userId - Foreign key referring to the User.
    * @param street - Street address.
    * @param city - City where the address is located.
    * @param state - State or region where the address is located.
    * @param postalCode - Postal code for the address.
    * @param country - Country where the address is located.
+   * @param id - Unique identifier for the address.
    * @param user - User to whom the address (optional).
    */
   constructor(
-    id: number,
-    userId: number,
-    street: string,
-    city: string,
-    state: string,
-    postalCode: string,
-    country: string,
+    userId?: number,
+    street?: string,
+    city?: string,
+    state?: string,
+    postalCode?: string,
+    country?: string,
+    id?: number,
     user?: UserOutput,
   ) {
     this.id = id;

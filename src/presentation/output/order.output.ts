@@ -5,7 +5,8 @@ import { OrderItemOutput } from './order-item.output';
 import { UserOutput } from './user.output';
 import { ShopOutput } from './shop.output';
 import { PaymentOutput } from './payment.output';
-import { RefunOutput } from './refund.output';
+import { RefundOutput } from './refund.output';
+import { Type } from 'class-transformer';
 
 /**
  * Data Transfer Object for Order.
@@ -32,6 +33,7 @@ export class OrderOutput {
    * Optional for input, included for output to provide context.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user?: UserOutput;
 
   /**
@@ -46,6 +48,7 @@ export class OrderOutput {
    * Optional for input, included for output to provide context.
    */
   @Field(() => ShopOutput, { nullable: true })
+  @Type(() => ShopOutput)
   shop?: ShopOutput;
 
   /**
@@ -53,13 +56,14 @@ export class OrderOutput {
    * Each item must follow the OrderItemOutput schema.
    */
   @Field(() => [OrderItemOutput], { nullable: true })
+  @Type(() => OrderItemOutput)
   items?: OrderItemOutput[];
 
   /**
    * Status of the Order (e.g., Pending, Shipped, Delivered).
    * Must be a valid OrderStatus enum value.
    */
-  @Field(() => OrderStatus, { nullable: true })
+  @Field({ nullable: true })
   status: OrderStatus;
 
   /**
@@ -103,6 +107,7 @@ export class OrderOutput {
    * Optional field.
    */
   @Field(() => [PaymentOutput], { nullable: true })
+  @Type(() => PaymentOutput)
   payments?: PaymentOutput[];
 
   /**
@@ -110,8 +115,9 @@ export class OrderOutput {
    * Each refund must follow the RefundOutput schema.
    * Optional field.
    */
-  @Field(() => [RefunOutput], { nullable: true })
-  refunds?: RefunOutput[];
+  @Field(() => [RefundOutput], { nullable: true })
+  @Type(() => RefundOutput)
+  refunds?: RefundOutput[];
 
   /**
    * Creates a new OrderOutput instance.
@@ -131,10 +137,10 @@ export class OrderOutput {
    * @param refunds - List of Refunds associated with the Order (optional).
    */
   constructor(
-    userId: number,
-    shopId: number,
-    status: OrderStatus,
-    totalAmount: number,
+    userId?: number,
+    shopId?: number,
+    status?: OrderStatus,
+    totalAmount?: number,
     id?: number,
     paymentId?: string,
     trackingNumber?: string,
@@ -144,7 +150,7 @@ export class OrderOutput {
     user?: UserOutput,
     shop?: ShopOutput,
     payments?: PaymentOutput[],
-    refunds?: RefunOutput[],
+    refunds?: RefundOutput[],
   ) {
     this.id = id;
     this.userId = userId;

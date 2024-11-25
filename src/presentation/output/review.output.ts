@@ -1,7 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { ProductOutput } from "./product.output";
 import { UserOutput } from "./user.output";
-
+import { Type } from "class-transformer"
 /**
  * Data Transfer Object for Review.
  * Used for validating and transforming review data in API requests and responses.
@@ -24,6 +24,7 @@ export class ReviewOutput {
    * The product associated with this review.
    */
   @Field(() => ProductOutput, { nullable: true })
+  @Type(() => ProductOutput)
   product: ProductOutput;
 
   /**
@@ -36,6 +37,7 @@ export class ReviewOutput {
    * The user who wrote the review.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user: UserOutput;
 
   /**
@@ -80,12 +82,12 @@ export class ReviewOutput {
    * @param createdAt - (Optional) Date and time of review creation.
    */
   constructor(
-    id: number,
-    productId: number,
-    product: ProductOutput,
-    userId: number,
-    user: UserOutput,
-    rating: number,
+    id?: number,
+    productId?: number,
+    product?: ProductOutput,
+    userId?: number,
+    user?: UserOutput,
+    rating?: number,
     comment?: string,
     createdAt: Date = new Date(),
   ) {

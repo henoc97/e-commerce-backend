@@ -14,8 +14,9 @@ import { FetchReviewsByUser } from 'src/application/use-cases/review.use-cases/f
 import { FlagReview } from 'src/application/use-cases/review.use-cases/flag-review.use-case';
 import { UpdateReview } from 'src/application/use-cases/review.use-cases/update-review.use-case';
 import { VerifyReview } from 'src/application/use-cases/review.use-cases/verify-review.use-case';
-import { Review, ReviewInput } from 'src/generated/graphql';
 import { ReviewDTO } from 'src/presentation/dtos/review.dto';
+import { ReviewInput } from 'src/presentation/input/review.input';
+import { ReviewOutput } from 'src/presentation/output/review.output';
 
 @Resolver('Review')
 export class ReviewResolver {
@@ -35,11 +36,12 @@ export class ReviewResolver {
     private readonly verifyReviewUseCase: VerifyReview,
   ) { }
 
-  @Mutation(() => ReviewDTO)
+  @Mutation(() => ReviewOutput)
   async createReview(
-    @Args('reviewDTO') reviewDTO: ReviewDTO,
-  ): Promise<Review | null> {
-    const result = await this.createReviewUseCase.execute(reviewDTO);
+    @Args('reviewDTO') review: ReviewInput,
+  ): Promise<ReviewOutput | null> {
+    const dto = toReviewDTO(review);
+    const result = await this.createReviewUseCase.execute(dto);
     return transformReviewDTOToGraphQL(result);
   }
 
@@ -55,77 +57,77 @@ export class ReviewResolver {
     return this.fetchAverageRatingUseCase.execute(productId);
   }
 
-  @Query(() => [ReviewDTO])
-  async fetchFlaggedReviews(): Promise<Review[]> {
+  @Query(() => [ReviewOutput])
+  async fetchFlaggedReviews(): Promise<ReviewOutput[]> {
     const result = await this.fetchFlaggedReviewsUseCase.execute();
     return result.map(transformReviewDTOToGraphQL);
   }
 
-  @Query(() => [ReviewDTO])
+  @Query(() => [ReviewOutput])
   async fetchPopularReviews(
     @Args('limit') limit: number,
-  ): Promise<Review[]> {
+  ): Promise<ReviewOutput[]> {
     const result = await this.fetchPopularReviewsUseCase.execute(limit);
     return result.map(transformReviewDTOToGraphQL);
   }
 
-  @Query(() => ReviewDTO, { nullable: true })
-  async fetchReviewById(@Args('id') id: number): Promise<Review | null> {
+  @Query(() => ReviewOutput, { nullable: true })
+  async fetchReviewById(@Args('id') id: number): Promise<ReviewOutput | null> {
     const result = await this.fetchReviewByIdUseCase.execute(id);
     return transformReviewDTOToGraphQL(result);
   }
 
-  @Query(() => [ReviewDTO])
+  @Query(() => [ReviewOutput])
   async fetchReviewsByDateRange(
     @Args('startDate') startDate: Date,
     @Args('endDate') endDate: Date,
-  ): Promise<Review[]> {
+  ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByDateRangeUseCase.execute(startDate, endDate);
     return result.map(transformReviewDTOToGraphQL);
   }
 
-  @Query(() => [ReviewDTO])
+  @Query(() => [ReviewOutput])
   async fetchReviewsByProduct(
     @Args('productId') productId: number,
-  ): Promise<Review[]> {
+  ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByProductUseCase.execute(productId);
     return result.map(transformReviewDTOToGraphQL);
   }
 
-  @Query(() => [ReviewDTO])
+  @Query(() => [ReviewOutput])
   async fetchReviewsByRating(
     @Args('rating') rating: number,
-  ): Promise<Review[]> {
+  ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByRatingUseCase.execute(rating);
     return result.map(transformReviewDTOToGraphQL);
   }
 
-  @Query(() => [ReviewDTO])
+  @Query(() => [ReviewOutput])
   async fetchReviewsByUser(
     @Args('userId') userId: number,
-  ): Promise<Review[]> {
+  ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByUserUseCase.execute(userId);
     return result.map(transformReviewDTOToGraphQL);
   }
 
-  @Mutation(() => ReviewDTO, { nullable: true })
-  async flagReview(@Args('id') id: number): Promise<Review | null> {
+  @Mutation(() => ReviewOutput, { nullable: true })
+  async flagReview(@Args('id') id: number): Promise<ReviewOutput | null> {
     const result = await this.flagReviewUseCase.execute(id);
     return transformReviewDTOToGraphQL(result);
   }
 
-  @Mutation(() => ReviewDTO, { nullable: true })
+  @Mutation(() => ReviewOutput, { nullable: true })
   async updateReview(
     @Args('id') id: number,
-    @Args('reviewDTO') review: ReviewInput,
-  ): Promise<Review | null> {
+    @Args('review') review: ReviewInput,
+  ): Promise<ReviewOutput | null> {
     const dto = toReviewDTO(review);
     const result = await this.updateReviewUseCase.execute(id, dto);
     return transformReviewDTOToGraphQL(result);
   }
 
-  @Mutation(() => ReviewDTO, { nullable: true })
-  async verifyReview(@Args('id') id: number): Promise<Review | null> {
+  @Mutation(() => ReviewOutput, { nullable: true })
+  async verifyReview(@Args('id') id: number): Promise<ReviewOutput | null> {
     const result = await this.verifyReviewUseCase.execute(id);
     return transformReviewDTOToGraphQL(result);
   }

@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { UserOutput } from "./user.output";
-
+import { Type } from "class-transformer"
 /**
  * Data Transfer Object for Subsite.
  * Used for validating and transforming Subsite data in API requests and responses.
@@ -33,14 +33,15 @@ export class SubsiteOutput {
    * Provides details about the user managing or owning the Subsite.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user: UserOutput;
 
   /**
    * JSON configuration for the Subsite.
    * Stores various settings and parameters for customizing the Subsite.
    */
-  @Field()
-  config: any;
+  @Field({ nullable: true })
+  config: string;
 
   /**
    * The date and time when the Subsite was created.
@@ -59,11 +60,11 @@ export class SubsiteOutput {
    * @param createdAt - (Optional) Date and time of Subsite creation, defaults to the current date and time.
    */
   constructor(
-    id: number,
-    title: string,
-    userId: number,
-    user: UserOutput,
-    config: any,
+    id?: number,
+    title?: string,
+    userId?: number,
+    user?: UserOutput,
+    config?: string,
     createdAt: Date = new Date(),
   ) {
     this.id = id;

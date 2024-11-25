@@ -15,9 +15,11 @@ import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
 import { transformCartDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { Cart } from 'src/generated/graphql';
+import { CartOutput } from 'src/presentation/output/cart.output';
+import { CartItemInput } from 'src/presentation/input/cart-item.input';
+import { toCartDTO } from 'src/application/helper/to-dto/to.cart.dto';
 
-@Resolver(() => 'Cart')
+@Resolver(() => CartOutput)
 export class CartResolver {
   constructor(
     private readonly addItemToCartUseCase: AddItemToCart,
@@ -34,26 +36,27 @@ export class CartResolver {
   ) { }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'Cart')
+  @Mutation(() => CartOutput)
   async addItemToCart(
     @Args('cartId') cartId: number,
-    @Args('item') item: CartItemDTO,
-  ): Promise<Cart> {
+    @Args('item') item: CartItemInput,
+  ): Promise<CartOutput> {
     const result = await this.addItemToCartUseCase.execute(cartId, item);
     return transformCartDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'Cart')
-  async clearCart(@Args('cartId') cartId: number): Promise<Cart | null> {
+  @Mutation(() => CartOutput)
+  async clearCart(@Args('cartId') cartId: number): Promise<CartOutput | null> {
     const result = await this.clearCartUseCase.execute(cartId);
     return transformCartDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'Cart')
-  async createCart(@Args('input') input: CartDTO): Promise<Cart> {
-    const result = await this.createCartUseCase.execute(input);
+  @Mutation(() => CartOutput)
+  async createCart(@Args('input') input: CartItemInput): Promise<CartOutput> {
+    const dto = toCartDTO(input);
+    const result = await this.createCartUseCase.execute(dto);
     return transformCartDTOToGraphQL(result);
   }
 
@@ -64,15 +67,15 @@ export class CartResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => 'Cart', { nullable: true })
-  async fetchCartById(@Args('id') id: number): Promise<Cart | null> {
+  @Query(() => CartOutput, { nullable: true })
+  async fetchCartById(@Args('id') id: number): Promise<CartOutput | null> {
     const result = await this.fetchCartByIdUseCase.execute(id);
     return transformCartDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Query(() => ['Cart'])
-  async fetchCartByUserId(@Args('userId') userId: number): Promise<Cart[]> {
+  @Query(() => [CartOutput])
+  async fetchCartByUserId(@Args('userId') userId: number): Promise<CartOutput[]> {
     const result = await this.fetchCartByUserIdUseCase.execute(userId);
     return result.map(transformCartDTOToGraphQL);
   }
@@ -90,31 +93,31 @@ export class CartResolver {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'Cart')
+  @Mutation(() => CartOutput)
   async mergeCarts(
     @Args('sourceCartId') sourceCartId: number,
     @Args('targetCartId') targetCartId: number,
-  ): Promise<Cart> {
+  ): Promise<CartOutput> {
     const result = await this.mergeCartsUseCase.execute(sourceCartId, targetCartId);
     return transformCartDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'Cart')
+  @Mutation(() => CartOutput)
   async removeItemFromCart(
     @Args('cartId') cartId: number,
     @Args('itemId') itemId: number,
-  ): Promise<Cart> {
+  ): Promise<CartOutput> {
     const result = await this.removeItemFromCartUseCase.execute(cartId, itemId);
     return transformCartDTOToGraphQL(result);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Mutation(() => 'Cart')
+  @Mutation(() => CartOutput)
   async updateCart(
     @Args('cartId') cartId: number,
-    @Args('data') data: CartDTO,
-  ): Promise<Cart> {
+    @Args('data') data: CartItemInput,
+  ): Promise<CartOutput> {
     const result = await this.updateCartUseCase.execute(cartId, data);
     return transformCartDTOToGraphQL(result);
   }

@@ -1,5 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { UserOutput } from "./user.output";
+import { Type } from "class-transformer";
 
 
 /**
@@ -24,6 +25,7 @@ export class UserProfileOutput {
    * User object representing the relationship between the profile and the user.
    */
   @Field(() => UserOutput, { nullable: true })
+  @Type(() => UserOutput)
   user: UserOutput;
 
   /**
@@ -55,9 +57,9 @@ export class UserProfileOutput {
    * @param gender - (Optional) Gender of the user.
    */
   constructor(
-    id: number,
-    userId: number,
-    user: UserOutput,
+    id?: number,
+    userId?: number,
+    user?: UserOutput,
     phone?: string,
     birthday?: Date,
     gender?: string,

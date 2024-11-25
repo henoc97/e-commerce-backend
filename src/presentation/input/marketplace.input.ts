@@ -5,7 +5,7 @@ import { Field, InputType } from "@nestjs/graphql";
  * Used as input data for GraphQL mutations.
  */
 @InputType()
-export class MarketplaceDTO {
+export class MarketplaceInput {
   /**
    * Unique identifier for the Marketplace.
    * Optional during creation, required for updates.

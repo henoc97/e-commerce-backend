@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activity.dto';
 import { transformUserActivityDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { CountActivitiesByUser } from 'src/application/use-cases/user-activity.use-cases/count-activities-by-user.use-case';
 import { DeleteActivity } from 'src/application/use-cases/user-activity.use-cases/delete-activity.use-case';
@@ -10,8 +11,9 @@ import { ListActivitiesByUser } from 'src/application/use-cases/user-activity.us
 import { RecordActivity } from 'src/application/use-cases/user-activity.use-cases/record-activity.use-case';
 import { UpdateActivity } from 'src/application/use-cases/user-activity.use-cases/update-activity.use-case';
 import { ValidateActivity } from 'src/application/use-cases/user-activity.use-cases/validate-activity.use-case';
-import { UserActivity } from 'src/generated/graphql';
 import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
+import { UserActivityInput } from 'src/presentation/input/user-activity.input';
+import { UserActivityOutput } from 'src/presentation/output/user-activity.output';
 
 @Resolver()
 export class UserActivityResolver {
@@ -38,67 +40,69 @@ export class UserActivityResolver {
     return this.deleteActivityUseCase.execute(id);
   }
 
-  @Query(() => UserActivityDTO, { nullable: true })
-  async fetchActivity(@Args('id') id: number): Promise<UserActivity | null> {
+  @Query(() => UserActivityOutput, { nullable: true })
+  async fetchActivity(@Args('id') id: number): Promise<UserActivityOutput | null> {
     const result = await this.fetchActivityById.execute(id);
     return transformUserActivityDTOToGraphQL(result);
   }
 
-  @Query(() => [UserActivityDTO])
+  @Query(() => [UserActivityOutput])
   async getRecentActivities(
     @Args('userId') userId: number,
     @Args('limit') limit: number,
-  ): Promise<UserActivity[]> {
+  ): Promise<UserActivityOutput[]> {
     const result = await this.getRecentActivitiesByUser.execute(userId, limit);
     return result.map(transformUserActivityDTOToGraphQL);
   }
 
-  @Query(() => [UserActivityDTO])
+  @Query(() => [UserActivityOutput])
   async listActivitiesByDateRange(
     @Args('start') start: Date,
     @Args('end') end: Date,
-  ): Promise<UserActivity[]> {
+  ): Promise<UserActivityOutput[]> {
     const result = await this.listActivitiesByDateRangeUseCase.execute(start, end);
     return result.map(transformUserActivityDTOToGraphQL);
   }
 
-  @Query(() => [UserActivityDTO])
+  @Query(() => [UserActivityOutput])
   async listActivitiesByProduct(
     @Args('productId') productId: number,
-  ): Promise<UserActivity[]> {
+  ): Promise<UserActivityOutput[]> {
     const result = await this.listActivitiesByProductUseCase.execute(productId);
     return result.map(transformUserActivityDTOToGraphQL);
   }
 
-  @Query(() => [UserActivityDTO])
+  @Query(() => [UserActivityOutput])
   async listActivitiesByUser(
     @Args('userId') userId: number,
-  ): Promise<UserActivity[]> {
+  ): Promise<UserActivityOutput[]> {
     const result = await this.listActivitiesByUserUseCase.execute(userId);
     return result.map(transformUserActivityDTOToGraphQL);
   }
 
-  @Mutation(() => UserActivityDTO)
+  @Mutation(() => UserActivityOutput)
   async recordActivity(
-    @Args('activityDTO') activityDTO: UserActivityDTO,
-  ): Promise<UserActivity> {
-    const result = await this.recordActivityUseCase.execute(activityDTO);
+    @Args('activity') activity: UserActivityInput,
+  ): Promise<UserActivityOutput> {
+    const dto = toUserActivityDTO(activity)
+    const result = await this.recordActivityUseCase.execute(dto);
     return transformUserActivityDTOToGraphQL(result);
   }
 
-  @Mutation(() => UserActivityDTO, { nullable: true })
+  @Mutation(() => UserActivityOutput, { nullable: true })
   async updateActivity(
     @Args('id') id: number,
-    @Args('updates') updates: UserActivityDTO,
-  ): Promise<UserActivity | null> {
+    @Args('updates') updates: UserActivityInput,
+  ): Promise<UserActivityOutput | null> {
     const result = await this.updateActivityUseCase.execute(id, updates);
     return transformUserActivityDTOToGraphQL(result);
   }
 
   @Query(() => Boolean)
   async validateActivity(
-    @Args('activityDTO') activityDTO: UserActivityDTO,
+    @Args('activityDTO') activity: UserActivityInput,
   ): Promise<boolean> {
-    return this.validateActivityUseCase.execute(activityDTO);
+    const dto = toUserActivityDTO(activity)
+    return this.validateActivityUseCase.execute(dto);
   }
 }

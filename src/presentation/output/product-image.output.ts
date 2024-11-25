@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { ProductOutput } from "./product.output";
-
+import { Type } from "class-transformer"
 
 /**
  * Data Transfer Object for ProductImage.
@@ -25,6 +25,7 @@ export class ProductImageOutput {
    * This is a nested object validated separately.
    */
   @Field(() => ProductOutput, { nullable: true })
+  @Type(() => ProductOutput)
   product: ProductOutput;
 
   /**
@@ -40,7 +41,7 @@ export class ProductImageOutput {
    * @param product - The Product entity associated with the image.
    * @param url - The URL of the product image.
    */
-  constructor(id: number, productId: number, product: ProductOutput, url: string) {
+  constructor(id?: number, productId?: number, product?: ProductOutput, url?: string) {
     this.id = id;
     this.productId = productId;
     this.product = product;

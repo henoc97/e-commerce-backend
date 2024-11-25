@@ -1,5 +1,4 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
 import { ShopDTO } from 'src/presentation/dtos/shop.dto';
 import { AddShopToMarketplace } from 'src/application/use-cases/marketplace.use-cases/add-shop-to-marketplace.use-case';
 import { CreateMarketplace } from 'src/application/use-cases/marketplace.use-cases/create-marketplace.use-case';
@@ -10,10 +9,12 @@ import { FetchShopsInMarketplace } from 'src/application/use-cases/marketplace.u
 import { ListMarketplaces } from 'src/application/use-cases/marketplace.use-cases/list-marketplaces.use-case';
 import { RemoveShopFromMarketplace } from 'src/application/use-cases/marketplace.use-cases/remove-shop-from-marketplace.use-case';
 import { UpdateMarketplace } from 'src/application/use-cases/marketplace.use-cases/update-marketplace.use-case';
+import { MarketplaceOutput } from 'src/presentation/output/marketplace.output';
 import { transformMarketplaceDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { Marketplace } from 'src/generated/graphql';
+import { MarketplaceInput } from 'src/presentation/input/marketplace.input';
+import { ShopOutput } from 'src/presentation/output/shop.output';
 
-@Resolver(() => MarketplaceDTO)
+@Resolver(() => MarketplaceInput)
 export class MarketplaceResolver {
   constructor(
     private readonly addShopToMarketplaceUseCase: AddShopToMarketplace,
@@ -27,39 +28,39 @@ export class MarketplaceResolver {
     private readonly updateMarketplaceUseCase: UpdateMarketplace,
   ) { }
 
-  @Query(() => ['Marketplace'])
-  async listMarketplaces(): Promise<Marketplace[]> {
+  @Query(() => [MarketplaceOutput])
+  async listMarketplaces(): Promise<MarketplaceOutput[]> {
     const result = await this.listMarketplacesUseCase.execute();
     return result.map(transformMarketplaceDTOToGraphQL);
   }
 
-  @Query(() => 'Marketplace', { nullable: true })
+  @Query(() => MarketplaceOutput, { nullable: true })
   async fetchMarketplaceById(
     @Args('id') id: number,
-  ): Promise<Marketplace | null> {
+  ): Promise<MarketplaceOutput | null> {
     const result = await this.fetchMarketplaceByIdUseCase.execute(id);
     return transformMarketplaceDTOToGraphQL(result);
   }
 
-  @Query(() => 'Marketplace', { nullable: true })
+  @Query(() => MarketplaceOutput, { nullable: true })
   async fetchMarketplaceByShopId(
     @Args('shopId') shopId: number,
-  ): Promise<Marketplace | null> {
+  ): Promise<MarketplaceOutput | null> {
     const result = await this.fetchMarketplaceByShopIdUseCase.execute(shopId);
     return transformMarketplaceDTOToGraphQL(result);
   }
 
-  @Query(() => [ShopDTO])
+  @Query(() => [ShopOutput])
   async fetchShopsInMarketplace(
     @Args('marketplaceId') marketplaceId: number,
   ): Promise<ShopDTO[]> {
     return this.fetchShopsInMarketplaceUseCase.execute(marketplaceId);
   }
 
-  @Mutation(() => 'Marketplace', { nullable: true })
+  @Mutation(() => MarketplaceOutput, { nullable: true })
   async createMarketplace(
-    @Args('dto') dto: MarketplaceDTO,
-  ): Promise<Marketplace | null> {
+    @Args('dto') dto: MarketplaceInput,
+  ): Promise<MarketplaceOutput | null> {
     const result = await this.createMarketplaceUseCase.execute(dto);
     return transformMarketplaceDTOToGraphQL(result);
   }
@@ -69,29 +70,29 @@ export class MarketplaceResolver {
     return this.deleteMarketplaceUseCase.execute(id);
   }
 
-  @Mutation(() => 'Marketplace', { nullable: true })
+  @Mutation(() => MarketplaceOutput, { nullable: true })
   async updateMarketplace(
     @Args('id') id: number,
-    @Args('data') data: MarketplaceDTO,
-  ): Promise<Marketplace | null> {
+    @Args('data') data: MarketplaceInput,
+  ): Promise<MarketplaceOutput | null> {
     const result = await this.updateMarketplaceUseCase.execute(id, data);
     return transformMarketplaceDTOToGraphQL(result);
   }
 
-  @Mutation(() => 'Marketplace', { nullable: true })
+  @Mutation(() => MarketplaceOutput, { nullable: true })
   async addShopToMarketplace(
     @Args('marketplaceId') marketplaceId: number,
     @Args('shopId') shopId: number,
-  ): Promise<Marketplace | null> {
+  ): Promise<MarketplaceOutput | null> {
     const result = await this.addShopToMarketplaceUseCase.execute(marketplaceId, shopId);
     return transformMarketplaceDTOToGraphQL(result);
   }
 
-  @Mutation(() => 'Marketplace', { nullable: true })
+  @Mutation(() => MarketplaceOutput, { nullable: true })
   async removeShopFromMarketplace(
     @Args('marketplaceId') marketplaceId: number,
     @Args('shopId') shopId: number,
-  ): Promise<Marketplace | null> {
+  ): Promise<MarketplaceOutput | null> {
     const result = await this.removeShopFromMarketplaceUseCase.execute(marketplaceId, shopId);
     return transformMarketplaceDTOToGraphQL(result);
   }

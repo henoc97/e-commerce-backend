@@ -1,9 +1,10 @@
-import { Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 
 /**
  * Input Type for Vendor.
  * Used as input data for GraphQL mutations.
  */
+@InputType()
 export class VendorInput {
   /**
    * Unique identifier for the vendor.

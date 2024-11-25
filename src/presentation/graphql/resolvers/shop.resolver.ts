@@ -23,9 +23,16 @@ import { CategoryDTO } from 'src/presentation/dtos/category.dto';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { ProductDTO } from 'src/presentation/dtos/product.dto';
 import { transformShopDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { Shop } from 'src/generated/graphql';
+import { ShopOutput } from 'src/presentation/output/shop.output';
+import { CategoryInput } from 'src/presentation/input/category.input';
+import { OrderOutput } from 'src/presentation/output/order.output';
+import { ShopInput } from 'src/presentation/input/shop.input';
+import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
+import { OrderInput } from 'src/presentation/input/order.input';
+import { ProductInput } from 'src/presentation/input/product.input';
+import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
 
-@Resolver(() => ShopDTO)
+@Resolver(() => ShopOutput)
 export class ShopResolver {
   constructor(
     private readonly createShopUseCase: CreateShop,
@@ -49,44 +56,46 @@ export class ShopResolver {
     private readonly updateShopUseCase: UpdateShop,
   ) { }
 
-  @Mutation(() => ShopDTO, { nullable: true })
-  async createShop(@Args('shop') shop: ShopDTO): Promise<Shop | null> {
-    const result = await this.createShopUseCase.execute(shop);
+  @Mutation(() => ShopOutput, { nullable: true })
+  async createShop(@Args('shop') shop: ShopInput): Promise<ShopOutput | null> {
+    const dto = toShopDTO(shop)
+    const result = await this.createShopUseCase.execute(dto);
     return transformShopDTOToGraphQL(result)
   }
 
-  @Mutation(() => ShopDTO, { nullable: true })
+  @Mutation(() => ShopOutput, { nullable: true })
   async addCategoryToShop(
     @Args('shopId') shopId: number,
-    @Args('category') category: CategoryDTO,
-  ): Promise<Shop | null> {
+    @Args('category') category: CategoryInput,
+  ): Promise<ShopOutput | null> {
     const result = await this.addCategoryToShopUseCase.execute(shopId, category);
     return transformShopDTOToGraphQL(result)
   }
 
-  @Mutation(() => ShopDTO, { nullable: true })
+  @Mutation(() => ShopOutput, { nullable: true })
   async addOrderToShop(
     @Args('shopId') shopId: number,
-    @Args('order') order: OrderDTO,
-  ): Promise<Shop | null> {
+    @Args('order') order: OrderInput,
+  ): Promise<ShopOutput | null> {
     const result = await this.addOrderToShopUseCase.execute(shopId, order);
     return transformShopDTOToGraphQL(result)
   }
 
-  @Mutation(() => ShopDTO, { nullable: true })
+  @Mutation(() => ShopOutput, { nullable: true })
   async addProductToShop(
     @Args('shopId') shopId: number,
-    @Args('product') product: ProductDTO,
-  ): Promise<Shop | null> {
-    const result = await this.addProductToShopUseCase.execute(shopId, product);
+    @Args('product') product: ProductInput,
+  ): Promise<ShopOutput | null> {
+    const dto = toProductDTO(product)
+    const result = await this.addProductToShopUseCase.execute(shopId, dto);
     return transformShopDTOToGraphQL(result)
   }
 
-  @Mutation(() => ShopDTO, { nullable: true })
+  @Mutation(() => ShopOutput, { nullable: true })
   async associateMarketplaceWithShop(
     @Args('shopId') shopId: number,
     @Args('marketplaceId') marketplaceId: number,
-  ): Promise<Shop | null> {
+  ): Promise<ShopOutput | null> {
     const result = await this.associateMarketplaceWithShopUseCase.execute(
       shopId,
       marketplaceId,
@@ -99,48 +108,48 @@ export class ShopResolver {
     return this.deleteShopUseCase.execute(id);
   }
 
-  @Query(() => ShopDTO, { nullable: true })
-  async fetchMostRecentShop(): Promise<Shop | null> {
+  @Query(() => ShopOutput, { nullable: true })
+  async fetchMostRecentShop(): Promise<ShopOutput | null> {
     const result = await this.fetchMostRecentShopUseCase.execute();
     return transformShopDTOToGraphQL(result)
   }
 
-  @Query(() => ShopDTO, { nullable: true })
-  async fetchShopById(@Args('id') id: number): Promise<Shop | null> {
+  @Query(() => ShopOutput, { nullable: true })
+  async fetchShopById(@Args('id') id: number): Promise<ShopOutput | null> {
     const result = await this.fetchShopByIdUseCase.execute(id);
     return transformShopDTOToGraphQL(result)
   }
 
-  // @Query(() => [ShopDTO])
-  // async fetchShopList(): Promise<Shop[]> {
+  // @Query(() => [ShopOutput])
+  // async fetchShopList(): Promise<ShopOutput[]> {
   //   const result = awaiteturn this.fetchShopListUseCase.execute();
   // return transformShopDTOToGraphQL(result)
   // }
 
-  @Query(() => [ShopDTO])
+  @Query(() => [ShopOutput])
   async listShopsByVendor(
     @Args('vendorId') vendorId: number,
-  ): Promise<Shop[]> {
+  ): Promise<ShopOutput[]> {
     const result = await this.listShopsByVendorUseCase.execute(vendorId);
     return result.map(transformShopDTOToGraphQL)
   }
 
-  @Query(() => [ShopDTO])
-  async searchShopsByName(@Args('name') name: string): Promise<Shop[]> {
+  @Query(() => [ShopOutput])
+  async searchShopsByName(@Args('name') name: string): Promise<ShopOutput[]> {
     const result = await this.searchShopsByNameUseCase.execute(name);
     return result.map(transformShopDTOToGraphQL)
   }
 
-  @Mutation(() => ShopDTO)
+  @Mutation(() => ShopOutput)
   async updateShop(
     @Args('shopId') shopId: number,
-    @Args('updates') updates: ShopDTO,
-  ): Promise<Shop> {
+    @Args('updates') updates: ShopInput,
+  ): Promise<ShopOutput> {
     const result = await this.updateShopUseCase.execute(shopId, updates);
     return transformShopDTOToGraphQL(result)
   }
 
-  @Query(() => [OrderDTO])
+  @Query(() => [OrderOutput])
   async fetchOrderReportForShop(
     @Args('shopId') shopId: number,
     @Args('startDate') startDate: Date,
@@ -153,7 +162,7 @@ export class ShopResolver {
     );
   }
 
-  // @Query(() => [ShopDTO])
+  // @Query(() => [ShopOutput])
   // async fetchShopRevenueReport(
   //   @Args('shopId') shopId: number,
   //   @Args('startDate') startDate: Date,
@@ -166,7 +175,7 @@ export class ShopResolver {
   //   );
   // }
 
-  // @Query(() => [ShopDTO])
+  // @Query(() => [ShopOutput])
   // async fetchShopSalesReport(
   //   @Args('shopId') shopId: number,
   //   @Args('startDate') startDate: Date,
@@ -175,7 +184,7 @@ export class ShopResolver {
   //   return this.fetchShopSalesReportUseCase.execute(shopId, startDate, endDate);
   // }
 
-  // @Query(() => ProductDTO, { nullable: true })
+  // @Query(() => ProductInput, { nullable: true })
   // async fetchTopProductForShop(
   //   @Args('shopId') shopId: number,
   // ): Promise<ProductDTO | null> {

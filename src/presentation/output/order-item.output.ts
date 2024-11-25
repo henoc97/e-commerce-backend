@@ -2,6 +2,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { OrderOutput } from './order.output';
 import { ProductOutput } from './product.output';
+import { Type } from 'class-transformer';
 
 /**
  * Data Transfer Object for OrderItem.
@@ -28,6 +29,7 @@ export class OrderItemOutput {
    * Optional for input, included for output to provide context.
    */
   @Field(() => OrderOutput, { nullable: true })
+  @Type(() => OrderOutput)
   order?: OrderOutput;
 
   /**
@@ -42,6 +44,7 @@ export class OrderItemOutput {
    * Optional for input, included for output to provide context.
    */
   @Field(() => ProductOutput, { nullable: true })
+  @Type(() => ProductOutput)
   product?: ProductOutput;
 
   /**
@@ -77,10 +80,10 @@ export class OrderItemOutput {
    * @param createdAt - Date and time of order-item creation (optional).
    */
   constructor(
-    orderId: number,
-    productId: number,
-    quantity: number,
-    price: number,
+    orderId?: number,
+    productId?: number,
+    quantity?: number,
+    price?: number,
     id?: number,
     order?: OrderOutput,
     product?: ProductOutput,

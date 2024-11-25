@@ -1,11 +1,13 @@
-import { Field } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 import { ProductOutput } from "./product.output";
+import { Type } from "class-transformer";
 
 
 /**
  * Data Transfer Object for ProductVariant.
  * Used for validation and transformation of product variant data in API requests and responses.
  */
+@ObjectType()
 export class ProductVariantOutput {
   /**
    * Unique identifier for the ProductVariant.
@@ -24,6 +26,7 @@ export class ProductVariantOutput {
    * This is a nested object validated separately.
    */
   @Field(() => ProductOutput, { nullable: true })
+  @Type(() => ProductOutput)
   product: ProductOutput;
 
   /**
@@ -47,11 +50,11 @@ export class ProductVariantOutput {
    * @param value - Value of the variant.
    */
   constructor(
-    id: number,
-    productId: number,
-    product: ProductOutput,
-    name: string,
-    value: string,
+    id?: number,
+    productId?: number,
+    product?: ProductOutput,
+    name?: string,
+    value?: string,
   ) {
     this.id = id;
     this.productId = productId;
