@@ -1,11 +1,11 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromNotificationPrisma } from 'src/application/helper/from-prisma/to.notification.entity';
 import { Notification } from 'src/domain/entities/notification.entity';
 import { NotificationType } from 'src/domain/enums/notification-type.enum';
 import { INotificationRepository } from 'src/domain/repositories/notification.repository';
+import prisma from 'prisma/prisma.service';
 
 export class NotificationRepository implements INotificationRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
   /**
    * Creates a new notification in the database.
    * @param notification - The notification entity to create.
@@ -14,7 +14,7 @@ export class NotificationRepository implements INotificationRepository {
   async create(notification: Notification): Promise<Notification> {
     try {
       const { id, user, ...data } = notification;
-      const result = await this.prisma.notification.create({
+      const result = await prisma.notification.create({
         data: data,
       });
       return fromNotificationPrisma(result);
@@ -31,7 +31,7 @@ export class NotificationRepository implements INotificationRepository {
    */
   async getById(id: number): Promise<Notification | null> {
     try {
-      const result = await this.prisma.notification.findUnique({
+      const result = await prisma.notification.findUnique({
         where: { id },
       });
       return fromNotificationPrisma(result);
@@ -53,7 +53,7 @@ export class NotificationRepository implements INotificationRepository {
   ): Promise<Notification> {
     try {
       const { user, ...data } = updates;
-      const result = await this.prisma.notification.update({
+      const result = await prisma.notification.update({
         where: { id },
         data: data,
       });
@@ -71,7 +71,7 @@ export class NotificationRepository implements INotificationRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.notification.delete({ where: { id } });
+      await prisma.notification.delete({ where: { id } });
       return true;
     } catch (error) {
       console.error('Error deleting notification:', error);
@@ -86,7 +86,7 @@ export class NotificationRepository implements INotificationRepository {
    */
   async getByUserId(userId: number): Promise<Notification[]> {
     try {
-      const result = await this.prisma.notification.findMany({
+      const result = await prisma.notification.findMany({
         where: { userId },
       });
       return result.map(fromNotificationPrisma);
@@ -103,7 +103,7 @@ export class NotificationRepository implements INotificationRepository {
    */
   async getByType(type: NotificationType): Promise<Notification[]> {
     try {
-      const result = await this.prisma.notification.findMany({
+      const result = await prisma.notification.findMany({
         where: { type },
       });
       return result.map(fromNotificationPrisma);
@@ -124,7 +124,7 @@ export class NotificationRepository implements INotificationRepository {
     endDate: Date,
   ): Promise<Notification[]> {
     try {
-      const result = await this.prisma.notification.findMany({
+      const result = await prisma.notification.findMany({
         where: {
           sentAt: {
             gte: startDate,
@@ -146,7 +146,7 @@ export class NotificationRepository implements INotificationRepository {
    */
   async markAsRead(id: number): Promise<Notification> {
     try {
-      const result = await this.prisma.notification.update({
+      const result = await prisma.notification.update({
         where: { id },
         data: { read: true },
       });
@@ -164,7 +164,7 @@ export class NotificationRepository implements INotificationRepository {
    */
   async countUnread(userId: number): Promise<number> {
     try {
-      const result = await this.prisma.notification.count({
+      const result = await prisma.notification.count({
         where: {
           userId,
           read: false,
@@ -184,7 +184,7 @@ export class NotificationRepository implements INotificationRepository {
    */
   async getRecent(userId: number): Promise<Notification[]> {
     try {
-      const result = await this.prisma.notification.findMany({
+      const result = await prisma.notification.findMany({
         where: { userId },
         orderBy: { sentAt: 'desc' },
         take: 10,

@@ -1,11 +1,11 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromMarketplacePrisma } from 'src/application/helper/from-prisma/to.marketplace.entity';
 import { Marketplace } from 'src/domain/entities/marketplace.entity';
 import { Shop } from 'src/domain/entities/shop.entity';
 import { IMarketplaceRepository } from 'src/domain/repositories/marketplace.repository';
+import prisma from 'prisma/prisma.service';
 
 export class MarketplaceRepository implements IMarketplaceRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new marketplace.
@@ -15,7 +15,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
   async create(marketplace: Marketplace): Promise<Marketplace> {
     try {
       const { id, shops, ...data } = marketplace;
-      const result = await this.prisma.marketplace.create({
+      const result = await prisma.marketplace.create({
         data: data,
       });
       return fromMarketplacePrisma(result);
@@ -32,7 +32,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
    */
   async getById(id: number): Promise<Marketplace | null> {
     try {
-      const result = await this.prisma.marketplace.findUnique({
+      const result = await prisma.marketplace.findUnique({
         where: { id },
       });
       return result ? fromMarketplacePrisma(result) : null;
@@ -48,7 +48,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
    */
   async list(): Promise<Marketplace[]> {
     try {
-      const result = await this.prisma.marketplace.findMany();
+      const result = await prisma.marketplace.findMany();
       return result.map(fromMarketplacePrisma);
     } catch (error) {
       console.error('Error listing marketplaces:', error);
@@ -65,7 +65,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
   async update(id: number, data: Partial<Marketplace>): Promise<Marketplace> {
     try {
       const { shops, ...marketplaceData } = data;
-      const result = await this.prisma.marketplace.update({
+      const result = await prisma.marketplace.update({
         where: { id },
         data: marketplaceData,
       });
@@ -83,7 +83,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.marketplace.delete({
+      await prisma.marketplace.delete({
         where: { id },
       });
       return true;
@@ -100,7 +100,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
    */
   async getShops(marketplaceId: number): Promise<Shop[]> {
     try {
-      const result = await this.prisma.marketplace.findMany({
+      const result = await prisma.marketplace.findMany({
         where: { id: marketplaceId },
       });
       const { shops } = fromMarketplacePrisma(result);
@@ -118,7 +118,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
    */
   async getMarketplaceByShopId(shopId: number): Promise<Marketplace | null> {
     try {
-      const result = await this.prisma.marketplace.findFirst({
+      const result = await prisma.marketplace.findFirst({
         where: { shops: { some: { id: shopId } } },
       });
       return fromMarketplacePrisma(result);

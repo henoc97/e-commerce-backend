@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PaymentService } from '../services/payment.service';
 import { PaymentRepository } from 'src/infrastructure/persistences/payment.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreatePayment } from '../use-cases/payment.use-cases/create-payment.use-case';
 import { UpdatePayment } from '../use-cases/payment.use-cases/update-payment.use-case';
 import { DeletePayment } from '../use-cases/payment.use-cases/delete-payment.use-case';
@@ -31,7 +30,7 @@ const paymentUseCases = [
 @Module({
   providers: [
     PaymentService,
-    PrismaService,
+
     {
       provide: 'IPaymentRepository',
       useClass: PaymentRepository,

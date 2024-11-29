@@ -1,14 +1,14 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromOrderPrisma } from 'src/application/helper/from-prisma/to.order.entity';
 import { Order } from 'src/domain/entities/order.entity';
 import { OrderStatus } from 'src/domain/enums/order-status.enum';
 import { IOrderRepository } from 'src/domain/repositories/order.repository';
+import prisma from 'prisma/prisma.service';
 
 /**
  * Represents the Order repository responsible for handling order-related database operations.
  */
 export class OrderRepository implements IOrderRepository {
-  constructor(private readonly prisma: PrismaService) { }
+
   getAll(): Promise<Order[]> {
     throw new Error('Method not implemented.');
   }
@@ -23,7 +23,7 @@ export class OrderRepository implements IOrderRepository {
     try {
       const { id, user, shop, items, shipment, payments, refunds, ...data } =
         order;
-      const createdOrder = await this.prisma.order.create({
+      const createdOrder = await prisma.order.create({
         data: data,
       });
       return fromOrderPrisma(createdOrder);
@@ -40,7 +40,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getById(id: number): Promise<Order | null> {
     try {
-      const order = await this.prisma.order.findUnique({
+      const order = await prisma.order.findUnique({
         where: { id },
       });
       return fromOrderPrisma(order);
@@ -62,7 +62,7 @@ export class OrderRepository implements IOrderRepository {
     try {
       const { user, shop, items, shipment, payments, refunds, ...data } =
         updates;
-      const updatedOrder = await this.prisma.order.update({
+      const updatedOrder = await prisma.order.update({
         where: { id },
         data: data,
       });
@@ -80,7 +80,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.order.delete({
+      await prisma.order.delete({
         where: { id },
       });
       return true;
@@ -98,7 +98,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getByUserId(userId: number): Promise<Order[]> {
     try {
-      const orders = await this.prisma.order.findMany({
+      const orders = await prisma.order.findMany({
         where: { userId },
       });
       return orders.map(fromOrderPrisma);
@@ -117,7 +117,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getByShopId(shopId: number): Promise<Order[]> {
     try {
-      const orders = await this.prisma.order.findMany({
+      const orders = await prisma.order.findMany({
         where: { shopId },
       });
       return orders.map(fromOrderPrisma);
@@ -136,7 +136,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getByStatus(status: OrderStatus): Promise<Order[]> {
     try {
-      const orders = await this.prisma.order.findMany({
+      const orders = await prisma.order.findMany({
         where: { status },
       });
       return orders.map(fromOrderPrisma);
@@ -156,7 +156,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async updateStatus(id: number, status: OrderStatus): Promise<Order> {
     try {
-      const updatedOrder = await this.prisma.order.update({
+      const updatedOrder = await prisma.order.update({
         where: { id },
         data: { status },
       });
@@ -177,7 +177,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async addPayment(orderId: number, paymentId: string): Promise<Order> {
     try {
-      const updatedOrder = await this.prisma.order.update({
+      const updatedOrder = await prisma.order.update({
         where: { id: orderId },
         data: {
           payments: {
@@ -204,7 +204,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async addRefund(orderId: number, refundId: string): Promise<Order> {
     try {
-      const updatedOrder = await this.prisma.order.update({
+      const updatedOrder = await prisma.order.update({
         where: { id: orderId },
         data: {
           refunds: {
@@ -228,7 +228,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getByTrackingNumber(trackingNumber: string): Promise<Order | null> {
     try {
-      const order = await this.prisma.order.findFirst({
+      const order = await prisma.order.findFirst({
         where: { trackingNumber },
       });
       return fromOrderPrisma(order);
@@ -248,7 +248,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getByDateRange(startDate: Date, endDate: Date): Promise<Order[]> {
     try {
-      const orders = await this.prisma.order.findMany({
+      const orders = await prisma.order.findMany({
         where: {
           createdAt: {
             gte: startDate,
@@ -273,7 +273,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getRecentOrdersByShop(shopId: number, limit: number): Promise<Order[]> {
     try {
-      const orders = await this.prisma.order.findMany({
+      const orders = await prisma.order.findMany({
         where: { shopId },
         orderBy: { createdAt: 'desc' },
         take: limit,
@@ -294,7 +294,7 @@ export class OrderRepository implements IOrderRepository {
    */
   async getTopOrdersByAmount(topN: number): Promise<Order[]> {
     try {
-      const orders = await this.prisma.order.findMany({
+      const orders = await prisma.order.findMany({
         orderBy: { totalAmount: 'desc' },
         take: topN,
       });

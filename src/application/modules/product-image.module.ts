@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ProductImageService } from '../services/product-image.service';
 import { ProductImageRepository } from 'src/infrastructure/persistences/product-image.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateProductImage } from '../use-cases/product-image.use-cases/create-product-image.use-case';
 import { FetchProductImagesByProductId } from '../use-cases/product-image.use-cases/fetch-product-images-by-product-id.use-case';
 import { UpdateProductImage } from '../use-cases/product-image.use-cases/update-product-image.use-case';
@@ -29,7 +28,7 @@ const productImageUseCases = [
 @Module({
   providers: [
     ProductImageService,
-    PrismaService,
+
     {
       provide: 'IProductImageRepository',
       useClass: ProductImageRepository,

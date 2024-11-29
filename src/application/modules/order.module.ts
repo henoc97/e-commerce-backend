@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { OrderService } from '../services/order.service';
 import { OrderRepository } from 'src/infrastructure/persistences/order.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateOrder } from '../use-cases/order.use-cases/create-order.use-case';
 import { AddPaymentToOrder } from '../use-cases/order.use-cases/add-payment-to-order.use-case';
 import { UpdateOrder } from '../use-cases/order.use-cases/update-order.use-case';
@@ -42,7 +41,7 @@ const orderUseCases = [
   imports: [KafkaModule],
   providers: [
     OrderService,
-    PrismaService,
+
     {
       provide: 'IOrderRepository',
       useClass: OrderRepository,

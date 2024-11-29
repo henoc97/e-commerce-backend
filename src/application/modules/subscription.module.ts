@@ -11,7 +11,6 @@ import { ListSubscriptionsByVendor } from '../use-cases/subscription.use-cases/l
 import { ListExpiringSubscriptions } from '../use-cases/subscription.use-cases/list-expiring-subscriptions.use-case';
 import { ListSubscriptionsByPriceRange } from '../use-cases/subscription.use-cases/list-subscriptions-by-price-range.use-case';
 import { UpdateSubscription } from '../use-cases/subscription.use-cases/update-subscription.use-case';
-import { PrismaService } from 'prisma/prisma.service';
 import { ListActiveSubscriptions } from '../use-cases/subscription.use-cases/list-active-subscriptions.use-case';
 
 const subscriptionUseCases = [
@@ -31,7 +30,7 @@ const subscriptionUseCases = [
 @Module({
   providers: [
     SubscriptionService,
-    PrismaService,
+
     {
       provide: 'ISubscriptionRepository',
       useClass: SubscriptionRepository,

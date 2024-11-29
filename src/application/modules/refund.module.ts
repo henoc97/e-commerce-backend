@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { RefundService } from '../services/refund.service';
 import { RefundRepository } from 'src/infrastructure/persistences/refund.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateRefund } from '../use-cases/refund.use-cases/create-refund.use-case';
 import { CancelRefund } from '../use-cases/refund.use-cases/cancel-refund.use-case';
 import { ApproveRefund } from '../use-cases/refund.use-cases/approve-refund.use-case';
@@ -33,7 +32,7 @@ const refundUseCases = [
 @Module({
   providers: [
     RefundService,
-    PrismaService,
+
     {
       provide: 'IRefundRepository',
       useClass: RefundRepository,

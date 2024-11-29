@@ -1,0 +1,18 @@
+Démarrer Zookeeper et Kafka sur Windows
+Démarrer Zookeeper :
+
+Kafka dépend de Zookeeper pour sa gestion interne. Vous pouvez démarrer Zookeeper avec la commande suivante :
+Ouvrez une invite de commandes (cmd) et naviguez dans le répertoire Kafka (cd C:\kafka).
+Tapez la commande suivante pour démarrer Zookeeper :
+bash
+Copier le code
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+Laissez cette fenêtre ouverte.
+Démarrer Kafka :
+
+Ouvrez une nouvelle invite de commandes (cmd) et naviguez dans le répertoire Kafka.
+Tapez la commande suivante pour démarrer le serveur Kafka :
+bash
+Copier le code
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+Kafka démarrera sur le port par défaut 9092, et il devrait être maintenant en ligne et prêt à recevoir des connexions.

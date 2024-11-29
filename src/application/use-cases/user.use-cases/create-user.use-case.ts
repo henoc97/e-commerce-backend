@@ -10,7 +10,7 @@ import { UserDTO } from 'src/presentation/dtos/user.dto';
  */
 @Injectable()
 export class CreateUser {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Execute the create-user use case.
@@ -18,6 +18,7 @@ export class CreateUser {
    * @returns A promise that resolves to the created UserDTO.
    */
   async execute(userDTO: UserDTO): Promise<UserDTO | null> {
+    console.log('UserDTO received in UseCase:', userDTO);
     const user = await this.userService.createUser(userDTO);
 
     if (!user) return null;

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CartItemService } from '../services/cart-item.service';
 import { CartItemRepository } from 'src/infrastructure/persistences/cart-item.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CartModule } from './cart.module';
 import { CreateCartItem } from '../use-cases/cart-item.use-cases/create-cart-item.use-case';
 import { UpdateCartItem } from '../use-cases/cart-item.use-cases/update-cart-item.use-case';
@@ -32,7 +31,6 @@ const cartItemUseCases = [
   imports: [CartModule],
   providers: [
     CartItemService,
-    PrismaService,
     {
       provide: 'ICartItemRepository',
       useClass: CartItemRepository,

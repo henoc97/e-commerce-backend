@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { UserRepository } from 'src/infrastructure/persistences/user.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateUser } from '../use-cases/user.use-cases/create-user.use-case';
 import { AddAddressToUser } from '../use-cases/user.use-cases/add-address-to-user.use-case';
 import { GetUser } from '../use-cases/user.use-cases/get-user.use-case';
@@ -38,7 +37,6 @@ const userUseCases = [
   imports: [KafkaModule, AddressModule],
   providers: [
     UserService,
-    PrismaService,
     {
       provide: 'IUserRepository',
       useClass: UserRepository,

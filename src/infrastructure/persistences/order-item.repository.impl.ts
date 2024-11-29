@@ -1,14 +1,14 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromOrderItemPrisma } from 'src/application/helper/from-prisma/to.order-item.entity';
 import { OrderItem } from 'src/domain/entities/order-item.enttity';
 import { IOrderItemRepository } from 'src/domain/repositories/order-item.repository';
+import prisma from 'prisma/prisma.service';
 
 /**
  * Repository class for handling operations related to OrderItems.
  * Implements methods for creating, retrieving, updating, and deleting order items.
  */
 export class OrderItemRepository implements IOrderItemRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new order item in the database.
@@ -18,7 +18,7 @@ export class OrderItemRepository implements IOrderItemRepository {
   async create(item: OrderItem): Promise<OrderItem> {
     try {
       const { id, order, product, ...data } = item;
-      const result = await this.prisma.orderItem.create({
+      const result = await prisma.orderItem.create({
         data: data,
       });
       return fromOrderItemPrisma(result);
@@ -35,7 +35,7 @@ export class OrderItemRepository implements IOrderItemRepository {
    */
   async getById(id: number): Promise<OrderItem | null> {
     try {
-      const result = await this.prisma.orderItem.findUnique({
+      const result = await prisma.orderItem.findUnique({
         where: { id },
       });
       return fromOrderItemPrisma(result);
@@ -54,7 +54,7 @@ export class OrderItemRepository implements IOrderItemRepository {
   async update(id: number, updates: Partial<OrderItem>): Promise<OrderItem> {
     try {
       const { id, product, order, ...data } = updates;
-      const result = await this.prisma.orderItem.update({
+      const result = await prisma.orderItem.update({
         where: { id },
         data: data,
       });
@@ -72,7 +72,7 @@ export class OrderItemRepository implements IOrderItemRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.orderItem.delete({
+      await prisma.orderItem.delete({
         where: { id },
       });
       return true;
@@ -89,7 +89,7 @@ export class OrderItemRepository implements IOrderItemRepository {
    */
   async getByOrderId(orderId: number): Promise<OrderItem[]> {
     try {
-      const result = await this.prisma.orderItem.findMany({
+      const result = await prisma.orderItem.findMany({
         where: { orderId },
       });
       return result.map(fromOrderItemPrisma);
@@ -106,7 +106,7 @@ export class OrderItemRepository implements IOrderItemRepository {
    */
   async getByProductId(productId: number): Promise<OrderItem[]> {
     try {
-      const result = await this.prisma.orderItem.findMany({
+      const result = await prisma.orderItem.findMany({
         where: { productId },
       });
       return result.map(fromOrderItemPrisma);
@@ -123,7 +123,7 @@ export class OrderItemRepository implements IOrderItemRepository {
    */
   async calculateTotalPrice(orderId: number): Promise<number> {
     try {
-      const items = await this.prisma.orderItem.findMany({
+      const items = await prisma.orderItem.findMany({
         where: { orderId },
       });
       return items.reduce(
@@ -143,7 +143,7 @@ export class OrderItemRepository implements IOrderItemRepository {
    */
   async getRecentItems(orderId: number): Promise<OrderItem[]> {
     try {
-      const result = await this.prisma.orderItem.findMany({
+      const result = await prisma.orderItem.findMany({
         where: { orderId },
         orderBy: { createdAt: 'desc' },
         take: 10,
@@ -162,7 +162,7 @@ export class OrderItemRepository implements IOrderItemRepository {
    */
   async getLowStockItems(threshold: number): Promise<OrderItem[]> {
     try {
-      const result = await this.prisma.orderItem.findMany({
+      const result = await prisma.orderItem.findMany({
         where: { quantity: { lt: threshold } },
       });
       return result.map(fromOrderItemPrisma);

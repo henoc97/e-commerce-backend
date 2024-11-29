@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromSubsitePrisma } from 'src/application/helper/from-prisma/to.sub-site.entity';
 import { Subsite } from 'src/domain/entities/subsite.entity';
 import { ISubsiteRepository } from 'src/domain/repositories/subsite.repository';
+import prisma from 'prisma/prisma.service';
 
 export class SubsiteRepository implements ISubsiteRepository {
-  constructor(private readonly prisma: PrismaService) { }
+
   /**
    * Creates a new Subsite.
    * @param subsite - The subsite entity to create.
@@ -13,7 +13,7 @@ export class SubsiteRepository implements ISubsiteRepository {
   async create(subsite: Subsite): Promise<Subsite> {
     try {
       const { id, user, ...data } = subsite;
-      const createdSubsite = await this.prisma.subsite.create({
+      const createdSubsite = await prisma.subsite.create({
         data: data,
       });
       return fromSubsitePrisma(createdSubsite);
@@ -30,7 +30,7 @@ export class SubsiteRepository implements ISubsiteRepository {
    */
   async getById(id: number): Promise<Subsite | null> {
     try {
-      const subsite = await this.prisma.subsite.findUnique({
+      const subsite = await prisma.subsite.findUnique({
         where: { id },
       });
       return fromSubsitePrisma(subsite);
@@ -49,7 +49,7 @@ export class SubsiteRepository implements ISubsiteRepository {
   async update(id: number, updates: Partial<Subsite>): Promise<Subsite> {
     try {
       const { id, user, ...data } = updates;
-      const updatedSubsite = await this.prisma.subsite.update({
+      const updatedSubsite = await prisma.subsite.update({
         where: { id },
         data: data,
       });
@@ -67,7 +67,7 @@ export class SubsiteRepository implements ISubsiteRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.subsite.delete({
+      await prisma.subsite.delete({
         where: { id },
       });
       return true;
@@ -84,7 +84,7 @@ export class SubsiteRepository implements ISubsiteRepository {
    */
   async getByUser(userId: number): Promise<Subsite[]> {
     try {
-      const subsites = await this.prisma.subsite.findMany({
+      const subsites = await prisma.subsite.findMany({
         where: { userId },
       });
       return subsites.map(fromSubsitePrisma);
@@ -116,7 +116,7 @@ export class SubsiteRepository implements ISubsiteRepository {
    */
   async getConfig(id: number): Promise<any> {
     try {
-      const subsite = await this.prisma.subsite.findUnique({
+      const subsite = await prisma.subsite.findUnique({
         where: { id },
         select: { config: true },
       });
@@ -135,7 +135,7 @@ export class SubsiteRepository implements ISubsiteRepository {
    */
   async updateConfig(id: number, config: any): Promise<Subsite> {
     try {
-      const updatedSubsite = await this.prisma.subsite.update({
+      const updatedSubsite = await prisma.subsite.update({
         where: { id },
         data: { config },
       });
@@ -152,7 +152,7 @@ export class SubsiteRepository implements ISubsiteRepository {
    */
   async getLatest(): Promise<Subsite> {
     try {
-      const latestSubsite = await this.prisma.subsite.findFirst({
+      const latestSubsite = await prisma.subsite.findFirst({
         orderBy: { createdAt: 'desc' },
       });
       return fromSubsitePrisma(latestSubsite);
@@ -169,7 +169,7 @@ export class SubsiteRepository implements ISubsiteRepository {
    */
   async countByUser(userId: number): Promise<number> {
     try {
-      const count = await this.prisma.subsite.count({
+      const count = await prisma.subsite.count({
         where: { userId },
       });
       return count;

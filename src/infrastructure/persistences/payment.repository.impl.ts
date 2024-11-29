@@ -1,12 +1,11 @@
 import { Payment } from 'src/domain/entities/payment.entity';
 import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
 import { IPaymentRepository } from 'src/domain/repositories/payment.repository';
-import { PrismaClient } from '@prisma/client';
 import { fromPaymentPrisma } from 'src/application/helper/from-prisma/to.payment.entity';
-import { PrismaService } from 'prisma/prisma.service';
+import prisma from 'prisma/prisma.service';
 
 export class PaymentRepository implements IPaymentRepository {
-  constructor(private readonly prisma: PrismaService) { }
+
 
   /**
    * Creates a new payment record in the database.
@@ -17,7 +16,7 @@ export class PaymentRepository implements IPaymentRepository {
   async create(payment: Payment): Promise<Payment> {
     try {
       const { id, order, ...data } = payment;
-      const createdPayment = await this.prisma.payment.create({
+      const createdPayment = await prisma.payment.create({
         data: data,
       });
       return fromPaymentPrisma(createdPayment);
@@ -34,7 +33,7 @@ export class PaymentRepository implements IPaymentRepository {
    */
   async getById(id: number): Promise<Payment | null> {
     try {
-      const payment = await this.prisma.payment.findUnique({
+      const payment = await prisma.payment.findUnique({
         where: { id },
       });
       return fromPaymentPrisma(payment);
@@ -53,7 +52,7 @@ export class PaymentRepository implements IPaymentRepository {
   async update(id: number, updates: Partial<Payment>): Promise<Payment> {
     try {
       const { id, order, ...data } = updates;
-      const updatedPayment = await this.prisma.payment.update({
+      const updatedPayment = await prisma.payment.update({
         where: { id },
         data: data,
       });
@@ -71,7 +70,7 @@ export class PaymentRepository implements IPaymentRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.payment.delete({
+      await prisma.payment.delete({
         where: { id },
       });
       return true;
@@ -89,7 +88,7 @@ export class PaymentRepository implements IPaymentRepository {
    */
   async getByOrderId(orderId: number): Promise<Payment[]> {
     try {
-      const payments = await this.prisma.payment.findMany({
+      const payments = await prisma.payment.findMany({
         where: { orderId },
       });
       return payments.map(fromPaymentPrisma);
@@ -108,7 +107,7 @@ export class PaymentRepository implements IPaymentRepository {
    */
   async getByMethod(method: string): Promise<Payment[]> {
     try {
-      const payments = await this.prisma.payment.findMany({
+      const payments = await prisma.payment.findMany({
         where: { method },
       });
       return payments.map(fromPaymentPrisma);
@@ -127,7 +126,7 @@ export class PaymentRepository implements IPaymentRepository {
    */
   async getByStatus(status: PaymentStatus): Promise<Payment[]> {
     try {
-      const payments = await this.prisma.payment.findMany({
+      const payments = await prisma.payment.findMany({
         where: { status },
       });
       return payments.map(fromPaymentPrisma);
@@ -147,7 +146,7 @@ export class PaymentRepository implements IPaymentRepository {
    */
   async getByDateRange(startDate: Date, endDate: Date): Promise<Payment[]> {
     try {
-      const payments = await this.prisma.payment.findMany({
+      const payments = await prisma.payment.findMany({
         where: {
           createdAt: {
             gte: startDate,
@@ -175,7 +174,7 @@ export class PaymentRepository implements IPaymentRepository {
     endDate: Date,
   ): Promise<number> {
     try {
-      const totalAmount = await this.prisma.payment.aggregate({
+      const totalAmount = await prisma.payment.aggregate({
         _sum: {
           amount: true,
         },
@@ -204,7 +203,7 @@ export class PaymentRepository implements IPaymentRepository {
     orderId: number,
   ): Promise<Payment | null> {
     try {
-      const recentPayment = await this.prisma.payment.findFirst({
+      const recentPayment = await prisma.payment.findFirst({
         where: { orderId },
         orderBy: { createdAt: 'desc' },
       });
@@ -223,7 +222,7 @@ export class PaymentRepository implements IPaymentRepository {
    */
   async getPaymentsGroupedByMethod(): Promise<Map<string, Payment[]>> {
     try {
-      const payments = await this.prisma.payment.findMany();
+      const payments = await prisma.payment.findMany();
       const groupedPayments = new Map<string, Payment[]>();
 
       payments.forEach((payment) => {

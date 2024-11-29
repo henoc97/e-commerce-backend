@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserActivityService } from '../services/user-activity.service';
 import { UserActivityRepository } from 'src/infrastructure/persistences/user-activity.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { ListActivitiesByUser } from '../use-cases/user-activity.use-cases/list-activities-by-user.use-case';
 import { CountActivitiesByUser } from '../use-cases/user-activity.use-cases/count-activities-by-user.use-case';
 import { ListActivitiesByProduct } from '../use-cases/user-activity.use-cases/list-activities-by-product.use-case';
@@ -31,7 +30,7 @@ const userActivityUseCases = [
   imports: [KafkaModule],
   providers: [
     UserActivityService,
-    PrismaService,
+
     {
       provide: 'IUserActivityRepository',
       useClass: UserActivityRepository,

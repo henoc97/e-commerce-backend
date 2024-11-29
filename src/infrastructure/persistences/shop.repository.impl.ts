@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromShopPrisma } from 'src/application/helper/from-prisma/to.shop.entity';
 import { Shop } from 'src/domain/entities/shop.entity';
 import { IShopRepository } from 'src/domain/repositories/shop.repository';
+import prisma from 'prisma/prisma.service';
 
 export class ShopRepository implements IShopRepository {
-  constructor(private readonly prisma: PrismaService) { }
+
   /**
    * Creates a new shop in the database.
    * @param shop - The shop entity to create.
@@ -14,7 +14,7 @@ export class ShopRepository implements IShopRepository {
     try {
       const { id, vendor, products, orders, categories, Marketplace, ...data } =
         shop;
-      const result = await this.prisma.shop.create({
+      const result = await prisma.shop.create({
         data: data,
       });
       return fromShopPrisma(result);
@@ -30,7 +30,7 @@ export class ShopRepository implements IShopRepository {
    */
   async getById(id: number): Promise<Shop | null> {
     try {
-      const result = await this.prisma.shop.findUnique({
+      const result = await prisma.shop.findUnique({
         where: { id },
       });
       return fromShopPrisma(result);
@@ -51,7 +51,7 @@ export class ShopRepository implements IShopRepository {
     try {
       const { vendor, products, orders, categories, Marketplace, ...data } =
         updates;
-      const result = await this.prisma.shop.update({
+      const result = await prisma.shop.update({
         where: { id },
         data: data,
       });
@@ -68,7 +68,7 @@ export class ShopRepository implements IShopRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.shop.delete({ where: { id } });
+      await prisma.shop.delete({ where: { id } });
       return true;
     } catch (error) {
       console.error(`Failed to delete shop with ID ${id}: ${error}`);
@@ -83,7 +83,7 @@ export class ShopRepository implements IShopRepository {
    */
   async searchByName(name: string): Promise<Shop[]> {
     try {
-      const result = await this.prisma.shop.findMany({
+      const result = await prisma.shop.findMany({
         where: { name: { contains: name } },
       });
       return result.map(fromShopPrisma);
@@ -101,7 +101,7 @@ export class ShopRepository implements IShopRepository {
    */
   async listByVendor(vendorId: number): Promise<Shop[]> {
     try {
-      const shops = await this.prisma.shop.findMany({
+      const shops = await prisma.shop.findMany({
         where: { vendorId },
       });
       return shops.map(fromShopPrisma);
@@ -116,7 +116,7 @@ export class ShopRepository implements IShopRepository {
    */
   async getMostRecent(): Promise<Shop | null> {
     try {
-      const shop = await this.prisma.shop.findFirst({
+      const shop = await prisma.shop.findFirst({
         orderBy: { createdAt: 'desc' },
       });
       return fromShopPrisma(shop);
@@ -136,7 +136,7 @@ export class ShopRepository implements IShopRepository {
     marketplaceId: number,
   ): Promise<Shop> {
     try {
-      const result = await this.prisma.shop.update({
+      const result = await prisma.shop.update({
         where: { id: shopId },
         data: {
           marketplace: {
@@ -159,7 +159,7 @@ export class ShopRepository implements IShopRepository {
    */
   async getTotalSales(shopId: number): Promise<number> {
     try {
-      const orders = await this.prisma.order.findMany({
+      const orders = await prisma.order.findMany({
         where: { shopId },
         select: {
           totalAmount: true, // Select the total amount from each order
@@ -193,7 +193,7 @@ export class ShopRepository implements IShopRepository {
     endDate: Date,
   ): Promise<any> {
     try {
-      const report = await this.prisma.order.findMany({
+      const report = await prisma.order.findMany({
         where: {
           shopId,
           createdAt: {

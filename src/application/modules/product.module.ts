@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ProductRepository } from 'src/infrastructure/persistences/product.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { RemovePromotionFromProduct } from '../use-cases/product.use-cases/remove-promotion-from-product.use-case';
 import { DeleteProduct } from '../use-cases/product.use-cases/delete-product.use-case';
 import { RemoveImageFromProduct } from '../use-cases/product.use-cases/remove-image-from-product.use-case';
@@ -57,7 +56,7 @@ const productUseCases = [
   ],
   providers: [
     ProductService,
-    PrismaService,
+
     {
       provide: 'IProductRepository',
       useClass: ProductRepository,

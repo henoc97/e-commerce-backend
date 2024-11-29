@@ -1,11 +1,11 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromRefundPrisma } from 'src/application/helper/from-prisma/to.refund.entity';
 import { Refund } from 'src/domain/entities/refund.entity';
 import { RefundStatus } from 'src/domain/enums/refund-status.enum';
 import { IRefundRepository } from 'src/domain/repositories/refund.repository';
+import prisma from 'prisma/prisma.service';
 
 export class RefundRepository implements IRefundRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new refund record in the database.
@@ -15,7 +15,7 @@ export class RefundRepository implements IRefundRepository {
   async create(refund: Refund): Promise<Refund> {
     try {
       const { id, order, ...data } = refund;
-      const createdRefund = await this.prisma.refund.create({
+      const createdRefund = await prisma.refund.create({
         data: data,
       });
       return fromRefundPrisma(createdRefund);
@@ -32,7 +32,7 @@ export class RefundRepository implements IRefundRepository {
    */
   async getById(id: number): Promise<Refund | null> {
     try {
-      const result = await this.prisma.refund.findUnique({
+      const result = await prisma.refund.findUnique({
         where: { id },
         include: { order: true },
       });
@@ -50,7 +50,7 @@ export class RefundRepository implements IRefundRepository {
    */
   async getByOrder(orderId: number): Promise<Refund[]> {
     try {
-      const result = await this.prisma.refund.findMany({
+      const result = await prisma.refund.findMany({
         where: { orderId },
       });
       return result.map(fromRefundPrisma);
@@ -69,7 +69,7 @@ export class RefundRepository implements IRefundRepository {
   async modify(id: number, updates: Partial<Refund>): Promise<Refund> {
     try {
       const { id, order, ...data } = updates;
-      const result = await this.prisma.refund.update({
+      const result = await prisma.refund.update({
         where: { id },
         data: data,
       });
@@ -87,7 +87,7 @@ export class RefundRepository implements IRefundRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.refund.delete({
+      await prisma.refund.delete({
         where: { id },
       });
       return true;
@@ -120,7 +120,7 @@ export class RefundRepository implements IRefundRepository {
    */
   async process(id: number, status: RefundStatus): Promise<Refund> {
     try {
-      const result = await this.prisma.refund.update({
+      const result = await prisma.refund.update({
         where: { id },
         data: { status },
       });
@@ -138,7 +138,7 @@ export class RefundRepository implements IRefundRepository {
    */
   async getByStatus(status: RefundStatus): Promise<Refund[]> {
     try {
-      const result = await this.prisma.refund.findMany({
+      const result = await prisma.refund.findMany({
         where: { status },
       });
       return result.map(fromRefundPrisma);
@@ -187,7 +187,7 @@ export class RefundRepository implements IRefundRepository {
       const refund = await this.getById(id);
       if (!refund) throw new Error('Refund not found, error: ');
 
-      const updatedRefund = await this.prisma.refund.update({
+      const updatedRefund = await prisma.refund.update({
         where: { id },
         data: { amount },
       });
@@ -205,7 +205,7 @@ export class RefundRepository implements IRefundRepository {
    */
   async getTotalRefunded(orderId: number): Promise<number> {
     try {
-      const refunds = await this.prisma.refund.findMany({
+      const refunds = await prisma.refund.findMany({
         where: { orderId },
       });
       return refunds.reduce((total, refund) => total + refund.amount, 0);

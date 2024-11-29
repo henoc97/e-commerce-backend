@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ShopService } from '../services/shop.service';
 import { ShopRepository } from 'src/infrastructure/persistences/shop.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { AddProductToShop } from '../use-cases/shop.use-cases/add-product-to-shop.use-case';
 import { AddOrderToShop } from '../use-cases/shop.use-cases/add-order-to-shop.use-case';
 import { CreateShop } from '../use-cases/shop.use-cases/create-shop.use-case';
@@ -51,7 +50,7 @@ const shopUseCases = [
   imports: [ProductModule, CategoryModule, OrderModule],
   providers: [
     ShopService,
-    PrismaService,
+
     {
       provide: 'IShopRepository',
       useClass: ShopRepository,

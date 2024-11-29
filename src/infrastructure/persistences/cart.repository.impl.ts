@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromCartPrisma } from 'src/application/helper/from-prisma/to.cart.entity';
 import { Cart } from 'src/domain/entities/cart.entity';
 import { ICartRepository } from 'src/domain/repositories/cart.repository';
+import prisma from 'prisma/prisma.service';
 
 export class CartRepository implements ICartRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new cart.
@@ -14,7 +14,7 @@ export class CartRepository implements ICartRepository {
   async create(cart: Cart): Promise<Cart> {
     try {
       const { id, user, items, ...cartData } = cart;
-      const result = await this.prisma.cart.create({
+      const result = await prisma.cart.create({
         data: cartData,
       });
       return fromCartPrisma(result);
@@ -31,7 +31,7 @@ export class CartRepository implements ICartRepository {
    */
   async getById(id: number): Promise<Cart | null> {
     try {
-      const result = await this.prisma.cart.findUnique({
+      const result = await prisma.cart.findUnique({
         where: { id },
       });
       return result ? fromCartPrisma(result) : null;
@@ -50,7 +50,7 @@ export class CartRepository implements ICartRepository {
   async update(id: number, data: Partial<Cart>): Promise<Cart> {
     try {
       const { user, items, ...cartData } = data;
-      const result = await this.prisma.cart.update({
+      const result = await prisma.cart.update({
         where: { id },
         data: cartData,
       });
@@ -68,7 +68,7 @@ export class CartRepository implements ICartRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.cart.delete({
+      await prisma.cart.delete({
         where: { id },
       });
       return true;
@@ -85,7 +85,7 @@ export class CartRepository implements ICartRepository {
    */
   async getByUserId(userId: number): Promise<Cart[]> {
     try {
-      const result = await this.prisma.cart.findMany({
+      const result = await prisma.cart.findMany({
         where: { userId },
       });
       return result.map(fromCartPrisma);

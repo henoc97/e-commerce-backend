@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MarketplaceService } from '../services/marketplace.service';
 import { MarketplaceRepository } from 'src/infrastructure/persistences/marketplace.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { ListMarketplaces } from '../use-cases/marketplace.use-cases/list-marketplaces.use-case';
 import { AddShopToMarketplace } from '../use-cases/marketplace.use-cases/add-shop-to-marketplace.use-case';
 import { CreateMarketplace } from '../use-cases/marketplace.use-cases/create-marketplace.use-case';
@@ -29,7 +28,7 @@ const marketplaceUseCases = [
   imports: [ShopModule],
   providers: [
     MarketplaceService,
-    PrismaService,
+
     {
       provide: 'IMarketplaceRepository',
       useClass: MarketplaceRepository,

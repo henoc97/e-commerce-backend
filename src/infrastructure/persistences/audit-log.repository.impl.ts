@@ -1,11 +1,11 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromAuditLogPrisma } from 'src/application/helper/from-prisma/to.audit-log.entity';
 import { AuditLog } from 'src/domain/entities/audit-log.entity';
 import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
 import { IAuditLogRepository } from 'src/domain/repositories/auditlog.repository';
+import prisma from 'prisma/prisma.service';
 
 export class AuditLogRepository implements IAuditLogRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new audit log in the database.
@@ -15,7 +15,7 @@ export class AuditLogRepository implements IAuditLogRepository {
   async create(log: AuditLog): Promise<AuditLog> {
     try {
       const { id, user, ...audiLog } = log;
-      const result = await this.prisma.auditLog.create({
+      const result = await prisma.auditLog.create({
         data: audiLog,
       });
       return fromAuditLogPrisma(result);
@@ -32,7 +32,7 @@ export class AuditLogRepository implements IAuditLogRepository {
    */
   async getById(id: number): Promise<AuditLog | null> {
     try {
-      const result = await this.prisma.auditLog.findUnique({
+      const result = await prisma.auditLog.findUnique({
         where: { id },
       });
       return fromAuditLogPrisma(result);
@@ -50,7 +50,7 @@ export class AuditLogRepository implements IAuditLogRepository {
    */
   async getByEntity(entity: string, entityId: number): Promise<AuditLog[]> {
     try {
-      const result = await this.prisma.auditLog.findMany({
+      const result = await prisma.auditLog.findMany({
         where: { entity, entityId },
       });
       return result.map(fromAuditLogPrisma);
@@ -67,7 +67,7 @@ export class AuditLogRepository implements IAuditLogRepository {
    */
   async getByUser(userId: number): Promise<AuditLog[]> {
     try {
-      const result = await this.prisma.auditLog.findMany({
+      const result = await prisma.auditLog.findMany({
         where: { userId },
       });
       return result.map(fromAuditLogPrisma);
@@ -86,7 +86,7 @@ export class AuditLogRepository implements IAuditLogRepository {
   async update(id: number, updatedLog: AuditLog): Promise<AuditLog> {
     try {
       const { user, ...log } = updatedLog;
-      const result = await this.prisma.auditLog.update({
+      const result = await prisma.auditLog.update({
         where: { id },
         data: log,
       });
@@ -104,7 +104,7 @@ export class AuditLogRepository implements IAuditLogRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.auditLog.delete({
+      await prisma.auditLog.delete({
         where: { id },
       });
       return true;
@@ -122,7 +122,7 @@ export class AuditLogRepository implements IAuditLogRepository {
    */
   async getByDateRange(startDate: Date, endDate: Date): Promise<AuditLog[]> {
     try {
-      const result = await this.prisma.auditLog.findMany({
+      const result = await prisma.auditLog.findMany({
         where: {
           createdAt: {
             gte: startDate,
@@ -144,7 +144,7 @@ export class AuditLogRepository implements IAuditLogRepository {
    */
   async getRecent(limit: number): Promise<AuditLog[]> {
     try {
-      const result = await this.prisma.auditLog.findMany({
+      const result = await prisma.auditLog.findMany({
         orderBy: {
           createdAt: 'desc',
         },
@@ -164,7 +164,7 @@ export class AuditLogRepository implements IAuditLogRepository {
    */
   async getByAction(action: AuditLogAction): Promise<AuditLog[]> {
     try {
-      const result = await this.prisma.auditLog.findMany({
+      const result = await prisma.auditLog.findMany({
         where: { action },
       });
       return result.map(fromAuditLogPrisma);

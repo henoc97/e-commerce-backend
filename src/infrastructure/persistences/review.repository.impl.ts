@@ -1,13 +1,13 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromReviewPrisma } from 'src/application/helper/from-prisma/to.review.entity';
 import { Review } from 'src/domain/entities/review.entity';
 import { IReviewRepository } from 'src/domain/repositories/review.repository';
+import prisma from 'prisma/prisma.service';
 
 /**
  * Repository for handling Review-related operations using Prisma ORM.
  */
 export class ReviewRepository implements IReviewRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new review.
@@ -17,7 +17,7 @@ export class ReviewRepository implements IReviewRepository {
   async create(review: Review): Promise<Review> {
     try {
       const { id, product, user, ...data } = review;
-      const result = await this.prisma.review.create({
+      const result = await prisma.review.create({
         data: data,
       });
       return fromReviewPrisma(result);
@@ -34,7 +34,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getById(id: number): Promise<Review | null> {
     try {
-      const result = await this.prisma.review.findUnique({
+      const result = await prisma.review.findUnique({
         where: { id },
       });
       return fromReviewPrisma(result);
@@ -53,7 +53,7 @@ export class ReviewRepository implements IReviewRepository {
   async modify(id: number, updates: Partial<Review>): Promise<Review> {
     try {
       const { id, product, user, ...data } = updates;
-      const result = await this.prisma.review.update({
+      const result = await prisma.review.update({
         where: { id },
         data: data,
       });
@@ -71,7 +71,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.review.delete({
+      await prisma.review.delete({
         where: { id },
       });
       return true;
@@ -88,7 +88,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getByProduct(productId: number): Promise<Review[]> {
     try {
-      const result = await this.prisma.review.findMany({
+      const result = await prisma.review.findMany({
         where: { productId },
       });
       return result.map(fromReviewPrisma);
@@ -105,7 +105,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getByUser(userId: number): Promise<Review[]> {
     try {
-      const result = await this.prisma.review.findMany({
+      const result = await prisma.review.findMany({
         where: { userId },
       });
       return result.map(fromReviewPrisma);
@@ -122,7 +122,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getByRating(rating: number): Promise<Review[]> {
     try {
-      const result = await this.prisma.review.findMany({
+      const result = await prisma.review.findMany({
         where: { rating },
       });
       return result.map(fromReviewPrisma);
@@ -140,7 +140,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getByDateRange(startDate: Date, endDate: Date): Promise<Review[]> {
     try {
-      const result = await this.prisma.review.findMany({
+      const result = await prisma.review.findMany({
         where: {
           createdAt: {
             gte: startDate,
@@ -164,7 +164,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async verify(id: number): Promise<Review> {
     try {
-      const result = await this.prisma.review.update({
+      const result = await prisma.review.update({
         where: { id },
         data: { verified: true }, // Assuming there's a 'verified' field in your Review model
       });
@@ -182,7 +182,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async flag(id: number): Promise<Review> {
     try {
-      const result = await this.prisma.review.update({
+      const result = await prisma.review.update({
         where: { id },
         data: { flagged: true }, // Assuming there's a 'flagged' field in your Review model
       });
@@ -199,7 +199,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getFlagged(): Promise<Review[]> {
     try {
-      const result = await this.prisma.review.findMany({
+      const result = await prisma.review.findMany({
         where: { flagged: true }, // Assuming 'flagged' is the field used to mark reviews
       });
       return result.map(fromReviewPrisma); // Convert each Prisma result to your Review entity
@@ -216,7 +216,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getPopular(limit: number): Promise<Review[]> {
     try {
-      const result = await this.prisma.review.findMany({
+      const result = await prisma.review.findMany({
         orderBy: { rating: 'desc' },
         take: limit,
       });
@@ -234,7 +234,7 @@ export class ReviewRepository implements IReviewRepository {
    */
   async getAverageRating(productId: number): Promise<number> {
     try {
-      const reviews = await this.prisma.review.findMany({
+      const reviews = await prisma.review.findMany({
         where: { productId },
         select: { rating: true },
       });

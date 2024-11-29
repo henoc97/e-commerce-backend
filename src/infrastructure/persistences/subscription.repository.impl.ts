@@ -1,11 +1,10 @@
-import { PrismaClient } from '@prisma/client';
-import { PrismaService } from 'prisma/prisma.service';
 import { fromSubscriptionPrisma } from 'src/application/helper/from-prisma/to.subscription.entity';
 import { Subscription } from 'src/domain/entities/subscription.entity';
 import { ISubscriptionRepository } from 'src/domain/repositories/subscription.repository';
+import prisma from 'prisma/prisma.service';
 
 export class SubscriptionRepository implements ISubscriptionRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
   /**
    * Creates a new subscription record in the database.
    * @param subscription - The subscription entity to be created.
@@ -14,7 +13,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
   async create(subscription: Subscription): Promise<Subscription> {
     try {
       const { id, vendors, ...data } = subscription;
-      const createdSubscription = await this.prisma.subscription.create({
+      const createdSubscription = await prisma.subscription.create({
         data: data,
       });
       return fromSubscriptionPrisma(createdSubscription);
@@ -31,7 +30,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
    */
   async getById(id: number): Promise<Subscription | null> {
     try {
-      const result = await this.prisma.subscription.findUnique({
+      const result = await prisma.subscription.findUnique({
         where: { id },
       });
       return fromSubscriptionPrisma(result);
@@ -53,7 +52,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
   ): Promise<Subscription> {
     try {
       const { vendors, ...data } = updates;
-      const result = await this.prisma.subscription.update({
+      const result = await prisma.subscription.update({
         where: { id },
         data: data,
       });
@@ -71,7 +70,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.subscription.delete({ where: { id } });
+      await prisma.subscription.delete({ where: { id } });
       return true;
     } catch (error) {
       console.error('Error deleting subscription:', error);
@@ -86,7 +85,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
    */
   async getByVendor(vendorId: number): Promise<Subscription[]> {
     try {
-      const result = await this.prisma.subscription.findMany({
+      const result = await prisma.subscription.findMany({
         where: { vendors: { some: { id: vendorId } } },
       });
       return result.map(fromSubscriptionPrisma);
@@ -107,7 +106,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     maxPrice: number,
   ): Promise<Subscription[]> {
     try {
-      const result = await this.prisma.subscription.findMany({
+      const result = await prisma.subscription.findMany({
         where: {
           price: {
             gte: minPrice,
@@ -129,7 +128,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
   async getActive(): Promise<Subscription[]> {
     try {
       const now = new Date();
-      const result = await this.prisma.subscription.findMany({
+      const result = await prisma.subscription.findMany({
         where: {
           createdAt: {
             lte: now,
@@ -153,7 +152,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
   async getExpired(): Promise<Subscription[]> {
     try {
       const now = new Date();
-      const result = await this.prisma.subscription.findMany({
+      const result = await prisma.subscription.findMany({
         where: {
           updatedAt: {
             lte: now,
@@ -176,7 +175,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     try {
       const now = new Date();
       const expiringDate = new Date(now.getTime() + days * 24 * 60 * 60 * 1000); // days in milliseconds
-      const result = await this.prisma.subscription.findMany({
+      const result = await prisma.subscription.findMany({
         where: {
           updatedAt: {
             gte: now,
@@ -197,7 +196,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
    */
   async getLatest(): Promise<Subscription> {
     try {
-      const result = await this.prisma.subscription.findFirst({
+      const result = await prisma.subscription.findFirst({
         orderBy: {
           createdAt: 'desc',
         },
@@ -216,7 +215,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
    */
   async countByVendor(vendorId: number): Promise<number> {
     try {
-      return await this.prisma.subscription.count({
+      return await prisma.subscription.count({
         where: { vendors: { some: { id: vendorId } } },
       });
     } catch (error) {

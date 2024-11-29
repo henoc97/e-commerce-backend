@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ReviewService } from '../services/review.service';
 import { ReviewRepository } from 'src/infrastructure/persistences/review.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateReview } from '../use-cases/review.use-cases/create-review.use-case';
 import { FetchReviewsByUser } from '../use-cases/review.use-cases/fetch-reviews-by-user.use-case';
 import { UpdateReview } from '../use-cases/review.use-cases/update-review.use-case';
@@ -37,7 +36,7 @@ const reviewUseCases = [
   imports: [KafkaModule],
   providers: [
     ReviewService,
-    PrismaService,
+
     {
       provide: 'IReviewRepository',
       useClass: ReviewRepository,

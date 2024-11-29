@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromAddressPrisma } from 'src/application/helper/from-prisma/to.address.entity';
 import { Address } from 'src/domain/entities/address.entity';
 import { IAddressRepository } from 'src/domain/repositories/address.repository';
+import prisma from 'prisma/prisma.service';
 
 export class AddressRepository implements IAddressRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new address in the database.
@@ -14,7 +14,7 @@ export class AddressRepository implements IAddressRepository {
   async create(address: Address): Promise<Address> {
     const { id, user, ...addressData } = address;
     try {
-      const result = await this.prisma.address.create({
+      const result = await prisma.address.create({
         data: addressData,
       });
       return fromAddressPrisma(result);
@@ -31,7 +31,7 @@ export class AddressRepository implements IAddressRepository {
    */
   async getById(id: number): Promise<Address | null> {
     try {
-      const result = await this.prisma.address.findUnique({
+      const result = await prisma.address.findUnique({
         where: { id },
       });
       return fromAddressPrisma(result);
@@ -50,7 +50,7 @@ export class AddressRepository implements IAddressRepository {
   async updateById(id: number, updateData: Partial<Address>): Promise<Address> {
     const { user, ...data } = updateData;
     try {
-      const result = await this.prisma.address.update({
+      const result = await prisma.address.update({
         where: { id },
         data: data,
       });
@@ -68,7 +68,7 @@ export class AddressRepository implements IAddressRepository {
    */
   async deleteById(id: number): Promise<boolean> {
     try {
-      await this.prisma.address.delete({
+      await prisma.address.delete({
         where: { id },
       });
       return true;
@@ -85,7 +85,7 @@ export class AddressRepository implements IAddressRepository {
    */
   async getAllByUserId(userId: number): Promise<Address[]> {
     try {
-      const result = await this.prisma.address.findMany({
+      const result = await prisma.address.findMany({
         where: { userId },
       });
       return result.map(fromAddressPrisma);
@@ -106,7 +106,7 @@ export class AddressRepository implements IAddressRepository {
     addressId: number,
   ): Promise<Address | null> {
     try {
-      const result = await this.prisma.address.findFirst({
+      const result = await prisma.address.findFirst({
         where: {
           id: addressId,
           userId,
@@ -126,7 +126,7 @@ export class AddressRepository implements IAddressRepository {
    */
   async getByCity(city: string): Promise<Address[]> {
     try {
-      const result = await this.prisma.address.findMany({
+      const result = await prisma.address.findMany({
         where: { city },
       });
       return result.map(fromAddressPrisma);
@@ -143,7 +143,7 @@ export class AddressRepository implements IAddressRepository {
    */
   async getByState(state: string): Promise<Address[]> {
     try {
-      const result = await this.prisma.address.findMany({
+      const result = await prisma.address.findMany({
         where: { state },
       });
       return result.map(fromAddressPrisma);
@@ -160,7 +160,7 @@ export class AddressRepository implements IAddressRepository {
    */
   async getByCountry(country: string): Promise<Address[]> {
     try {
-      const result = await this.prisma.address.findMany({
+      const result = await prisma.address.findMany({
         where: { country },
       });
       return result.map(fromAddressPrisma);
@@ -177,7 +177,7 @@ export class AddressRepository implements IAddressRepository {
    */
   async getByPostalCode(postalCode: string): Promise<Address[]> {
     try {
-      const result = await this.prisma.address.findMany({
+      const result = await prisma.address.findMany({
         where: { postalCode },
       });
       return result.map(fromAddressPrisma);

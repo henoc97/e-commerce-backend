@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { VendorService } from '../services/vendor.service';
 import { VendorRepository } from 'src/infrastructure/persistences/vendor.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateVendor } from '../use-cases/vendor.use-cases/create-vendor.use-case';
 import { FindVendorsByUser } from '../use-cases/vendor.use-cases/find-vendors-by-user.use-case';
 import { VendorList } from '../use-cases/vendor.use-cases/vendor-list.use-case';
@@ -36,7 +35,7 @@ const vendorUseCases = [
   imports: [SubscriptionModule, ShopModule],
   providers: [
     VendorService,
-    PrismaService,
+
     {
       provide: 'IVendorRepository',
       useClass: VendorRepository,

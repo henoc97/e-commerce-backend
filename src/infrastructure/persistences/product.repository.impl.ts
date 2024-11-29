@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromProductPrisma } from 'src/application/helper/from-prisma/to.product.entity';
 import { Product } from 'src/domain/entities/product.entity';
 import { IProductRepository } from 'src/domain/repositories/product.repository';
+import prisma from 'prisma/prisma.service';
 
 export class ProductRepository implements IProductRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
   getFeaturedProducts(): Promise<Product[]> {
     throw new Error('Method not implemented.');
   }
@@ -28,7 +28,7 @@ export class ProductRepository implements IProductRepository {
         review,
         ...data
       } = product;
-      const result = await this.prisma.product.create({ data: data });
+      const result = await prisma.product.create({ data: data });
       return fromProductPrisma(result);
     } catch (error) {
       console.error('Error creating product:', error);
@@ -43,7 +43,7 @@ export class ProductRepository implements IProductRepository {
    */
   async getById(id: number): Promise<Product | null> {
     try {
-      const result = await this.prisma.product.findUnique({ where: { id } });
+      const result = await prisma.product.findUnique({ where: { id } });
       return fromProductPrisma(result);
     } catch (error) {
       console.error('Error fetching product by ID:', error);
@@ -72,7 +72,7 @@ export class ProductRepository implements IProductRepository {
         ...data
       } = updates;
 
-      const result = await this.prisma.product.update({
+      const result = await prisma.product.update({
         where: { id },
         data: data,
       });
@@ -90,7 +90,7 @@ export class ProductRepository implements IProductRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.product.delete({ where: { id } });
+      await prisma.product.delete({ where: { id } });
       return true;
     } catch (error) {
       console.error('Error deleting product:', error);
@@ -105,7 +105,7 @@ export class ProductRepository implements IProductRepository {
    */
   async findByName(name: string): Promise<Product[]> {
     try {
-      const result = await this.prisma.product.findMany({
+      const result = await prisma.product.findMany({
         where: { name: { contains: name } },
       });
       return result.map(fromProductPrisma);
@@ -122,7 +122,7 @@ export class ProductRepository implements IProductRepository {
    */
   async findByVendor(vendorId: number): Promise<Product[]> {
     try {
-      const result = await this.prisma.product.findMany({
+      const result = await prisma.product.findMany({
         where: { vendorId },
       });
       return result.map(fromProductPrisma);
@@ -139,7 +139,7 @@ export class ProductRepository implements IProductRepository {
    */
   async findByCategory(categoryId: number): Promise<Product[]> {
     try {
-      const result = await this.prisma.product.findMany({
+      const result = await prisma.product.findMany({
         where: { categoryId },
       });
       return result.map(fromProductPrisma);
@@ -159,7 +159,7 @@ export class ProductRepository implements IProductRepository {
    */
   async updateStock(productId: number, quantity: number): Promise<Product> {
     try {
-      const result = await this.prisma.product.update({
+      const result = await prisma.product.update({
         where: { id: productId },
         data: { stock: { increment: quantity } },
       });
@@ -182,7 +182,7 @@ export class ProductRepository implements IProductRepository {
     maxPrice: number,
   ): Promise<Product[]> {
     try {
-      const result = await this.prisma.product.findMany({
+      const result = await prisma.product.findMany({
         where: {
           price: {
             gte: minPrice,
@@ -199,7 +199,7 @@ export class ProductRepository implements IProductRepository {
 
   // async getFeaturedProducts(): Promise<Product[]> {
   //     try {
-  //         const result = await this.prisma.product.findMany({
+  //         const result = await prisma.product.findMany({
   //             where: { isFeatured: true }, // Assuming there's a boolean field 'isFeatured'
   //         });
   //         return result.map(fromProductPrisma);

@@ -1,16 +1,20 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+// prisma/prisma.service.ts
 import { PrismaClient } from '@prisma/client';
 
-@Injectable()
-export class PrismaService
-  extends PrismaClient
-  implements OnModuleInit, OnModuleDestroy
-{
-  async onModuleInit() {
-    await this.$connect();
-  }
+let prisma: PrismaClient;
 
-  async onModuleDestroy() {
-    await this.$disconnect();
-  }
+declare global {
+  // This is necessary to prevent TypeScript from complaining about the `global` object
+  var __prisma: PrismaClient | undefined;
 }
+
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient();
+} else {
+  if (!global.__prisma) {
+    global.__prisma = new PrismaClient();
+  }
+  prisma = global.__prisma;
+}
+
+export default prisma;

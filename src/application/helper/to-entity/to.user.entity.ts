@@ -26,22 +26,22 @@ export function fromUserDTO(userDTO: UserDTO | Partial<UserDTO>): User {
     userDTO.password,
     userDTO.role,
     userDTO.profile ? fromUserProfileDTO(userDTO.profile) : undefined,
-    userDTO.addresses.map((address) => fromAddressDTO(address)),
-    userDTO.orders.map((order) => fromOrderDTO(order)),
+    userDTO.addresses?.map(fromAddressDTO),
+    userDTO.orders?.map(fromOrderDTO),
     userDTO.createdAt,
     userDTO.updatedAt,
     userDTO.vendor ? fromVendorDTO(userDTO.vendor) : undefined,
-    userDTO.carts.map((c) => fromCartDTO(c)),
+    userDTO.carts?.map(fromCartDTO),
     userDTO.name,
-    userDTO.reviews.map((review) => fromReviewDTO(review)),
-    userDTO.notifications.map((notification) =>
-      fromNotificationDTO(notification),
+    userDTO.reviews?.map(fromReviewDTO),
+    userDTO.notifications?.map(
+      fromNotificationDTO,
     ),
-    userDTO.tickets.map((ticket) => fromTicketDTO(ticket)),
-    userDTO.subsites.map((subsite) => fromSubsiteDTO(subsite)),
-    userDTO.userActivities.map((userActivity) =>
-      fromUserActivityDTO(userActivity),
+    userDTO.tickets?.map(fromTicketDTO),
+    userDTO.subsites?.map(fromSubsiteDTO),
+    userDTO.userActivities?.map(
+      fromUserActivityDTO,
     ),
-    userDTO.auditLogs.map((auditLog) => fromAuditLogDTO(auditLog)),
+    userDTO.auditLogs?.map(fromAuditLogDTO),
   );
 }

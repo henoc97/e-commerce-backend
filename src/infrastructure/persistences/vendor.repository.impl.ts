@@ -1,16 +1,16 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromVendorPrisma } from 'src/application/helper/from-prisma/to.vendor.entity';
 import { Product } from 'src/domain/entities/product.entity';
 import { Shop } from 'src/domain/entities/shop.entity';
 import { Subscription } from 'src/domain/entities/subscription.entity';
 import { Vendor } from 'src/domain/entities/vendor.entity';
 import { IVendorRepository } from 'src/domain/repositories/vendor.repository';
+import prisma from 'prisma/prisma.service';
 
 /**
  * Repository class for managing vendor-related data operations.
  */
 export class VendorRepository implements IVendorRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Create a new vendor.
@@ -20,7 +20,7 @@ export class VendorRepository implements IVendorRepository {
   async create(vendor: Vendor): Promise<Vendor> {
     try {
       const { id, user, products, subscription, shop, ...data } = vendor;
-      const result = this.prisma.vendor.create({ data: data });
+      const result = prisma.vendor.create({ data: data });
       return fromVendorPrisma(result);
     } catch (error) {
       console.error('Error creating vendor:', error);
@@ -35,7 +35,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async findById(id: number): Promise<Vendor | null> {
     try {
-      const result = this.prisma.vendor.findUnique({ where: { id } });
+      const result = prisma.vendor.findUnique({ where: { id } });
       return fromVendorPrisma(result);
     } catch (error) {
       console.error('Error finding vendor by ID:', error);
@@ -52,7 +52,7 @@ export class VendorRepository implements IVendorRepository {
   async update(id: number, data: Partial<Vendor>): Promise<Vendor> {
     try {
       const { user, products, subscription, shop, ...updates } = data;
-      const result = await this.prisma.vendor.update({
+      const result = await prisma.vendor.update({
         where: { id },
         data: updates,
       });
@@ -70,7 +70,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.vendor.delete({ where: { id } });
+      await prisma.vendor.delete({ where: { id } });
       return true;
     } catch (error) {
       console.error('Error deleting vendor:', error);
@@ -85,7 +85,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async findByStoreName(storeName: string): Promise<Vendor[]> {
     try {
-      const result = await this.prisma.vendor.findMany({
+      const result = await prisma.vendor.findMany({
         where: { storeName },
       });
       return result.map(fromVendorPrisma);
@@ -103,7 +103,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async addProduct(vendorId: number, product: Product): Promise<Vendor> {
     try {
-      const result = this.prisma.vendor.update({
+      const result = prisma.vendor.update({
         where: { id: vendorId },
         data: { products: { connect: { id: product.id } } },
       });
@@ -122,7 +122,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async removeProduct(vendorId: number, productId: number): Promise<Vendor> {
     try {
-      const result = this.prisma.vendor.update({
+      const result = prisma.vendor.update({
         where: { id: vendorId },
         data: { products: { disconnect: { id: productId } } },
       });
@@ -144,7 +144,7 @@ export class VendorRepository implements IVendorRepository {
     subscription: Subscription,
   ): Promise<Vendor> {
     try {
-      const result = this.prisma.vendor.update({
+      const result = prisma.vendor.update({
         where: { id: vendorId },
         data: { subscription: { connect: { id: subscription.id } } },
       });
@@ -163,7 +163,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async setShop(vendorId: number, shop: Shop): Promise<Vendor> {
     try {
-      const result = this.prisma.vendor.update({
+      const result = prisma.vendor.update({
         where: { id: vendorId },
         data: { shop: { connect: { id: shop.id } } },
       });
@@ -181,7 +181,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async findByUser(userId: number): Promise<Vendor[]> {
     try {
-      const result = await this.prisma.vendor.findMany({ where: { userId } });
+      const result = await prisma.vendor.findMany({ where: { userId } });
       return result.map(fromVendorPrisma);
     } catch (error) {
       console.error('Error finding vendors by user:', error);
@@ -196,7 +196,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async findBySubscription(subscriptionId: number): Promise<Vendor[]> {
     try {
-      const result = await this.prisma.vendor.findMany({
+      const result = await prisma.vendor.findMany({
         where: { subscriptionId },
       });
       return result.map(fromVendorPrisma);
@@ -212,7 +212,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async getAll(): Promise<Vendor[]> {
     try {
-      const result = await this.prisma.vendor.findMany();
+      const result = await prisma.vendor.findMany();
       return result.map(fromVendorPrisma);
     } catch (error) {
       console.error('Error fetching all vendors:', error);

@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromProductImagePrisma } from 'src/application/helper/from-prisma/to.product-image.entity';
 import { ProductImage } from 'src/domain/entities/product-image.entity';
 import { IProductImageRepository } from 'src/domain/repositories/product-image.repository';
+import prisma from 'prisma/prisma.service';
 
 export class ProductImageRepository implements IProductImageRepository {
-  constructor(private readonly prisma: PrismaService) { }
+
   /**
    * Creates a new ProductImage record in the database.
    * @param image - The product image entity to be created.
@@ -14,7 +14,7 @@ export class ProductImageRepository implements IProductImageRepository {
   async create(image: ProductImage): Promise<ProductImage> {
     try {
       const { id, product, ...data } = image;
-      const newImage = await this.prisma.productImage.create({
+      const newImage = await prisma.productImage.create({
         data: data,
       });
       return fromProductImagePrisma(newImage);
@@ -31,7 +31,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async getById(id: number): Promise<ProductImage | null> {
     try {
-      const image = await this.prisma.productImage.findUnique({
+      const image = await prisma.productImage.findUnique({
         where: { id },
       });
       return fromProductImagePrisma(image);
@@ -55,7 +55,7 @@ export class ProductImageRepository implements IProductImageRepository {
   ): Promise<ProductImage> {
     try {
       const { product, ...data } = updates;
-      const updatedImage = await this.prisma.productImage.update({
+      const updatedImage = await prisma.productImage.update({
         where: { id },
         data: data,
       });
@@ -75,7 +75,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.productImage.delete({
+      await prisma.productImage.delete({
         where: { id },
       });
       return true;
@@ -95,7 +95,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async getByProductId(productId: number): Promise<ProductImage[]> {
     try {
-      const images = await this.prisma.productImage.findMany({
+      const images = await prisma.productImage.findMany({
         where: { productId },
       });
       return images.map(fromProductImagePrisma);
@@ -114,7 +114,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async deleteByProductId(productId: number): Promise<boolean> {
     try {
-      await this.prisma.productImage.deleteMany({
+      await prisma.productImage.deleteMany({
         where: { productId },
       });
       return true;
@@ -135,7 +135,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async updateUrl(id: number, url: string): Promise<ProductImage> {
     try {
-      const updatedImage = await this.prisma.productImage.update({
+      const updatedImage = await prisma.productImage.update({
         where: { id },
         data: { url },
       });
@@ -156,7 +156,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async exists(productId: number, url: string): Promise<boolean> {
     try {
-      const image = await this.prisma.productImage.findFirst({
+      const image = await prisma.productImage.findFirst({
         where: {
           productId,
           url,
@@ -178,7 +178,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async getPrimaryImage(productId: number): Promise<ProductImage | null> {
     try {
-      const image = await this.prisma.productImage.findFirst({
+      const image = await prisma.productImage.findFirst({
         where: { productId },
         orderBy: {
           id: 'asc', // Assuming the primary image is the first one created
@@ -200,7 +200,7 @@ export class ProductImageRepository implements IProductImageRepository {
    */
   async countImagesByProductId(productId: number): Promise<number> {
     try {
-      const count = await this.prisma.productImage.count({
+      const count = await prisma.productImage.count({
         where: { productId },
       });
       return count;

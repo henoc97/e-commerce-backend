@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PromotionService } from '../services/promotion.service';
 import { PromotionRepository } from 'src/infrastructure/persistences/promotion.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreatePromotion } from '../use-cases/promotion.use-cases/create-promotion.use-case';
 import { UpdatePromotion } from '../use-cases/promotion.use-cases/update-promotion.use-case';
 import { CombinePromotions } from '../use-cases/promotion.use-cases/combine-promotions.use-case';
@@ -29,7 +28,7 @@ const promotionUseCases = [
   imports: [CartItemModule],
   providers: [
     PromotionService,
-    PrismaService,
+
     {
       provide: 'IPromotionRepository',
       useClass: PromotionRepository,

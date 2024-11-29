@@ -1,14 +1,14 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromUserProfilePrisma } from 'src/application/helper/from-prisma/to.user-profile.entity';
 import { UserProfile } from 'src/domain/entities/user-profile.entity';
 import { IUserProfileRepository } from 'src/domain/repositories/user-profile.repository';
+import prisma from 'prisma/prisma.service';
 
 /**
  * Repository implementation for user profiles.
  * Provides methods to create, retrieve, update, and delete user profiles.
  */
 export class UserProfileRepository implements IUserProfileRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new user profile.
@@ -18,7 +18,7 @@ export class UserProfileRepository implements IUserProfileRepository {
   async create(profile: UserProfile): Promise<UserProfile> {
     try {
       const { user, ...data } = profile;
-      const result = await this.prisma.userProfile.create({
+      const result = await prisma.userProfile.create({
         data: data,
       });
       return fromUserProfilePrisma(result);
@@ -35,7 +35,7 @@ export class UserProfileRepository implements IUserProfileRepository {
    */
   async getById(id: number): Promise<UserProfile | null> {
     try {
-      const result = await this.prisma.userProfile.findUnique({
+      const result = await prisma.userProfile.findUnique({
         where: { id },
       });
       return fromUserProfilePrisma(result);
@@ -57,7 +57,7 @@ export class UserProfileRepository implements IUserProfileRepository {
   ): Promise<UserProfile> {
     try {
       const { user, ...data } = updates;
-      const result = await this.prisma.userProfile.update({
+      const result = await prisma.userProfile.update({
         where: { id },
         data: data,
       });
@@ -75,7 +75,7 @@ export class UserProfileRepository implements IUserProfileRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.userProfile.delete({
+      await prisma.userProfile.delete({
         where: { id },
       });
       return true;
@@ -92,7 +92,7 @@ export class UserProfileRepository implements IUserProfileRepository {
    */
   async getByUserId(userId: number): Promise<UserProfile | null> {
     try {
-      const result = await this.prisma.userProfile.findUnique({
+      const result = await prisma.userProfile.findUnique({
         where: { userId },
       });
       return fromUserProfilePrisma(result);
@@ -138,7 +138,7 @@ export class UserProfileRepository implements IUserProfileRepository {
   ): Promise<UserProfile> {
     try {
       const { user, ...data } = updates;
-      const result = await this.prisma.userProfile.update({
+      const result = await prisma.userProfile.update({
         where: { userId },
         data: data,
       });
@@ -156,7 +156,7 @@ export class UserProfileRepository implements IUserProfileRepository {
    */
   async getByGender(gender: string): Promise<UserProfile[]> {
     try {
-      const result = await this.prisma.userProfile.findMany({
+      const result = await prisma.userProfile.findMany({
         where: { gender },
       });
       return result.map(fromUserProfilePrisma);
@@ -177,7 +177,7 @@ export class UserProfileRepository implements IUserProfileRepository {
     endDate: Date,
   ): Promise<UserProfile[]> {
     try {
-      const result = await this.prisma.userProfile.findMany({
+      const result = await prisma.userProfile.findMany({
         where: {
           birthday: {
             gte: startDate,
@@ -199,7 +199,7 @@ export class UserProfileRepository implements IUserProfileRepository {
    */
   async isPhoneInUse(phone: string): Promise<boolean> {
     try {
-      const count = await this.prisma.userProfile.count({
+      const count = await prisma.userProfile.count({
         where: { phone },
       });
       return count > 0;
@@ -216,7 +216,7 @@ export class UserProfileRepository implements IUserProfileRepository {
    */
   async exists(userId: number): Promise<boolean> {
     try {
-      const count = await this.prisma.userProfile.count({
+      const count = await prisma.userProfile.count({
         where: { userId },
       });
       return count > 0;
@@ -234,7 +234,7 @@ export class UserProfileRepository implements IUserProfileRepository {
   async findMatches(criteria: Partial<UserProfile>): Promise<UserProfile[]> {
     try {
       const { user, ...data } = criteria;
-      const result = await this.prisma.userProfile.findMany({
+      const result = await prisma.userProfile.findMany({
         where: data,
       });
       return result.map(fromUserProfilePrisma);

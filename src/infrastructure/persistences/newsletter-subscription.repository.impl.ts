@@ -1,12 +1,11 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromNewsletterSubscriptionPrisma } from 'src/application/helper/from-prisma/to.newsletter-subscription.entity';
 import { NewsletterSubscription } from 'src/domain/entities/newsletter-subscription.entity';
 import { INewsletterSubscriptionRepository } from 'src/domain/repositories/newsletter-subscription.repository';
+import prisma from 'prisma/prisma.service';
 
 export class NewsletterSubscriptionRepository
-  implements INewsletterSubscriptionRepository
-{
-  constructor(private readonly prisma: PrismaService) {}
+  implements INewsletterSubscriptionRepository {
+
   /**
    * Creates a new newsletter subscription for a specific shop.
    * @param subscription The subscription entity to create.
@@ -17,7 +16,7 @@ export class NewsletterSubscriptionRepository
   ): Promise<NewsletterSubscription> {
     try {
       const { id, ...data } = subscription;
-      const result = await this.prisma.newsletterSubscription.create({
+      const result = await prisma.newsletterSubscription.create({
         data: data,
       });
       return fromNewsletterSubscriptionPrisma(result);
@@ -34,7 +33,7 @@ export class NewsletterSubscriptionRepository
    */
   async getById(id: number): Promise<NewsletterSubscription | null> {
     try {
-      const result = await this.prisma.newsletterSubscription.findUnique({
+      const result = await prisma.newsletterSubscription.findUnique({
         where: {
           id,
         },
@@ -60,7 +59,7 @@ export class NewsletterSubscriptionRepository
     updates: Partial<NewsletterSubscription>,
   ): Promise<NewsletterSubscription> {
     try {
-      const result = await this.prisma.newsletterSubscription.update({
+      const result = await prisma.newsletterSubscription.update({
         where: {
           id,
         },
@@ -80,7 +79,7 @@ export class NewsletterSubscriptionRepository
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.newsletterSubscription.delete({
+      await prisma.newsletterSubscription.delete({
         where: {
           id,
         },
@@ -99,7 +98,7 @@ export class NewsletterSubscriptionRepository
    */
   async listAllByShop(shopId: number): Promise<NewsletterSubscription[]> {
     try {
-      const result = await this.prisma.newsletterSubscription.findMany({
+      const result = await prisma.newsletterSubscription.findMany({
         where: {
           shopId,
         },
@@ -125,7 +124,7 @@ export class NewsletterSubscriptionRepository
     shopId: number,
   ): Promise<NewsletterSubscription | null> {
     try {
-      const result = await this.prisma.newsletterSubscription.findUnique({
+      const result = await prisma.newsletterSubscription.findUnique({
         where: {
           email,
           shopId,
@@ -170,7 +169,7 @@ export class NewsletterSubscriptionRepository
     endDate: Date,
   ): Promise<NewsletterSubscription[]> {
     try {
-      const result = await this.prisma.newsletterSubscription.findMany({
+      const result = await prisma.newsletterSubscription.findMany({
         where: {
           shopId,
           subscribedAt: {
@@ -196,7 +195,7 @@ export class NewsletterSubscriptionRepository
    */
   async countAllForShop(shopId: number): Promise<number> {
     try {
-      const count = await this.prisma.newsletterSubscription.count({
+      const count = await prisma.newsletterSubscription.count({
         where: {
           shopId,
         },

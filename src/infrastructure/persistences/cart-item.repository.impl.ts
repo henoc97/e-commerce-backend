@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromCartItemPrisma } from 'src/application/helper/from-prisma/to.cart-item.entity';
 import { CartItem } from 'src/domain/entities/cart-item.entity';
 import { ICartItemRepository } from 'src/domain/repositories/cart-item.repository';
+import prisma from 'prisma/prisma.service';
 
 export class CartItemRepository implements ICartItemRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new cart item.
@@ -14,7 +14,7 @@ export class CartItemRepository implements ICartItemRepository {
   async create(item: CartItem): Promise<CartItem> {
     try {
       const { id, cart, product, ...cartItem } = item;
-      const result = await this.prisma.cartItem.create({
+      const result = await prisma.cartItem.create({
         data: cartItem,
       });
       return fromCartItemPrisma(result);
@@ -31,7 +31,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async getById(id: number): Promise<CartItem | null> {
     try {
-      const result = await this.prisma.cartItem.findUnique({
+      const result = await prisma.cartItem.findUnique({
         where: { id },
       });
       return result ? fromCartItemPrisma(result) : null;
@@ -50,7 +50,7 @@ export class CartItemRepository implements ICartItemRepository {
   async update(id: number, data: Partial<CartItem>): Promise<CartItem> {
     try {
       const { cart, product, ...cartItem } = data;
-      const result = await this.prisma.cartItem.update({
+      const result = await prisma.cartItem.update({
         where: { id },
         data: cartItem,
       });
@@ -68,7 +68,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.cartItem.delete({
+      await prisma.cartItem.delete({
         where: { id },
       });
       return true;
@@ -85,7 +85,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async getByCartId(cartId: number): Promise<CartItem[]> {
     try {
-      const result = await this.prisma.cartItem.findMany({
+      const result = await prisma.cartItem.findMany({
         where: { cartId },
       });
       return result.map(fromCartItemPrisma);
@@ -106,7 +106,7 @@ export class CartItemRepository implements ICartItemRepository {
     cartId: number,
   ): Promise<CartItem | null> {
     try {
-      const result = await this.prisma.cartItem.findMany({
+      const result = await prisma.cartItem.findMany({
         where: { productId, cartId },
       });
       return result.length > 0 ? fromCartItemPrisma(result[0]) : null;
@@ -126,7 +126,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async getItemCount(cartId: number): Promise<number> {
     try {
-      const count = await this.prisma.cartItem.count({
+      const count = await prisma.cartItem.count({
         where: { cartId },
       });
       return count;
@@ -144,7 +144,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async updateQuantity(id: number, quantity: number): Promise<CartItem> {
     try {
-      const result = await this.prisma.cartItem.update({
+      const result = await prisma.cartItem.update({
         where: { id },
         data: { quantity },
       });
@@ -162,7 +162,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async clearCart(cartId: number): Promise<boolean> {
     try {
-      await this.prisma.cartItem.deleteMany({
+      await prisma.cartItem.deleteMany({
         where: { cartId },
       });
       return true;
@@ -179,7 +179,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async calculateCartTotal(cartId: number): Promise<number> {
     try {
-      const items = await this.prisma.cartItem.findMany({
+      const items = await prisma.cartItem.findMany({
         where: { cartId },
         include: { product: true },
       });
@@ -203,7 +203,7 @@ export class CartItemRepository implements ICartItemRepository {
    */
   async getHighestQuantityItem(cartId: number): Promise<CartItem | null> {
     try {
-      const highestItem = await this.prisma.cartItem.findFirst({
+      const highestItem = await prisma.cartItem.findFirst({
         where: { cartId },
         orderBy: {
           quantity: 'desc',

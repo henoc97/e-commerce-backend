@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { NotificationService } from '../services/notification.service';
 import { NotificationRepository } from 'src/infrastructure/persistences/notification.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateNotification } from '../use-cases/notification.use-cases/create-notification.use-case';
 import { CountUnreadNotifications } from '../use-cases/notification.use-cases/count-unread-notifications.use-case';
 import { UpdateNotification } from '../use-cases/notification.use-cases/update-notification.use-case';
@@ -29,7 +28,7 @@ const notificationUseCases = [
 @Module({
   providers: [
     NotificationService,
-    PrismaService,
+
     {
       provide: 'INotificationRepository',
       useClass: NotificationRepository,

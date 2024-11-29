@@ -1,13 +1,13 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromPromotionPrisma } from 'src/application/helper/from-prisma/to.promotion.entity';
 import { Promotion } from 'src/domain/entities/promotion.entity';
 import { IPromotionRepository } from 'src/domain/repositories/promotion.repository';
+import prisma from 'prisma/prisma.service';
 
 /**
  * Repository for handling Promotion operations with Prisma.
  */
 export class PromotionRepository implements IPromotionRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
   /**
    * Creates a new promotion.
    * @param promotion - The promotion data to be created.
@@ -16,7 +16,7 @@ export class PromotionRepository implements IPromotionRepository {
   async create(promotion: Promotion): Promise<Promotion> {
     try {
       const { id, product, ...data } = promotion;
-      const newPromotion = await this.prisma.promotion.create({
+      const newPromotion = await prisma.promotion.create({
         data: data,
       });
       return fromPromotionPrisma(newPromotion);
@@ -33,7 +33,7 @@ export class PromotionRepository implements IPromotionRepository {
    */
   async getById(id: number): Promise<Promotion | null> {
     try {
-      const result = await this.prisma.promotion.findUnique({ where: { id } });
+      const result = await prisma.promotion.findUnique({ where: { id } });
       return fromPromotionPrisma(result);
     } catch (error) {
       console.error('Error retrieving promotion by ID:', error);
@@ -50,7 +50,7 @@ export class PromotionRepository implements IPromotionRepository {
   async modify(id: number, updates: Partial<Promotion>): Promise<Promotion> {
     try {
       const { product, ...data } = updates;
-      const updatedPromotion = await this.prisma.promotion.update({
+      const updatedPromotion = await prisma.promotion.update({
         where: { id },
         data: data,
       });
@@ -68,7 +68,7 @@ export class PromotionRepository implements IPromotionRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.promotion.delete({ where: { id } });
+      await prisma.promotion.delete({ where: { id } });
       return true;
     } catch (error) {
       console.error('Error deleting promotion:', error);
@@ -83,7 +83,7 @@ export class PromotionRepository implements IPromotionRepository {
    */
   async getByProduct(productId: number): Promise<Promotion[]> {
     try {
-      const result = await this.prisma.promotion.findMany({
+      const result = await prisma.promotion.findMany({
         where: { productId },
       });
       return result.map(fromPromotionPrisma);
@@ -103,7 +103,7 @@ export class PromotionRepository implements IPromotionRepository {
    */
   async getActiveBetween(start: Date, end: Date): Promise<Promotion[]> {
     try {
-      const result = await this.prisma.promotion.findMany({
+      const result = await prisma.promotion.findMany({
         where: {
           startDate: { gte: start },
           endDate: { lte: end },
@@ -123,7 +123,7 @@ export class PromotionRepository implements IPromotionRepository {
   async getActive(): Promise<Promotion[]> {
     try {
       const now = new Date();
-      const result = await this.prisma.promotion.findMany({
+      const result = await prisma.promotion.findMany({
         where: {
           startDate: { lte: now },
           endDate: { gte: now },
@@ -143,7 +143,7 @@ export class PromotionRepository implements IPromotionRepository {
    */
   async getBestForProduct(productId: number): Promise<Promotion | null> {
     try {
-      const promotions = await this.prisma.promotion.findMany({
+      const promotions = await prisma.promotion.findMany({
         where: { productId },
       });
       if (promotions.length === 0) return null;

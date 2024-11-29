@@ -1,14 +1,14 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromUserActivityPrisma } from 'src/application/helper/from-prisma/to.user-activity.entity';
 import { UserActivity } from 'src/domain/entities/user-activity.entity';
 import { IUserActivityRepository } from 'src/domain/repositories/user-activity.repository';
+import prisma from 'prisma/prisma.service';
 
 /**
  * UserActivityRepository provides access to user activity data in the database.
  * It implements the IUserActivityRepository interface to perform CRUD operations.
  */
 export class UserActivityRepository implements IUserActivityRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new user activity record in the database.
@@ -18,7 +18,7 @@ export class UserActivityRepository implements IUserActivityRepository {
   async create(activity: UserActivity): Promise<UserActivity> {
     try {
       const { id, user, ...data } = activity;
-      const newActivity = await this.prisma.userActivity.create({
+      const newActivity = await prisma.userActivity.create({
         data: data,
       });
       return fromUserActivityPrisma(newActivity);
@@ -35,7 +35,7 @@ export class UserActivityRepository implements IUserActivityRepository {
    */
   async findById(id: number): Promise<UserActivity | null> {
     try {
-      const activity = await this.prisma.userActivity.findUnique({
+      const activity = await prisma.userActivity.findUnique({
         where: { id },
       });
       return fromUserActivityPrisma(activity);
@@ -52,7 +52,7 @@ export class UserActivityRepository implements IUserActivityRepository {
    */
   async listByUser(userId: number): Promise<UserActivity[]> {
     try {
-      const activities = await this.prisma.userActivity.findMany({
+      const activities = await prisma.userActivity.findMany({
         where: { userId },
       });
       return activities.map(fromUserActivityPrisma);
@@ -69,7 +69,7 @@ export class UserActivityRepository implements IUserActivityRepository {
    */
   async listByProduct(productId: number): Promise<UserActivity[]> {
     try {
-      const activities = await this.prisma.userActivity.findMany({
+      const activities = await prisma.userActivity.findMany({
         where: { productId },
       });
       return activities.map(fromUserActivityPrisma);
@@ -88,7 +88,7 @@ export class UserActivityRepository implements IUserActivityRepository {
   async update(id: number, activity: UserActivity): Promise<UserActivity> {
     try {
       const { user, ...data } = activity;
-      const updatedActivity = await this.prisma.userActivity.update({
+      const updatedActivity = await prisma.userActivity.update({
         where: { id },
         data: data,
       });
@@ -106,7 +106,7 @@ export class UserActivityRepository implements IUserActivityRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.userActivity.delete({
+      await prisma.userActivity.delete({
         where: { id },
       });
       return true;
@@ -124,7 +124,7 @@ export class UserActivityRepository implements IUserActivityRepository {
    */
   async listByDateRange(start: Date, end: Date): Promise<UserActivity[]> {
     try {
-      const activities = await this.prisma.userActivity.findMany({
+      const activities = await prisma.userActivity.findMany({
         where: {
           createdAt: {
             gte: start,
@@ -161,7 +161,7 @@ export class UserActivityRepository implements IUserActivityRepository {
    */
   async countByUser(userId: number): Promise<number> {
     try {
-      return await this.prisma.userActivity.count({
+      return await prisma.userActivity.count({
         where: { userId },
       });
     } catch (error) {
@@ -181,7 +181,7 @@ export class UserActivityRepository implements IUserActivityRepository {
     limit: number,
   ): Promise<UserActivity[]> {
     try {
-      const activities = await this.prisma.userActivity.findMany({
+      const activities = await prisma.userActivity.findMany({
         where: { userId },
         orderBy: { createdAt: 'desc' },
         take: limit,

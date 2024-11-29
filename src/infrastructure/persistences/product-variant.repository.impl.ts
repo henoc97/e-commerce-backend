@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromProductVariantPrisma } from 'src/application/helper/from-prisma/to.product-variant.entity';
 import { ProductVariant } from 'src/domain/entities/product-variant.entity';
 import { IProductVariantRepository } from 'src/domain/repositories/product-variant.repository';
+import prisma from 'prisma/prisma.service';
 
 export class ProductVariantRepository implements IProductVariantRepository {
-  constructor(private readonly prisma: PrismaService) { }
+
   /**
    * Creates a new ProductVariant in the database.
    * @param variant - The product variant to be created.
@@ -14,7 +14,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
   async create(variant: ProductVariant): Promise<ProductVariant> {
     try {
       const { id, product, ...data } = variant;
-      const newVariant = await this.prisma.productVariant.create({
+      const newVariant = await prisma.productVariant.create({
         data: data,
       });
       return fromProductVariantPrisma(newVariant);
@@ -31,7 +31,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
    */
   async getById(id: number): Promise<ProductVariant | null> {
     try {
-      const variant = await this.prisma.productVariant.findUnique({
+      const variant = await prisma.productVariant.findUnique({
         where: { id },
       });
       return fromProductVariantPrisma(variant);
@@ -55,7 +55,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
   ): Promise<ProductVariant> {
     try {
       const { id, product, ...data } = updates;
-      const updatedVariant = await this.prisma.productVariant.update({
+      const updatedVariant = await prisma.productVariant.update({
         where: { id },
         data: data,
       });
@@ -75,7 +75,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.productVariant.delete({
+      await prisma.productVariant.delete({
         where: { id },
       });
       return true;
@@ -95,7 +95,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
    */
   async getByProductId(productId: number): Promise<ProductVariant[]> {
     try {
-      const variants = await this.prisma.productVariant.findMany({
+      const variants = await prisma.productVariant.findMany({
         where: { productId },
       });
       return variants.map(fromProductVariantPrisma);
@@ -114,7 +114,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
    */
   async deleteByProductId(productId: number): Promise<boolean> {
     try {
-      await this.prisma.productVariant.deleteMany({
+      await prisma.productVariant.deleteMany({
         where: { productId },
       });
       return true;
@@ -140,7 +140,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
     value: string,
   ): Promise<boolean> {
     try {
-      const variant = await this.prisma.productVariant.findFirst({
+      const variant = await prisma.productVariant.findFirst({
         where: {
           productId,
           name,
@@ -169,7 +169,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
     value?: string,
   ): Promise<ProductVariant> {
     try {
-      const updatedVariant = await this.prisma.productVariant.update({
+      const updatedVariant = await prisma.productVariant.update({
         where: { id },
         data: {
           name: name ? name : undefined,
@@ -193,7 +193,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
    */
   async getByName(productId: number, name: string): Promise<ProductVariant[]> {
     try {
-      const variants = await this.prisma.productVariant.findMany({
+      const variants = await prisma.productVariant.findMany({
         where: {
           productId,
           name,
@@ -218,7 +218,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
     productId: number,
   ): Promise<ProductVariant | null> {
     try {
-      const popularVariant = await this.prisma.productVariant.findFirst({
+      const popularVariant = await prisma.productVariant.findFirst({
         where: { productId },
         orderBy: {
           // Replace with the logic to determine the "most popular" (e.g., by sales count)

@@ -1,10 +1,10 @@
-import { PrismaService } from 'prisma/prisma.service';
 import { fromCategoryPrisma } from 'src/application/helper/from-prisma/to.category.entity';
 import { Category } from 'src/domain/entities/category.entity';
 import { ICategoryRepository } from 'src/domain/repositories/category.repository';
+import prisma from 'prisma/prisma.service';
 
 export class CategoryRepository implements ICategoryRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new category.
@@ -14,7 +14,7 @@ export class CategoryRepository implements ICategoryRepository {
   async create(category: Category): Promise<Category> {
     try {
       const { id, parent, children, products, shop, ...data } = category;
-      const result = await this.prisma.category.create({
+      const result = await prisma.category.create({
         data: data,
       });
       return fromCategoryPrisma(result);
@@ -31,7 +31,7 @@ export class CategoryRepository implements ICategoryRepository {
    */
   async getById(id: number): Promise<Category | null> {
     try {
-      const result = await this.prisma.category.findUnique({
+      const result = await prisma.category.findUnique({
         where: { id },
       });
       return fromCategoryPrisma(result);
@@ -50,7 +50,7 @@ export class CategoryRepository implements ICategoryRepository {
   async update(id: number, data: Partial<Category>): Promise<Category> {
     try {
       const { parent, children, products, shop, ...categoryData } = data;
-      const result = await this.prisma.category.update({
+      const result = await prisma.category.update({
         where: { id },
         data: categoryData,
       });
@@ -68,7 +68,7 @@ export class CategoryRepository implements ICategoryRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.category.delete({
+      await prisma.category.delete({
         where: { id },
       });
       return true;
@@ -85,7 +85,7 @@ export class CategoryRepository implements ICategoryRepository {
    */
   async getChildren(parentId: number): Promise<Category[]> {
     try {
-      const result = await this.prisma.category.findMany({
+      const result = await prisma.category.findMany({
         where: { parentId },
       });
       return result.map(fromCategoryPrisma);
@@ -103,7 +103,7 @@ export class CategoryRepository implements ICategoryRepository {
    */
   async setParent(id: number, newParentId: number): Promise<Category> {
     try {
-      const result = await this.prisma.category.update({
+      const result = await prisma.category.update({
         where: { id },
         data: { parentId: newParentId },
       });
@@ -122,7 +122,7 @@ export class CategoryRepository implements ICategoryRepository {
    */
   async exists(name: string, shopId: number): Promise<boolean> {
     try {
-      const result = await this.prisma.category.findFirst({
+      const result = await prisma.category.findFirst({
         where: {
           name,
           shopId,
@@ -141,7 +141,7 @@ export class CategoryRepository implements ICategoryRepository {
    */
   async getTopLevelCategories(): Promise<Category[]> {
     try {
-      const result = await this.prisma.category.findMany({
+      const result = await prisma.category.findMany({
         where: { parentId: null },
       });
       return result.map(fromCategoryPrisma);

@@ -1,12 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-import { PrismaService } from 'prisma/prisma.service';
 import { fromTicketPrisma } from 'src/application/helper/from-prisma/to.ticket.entity';
 import { Ticket } from 'src/domain/entities/ticket.entity';
 import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
 import { ITicketRepository } from 'src/domain/repositories/ticket.repository';
+import prisma from 'prisma/prisma.service';
 
 export class TicketRepository implements ITicketRepository {
-  constructor(private readonly prisma: PrismaService) {}
+
 
   /**
    * Creates a new ticket in the database.
@@ -16,7 +15,7 @@ export class TicketRepository implements ITicketRepository {
   async create(ticket: Ticket): Promise<Ticket> {
     try {
       const { id, user, ...data } = ticket;
-      const createdTicket = await this.prisma.ticket.create({
+      const createdTicket = await prisma.ticket.create({
         data: data,
       });
       return fromTicketPrisma(createdTicket);
@@ -33,7 +32,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async getById(id: number): Promise<Ticket | null> {
     try {
-      const ticket = await this.prisma.ticket.findUnique({
+      const ticket = await prisma.ticket.findUnique({
         where: { id },
       });
       return fromTicketPrisma(ticket);
@@ -52,7 +51,7 @@ export class TicketRepository implements ITicketRepository {
   async update(id: number, updates: Partial<Ticket>): Promise<Ticket> {
     try {
       const { id, user, ...data } = updates;
-      const updatedTicket = await this.prisma.ticket.update({
+      const updatedTicket = await prisma.ticket.update({
         where: { id },
         data: data,
       });
@@ -70,7 +69,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async remove(id: number): Promise<boolean> {
     try {
-      await this.prisma.ticket.delete({
+      await prisma.ticket.delete({
         where: { id },
       });
       return true;
@@ -87,7 +86,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async getByUser(userId: number): Promise<Ticket[]> {
     try {
-      const tickets = await this.prisma.ticket.findMany({
+      const tickets = await prisma.ticket.findMany({
         where: { userId },
       });
       return tickets.map(fromTicketPrisma);
@@ -104,7 +103,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async getByStatus(status: TicketStatus): Promise<Ticket[]> {
     try {
-      const tickets = await this.prisma.ticket.findMany({
+      const tickets = await prisma.ticket.findMany({
         where: { status },
       });
       return tickets.map(fromTicketPrisma);
@@ -122,7 +121,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async getByDateRange(startDate: Date, endDate: Date): Promise<Ticket[]> {
     try {
-      const tickets = await this.prisma.ticket.findMany({
+      const tickets = await prisma.ticket.findMany({
         where: {
           createdAt: {
             gte: startDate,
@@ -143,7 +142,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async getLatest(): Promise<Ticket> {
     try {
-      const latestTicket = await this.prisma.ticket.findFirst({
+      const latestTicket = await prisma.ticket.findFirst({
         orderBy: { createdAt: 'desc' },
       });
       return fromTicketPrisma(latestTicket);
@@ -160,7 +159,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async countOpenByUser(userId: number): Promise<number> {
     try {
-      const count = await this.prisma.ticket.count({
+      const count = await prisma.ticket.count({
         where: {
           userId,
           status: TicketStatus.OPEN,
@@ -179,7 +178,7 @@ export class TicketRepository implements ITicketRepository {
    */
   async getHighPriority(): Promise<Ticket[]> {
     try {
-      const highPriorityTickets = await this.prisma.ticket.findMany({
+      const highPriorityTickets = await prisma.ticket.findMany({
         where: {
           status: 'HIGH', // Assuming a 'priority' field exists
         },

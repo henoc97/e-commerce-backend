@@ -1,4 +1,4 @@
-import { PrismaService } from 'prisma/prisma.service';
+import prisma from 'prisma/prisma.service';
 import { fromUserPrisma } from 'src/application/helper/from-prisma/to.user.entity';
 import { User } from 'src/domain/entities/user.entity';
 import { UserActivityAction } from 'src/domain/enums/user-activity-action.enum';
@@ -6,7 +6,10 @@ import { UserRole } from 'src/domain/enums/user-role.enum';
 import { IUserRepository } from 'src/domain/repositories/user.repository';
 
 export class UserRepository implements IUserRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    // private readonly prisma: PrismaService
+  ) {
+  }
 
   /**
    * Create a new user in the database.
@@ -14,29 +17,33 @@ export class UserRepository implements IUserRepository {
    * @returns Promise<User> - The created user object.
    */
   async create(user: User): Promise<User> {
+    console.log('Input user object:', user);
+
     try {
-      const {
-        id,
-        profile,
-        addresses,
-        orders,
-        vendor,
-        carts,
-        reviews,
-        notifications,
-        tickets,
-        subsites,
-        userActivities,
-        auditLogs,
-        ...data
-      } = user;
-      const result = await this.prisma.user.create({ data: data });
+      // Vérifie si Prisma est initialisé
+      if (!prisma) {
+        throw new Error('Prisma client is not initialized');
+      }
+      // Vérifie si Prisma est initialisé
+      if (!prisma.user) {
+        throw new Error('User model is undefined.');
+      }
+
+      // Extraction des champs scalaires uniquement
+      const { email, password, name, role } = user;
+
+      const result = await prisma.user.create({
+        data: { email, password, name, role },
+      });
+
+      console.log('Created user:', result);
       return fromUserPrisma(result);
     } catch (error) {
       console.error('Error creating user:', error);
       throw new Error('User creation failed.');
     }
   }
+
 
   /**
    * Get a user by their ID.
@@ -45,7 +52,7 @@ export class UserRepository implements IUserRepository {
    */
   async getById(id: number): Promise<User | null> {
     try {
-      const result = await this.prisma.user.findUnique({ where: { id } });
+      const result = await prisma.user.findUnique({ where: { id } });
       return fromUserPrisma(result);
     } catch (error) {
       console.error('Error fetching user by ID:', error);
@@ -75,7 +82,7 @@ export class UserRepository implements IUserRepository {
         auditLogs,
         ...data
       } = updates;
-      const result = await this.prisma.user.update({
+      const result = await prisma.user.update({
         where: { id },
         data: data,
       });
@@ -93,7 +100,7 @@ export class UserRepository implements IUserRepository {
    */
   async delete(id: number): Promise<boolean> {
     try {
-      await this.prisma.user.delete({ where: { id } });
+      await prisma.user.delete({ where: { id } });
       return true;
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -108,7 +115,7 @@ export class UserRepository implements IUserRepository {
    */
   async getByRole(role: UserRole): Promise<User[]> {
     try {
-      const result = await this.prisma.user.findMany({ where: { role } });
+      const result = await prisma.user.findMany({ where: { role } });
       return result.map(fromUserPrisma);
     } catch (error) {
       console.error('Error fetching users by role:', error);
@@ -124,7 +131,7 @@ export class UserRepository implements IUserRepository {
    */
   async removeAddress(userId: number, addressId: number): Promise<User> {
     try {
-      const result = await this.prisma.user.update({
+      const result = await prisma.user.update({
         where: { id: userId },
         data: { addresses: { delete: { id: addressId } } },
       });
@@ -143,7 +150,7 @@ export class UserRepository implements IUserRepository {
    */
   async removeOrder(userId: number, orderId: number): Promise<User> {
     try {
-      const result = await this.prisma.user.update({
+      const result = await prisma.user.update({
         where: { id: userId },
         data: { orders: { delete: { id: orderId } } },
       });
@@ -161,7 +168,7 @@ export class UserRepository implements IUserRepository {
    */
   async getByEmail(email: string): Promise<User | null> {
     try {
-      const result = await this.prisma.user.findUnique({ where: { email } });
+      const result = await prisma.user.findUnique({ where: { email } });
       return fromUserPrisma(result);
     } catch (error) {
       console.error('Error fetching user by email:', error);
@@ -177,7 +184,7 @@ export class UserRepository implements IUserRepository {
    */
   async updatePassword(userId: number, newPassword: string): Promise<User> {
     try {
-      const result = await this.prisma.user.update({
+      const result = await prisma.user.update({
         where: { id: userId },
         data: { password: newPassword },
       });
@@ -195,7 +202,7 @@ export class UserRepository implements IUserRepository {
    */
   async getCountByRole(role: UserRole): Promise<number> {
     try {
-      const result = await this.prisma.user.count({ where: { role } });
+      const result = await prisma.user.count({ where: { role } });
       return result;
     } catch (error) {
       console.error('Error fetching user count by role:', error);
@@ -214,7 +221,7 @@ export class UserRepository implements IUserRepository {
       const dateThreshold = new Date();
       dateThreshold.setDate(dateThreshold.getDate() - days);
 
-      const inactiveUsers = await this.prisma.user.findMany({
+      const inactiveUsers = await prisma.user.findMany({
         where: {
           userActivity: {
             every: {
@@ -242,7 +249,7 @@ export class UserRepository implements IUserRepository {
    */
   async updateRole(userId: number, role: UserRole): Promise<User> {
     try {
-      const result = await this.prisma.user.update({
+      const result = await prisma.user.update({
         where: { id: userId },
         data: { role },
       });
@@ -263,7 +270,7 @@ export class UserRepository implements IUserRepository {
       const dateThreshold = new Date();
       dateThreshold.setDate(dateThreshold.getDate() - days);
 
-      const activeUserCount = await this.prisma.user.count({
+      const activeUserCount = await prisma.user.count({
         where: {
           userActivity: {
             some: {
@@ -290,7 +297,7 @@ export class UserRepository implements IUserRepository {
    */
   async deleteUser(userId: number): Promise<boolean> {
     try {
-      await this.prisma.user.delete({ where: { id: userId } });
+      await prisma.user.delete({ where: { id: userId } });
       return true;
     } catch (error) {
       console.error('Error deleting user:', error);

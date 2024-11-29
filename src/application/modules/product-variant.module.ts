@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ProductVariantService } from '../services/product-variant.service';
 import { ProductVariantRepository } from 'src/infrastructure/persistences/product-variant.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateProductVariant } from '../use-cases/product-variant.use-cases/create-product-variant.use-case';
 import { FetchProductVariantsByProductId } from '../use-cases/product-variant.use-cases/fetch-product-variants-by-product-id.use-case';
 import { DeleteProductVariantsByProductId } from '../use-cases/product-variant.use-cases/delete-product-variants-by-product-id.use-case';
@@ -27,7 +26,7 @@ const productVariantUseCases = [
 @Module({
   providers: [
     ProductVariantService,
-    PrismaService,
+
     {
       provide: 'IProductVariantRepository',
       useClass: ProductVariantRepository,

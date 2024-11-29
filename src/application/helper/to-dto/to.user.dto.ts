@@ -7,6 +7,10 @@ import { toAuditLogDTO } from './to.audit-log.dto';
 import { toCartDTO } from './to.cart.dto';
 import { toUserActivityDTO } from './to.user-activity.dto';
 import { toReviewDTO } from './to.review.dto';
+import { Cart } from 'src/domain/entities/cart.entity';
+import { Review, Ticket } from '@prisma/client';
+import { Notification } from 'src/domain/entities/notification.entity';
+import { AuditLog } from 'src/domain/entities/audit-log.entity';
 
 /**
  * Converts a user entity to a userDTO.
@@ -14,6 +18,7 @@ import { toReviewDTO } from './to.review.dto';
  * @returns The userDTO corresponding to the entity.
  */
 export function toUserDTO(user: any): UserDTO {
+  console.log('UserInput:', user);
   return new UserDTO(
     user.id,
     user.email,
@@ -25,13 +30,13 @@ export function toUserDTO(user: any): UserDTO {
     user.createdAt,
     user.updatedAt,
     user.vendor,
-    user.carts.map((cart) => toCartDTO(cart)),
+    user.carts?.map((cart: Cart) => toCartDTO(cart)),
     user.name,
-    user.reviews.map((review) => toReviewDTO(review)),
-    user.notifications.map((notification) => toNotificationDTO(notification)),
-    user.tickets.map((ticket) => toTicketDTO(ticket)),
-    user.subsites.map((subsite) => toSubsiteDTO(subsite)),
-    user.userActivities.map((userActivity) => toUserActivityDTO(userActivity)),
-    user.auditLogs.map((auditLog) => toAuditLogDTO(auditLog)),
+    user.reviews?.map((review: Review) => toReviewDTO(review)),
+    user.notifications?.map((notification: Notification) => toNotificationDTO(notification)),
+    user.tickets?.map((ticket: Ticket) => toTicketDTO(ticket)),
+    user.subsites?.map((subsite: Ticket) => toSubsiteDTO(subsite)),
+    user.userActivities?.map((userActivity: UserActivation) => toUserActivityDTO(userActivity)),
+    user.auditLogs?.map((auditLog: AuditLog) => toAuditLogDTO(auditLog)),
   );
 }

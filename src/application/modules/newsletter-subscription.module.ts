@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { NewsletterSubscriptionService } from '../services/newsletter-subscription.service';
-import { PrismaService } from 'prisma/prisma.service';
 import { NewsletterSubscriptionRepository } from 'src/infrastructure/persistences/newsletter-subscription.repository.impl';
 import { ListNewsletterSubscriptions } from '../use-cases/newsletter-subscription.use-cases/list-newsletter-subscriptions.use-case';
 import { CreateNewsletterSubscription } from '../use-cases/newsletter-subscription.use-cases/create-newsletter-subscription.use-case';
@@ -27,7 +26,7 @@ const newsletterSubscriptionUseCases = [
 @Module({
   providers: [
     NewsletterSubscriptionService,
-    PrismaService,
+
     {
       provide: 'INewsletterSubscriptionRepository',
       useClass: NewsletterSubscriptionRepository,

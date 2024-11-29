@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { OrderItemService } from '../services/order-item.service';
 import { OrderItemRepository } from 'src/infrastructure/persistences/order-item.repository.impl';
-import { PrismaService } from 'prisma/prisma.service';
 import { CreateOrderItem } from '../use-cases/order-item.use-case/create-order-item.use-case';
 import { FetchOrderItemsByOrderId } from '../use-cases/order-item.use-case/fetch-order-items-by-order-id.use-case';
 import { FetchOrderItemsByProductId } from '../use-cases/order-item.use-case/fetch-order-items-by-product-id.use-case';
@@ -29,7 +28,7 @@ const orderItemUseCases = [
     imports: [KafkaModule],
     providers: [
         OrderItemService,
-        PrismaService,
+
         {
             provide: 'IOrderItemRepository',
             useClass: OrderItemRepository,
