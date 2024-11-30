@@ -12,7 +12,7 @@ export function fromCartDTO(cartDTO: CartDTO | Partial<CartDTO>): Cart {
   return new Cart(
     cartDTO.id,
     cartDTO.userId,
-    cartDTO.items ? cartDTO.items.map(fromCartItemDTO) : [],
+    cartDTO.items ? cartDTO.items?.map(fromCartItemDTO) : [],
     cartDTO.user ? fromUserDTO(cartDTO.user) : undefined,
   );
 }

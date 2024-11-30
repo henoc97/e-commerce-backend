@@ -8,7 +8,7 @@ import { ProductDTO } from 'src/presentation/dtos/product.dto';
  */
 @Injectable()
 export class FindProductsByName {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to find products by name.
@@ -18,6 +18,6 @@ export class FindProductsByName {
   async execute(name: string): Promise<ProductDTO[]> {
     const products = await this.productService.findProductsByName(name);
 
-    return products.map(toProductDTO);
+    return products?.map(toProductDTO);
   }
 }

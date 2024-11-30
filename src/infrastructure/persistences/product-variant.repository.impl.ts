@@ -98,7 +98,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
       const variants = await prisma.productVariant.findMany({
         where: { productId },
       });
-      return variants.map(fromProductVariantPrisma);
+      return variants?.map(fromProductVariantPrisma);
     } catch (error) {
       throw new Error(
         `Error retrieving variants for product with ID ${productId}: ${error}`,
@@ -199,7 +199,7 @@ export class ProductVariantRepository implements IProductVariantRepository {
           name,
         },
       });
-      return variants.map(fromProductVariantPrisma);
+      return variants?.map(fromProductVariantPrisma);
     } catch (error) {
       throw new Error(
         `Error retrieving variants for product with ID ${productId} and name ${name}: ${error}`,

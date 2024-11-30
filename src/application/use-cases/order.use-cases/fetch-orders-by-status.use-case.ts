@@ -9,7 +9,7 @@ import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
  */
 @Injectable()
 export class FetchOrdersByStatus {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   /**
    * Retrieves all orders with a specific status.
@@ -18,6 +18,6 @@ export class FetchOrdersByStatus {
    */
   async execute(status: OrderStatus): Promise<OrderDTO[]> {
     const orders = await this.orderService.getOrdersByStatus(status);
-    return orders.map(toOrderDTO);
+    return orders?.map(toOrderDTO);
   }
 }

@@ -9,7 +9,7 @@ import { ReviewDTO } from 'src/presentation/dtos/review.dto';
  */
 @Injectable()
 export class FetchReviewsByDateRange {
-  constructor(private readonly service: ReviewService) {}
+  constructor(private readonly service: ReviewService) { }
 
   /**
    * Execute the fetch-reviews-by-date-range use case.
@@ -22,6 +22,6 @@ export class FetchReviewsByDateRange {
       startDate,
       endDate,
     );
-    return reviews.map(toReviewDTO);
+    return reviews?.map(toReviewDTO);
   }
 }

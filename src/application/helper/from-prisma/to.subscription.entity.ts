@@ -1,4 +1,4 @@
-﻿import { fromVendorPrisma } from './to.vendor.entity';
+import { fromVendorPrisma } from './to.vendor.entity';
 import { Subscription } from 'src/domain/entities/subscription.entity';
 
 /**

@@ -10,7 +10,7 @@ import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
  */
 @Injectable()
 export class FindVendorsBySubscription {
-  constructor(private readonly vendorService: VendorService) {}
+  constructor(private readonly vendorService: VendorService) { }
 
   /**
    * Execute the find-vendors-by-subscription use case.
@@ -21,6 +21,6 @@ export class FindVendorsBySubscription {
     const vendors =
       await this.vendorService.findVendorsBySubscription(subscriptionId);
 
-    return vendors.map(toVendorDTO);
+    return vendors?.map(toVendorDTO);
   }
 }

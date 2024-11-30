@@ -15,7 +15,7 @@ export function toVendorDTO(vendor: any): VendorDTO {
     vendor.userId,
     vendor.user ? toUserDTO(vendor.user) : undefined,
     vendor.storeName,
-    vendor.products.map((product) => toProductDTO(product)),
+    vendor.products?.map((product) => toProductDTO(product)),
     vendor.subscriptionId,
     vendor.subscription ? toSubscriptionDTO(vendor.subscription) : undefined,
     vendor.shop ? toShopDTO(vendor.shop) : undefined,

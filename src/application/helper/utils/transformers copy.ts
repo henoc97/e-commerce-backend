@@ -61,8 +61,8 @@
 //         categoryDTO.id,
 //         categoryDTO.parentId,
 //         categoryDTO.parent ? transformCategoryDTOToGraphQL(categoryDTO.parent) : null,
-//         categoryDTO.children ? categoryDTO.children.map(transformCategoryDTOToGraphQL) : [],
-//         categoryDTO.products?.map(transformProductDTOToGraphQL),
+//         categoryDTO.children ? categoryDTO.children?.map(transformCategoryDTOToGraphQL) : [],
+//         categoryDTO.products?.map((transformProductDTOToGraphQL),
 //         categoryDTO.shopId,
 //         categoryDTO.shop ? transformShopDTOToGraphQL(categoryDTO.shop) : null,
 //     );
@@ -74,7 +74,7 @@
 //         vendorDTO.userId,
 //         transformUserDTOToGraphQL(vendorDTO.user),
 //         vendorDTO.storeName,
-//         vendorDTO.products ? vendorDTO.products.map(transformProductDTOToGraphQL) : [],
+//         vendorDTO.products ? vendorDTO.products?.map(transformProductDTOToGraphQL) : [],
 //         vendorDTO.subscriptionId,
 //         vendorDTO.subscription ? transformSubscriptionDTOToGraphQL(vendorDTO.subscription) : null,
 //         vendorDTO.shop ? transformShopDTOToGraphQL(vendorDTO.shop) : null,
@@ -88,7 +88,7 @@
 //         subscriptionDTO.price,
 //         subscriptionDTO.duration,
 //         subscriptionDTO.description,
-//         subscriptionDTO.vendors ? subscriptionDTO.vendors.map(transformVendorDTOToGraphQL) : [],
+//         subscriptionDTO.vendors ? subscriptionDTO.vendors?.map(transformVendorDTOToGraphQL) : [],
 //         subscriptionDTO.createdAt,
 //         subscriptionDTO.updatedAt,
 //     );
@@ -188,7 +188,7 @@
 //         marketplaceDTO.id,
 //         marketplaceDTO.name,
 //         marketplaceDTO.description,
-//         marketplaceDTO.shops ? marketplaceDTO.shops.map(transformShopDTOToGraphQL) : [],
+//         marketplaceDTO.shops ? marketplaceDTO.shops?.map(transformShopDTOToGraphQL) : [],
 //     );
 // }
 

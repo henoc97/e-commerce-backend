@@ -20,7 +20,7 @@ export class VendorRepository implements IVendorRepository {
   async create(vendor: Vendor): Promise<Vendor> {
     try {
       const { id, user, products, subscription, shop, ...data } = vendor;
-      const result = prisma.vendor.create({ data: data });
+      const result = prisma.vendor.create({ data: data, include: { user: true } });
       return fromVendorPrisma(result);
     } catch (error) {
       console.error('Error creating vendor:', error);
@@ -88,7 +88,7 @@ export class VendorRepository implements IVendorRepository {
       const result = await prisma.vendor.findMany({
         where: { storeName },
       });
-      return result.map(fromVendorPrisma);
+      return result?.map(fromVendorPrisma);
     } catch (error) {
       console.error('Error finding vendors by store name:', error);
       throw new Error('Failed to find vendors by store name.');
@@ -182,7 +182,7 @@ export class VendorRepository implements IVendorRepository {
   async findByUser(userId: number): Promise<Vendor[]> {
     try {
       const result = await prisma.vendor.findMany({ where: { userId } });
-      return result.map(fromVendorPrisma);
+      return result?.map(fromVendorPrisma);
     } catch (error) {
       console.error('Error finding vendors by user:', error);
       throw new Error('Failed to find vendors by user.');
@@ -199,7 +199,7 @@ export class VendorRepository implements IVendorRepository {
       const result = await prisma.vendor.findMany({
         where: { subscriptionId },
       });
-      return result.map(fromVendorPrisma);
+      return result?.map(fromVendorPrisma);
     } catch (error) {
       console.error('Error finding vendors by subscription ID:', error);
       throw new Error('Failed to find vendors by subscription ID.');
@@ -213,7 +213,7 @@ export class VendorRepository implements IVendorRepository {
   async getAll(): Promise<Vendor[]> {
     try {
       const result = await prisma.vendor.findMany();
-      return result.map(fromVendorPrisma);
+      return result?.map(fromVendorPrisma);
     } catch (error) {
       console.error('Error fetching all vendors:', error);
       throw new Error('Failed to fetch all vendors.');

@@ -13,8 +13,8 @@ import { ListSubscriptionsByVendor } from 'src/application/use-cases/subscriptio
 import { UpdateSubscription } from 'src/application/use-cases/subscription.use-cases/update-subscription.use-case';
 import { transformSubscriptionDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { SubscriptionOutput } from 'src/presentation/output/subscription.output';
-import { NewsletterSubscriptionInput } from 'src/presentation/input/newsletter-subscription.input';
 import { toSubscriptionDTO } from 'src/application/helper/to-dto/to.subscription.dto';
+import { SubscriptionInput } from 'src/presentation/input/subscription.input';
 
 @Resolver(() => SubscriptionOutput)
 export class SubscriptionResolver {
@@ -35,19 +35,19 @@ export class SubscriptionResolver {
   @Query(() => [SubscriptionOutput])
   async listActiveSubscriptions(): Promise<SubscriptionOutput[]> {
     const result = await this.listActiveSubscriptionsUseCase.execute();
-    return result.map(transformSubscriptionDTOToGraphQL);
+    return result?.map(transformSubscriptionDTOToGraphQL);
   }
 
   @Query(() => [SubscriptionOutput])
   async listExpiredSubscriptions(): Promise<SubscriptionOutput[]> {
     const result = await this.listExpiredSubscriptionsUseCase.execute();
-    return result.map(transformSubscriptionDTOToGraphQL);
+    return result?.map(transformSubscriptionDTOToGraphQL);
   }
 
   @Query(() => [SubscriptionOutput])
   async listExpiringSubscriptions(@Args('days') days: number): Promise<SubscriptionOutput[]> {
     const result = await this.listExpiringSubscriptionsUseCase.execute(days);
-    return result.map(transformSubscriptionDTOToGraphQL);
+    return result?.map(transformSubscriptionDTOToGraphQL);
   }
 
   @Query(() => [SubscriptionOutput])
@@ -56,13 +56,13 @@ export class SubscriptionResolver {
     @Args('maxPrice') maxPrice: number,
   ): Promise<SubscriptionOutput[]> {
     const result = await this.listSubscriptionsByPriceRangeUseCase.execute(minPrice, maxPrice);
-    return result.map(transformSubscriptionDTOToGraphQL);
+    return result?.map(transformSubscriptionDTOToGraphQL);
   }
 
   @Query(() => [SubscriptionOutput])
   async listSubscriptionsByVendor(@Args('vendorId') vendorId: number): Promise<SubscriptionOutput[]> {
     const result = await this.listSubscriptionsByVendorUseCase.execute(vendorId);
-    return result.map(transformSubscriptionDTOToGraphQL);
+    return result?.map(transformSubscriptionDTOToGraphQL);
   }
 
   @Query(() => SubscriptionOutput, { nullable: true })
@@ -79,7 +79,7 @@ export class SubscriptionResolver {
 
   @Mutation(() => SubscriptionOutput, { nullable: true })
   async createSubscription(
-    @Args('subscription') subscription: NewsletterSubscriptionInput,
+    @Args('subscription') subscription: SubscriptionInput,
   ): Promise<SubscriptionOutput | null> {
     const dto = toSubscriptionDTO(subscription)
     const result = await this.createSubscriptionUseCase.execute(dto);
@@ -94,7 +94,7 @@ export class SubscriptionResolver {
   @Mutation(() => SubscriptionOutput, { nullable: true })
   async updateSubscription(
     @Args('id') id: number,
-    @Args('updates') updates: NewsletterSubscriptionInput,
+    @Args('updates') updates: SubscriptionInput,
   ): Promise<SubscriptionOutput | null> {
     const result = await this.updateSubscriptionUseCase.execute(id, updates);
     return transformSubscriptionDTOToGraphQL(result);

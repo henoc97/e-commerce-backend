@@ -8,7 +8,7 @@ import { toPaymentDTO } from 'src/application/helper/to-dto/to.payment.dto';
  */
 @Injectable()
 export class FetchPaymentsGroupedByMethod {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) { }
 
   /**
    * Execute the fetch-payments-grouped-by-method use case.
@@ -20,7 +20,7 @@ export class FetchPaymentsGroupedByMethod {
     const result = new Map<string, PaymentDTO[]>();
 
     paymentsGrouped.forEach((payments, method) => {
-      result.set(method, payments.map(toPaymentDTO));
+      result.set(method, payments?.map(toPaymentDTO));
     });
 
     return result;

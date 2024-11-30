@@ -101,7 +101,7 @@ export class OrderRepository implements IOrderRepository {
       const orders = await prisma.order.findMany({
         where: { userId },
       });
-      return orders.map(fromOrderPrisma);
+      return orders?.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve orders for user with ID ${userId}: ${error}`,
@@ -120,7 +120,7 @@ export class OrderRepository implements IOrderRepository {
       const orders = await prisma.order.findMany({
         where: { shopId },
       });
-      return orders.map(fromOrderPrisma);
+      return orders?.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve orders for shop with ID ${shopId}: ${error}`,
@@ -139,7 +139,7 @@ export class OrderRepository implements IOrderRepository {
       const orders = await prisma.order.findMany({
         where: { status },
       });
-      return orders.map(fromOrderPrisma);
+      return orders?.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve orders with status ${status}: ${error}`,
@@ -256,7 +256,7 @@ export class OrderRepository implements IOrderRepository {
           },
         },
       });
-      return orders.map(fromOrderPrisma);
+      return orders?.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve orders within the date range: ${error}`,
@@ -278,7 +278,7 @@ export class OrderRepository implements IOrderRepository {
         orderBy: { createdAt: 'desc' },
         take: limit,
       });
-      return orders.map(fromOrderPrisma);
+      return orders?.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve recent orders for shop with ID ${shopId}: ${error}`,
@@ -298,7 +298,7 @@ export class OrderRepository implements IOrderRepository {
         orderBy: { totalAmount: 'desc' },
         take: topN,
       });
-      return orders.map(fromOrderPrisma);
+      return orders?.map(fromOrderPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve top ${topN} orders by amount: ${error}`,

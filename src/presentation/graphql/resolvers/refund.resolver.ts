@@ -80,7 +80,7 @@ export class RefundResolver {
     @Args('orderId') orderId: number,
   ): Promise<RefundOutput[]> {
     const result = await this.fetchRefundsByOrderUseCase.execute(orderId);
-    return result.map(transformRefundDTOToGraphQL);
+    return result?.map(transformRefundDTOToGraphQL);
   }
 
   @Query(() => [RefundOutput])
@@ -88,7 +88,7 @@ export class RefundResolver {
     @Args('status') status: RefundStatus,
   ): Promise<RefundOutput[]> {
     const result = await this.fetchRefundsByStatusUseCase.execute(status);
-    return result.map(transformRefundDTOToGraphQL);
+    return result?.map(transformRefundDTOToGraphQL);
   }
 
   @Query(() => Number)

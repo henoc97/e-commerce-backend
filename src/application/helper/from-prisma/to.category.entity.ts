@@ -15,8 +15,8 @@ export function fromCategoryPrisma(categoryPrisma: any): Category {
     categoryPrisma.parent
       ? fromCategoryPrisma(categoryPrisma.parent)
       : undefined,
-    categoryPrisma.children.map((chid: any) => fromCategoryPrisma(chid)),
-    categoryPrisma.products.map((product: any) => fromProductPrisma(product)),
+    categoryPrisma.children?.map((chid: any) => fromCategoryPrisma(chid)),
+    categoryPrisma.products?.map((product: any) => fromProductPrisma(product)),
     categoryPrisma.shopId,
     categoryPrisma.shop ? fromShopPrisma(categoryPrisma.shop) : undefined,
   );

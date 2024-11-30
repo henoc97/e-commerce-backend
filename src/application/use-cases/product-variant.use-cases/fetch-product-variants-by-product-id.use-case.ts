@@ -10,7 +10,7 @@ import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
  */
 @Injectable()
 export class FetchProductVariantsByProductId {
-  constructor(private readonly service: ProductVariantService) {}
+  constructor(private readonly service: ProductVariantService) { }
 
   /**
    * Execute the fetch-product-variants-by-product-id use case.
@@ -21,6 +21,6 @@ export class FetchProductVariantsByProductId {
     const variants =
       await this.service.getProductVariantsByProductId(productId);
 
-    return variants.map(toProductVariantDTO);
+    return variants?.map(toProductVariantDTO);
   }
 }

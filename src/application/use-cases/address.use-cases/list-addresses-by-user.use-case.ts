@@ -9,7 +9,7 @@ import { AddressDTO } from 'src/presentation/dtos/address.dto';
  */
 @Injectable()
 export class ListAddressesByUser {
-  constructor(private readonly service: AddressService) {}
+  constructor(private readonly service: AddressService) { }
 
   /**
    * Execute the list-addresses-by-user use case.
@@ -19,6 +19,6 @@ export class ListAddressesByUser {
   async execute(userId: number): Promise<AddressDTO[]> {
     const addresses = await this.service.getAddressesByUserId(userId);
 
-    return addresses.map((address) => toAddressDTO(address));
+    return addresses?.map((address) => toAddressDTO(address));
   }
 }

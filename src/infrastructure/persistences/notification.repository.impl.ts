@@ -89,7 +89,7 @@ export class NotificationRepository implements INotificationRepository {
       const result = await prisma.notification.findMany({
         where: { userId },
       });
-      return result.map(fromNotificationPrisma);
+      return result?.map(fromNotificationPrisma);
     } catch (error) {
       console.error('Error retrieving notifications for user:', error);
       throw error;
@@ -106,7 +106,7 @@ export class NotificationRepository implements INotificationRepository {
       const result = await prisma.notification.findMany({
         where: { type },
       });
-      return result.map(fromNotificationPrisma);
+      return result?.map(fromNotificationPrisma);
     } catch (error) {
       console.error('Error retrieving notifications by type:', error);
       throw error;
@@ -132,7 +132,7 @@ export class NotificationRepository implements INotificationRepository {
           },
         },
       });
-      return result.map(fromNotificationPrisma);
+      return result?.map(fromNotificationPrisma);
     } catch (error) {
       console.error('Error retrieving notifications by date range:', error);
       throw error;
@@ -189,7 +189,7 @@ export class NotificationRepository implements INotificationRepository {
         orderBy: { sentAt: 'desc' },
         take: 10,
       });
-      return result.map(fromNotificationPrisma);
+      return result?.map(fromNotificationPrisma);
     } catch (error) {
       console.error('Error retrieving recent notifications:', error);
       throw error;

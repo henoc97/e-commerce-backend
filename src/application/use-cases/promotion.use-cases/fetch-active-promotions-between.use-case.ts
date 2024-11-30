@@ -8,7 +8,7 @@ import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
  */
 @Injectable()
 export class FetchActivePromotionsBetween {
-  constructor(private readonly promotionService: PromotionService) {}
+  constructor(private readonly promotionService: PromotionService) { }
 
   /**
    * Executes the use case to fetch active promotions between specified dates.
@@ -21,6 +21,6 @@ export class FetchActivePromotionsBetween {
       start,
       end,
     );
-    return promotions.map(toPromotionDTO);
+    return promotions?.map(toPromotionDTO);
   }
 }

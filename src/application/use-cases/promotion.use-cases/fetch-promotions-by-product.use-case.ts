@@ -8,7 +8,7 @@ import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
  */
 @Injectable()
 export class FetchPromotionsByProduct {
-  constructor(private readonly promotionService: PromotionService) {}
+  constructor(private readonly promotionService: PromotionService) { }
 
   /**
    * Executes the use case to fetch all promotions associated with a specific product.
@@ -18,6 +18,6 @@ export class FetchPromotionsByProduct {
   async execute(productId: number): Promise<PromotionDTO[]> {
     const promotions =
       await this.promotionService.getPromotionsByProduct(productId);
-    return promotions.map(toPromotionDTO);
+    return promotions?.map(toPromotionDTO);
   }
 }

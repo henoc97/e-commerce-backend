@@ -52,7 +52,7 @@ export class UserActivityResolver {
     @Args('limit') limit: number,
   ): Promise<UserActivityOutput[]> {
     const result = await this.getRecentActivitiesByUser.execute(userId, limit);
-    return result.map(transformUserActivityDTOToGraphQL);
+    return result?.map(transformUserActivityDTOToGraphQL);
   }
 
   @Query(() => [UserActivityOutput])
@@ -61,7 +61,7 @@ export class UserActivityResolver {
     @Args('end') end: Date,
   ): Promise<UserActivityOutput[]> {
     const result = await this.listActivitiesByDateRangeUseCase.execute(start, end);
-    return result.map(transformUserActivityDTOToGraphQL);
+    return result?.map(transformUserActivityDTOToGraphQL);
   }
 
   @Query(() => [UserActivityOutput])
@@ -69,7 +69,7 @@ export class UserActivityResolver {
     @Args('productId') productId: number,
   ): Promise<UserActivityOutput[]> {
     const result = await this.listActivitiesByProductUseCase.execute(productId);
-    return result.map(transformUserActivityDTOToGraphQL);
+    return result?.map(transformUserActivityDTOToGraphQL);
   }
 
   @Query(() => [UserActivityOutput])
@@ -77,7 +77,7 @@ export class UserActivityResolver {
     @Args('userId') userId: number,
   ): Promise<UserActivityOutput[]> {
     const result = await this.listActivitiesByUserUseCase.execute(userId);
-    return result.map(transformUserActivityDTOToGraphQL);
+    return result?.map(transformUserActivityDTOToGraphQL);
   }
 
   @Mutation(() => UserActivityOutput)

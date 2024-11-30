@@ -68,7 +68,7 @@ export class PaymentResolver {
     @Args('endDate') endDate: Date,
   ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByDateRangeUseCase.execute(startDate, endDate);
-    return result.map(transformPaymentDTOToGraphQL);
+    return result?.map(transformPaymentDTOToGraphQL);
   }
 
   @Query(() => [PaymentOutput])
@@ -76,7 +76,7 @@ export class PaymentResolver {
     @Args('method') method: string,
   ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByMethodUseCase.execute(method);
-    return result.map(transformPaymentDTOToGraphQL);
+    return result?.map(transformPaymentDTOToGraphQL);
   }
 
   @Query(() => [PaymentOutput])
@@ -84,7 +84,7 @@ export class PaymentResolver {
     @Args('orderId') orderId: number,
   ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByOrderIdUseCase.execute(orderId);
-    return result.map(transformPaymentDTOToGraphQL);
+    return result?.map(transformPaymentDTOToGraphQL);
   }
 
   @Query(() => [PaymentOutput])
@@ -92,7 +92,7 @@ export class PaymentResolver {
     @Args('status') status: PaymentStatus,
   ): Promise<PaymentOutput[]> {
     const result = await this.fetchPaymentsByStatusUseCase.execute(status);
-    return result.map(transformPaymentDTOToGraphQL);
+    return result?.map(transformPaymentDTOToGraphQL);
   }
 
   @Query(() => String)

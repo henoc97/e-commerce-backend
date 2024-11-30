@@ -15,7 +15,7 @@ export function fromVendorPrisma(vendorPrisma: any): Vendor {
     vendorPrisma.userId,
     vendorPrisma.user ? fromUserPrisma(vendorPrisma.user) : undefined,
     vendorPrisma.storeName,
-    vendorPrisma.products.map((product) => fromProductPrisma(product)),
+    vendorPrisma.products?.map((product) => fromProductPrisma(product)),
     vendorPrisma.subscriptionId,
     vendorPrisma.subscription
       ? fromSubscriptionPrisma(vendorPrisma.subscription)

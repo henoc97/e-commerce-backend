@@ -8,7 +8,7 @@ import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
  */
 @Injectable()
 export class FetchTopOrdersByAmount {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   /**
    * Retrieves the top N orders with the highest total amounts.
@@ -17,6 +17,6 @@ export class FetchTopOrdersByAmount {
    */
   async execute(topN: number): Promise<OrderDTO[]> {
     const orders = await this.orderService.getTopOrdersByAmount(topN);
-    return orders.map(toOrderDTO);
+    return orders?.map(toOrderDTO);
   }
 }

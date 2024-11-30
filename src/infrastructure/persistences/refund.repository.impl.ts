@@ -53,7 +53,7 @@ export class RefundRepository implements IRefundRepository {
       const result = await prisma.refund.findMany({
         where: { orderId },
       });
-      return result.map(fromRefundPrisma);
+      return result?.map(fromRefundPrisma);
     } catch (error) {
       console.error(`Error fetching refunds for order ${orderId}:`, error);
       throw new Error('Unable to fetch refunds, error: ' + error);
@@ -141,7 +141,7 @@ export class RefundRepository implements IRefundRepository {
       const result = await prisma.refund.findMany({
         where: { status },
       });
-      return result.map(fromRefundPrisma);
+      return result?.map(fromRefundPrisma);
     } catch (error) {
       console.error(`Error fetching refunds with status ${status}:`, error);
       throw new Error('Unable to fetch refunds, error: ' + error);

@@ -61,13 +61,13 @@ export class CategoryResolver {
     @Args('categoryId') categoryId: number,
   ): Promise<CategoryOutput[]> {
     const result = await this.fetchCategoryHierarchy.execute(categoryId);
-    return result.map(transformCategoryDTOToGraphQL)
+    return result?.map(transformCategoryDTOToGraphQL)
   }
 
   @Query(() => [CategoryOutput])
   async children(@Args('parentId') parentId: number): Promise<CategoryOutput[]> {
     const result = await this.fetchChildren.execute(parentId);
-    return result.map(transformCategoryDTOToGraphQL)
+    return result?.map(transformCategoryDTOToGraphQL)
   }
 
   // @Query(() => ['Product'])
@@ -80,7 +80,7 @@ export class CategoryResolver {
   @Query(() => [CategoryOutput])
   async topLevelCategories(): Promise<CategoryOutput[]> {
     const result = await this.fetchTopLevelCategories.execute();
-    return result.map(transformCategoryDTOToGraphQL)
+    return result?.map(transformCategoryDTOToGraphQL)
   }
 
   @Mutation(() => CategoryOutput)

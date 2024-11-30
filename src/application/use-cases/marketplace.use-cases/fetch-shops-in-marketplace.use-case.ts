@@ -8,7 +8,7 @@ import { ShopDTO } from 'src/presentation/dtos/shop.dto';
  */
 @Injectable()
 export class FetchShopsInMarketplace {
-  constructor(private readonly service: MarketplaceService) {}
+  constructor(private readonly service: MarketplaceService) { }
 
   /**
    * Execute the fetch-shops-in-marketplace use case.
@@ -17,6 +17,6 @@ export class FetchShopsInMarketplace {
    */
   async execute(marketplaceId: number): Promise<ShopDTO[]> {
     const shops = await this.service.getShopsInMarketplace(marketplaceId);
-    return shops.map(toShopDTO);
+    return shops?.map(toShopDTO);
   }
 }

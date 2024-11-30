@@ -87,7 +87,7 @@ export class ProductImageResolver {
     @Args('productId') productId: number,
   ): Promise<ProductImageOutput[]> {
     const result = await this.fetchProductImagesByProductIdUseCase.execute(productId);
-    return result.map(transformProductImageDTOToGraphQL);
+    return result?.map(transformProductImageDTOToGraphQL);
   }
 
   @Mutation(() => ProductImageOutput)

@@ -10,7 +10,7 @@ import { CategoryDTO } from 'src/presentation/dtos/category.dto';
  */
 @Injectable()
 export class FetchChildren {
-  constructor(private readonly service: CategoryService) {}
+  constructor(private readonly service: CategoryService) { }
 
   /**
    * Execute the fetch-children use case.
@@ -20,6 +20,6 @@ export class FetchChildren {
   async execute(parentId: number): Promise<CategoryDTO[]> {
     const categories = await this.service.getChildren(parentId);
 
-    return categories.map((category) => toCategoryDTO(category));
+    return categories?.map((category) => toCategoryDTO(category));
   }
 }

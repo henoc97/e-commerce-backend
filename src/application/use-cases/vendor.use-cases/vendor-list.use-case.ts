@@ -10,7 +10,7 @@ import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
  */
 @Injectable()
 export class VendorList {
-  constructor(private readonly vendorService: VendorService) {}
+  constructor(private readonly vendorService: VendorService) { }
 
   /**
    * Execute the vendor-list use case.
@@ -19,6 +19,6 @@ export class VendorList {
   async execute(): Promise<VendorDTO[]> {
     const vendors = await this.vendorService.getAllVendors();
 
-    return vendors.map(toVendorDTO);
+    return vendors?.map(toVendorDTO);
   }
 }

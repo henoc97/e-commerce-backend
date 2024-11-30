@@ -49,7 +49,7 @@ export class UserProfileResolver {
   //   @Args('limit') limit: number,
   // ): Promise<UserProfileOutput[]> {
   //   const result = awaiteturn this.fetchRecentlyUpdatedProfilesUseCase.execute(limit);
-  // return result.map(transformUserProfileDTOToGraphQL)
+  // return result?.map(transformUserProfileDTOToGraphQL)
   // }
 
   @Query(() => UserProfileOutput, { nullable: true })
@@ -77,7 +77,7 @@ export class UserProfileResolver {
       startDate,
       endDate,
     );
-    return result.map(transformUserProfileDTOToGraphQL)
+    return result?.map(transformUserProfileDTOToGraphQL)
   }
 
   @Query(() => [UserProfileOutput])
@@ -85,7 +85,7 @@ export class UserProfileResolver {
     @Args('gender') gender: string,
   ): Promise<UserProfileOutput[]> {
     const result = await this.fetchUserProfilesByGenderUseCase.execute(gender);
-    return result.map(transformUserProfileDTOToGraphQL)
+    return result?.map(transformUserProfileDTOToGraphQL)
   }
 
   @Query(() => [UserProfileOutput])
@@ -94,7 +94,7 @@ export class UserProfileResolver {
   ): Promise<UserProfileOutput[]> {
     const dto = toUserProfileDTO(criteria);
     const result = await this.findMatchingProfilesUseCase.execute(dto);
-    return result.map(transformUserProfileDTOToGraphQL)
+    return result?.map(transformUserProfileDTOToGraphQL)
   }
 
   @Query(() => Boolean)

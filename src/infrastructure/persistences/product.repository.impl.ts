@@ -108,7 +108,7 @@ export class ProductRepository implements IProductRepository {
       const result = await prisma.product.findMany({
         where: { name: { contains: name } },
       });
-      return result.map(fromProductPrisma);
+      return result?.map(fromProductPrisma);
     } catch (error) {
       console.error('Error finding products by name:', error);
       throw error;
@@ -125,7 +125,7 @@ export class ProductRepository implements IProductRepository {
       const result = await prisma.product.findMany({
         where: { vendorId },
       });
-      return result.map(fromProductPrisma);
+      return result?.map(fromProductPrisma);
     } catch (error) {
       console.error('Error finding products by vendor:', error);
       throw error;
@@ -142,7 +142,7 @@ export class ProductRepository implements IProductRepository {
       const result = await prisma.product.findMany({
         where: { categoryId },
       });
-      return result.map(fromProductPrisma);
+      return result?.map(fromProductPrisma);
     } catch (error) {
       console.error('Error finding products by category:', error);
       throw error;
@@ -190,7 +190,7 @@ export class ProductRepository implements IProductRepository {
           },
         },
       });
-      return result.map(fromProductPrisma);
+      return result?.map(fromProductPrisma);
     } catch (error) {
       console.error('Error finding products by price range:', error);
       throw error;
@@ -202,7 +202,7 @@ export class ProductRepository implements IProductRepository {
   //         const result = await prisma.product.findMany({
   //             where: { isFeatured: true }, // Assuming there's a boolean field 'isFeatured'
   //         });
-  //         return result.map(fromProductPrisma);
+  //         return result?.map(fromProductPrisma);
   //     } catch (error) {
   //         console.error("Error fetching featured products:", error);
   //         throw error;

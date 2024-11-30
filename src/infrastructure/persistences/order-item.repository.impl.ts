@@ -92,7 +92,7 @@ export class OrderItemRepository implements IOrderItemRepository {
       const result = await prisma.orderItem.findMany({
         where: { orderId },
       });
-      return result.map(fromOrderItemPrisma);
+      return result?.map(fromOrderItemPrisma);
     } catch (error) {
       console.error('Error retrieving order items by order ID:', error);
       throw error;
@@ -109,7 +109,7 @@ export class OrderItemRepository implements IOrderItemRepository {
       const result = await prisma.orderItem.findMany({
         where: { productId },
       });
-      return result.map(fromOrderItemPrisma);
+      return result?.map(fromOrderItemPrisma);
     } catch (error) {
       console.error('Error retrieving order items by product ID:', error);
       throw error;
@@ -148,7 +148,7 @@ export class OrderItemRepository implements IOrderItemRepository {
         orderBy: { createdAt: 'desc' },
         take: 10,
       });
-      return result.map(fromOrderItemPrisma);
+      return result?.map(fromOrderItemPrisma);
     } catch (error) {
       console.error('Error retrieving recent order items:', error);
       throw error;
@@ -165,7 +165,7 @@ export class OrderItemRepository implements IOrderItemRepository {
       const result = await prisma.orderItem.findMany({
         where: { quantity: { lt: threshold } },
       });
-      return result.map(fromOrderItemPrisma);
+      return result?.map(fromOrderItemPrisma);
     } catch (error) {
       console.error('Error retrieving low stock items:', error);
       throw error;

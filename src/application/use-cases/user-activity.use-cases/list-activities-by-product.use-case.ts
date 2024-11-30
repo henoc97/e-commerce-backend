@@ -9,7 +9,7 @@ import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activit
  */
 @Injectable()
 export class ListActivitiesByProduct {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the list-activities-by-product use case.
@@ -20,6 +20,6 @@ export class ListActivitiesByProduct {
     const activities =
       await this.activityService.listActivitiesByProduct(productId);
 
-    return activities.map(toUserActivityDTO);
+    return activities?.map(toUserActivityDTO);
   }
 }

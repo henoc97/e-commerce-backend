@@ -10,7 +10,7 @@ import { CategoryDTO } from 'src/presentation/dtos/category.dto';
  */
 @Injectable()
 export class FetchCategoryHierarchy {
-  constructor(private readonly service: CategoryService) {}
+  constructor(private readonly service: CategoryService) { }
 
   /**
    * Execute the fetch-category-hierarchy use case.
@@ -20,6 +20,6 @@ export class FetchCategoryHierarchy {
   async execute(categoryId: number): Promise<CategoryDTO[]> {
     const categories = await this.service.getCategoryHierarchy(categoryId);
 
-    return categories.map((category) => toCategoryDTO(category));
+    return categories?.map((category) => toCategoryDTO(category));
   }
 }

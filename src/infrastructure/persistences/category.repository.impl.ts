@@ -88,7 +88,7 @@ export class CategoryRepository implements ICategoryRepository {
       const result = await prisma.category.findMany({
         where: { parentId },
       });
-      return result.map(fromCategoryPrisma);
+      return result?.map(fromCategoryPrisma);
     } catch (error) {
       console.error('Error fetching child categories:', error);
       throw error;
@@ -144,7 +144,7 @@ export class CategoryRepository implements ICategoryRepository {
       const result = await prisma.category.findMany({
         where: { parentId: null },
       });
-      return result.map(fromCategoryPrisma);
+      return result?.map(fromCategoryPrisma);
     } catch (error) {
       console.error('Error fetching top-level categories:', error);
       throw error;

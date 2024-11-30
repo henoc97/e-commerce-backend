@@ -15,6 +15,6 @@ export function fromMarketplaceDTO(
     marketplaceDTO.id,
     marketplaceDTO.name,
     marketplaceDTO.description,
-    marketplaceDTO.shops.map((shop) => fromShopDTO(shop)),
+    marketplaceDTO.shops?.map((shop) => fromShopDTO(shop)),
   );
 }

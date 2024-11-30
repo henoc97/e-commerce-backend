@@ -9,7 +9,7 @@ import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
  */
 @Injectable()
 export class ListSubscriptionsByVendor {
-  constructor(private readonly subscriptionService: SubscriptionService) {}
+  constructor(private readonly subscriptionService: SubscriptionService) { }
 
   /**
    * Execute the list-subscriptions-by-vendor use case.
@@ -19,6 +19,6 @@ export class ListSubscriptionsByVendor {
   async execute(vendorId: number): Promise<SubscriptionDTO[]> {
     const subscriptions =
       await this.subscriptionService.getSubscriptionsByVendor(vendorId);
-    return subscriptions.map(toSubscriptionDTO);
+    return subscriptions?.map(toSubscriptionDTO);
   }
 }

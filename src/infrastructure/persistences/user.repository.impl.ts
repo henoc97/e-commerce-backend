@@ -116,7 +116,7 @@ export class UserRepository implements IUserRepository {
   async getByRole(role: UserRole): Promise<User[]> {
     try {
       const result = await prisma.user.findMany({ where: { role } });
-      return result.map(fromUserPrisma);
+      return result?.map(fromUserPrisma);
     } catch (error) {
       console.error('Error fetching users by role:', error);
       throw new Error('Failed to fetch users by role.');
@@ -234,7 +234,7 @@ export class UserRepository implements IUserRepository {
         },
       });
 
-      return inactiveUsers.map(fromUserPrisma);
+      return inactiveUsers?.map(fromUserPrisma);
     } catch (error) {
       console.error('Error fetching inactive users:', error);
       throw new Error('Failed to fetch inactive users.');

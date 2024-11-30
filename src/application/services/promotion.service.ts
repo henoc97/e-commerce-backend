@@ -105,6 +105,6 @@ export class PromotionService {
   async combinePromotions(
     promotions: PromotionDTO[],
   ): Promise<Promotion | null> {
-    return await this.promotionRepository.combine(promotions.map(fromPromotionDTO));
+    return await this.promotionRepository.combine(promotions?.map(fromPromotionDTO));
   }
 }

@@ -55,7 +55,7 @@ export class UserActivityRepository implements IUserActivityRepository {
       const activities = await prisma.userActivity.findMany({
         where: { userId },
       });
-      return activities.map(fromUserActivityPrisma);
+      return activities?.map(fromUserActivityPrisma);
     } catch (error) {
       console.error('Error listing user activities:', error);
       throw new Error('Unable to list user activities.');
@@ -72,7 +72,7 @@ export class UserActivityRepository implements IUserActivityRepository {
       const activities = await prisma.userActivity.findMany({
         where: { productId },
       });
-      return activities.map(fromUserActivityPrisma);
+      return activities?.map(fromUserActivityPrisma);
     } catch (error) {
       console.error('Error listing user activities by product:', error);
       throw new Error('Unable to list user activities by product.');
@@ -132,7 +132,7 @@ export class UserActivityRepository implements IUserActivityRepository {
           },
         },
       });
-      return activities.map(fromUserActivityPrisma);
+      return activities?.map(fromUserActivityPrisma);
     } catch (error) {
       console.error('Error listing user activities by date range:', error);
       throw new Error('Unable to list user activities by date range.');
@@ -186,7 +186,7 @@ export class UserActivityRepository implements IUserActivityRepository {
         orderBy: { createdAt: 'desc' },
         take: limit,
       });
-      return activities.map(fromUserActivityPrisma);
+      return activities?.map(fromUserActivityPrisma);
     } catch (error) {
       console.error('Error getting recent user activities:', error);
       throw new Error('Unable to retrieve recent user activities.');

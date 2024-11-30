@@ -8,7 +8,7 @@ import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
  */
 @Injectable()
 export class FetchCartItemsByCartId {
-  constructor(private readonly cartItemService: CartItemService) {}
+  constructor(private readonly cartItemService: CartItemService) { }
 
   /**
    * Executes the fetch-cart-items-by-cart-id use case.
@@ -17,6 +17,6 @@ export class FetchCartItemsByCartId {
    */
   async execute(cartId: number): Promise<CartItemDTO[]> {
     const cartItems = await this.cartItemService.getCartItemsByCartId(cartId);
-    return cartItems.map((cartItem) => toCartItemDTO(cartItem));
+    return cartItems?.map((cartItem) => toCartItemDTO(cartItem));
   }
 }

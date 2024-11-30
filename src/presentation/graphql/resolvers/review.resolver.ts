@@ -60,7 +60,7 @@ export class ReviewResolver {
   @Query(() => [ReviewOutput])
   async fetchFlaggedReviews(): Promise<ReviewOutput[]> {
     const result = await this.fetchFlaggedReviewsUseCase.execute();
-    return result.map(transformReviewDTOToGraphQL);
+    return result?.map(transformReviewDTOToGraphQL);
   }
 
   @Query(() => [ReviewOutput])
@@ -68,7 +68,7 @@ export class ReviewResolver {
     @Args('limit') limit: number,
   ): Promise<ReviewOutput[]> {
     const result = await this.fetchPopularReviewsUseCase.execute(limit);
-    return result.map(transformReviewDTOToGraphQL);
+    return result?.map(transformReviewDTOToGraphQL);
   }
 
   @Query(() => ReviewOutput, { nullable: true })
@@ -83,7 +83,7 @@ export class ReviewResolver {
     @Args('endDate') endDate: Date,
   ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByDateRangeUseCase.execute(startDate, endDate);
-    return result.map(transformReviewDTOToGraphQL);
+    return result?.map(transformReviewDTOToGraphQL);
   }
 
   @Query(() => [ReviewOutput])
@@ -91,7 +91,7 @@ export class ReviewResolver {
     @Args('productId') productId: number,
   ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByProductUseCase.execute(productId);
-    return result.map(transformReviewDTOToGraphQL);
+    return result?.map(transformReviewDTOToGraphQL);
   }
 
   @Query(() => [ReviewOutput])
@@ -99,7 +99,7 @@ export class ReviewResolver {
     @Args('rating') rating: number,
   ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByRatingUseCase.execute(rating);
-    return result.map(transformReviewDTOToGraphQL);
+    return result?.map(transformReviewDTOToGraphQL);
   }
 
   @Query(() => [ReviewOutput])
@@ -107,7 +107,7 @@ export class ReviewResolver {
     @Args('userId') userId: number,
   ): Promise<ReviewOutput[]> {
     const result = await this.fetchReviewsByUserUseCase.execute(userId);
-    return result.map(transformReviewDTOToGraphQL);
+    return result?.map(transformReviewDTOToGraphQL);
   }
 
   @Mutation(() => ReviewOutput, { nullable: true })

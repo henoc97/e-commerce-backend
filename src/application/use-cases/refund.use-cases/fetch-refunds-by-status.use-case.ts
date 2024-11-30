@@ -10,7 +10,7 @@ import { toRefundDTO } from 'src/application/helper/to-dto/to.refund.dto';
  */
 @Injectable()
 export class FetchRefundsByStatus {
-  constructor(private readonly service: RefundService) {}
+  constructor(private readonly service: RefundService) { }
 
   /**
    * Execute the fetch-refunds-by-status use case.
@@ -19,6 +19,6 @@ export class FetchRefundsByStatus {
    */
   async execute(status: RefundStatus): Promise<RefundDTO[]> {
     const refunds = await this.service.getRefundsByStatus(status);
-    return refunds.map(toRefundDTO);
+    return refunds?.map(toRefundDTO);
   }
 }

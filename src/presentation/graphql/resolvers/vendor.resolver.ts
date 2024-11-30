@@ -74,7 +74,7 @@ export class VendorResolver {
    */
   @Mutation(() => VendorOutput, { nullable: true })
   async createVendor(
-    @Args('vendorDTO') vendor: VendorInput,
+    @Args('vendor') vendor: VendorInput,
   ): Promise<VendorOutput | null> {
     const dto = toVendorDTO(vendor);
     const result = await this.createVendorUseCase.execute(dto);
@@ -114,7 +114,7 @@ export class VendorResolver {
     @Args('storeName') storeName: string,
   ): Promise<VendorOutput[]> {
     const result = await this.findVendorsByStoreNameUseCase.execute(storeName);
-    return result.map(transformVendorDTOToGraphQL)
+    return result?.map(transformVendorDTOToGraphQL)
   }
 
   /**
@@ -127,7 +127,7 @@ export class VendorResolver {
     @Args('subscriptionId') subscriptionId: number,
   ): Promise<VendorOutput[]> {
     const result = await this.findVendorsBySubscriptionUseCase.execute(subscriptionId);
-    return result.map(transformVendorDTOToGraphQL)
+    return result?.map(transformVendorDTOToGraphQL)
   }
 
   /**
@@ -140,7 +140,7 @@ export class VendorResolver {
     @Args('userId') userId: number,
   ): Promise<VendorOutput[]> {
     const result = await this.findVendorsByUserUseCase.execute(userId);
-    return result.map(transformVendorDTOToGraphQL)
+    return result?.map(transformVendorDTOToGraphQL)
   }
 
   // /**
@@ -258,6 +258,6 @@ export class VendorResolver {
   @Query(() => [VendorOutput])
   async vendorList(): Promise<VendorOutput[]> {
     const result = await this.vendorListUseCase.execute();
-    return result.map(transformVendorDTOToGraphQL)
+    return result?.map(transformVendorDTOToGraphQL)
   }
 }

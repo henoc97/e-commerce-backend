@@ -80,7 +80,7 @@ export class ProductVariantResolver {
     @Args('name') name: string,
   ): Promise<ProductVariantOutput[]> {
     const result = await this.fetchByName.execute(productId, name);
-    return result.map(transformProductVariantDTOToGraphQL);
+    return result?.map(transformProductVariantDTOToGraphQL);
   }
 
   @Query(() => [ProductVariantOutput])
@@ -88,7 +88,7 @@ export class ProductVariantResolver {
     @Args('productId') productId: number,
   ): Promise<ProductVariantOutput[]> {
     const result = await this.fetchByProductId.execute(productId);
-    return result.map(transformProductVariantDTOToGraphQL);
+    return result?.map(transformProductVariantDTOToGraphQL);
   }
 
   @Mutation(() => ProductVariantOutput, { nullable: true })

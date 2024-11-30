@@ -72,7 +72,7 @@ export class NewsletterSubscriptionResolver {
       endDate,
       shopId,
     );
-    return result.map(transformNewsletterDTOToGraphQL);
+    return result?.map(transformNewsletterDTOToGraphQL);
   }
 
   @Query(() => [NewsletterSubscriptionOutput])
@@ -80,7 +80,7 @@ export class NewsletterSubscriptionResolver {
     @Args('shopId') shopId: number,
   ): Promise<NewsletterSubscriptionOutput[]> {
     const result = await this.listNewsletterSubscriptionsUseCase.execute(shopId);
-    return result.map(transformNewsletterDTOToGraphQL);
+    return result?.map(transformNewsletterDTOToGraphQL);
   }
 
   @Mutation(() => NewsletterSubscriptionOutput, { nullable: true })

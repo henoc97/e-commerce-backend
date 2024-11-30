@@ -13,8 +13,8 @@ export function toCategoryDTO(category: any): CategoryDTO {
     category.id,
     category.parentId,
     category.parent ? toCategoryDTO(category.parent) : undefined,
-    category.children.map((child) => toCategoryDTO(child)),
-    category.products.map((product) => toProductDTO(product)),
+    category.children?.map((child) => toCategoryDTO(child)),
+    category.products?.map((product) => toProductDTO(product)),
     category.shopId,
     category.shop ? toShopDTO(category.shop) : undefined,
   );

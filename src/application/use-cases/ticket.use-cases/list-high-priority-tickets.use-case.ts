@@ -9,7 +9,7 @@ import { toTicketDTO } from 'src/application/helper/to-dto/to.ticket.dto';
  */
 @Injectable()
 export class ListHighPriorityTickets {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   /**
    * Execute the list-high-priority-tickets use case.
@@ -18,6 +18,6 @@ export class ListHighPriorityTickets {
   async execute(): Promise<TicketDTO[]> {
     const tickets = await this.ticketService.getHighPriorityTickets();
 
-    return tickets.map(toTicketDTO);
+    return tickets?.map(toTicketDTO);
   }
 }

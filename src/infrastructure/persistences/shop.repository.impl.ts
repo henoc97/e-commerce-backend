@@ -86,7 +86,7 @@ export class ShopRepository implements IShopRepository {
       const result = await prisma.shop.findMany({
         where: { name: { contains: name } },
       });
-      return result.map(fromShopPrisma);
+      return result?.map(fromShopPrisma);
     } catch (error) {
       throw new Error(
         `Failed to search shops by name "${name}": ${error}`,
@@ -104,7 +104,7 @@ export class ShopRepository implements IShopRepository {
       const shops = await prisma.shop.findMany({
         where: { vendorId },
       });
-      return shops.map(fromShopPrisma);
+      return shops?.map(fromShopPrisma);
     } catch (error) {
       throw new Error(`Failed to list shops for vendor: ${error}`);
     }

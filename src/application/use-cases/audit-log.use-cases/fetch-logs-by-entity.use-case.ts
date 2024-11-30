@@ -8,7 +8,7 @@ import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
  */
 @Injectable()
 export class FetchLogsByEntity {
-  constructor(private readonly auditLogService: AuditLogService) {}
+  constructor(private readonly auditLogService: AuditLogService) { }
 
   /**
    * Executes the fetch-logs-by-entity use case.
@@ -18,6 +18,6 @@ export class FetchLogsByEntity {
    */
   async execute(entity: string, entityId: number): Promise<AuditLogDTO[]> {
     const logs = await this.auditLogService.getLogsByEntity(entity, entityId);
-    return logs.map((log) => toAuditLogDTO(log));
+    return logs?.map((log) => toAuditLogDTO(log));
   }
 }

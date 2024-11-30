@@ -21,10 +21,10 @@ export function toOrderDTO(order: any): OrderDTO {
     order.trackingNumber,
     order.createdAt,
     order.updatedAt,
-    order.items.map((item) => toOrderItemDTO(item)),
+    order.items?.map((item) => toOrderItemDTO(item)),
     order.user ? toUserDTO(order.user) : undefined,
     order.shop ? toShopDTO(order.shop) : undefined,
-    order.payments.map((payment) => toPaymentDTO(payment)),
-    order.refunds.map((refund) => toRefundDTO(refund)),
+    order.payments?.map((payment) => toPaymentDTO(payment)),
+    order.refunds?.map((refund) => toRefundDTO(refund)),
   );
 }

@@ -17,7 +17,7 @@ export class FetchShopList {
      */
     async execute(): Promise<ShopDTO[]> {
         // const shops = await this.shopService.getShopList();
-        // return shops.map(toShopDTO);
+        // return shops?.map(toShopDTO);
         return [];
     }
 }

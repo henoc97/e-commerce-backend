@@ -1,4 +1,4 @@
-﻿import { CartDTO } from 'src/presentation/dtos/cart.dto';
+import { CartDTO } from 'src/presentation/dtos/cart.dto';
 import { toCartItemDTO } from './to.cart-item.dto';
 import { toUserDTO } from './to.user.dto';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
@@ -16,7 +16,7 @@ export function toCartDTO(cart: any): CartDTO {
     cart.estimatedShippingCost,
     new Date(cart.lastSaved),
     cart.id,
-    cart.items.map((item: any) => toCartItemDTO(item)) as CartItemDTO[],
+    cart.items?.map((item: any) => toCartItemDTO(item)) as CartItemDTO[],
     cart.user ? toUserDTO(cart.user) : undefined,
   );
 }

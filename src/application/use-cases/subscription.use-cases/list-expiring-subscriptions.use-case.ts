@@ -9,7 +9,7 @@ import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
  */
 @Injectable()
 export class ListExpiringSubscriptions {
-  constructor(private readonly subscriptionService: SubscriptionService) {}
+  constructor(private readonly subscriptionService: SubscriptionService) { }
 
   /**
    * Execute the list-expiring-subscriptions use case.
@@ -19,6 +19,6 @@ export class ListExpiringSubscriptions {
   async execute(days: number): Promise<SubscriptionDTO[]> {
     const subscriptions =
       await this.subscriptionService.getExpiringSubscriptions(days);
-    return subscriptions.map(toSubscriptionDTO);
+    return subscriptions?.map(toSubscriptionDTO);
   }
 }

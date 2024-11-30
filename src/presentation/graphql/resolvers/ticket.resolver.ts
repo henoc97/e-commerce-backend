@@ -59,7 +59,7 @@ export class TicketResolver {
     @Args('userId') userId: number,
   ): Promise<TicketOutput[]> {
     const result = await this.listTicketsByUserUseCase.execute(userId);
-    return result.map(transformTicketDTOToGraphQL)
+    return result?.map(transformTicketDTOToGraphQL)
   }
 
   @Mutation(() => Boolean)
@@ -76,7 +76,7 @@ export class TicketResolver {
   @Query(() => [TicketOutput])
   async listHighPriorityTickets(): Promise<TicketOutput[]> {
     const result = await this.listHighPriorityTicketsUseCase.execute();
-    return result.map(transformTicketDTOToGraphQL)
+    return result?.map(transformTicketDTOToGraphQL)
   }
 
   @Query(() => [TicketOutput])
@@ -85,7 +85,7 @@ export class TicketResolver {
     @Args('endDate') endDate: Date,
   ): Promise<TicketOutput[]> {
     const result = await this.listTicketsByDateRangeUseCase.execute(startDate, endDate);
-    return result.map(transformTicketDTOToGraphQL)
+    return result?.map(transformTicketDTOToGraphQL)
   }
 
   @Query(() => [TicketOutput])
@@ -93,7 +93,7 @@ export class TicketResolver {
     @Args('status') status: TicketStatus,
   ): Promise<TicketOutput[]> {
     const result = await this.listTicketsByStatusUseCase.execute(status);
-    return result.map(transformTicketDTOToGraphQL)
+    return result?.map(transformTicketDTOToGraphQL)
   }
 
   @Mutation(() => TicketOutput, { nullable: true })

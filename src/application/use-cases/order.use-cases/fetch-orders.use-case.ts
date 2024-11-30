@@ -8,7 +8,7 @@ import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
  */
 @Injectable()
 export class FetchOrders {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   /**
    * Retrieves all orders.
@@ -16,6 +16,6 @@ export class FetchOrders {
    */
   async execute(): Promise<OrderDTO[]> {
     const orders = await this.orderService.getAllOrders();
-    return orders.map(toOrderDTO);
+    return orders?.map(toOrderDTO);
   }
 }

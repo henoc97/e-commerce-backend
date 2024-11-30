@@ -89,7 +89,7 @@ export class TicketRepository implements ITicketRepository {
       const tickets = await prisma.ticket.findMany({
         where: { userId },
       });
-      return tickets.map(fromTicketPrisma);
+      return tickets?.map(fromTicketPrisma);
     } catch (error) {
       console.error('Error fetching tickets by user:', error);
       throw new Error('Could not fetch tickets');
@@ -106,7 +106,7 @@ export class TicketRepository implements ITicketRepository {
       const tickets = await prisma.ticket.findMany({
         where: { status },
       });
-      return tickets.map(fromTicketPrisma);
+      return tickets?.map(fromTicketPrisma);
     } catch (error) {
       console.error('Error fetching tickets by status:', error);
       throw new Error('Could not fetch tickets');
@@ -129,7 +129,7 @@ export class TicketRepository implements ITicketRepository {
           },
         },
       });
-      return tickets.map(fromTicketPrisma);
+      return tickets?.map(fromTicketPrisma);
     } catch (error) {
       console.error('Error fetching tickets by date range:', error);
       throw new Error('Could not fetch tickets');
@@ -183,7 +183,7 @@ export class TicketRepository implements ITicketRepository {
           status: 'HIGH', // Assuming a 'priority' field exists
         },
       });
-      return highPriorityTickets.map(fromTicketPrisma);
+      return highPriorityTickets?.map(fromTicketPrisma);
     } catch (error) {
       console.error('Error fetching high-priority tickets:', error);
       throw new Error('Could not fetch high-priority tickets');

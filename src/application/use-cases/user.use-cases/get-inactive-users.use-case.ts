@@ -8,7 +8,7 @@ import { UserDTO } from 'src/presentation/dtos/user.dto';
  * Use case to retrieve all inactive users.
  */
 export class GetInactiveUsersUseCase {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Executes the use case to fetch inactive users.
@@ -16,6 +16,6 @@ export class GetInactiveUsersUseCase {
    */
   async execute(days: number): Promise<UserDTO[]> {
     const users = await this.userService.getInactiveUsers(days);
-    return users.map((user) => toUserDTO(user));
+    return users?.map((user) => toUserDTO(user));
   }
 }

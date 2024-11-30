@@ -9,7 +9,7 @@ import { ReviewDTO } from 'src/presentation/dtos/review.dto';
  */
 @Injectable()
 export class FetchFlaggedReviews {
-  constructor(private readonly service: ReviewService) {}
+  constructor(private readonly service: ReviewService) { }
 
   /**
    * Execute the fetch-flagged-reviews use case.
@@ -17,6 +17,6 @@ export class FetchFlaggedReviews {
    */
   async execute(): Promise<ReviewDTO[]> {
     const flaggedReviews = await this.service.getFlaggedReviews();
-    return flaggedReviews.map(toReviewDTO);
+    return flaggedReviews?.map(toReviewDTO);
   }
 }

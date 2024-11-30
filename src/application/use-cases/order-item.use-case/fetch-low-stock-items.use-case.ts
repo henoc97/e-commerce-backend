@@ -9,7 +9,7 @@ import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
  */
 @Injectable()
 export class FetchLowStockItems {
-  constructor(private readonly service: OrderItemService) {}
+  constructor(private readonly service: OrderItemService) { }
 
   /**
    * Execute the fetch-low-stock-items use case.
@@ -18,6 +18,6 @@ export class FetchLowStockItems {
    */
   async execute(threshold: number): Promise<OrderItemDTO[]> {
     const items = await this.service.getLowStockItems(threshold);
-    return items.map(toOrderItemDTO);
+    return items?.map(toOrderItemDTO);
   }
 }

@@ -159,7 +159,7 @@ export class UserProfileRepository implements IUserProfileRepository {
       const result = await prisma.userProfile.findMany({
         where: { gender },
       });
-      return result.map(fromUserProfilePrisma);
+      return result?.map(fromUserProfilePrisma);
     } catch (error) {
       console.error('Error retrieving user profiles by gender:', error);
       throw new Error('Could not retrieve user profiles by gender.');
@@ -185,7 +185,7 @@ export class UserProfileRepository implements IUserProfileRepository {
           },
         },
       });
-      return result.map(fromUserProfilePrisma);
+      return result?.map(fromUserProfilePrisma);
     } catch (error) {
       console.error('Error retrieving user profiles by birthday range:', error);
       throw new Error('Could not retrieve user profiles by birthday range.');
@@ -237,7 +237,7 @@ export class UserProfileRepository implements IUserProfileRepository {
       const result = await prisma.userProfile.findMany({
         where: data,
       });
-      return result.map(fromUserProfilePrisma);
+      return result?.map(fromUserProfilePrisma);
     } catch (error) {
       console.error('Error finding matching user profiles:', error);
       throw new Error('Could not find matching user profiles.');

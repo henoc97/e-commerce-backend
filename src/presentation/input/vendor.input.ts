@@ -27,6 +27,6 @@ export class VendorInput {
   /**
    * Optional ID of the subscription.
    */
-  @Field()
+  @Field({ nullable: true })
   subscriptionId?: number;
 }

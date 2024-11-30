@@ -9,7 +9,7 @@ import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
  */
 @Injectable()
 export class SearchShopsByName {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ShopService) { }
 
   /**
    * Execute the search-shops-by-name use case.
@@ -18,6 +18,6 @@ export class SearchShopsByName {
    */
   async execute(name: string): Promise<ShopDTO[]> {
     const shops = await this.shopService.searchShopsByName(name);
-    return shops.map(toShopDTO);
+    return shops?.map(toShopDTO);
   }
 }

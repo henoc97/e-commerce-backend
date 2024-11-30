@@ -9,7 +9,7 @@ import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
  */
 @Injectable()
 export class FetchRecentOrderItems {
-  constructor(private readonly service: OrderItemService) {}
+  constructor(private readonly service: OrderItemService) { }
 
   /**
    * Execute the fetch-recent-order-items use case.
@@ -18,6 +18,6 @@ export class FetchRecentOrderItems {
    */
   async execute(orderId: number): Promise<OrderItemDTO[]> {
     const items = await this.service.getRecentItems(orderId);
-    return items.map(toOrderItemDTO);
+    return items?.map(toOrderItemDTO);
   }
 }

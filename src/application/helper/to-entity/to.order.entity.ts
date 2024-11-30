@@ -18,14 +18,14 @@ export function fromOrderDTO(orderDTO: OrderDTO | Partial<OrderDTO>): Order {
     orderDTO.user ? fromUserDTO(orderDTO.user) : undefined,
     orderDTO.shopId,
     orderDTO.shop ? fromShopDTO(orderDTO.shop) : undefined,
-    orderDTO.items.map((item) => fromOrderItemDTO(item)),
+    orderDTO.items?.map((item) => fromOrderItemDTO(item)),
     orderDTO.status,
     orderDTO.totalAmount,
     orderDTO.paymentId,
     orderDTO.trackingNumber,
     orderDTO.createdAt,
     orderDTO.updatedAt,
-    orderDTO.payments.map((payment) => fromPaymentDTO(payment)),
-    orderDTO.refunds.map((refund) => fromRefundDTO(refund)),
+    orderDTO.payments?.map((payment) => fromPaymentDTO(payment)),
+    orderDTO.refunds?.map((refund) => fromRefundDTO(refund)),
   );
 }

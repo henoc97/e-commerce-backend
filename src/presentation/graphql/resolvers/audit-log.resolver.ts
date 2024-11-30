@@ -57,7 +57,7 @@ export class AuditLogResolver {
     @Args('action') action: AuditLogAction,
   ): Promise<AuditLogOutput[]> {
     const result = await this.fetchLogsByAction.execute(action);
-    return result.map(transformAuditLogDTOToGraphQL);
+    return result?.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -67,7 +67,7 @@ export class AuditLogResolver {
     @Args('endDate') endDate: Date,
   ): Promise<AuditLogOutput[]> {
     const result = await this.fetchLogsByDateRange.execute(startDate, endDate);
-    return result.map(transformAuditLogDTOToGraphQL);
+    return result?.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -77,7 +77,7 @@ export class AuditLogResolver {
     @Args('entityId') entityId: number,
   ): Promise<AuditLogOutput[]> {
     const result = await this.fetchLogsByEntity.execute(entity, entityId);
-    return result.map(transformAuditLogDTOToGraphQL);
+    return result?.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -86,14 +86,14 @@ export class AuditLogResolver {
     @Args('userId') userId: number,
   ): Promise<AuditLogOutput[]> {
     const result = await this.fetchLogsByUser.execute(userId);
-    return result.map(transformAuditLogDTOToGraphQL);
+    return result?.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
   @Query(() => [AuditLogOutput])
   async recentAuditLogs(@Args('limit') limit: number): Promise<AuditLogOutput[]> {
     const result = await this.fetchRecentLogs.execute(limit);
-    return result.map(transformAuditLogDTOToGraphQL);
+    return result?.map(transformAuditLogDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)

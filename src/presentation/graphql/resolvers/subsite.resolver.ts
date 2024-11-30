@@ -61,7 +61,7 @@ export class SubsiteResolver {
   @Query(() => [SubsiteOutput])
   async listActiveSubsites(): Promise<SubsiteOutput[]> {
     const result = await this.listActiveSubsitesUseCase.execute();
-    return result.map(transformSubsiteDTOToGraphQL)
+    return result?.map(transformSubsiteDTOToGraphQL)
   }
 
   @Mutation(() => Boolean)
@@ -96,7 +96,7 @@ export class SubsiteResolver {
     @Args('userId') userId: number,
   ): Promise<SubsiteOutput[]> {
     const result = await this.listSubsitesByUserUseCase.execute(userId);
-    return result.map(transformSubsiteDTOToGraphQL)
+    return result?.map(transformSubsiteDTOToGraphQL)
   }
 
   @Mutation(() => String)

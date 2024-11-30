@@ -9,7 +9,7 @@ import { toPaymentDTO } from 'src/application/helper/to-dto/to.payment.dto';
  */
 @Injectable()
 export class FetchPaymentsByStatus {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) { }
 
   /**
    * Execute the fetch-payments-by-status use case.
@@ -18,6 +18,6 @@ export class FetchPaymentsByStatus {
    */
   async execute(status: PaymentStatus): Promise<PaymentDTO[]> {
     const payments = await this.paymentService.getPaymentsByStatus(status);
-    return payments.map(toPaymentDTO);
+    return payments?.map(toPaymentDTO);
   }
 }

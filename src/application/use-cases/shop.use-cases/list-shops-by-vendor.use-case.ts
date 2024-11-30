@@ -9,7 +9,7 @@ import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
  */
 @Injectable()
 export class ListShopsByVendor {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ShopService) { }
 
   /**
    * Execute the list-shops-by-vendor use case.
@@ -18,6 +18,6 @@ export class ListShopsByVendor {
    */
   async execute(vendorId: number): Promise<ShopDTO[]> {
     const shops = await this.shopService.listShopsByVendor(vendorId);
-    return shops.map(toShopDTO);
+    return shops?.map(toShopDTO);
   }
 }

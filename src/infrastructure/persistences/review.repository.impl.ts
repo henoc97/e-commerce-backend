@@ -91,7 +91,7 @@ export class ReviewRepository implements IReviewRepository {
       const result = await prisma.review.findMany({
         where: { productId },
       });
-      return result.map(fromReviewPrisma);
+      return result?.map(fromReviewPrisma);
     } catch (error) {
       console.error('Error retrieving reviews for product:', error);
       throw new Error('Could not retrieve product reviews, error: ' + error);
@@ -108,7 +108,7 @@ export class ReviewRepository implements IReviewRepository {
       const result = await prisma.review.findMany({
         where: { userId },
       });
-      return result.map(fromReviewPrisma);
+      return result?.map(fromReviewPrisma);
     } catch (error) {
       console.error('Error retrieving reviews for user:', error);
       throw new Error('Could not retrieve user reviews, error: ' + error);
@@ -125,7 +125,7 @@ export class ReviewRepository implements IReviewRepository {
       const result = await prisma.review.findMany({
         where: { rating },
       });
-      return result.map(fromReviewPrisma);
+      return result?.map(fromReviewPrisma);
     } catch (error) {
       console.error('Error retrieving reviews by rating:', error);
       throw new Error('Could not retrieve reviews by rating, error: ' + error);
@@ -148,7 +148,7 @@ export class ReviewRepository implements IReviewRepository {
           },
         },
       });
-      return result.map(fromReviewPrisma);
+      return result?.map(fromReviewPrisma);
     } catch (error) {
       console.error('Error retrieving reviews by date range:', error);
       throw new Error(
@@ -202,7 +202,7 @@ export class ReviewRepository implements IReviewRepository {
       const result = await prisma.review.findMany({
         where: { flagged: true }, // Assuming 'flagged' is the field used to mark reviews
       });
-      return result.map(fromReviewPrisma); // Convert each Prisma result to your Review entity
+      return result?.map(fromReviewPrisma); // Convert each Prisma result to your Review entity
     } catch (error) {
       console.error('Error retrieving flagged reviews:', error);
       throw error;
@@ -220,7 +220,7 @@ export class ReviewRepository implements IReviewRepository {
         orderBy: { rating: 'desc' },
         take: limit,
       });
-      return result.map(fromReviewPrisma);
+      return result?.map(fromReviewPrisma);
     } catch (error) {
       console.error('Error retrieving popular reviews:', error);
       throw new Error('Could not retrieve popular reviews, error: ' + error);

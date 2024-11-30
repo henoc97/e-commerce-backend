@@ -120,7 +120,7 @@ export class UserResolver {
   @Query(() => [UserOutput], { name: 'getInactiveUsers' })
   async getInactiveUsers(@Args('days') days: number): Promise<UserOutput[]> {
     const result = await this.getInactiveUsersUseCase.execute(days);
-    return result.map(transformUserDTOToGraphQL);
+    return result?.map(transformUserDTOToGraphQL);
   }
 
   @Query(() => UserOutput, { name: 'getUserByEmail' })
@@ -138,7 +138,7 @@ export class UserResolver {
   @Query(() => [UserOutput], { name: 'getUsersByRole' })
   async getUsersByRole(@Args('role') role: UserRole): Promise<UserOutput[]> {
     const result = await this.getUsersByRoleUseCase.execute(role);
-    return result.map(transformUserDTOToGraphQL);
+    return result?.map(transformUserDTOToGraphQL);
   }
 
   @Mutation(() => UserOutput, { name: 'removeAddressFromUser' })

@@ -8,7 +8,7 @@ import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
  */
 @Injectable()
 export class FetchNotificationsByDateRange {
-  constructor(private readonly service: NotificationService) {}
+  constructor(private readonly service: NotificationService) { }
 
   /**
    * Executes the use case.
@@ -21,6 +21,6 @@ export class FetchNotificationsByDateRange {
       startDate,
       endDate,
     );
-    return notifications.map(toNotificationDTO);
+    return notifications?.map(toNotificationDTO);
   }
 }

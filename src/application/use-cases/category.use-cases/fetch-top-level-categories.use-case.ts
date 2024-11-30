@@ -10,7 +10,7 @@ import { CategoryDTO } from 'src/presentation/dtos/category.dto';
  */
 @Injectable()
 export class FetchTopLevelCategories {
-  constructor(private readonly service: CategoryService) {}
+  constructor(private readonly service: CategoryService) { }
 
   /**
    * Execute the fetch-top-level-categories use case.
@@ -19,6 +19,6 @@ export class FetchTopLevelCategories {
   async execute(): Promise<CategoryDTO[]> {
     const categories = await this.service.getTopLevelCategories();
 
-    return categories.map((category) => toCategoryDTO(category));
+    return categories?.map((category) => toCategoryDTO(category));
   }
 }

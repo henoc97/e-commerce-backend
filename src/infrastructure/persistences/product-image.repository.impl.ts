@@ -98,7 +98,7 @@ export class ProductImageRepository implements IProductImageRepository {
       const images = await prisma.productImage.findMany({
         where: { productId },
       });
-      return images.map(fromProductImagePrisma);
+      return images?.map(fromProductImagePrisma);
     } catch (error) {
       throw new Error(
         `Error retrieving images for product with ID ${productId}: ${error}`,

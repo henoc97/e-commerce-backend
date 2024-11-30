@@ -19,6 +19,6 @@
 //   async execute(limit: number): Promise<UserProfileDTO[]> {
 //     const profiles =
 //       await this.profileService.getRecentlyUpdatedProfiles(limit);
-//     return profiles.map(toUserProfileDTO);
+//     return profiles?.map(toUserProfileDTO);
 //   }
 // }

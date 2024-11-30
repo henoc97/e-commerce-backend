@@ -8,7 +8,7 @@ import { toPaymentDTO } from 'src/application/helper/to-dto/to.payment.dto';
  */
 @Injectable()
 export class FetchPaymentsByMethod {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) { }
 
   /**
    * Execute the fetch-payments-by-method use case.
@@ -17,6 +17,6 @@ export class FetchPaymentsByMethod {
    */
   async execute(method: string): Promise<PaymentDTO[]> {
     const payments = await this.paymentService.getPaymentsByMethod(method);
-    return payments.map(toPaymentDTO);
+    return payments?.map(toPaymentDTO);
   }
 }

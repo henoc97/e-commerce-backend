@@ -8,7 +8,7 @@ import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
  */
 @Injectable()
 export class FetchRecentLogs {
-  constructor(private readonly auditLogService: AuditLogService) {}
+  constructor(private readonly auditLogService: AuditLogService) { }
 
   /**
    * Executes the fetch-recent-logs use case.
@@ -17,6 +17,6 @@ export class FetchRecentLogs {
    */
   async execute(limit: number): Promise<AuditLogDTO[]> {
     const logs = await this.auditLogService.getRecentLogs(limit);
-    return logs.map((log) => toAuditLogDTO(log));
+    return logs?.map((log) => toAuditLogDTO(log));
   }
 }

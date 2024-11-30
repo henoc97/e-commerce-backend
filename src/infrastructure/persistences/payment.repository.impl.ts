@@ -91,7 +91,7 @@ export class PaymentRepository implements IPaymentRepository {
       const payments = await prisma.payment.findMany({
         where: { orderId },
       });
-      return payments.map(fromPaymentPrisma);
+      return payments?.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve payments by order ID: ${error}`,
@@ -110,7 +110,7 @@ export class PaymentRepository implements IPaymentRepository {
       const payments = await prisma.payment.findMany({
         where: { method },
       });
-      return payments.map(fromPaymentPrisma);
+      return payments?.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve payments by method: ${error}`,
@@ -129,7 +129,7 @@ export class PaymentRepository implements IPaymentRepository {
       const payments = await prisma.payment.findMany({
         where: { status },
       });
-      return payments.map(fromPaymentPrisma);
+      return payments?.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve payments by status: ${error}`,
@@ -154,7 +154,7 @@ export class PaymentRepository implements IPaymentRepository {
           },
         },
       });
-      return payments.map(fromPaymentPrisma);
+      return payments?.map(fromPaymentPrisma);
     } catch (error) {
       throw new Error(
         `Failed to retrieve payments by date range: ${error}`,

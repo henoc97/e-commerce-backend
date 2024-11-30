@@ -83,7 +83,7 @@ export class CartItemResolver {
     @Args('cartId') cartId: number,
   ): Promise<CartItemOutput[]> {
     const result = await this.fetchCartItemsByCartIdUseCase.execute(cartId);
-    return result.map(transformCartItemDTOToGraphQL);
+    return result?.map(transformCartItemDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)

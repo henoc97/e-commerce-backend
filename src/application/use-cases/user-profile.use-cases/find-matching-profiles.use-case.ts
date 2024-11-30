@@ -9,7 +9,7 @@ import { toUserProfileDTO } from 'src/application/helper/to-dto/to.user-profile.
  */
 @Injectable()
 export class FindMatchingProfiles {
-  constructor(private readonly profileService: UserProfileService) {}
+  constructor(private readonly profileService: UserProfileService) { }
 
   /**
    * Execute the find-matching-profiles use case.
@@ -18,6 +18,6 @@ export class FindMatchingProfiles {
    */
   async execute(criteria: Partial<UserProfileDTO>): Promise<UserProfileDTO[]> {
     const profiles = await this.profileService.findMatchingProfiles(criteria);
-    return profiles.map(toUserProfileDTO);
+    return profiles?.map(toUserProfileDTO);
   }
 }

@@ -7,20 +7,27 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   imports: [
     ClientsModule.register([
       {
-        name: 'KAFKA_SERVICE',  // Le nom du client Kafka, utilisé pour l'injection
-        transport: Transport.KAFKA,  // Définir le type de transport comme Kafka
+        name: 'KAFKA_SERVICE',
+        transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: 'nestjs-kafka-client',  // L'ID de votre client Kafka
-            brokers: ['localhost:9093'],  // Les adresses de vos brokers Kafka
+            clientId: 'nestjs-kafka-client',
+            brokers: ['localhost:9092'],
+            retry: {
+              initialRetryTime: 1000,
+              retries: 5
+            },
+            connectionTimeout: 3000
           },
           consumer: {
-            groupId: 'nestjs-consumer-group',  // Le groupe de consommateurs Kafka
+            groupId: 'nestjs-consumer-group',
+            allowAutoTopicCreation: true,
+            sessionTimeout: 30000
           },
         },
       },
     ]),
   ],
-  exports: [ClientsModule],  // Exporte ClientsModule pour qu'il soit disponible ailleurs
+  exports: [ClientsModule],
 })
 export class KafkaModule { }

@@ -10,7 +10,7 @@ export function toMarketplaceDTO(marketplace: any): MarketplaceDTO {
   return new MarketplaceDTO(
     marketplace.name,
     marketplace.description,
-    marketplace.shops.map((shop) => toShopDTO(shop)),
+    marketplace.shops?.map((shop) => toShopDTO(shop)),
     marketplace.id,
   );
 }

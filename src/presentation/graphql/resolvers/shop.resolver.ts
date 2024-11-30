@@ -131,13 +131,13 @@ export class ShopResolver {
     @Args('vendorId') vendorId: number,
   ): Promise<ShopOutput[]> {
     const result = await this.listShopsByVendorUseCase.execute(vendorId);
-    return result.map(transformShopDTOToGraphQL)
+    return result?.map(transformShopDTOToGraphQL)
   }
 
   @Query(() => [ShopOutput])
   async searchShopsByName(@Args('name') name: string): Promise<ShopOutput[]> {
     const result = await this.searchShopsByNameUseCase.execute(name);
-    return result.map(transformShopDTOToGraphQL)
+    return result?.map(transformShopDTOToGraphQL)
   }
 
   @Mutation(() => ShopOutput)

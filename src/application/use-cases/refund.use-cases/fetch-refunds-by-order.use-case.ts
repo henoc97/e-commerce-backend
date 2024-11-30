@@ -9,7 +9,7 @@ import { RefundDTO } from 'src/presentation/dtos/refund.dto';
  */
 @Injectable()
 export class FetchRefundsByOrder {
-  constructor(private readonly service: RefundService) {}
+  constructor(private readonly service: RefundService) { }
 
   /**
    * Execute the fetch-refunds-by-order use case.
@@ -18,6 +18,6 @@ export class FetchRefundsByOrder {
    */
   async execute(orderId: number): Promise<RefundDTO[]> {
     const refunds = await this.service.getRefundsByOrder(orderId);
-    return refunds.map(toRefundDTO);
+    return refunds?.map(toRefundDTO);
   }
 }

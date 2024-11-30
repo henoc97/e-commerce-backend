@@ -12,6 +12,6 @@ export function fromMarketplacePrisma(marketplacePrisma: any): Marketplace {
     marketplacePrisma.id,
     marketplacePrisma.name,
     marketplacePrisma.description,
-    marketplacePrisma.shops.map((shop) => fromShopPrisma(shop)),
+    marketplacePrisma.shops?.map((shop) => fromShopPrisma(shop)),
   );
 }

@@ -54,7 +54,6 @@ enum ShippingMethod {
   TWO_DAY
 }
 
-
 enum Currency {
   USD
   EUR
@@ -178,20 +177,20 @@ model Vendor {
 
 // Shop Model: Represents a generated e-commerce site for each vendor
 model Shop {
-  id            Int                       @id @default(autoincrement())
-  name          String
-  url           String                    @unique
-  description   String?
-  vendor        Vendor                    @relation(fields: [vendorId], references: [id])
-  vendorId      Int                       @unique
-  products      Product[]
-  orders        Order[]
-  categories    Category[]
+  id                      Int                      @id @default(autoincrement())
+  name                    String
+  url                     String                   @unique
+  description             String?
+  vendor                  Vendor                   @relation(fields: [vendorId], references: [id])
+  vendorId                Int                      @unique
+  products                Product[]
+  orders                  Order[]
+  categories              Category[]
   newsletterSubscriptions NewsletterSubscription[] // Relation with NewsletterSubscription
-  createdAt     DateTime                  @default(now())
-  updatedAt     DateTime                  @updatedAt
-  marketplace   Marketplace?              @relation(fields: [marketplaceId], references: [id])
-  marketplaceId Int?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  marketplace             Marketplace?             @relation(fields: [marketplaceId], references: [id])
+  marketplaceId           Int?
 }
 
 // Product Model: Represents products in the catalog
@@ -266,106 +265,105 @@ model CartItem {
 
 // Order Model: Represents orders placed by users
 model Order {
-  id             Int         @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   userId         Int
-  user           User        @relation(fields: [userId], references: [id])
+  user           User           @relation(fields: [userId], references: [id])
   shopId         Int
-  shop           Shop        @relation(fields: [shopId], references: [id])
+  shop           Shop           @relation(fields: [shopId], references: [id])
   items          OrderItem[]
   status         OrderStatus
   totalAmount    Float
   paymentId      String?
   trackingNumber String?
-  shipmentId     Int?        @unique 
-  shipment       Shipment?   @relation(name: "OrderToShipment", fields: [shipmentId], references: [id])
-  shippingMethod ShippingMethod 
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  shipmentId     Int?           @unique
+  shipment       Shipment?      @relation(name: "OrderToShipment", fields: [shipmentId], references: [id])
+  shippingMethod ShippingMethod
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   payments       Payment[]
   refunds        Refund[]
 }
 
 // OrderItem Model: Items in an order
 model OrderItem {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
   productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float
   createdAt DateTime @default(now())
-  updatedAt    DateTime       @updatedAt
+  updatedAt DateTime @updatedAt
 }
 
 // Payment Model: Stores payment details
 model Payment {
-  id         Int      @id @default(autoincrement())
+  id         Int           @id @default(autoincrement())
   orderId    Int
-  order      Order    @relation(fields: [orderId], references: [id])
+  order      Order         @relation(fields: [orderId], references: [id])
   method     String // e.g., Stripe, PayPal, Bank Transfer
   status     PaymentStatus // e.g., SUCCESS, FAILED, PENDING
   amount     Float
   providerId String?
   metadata   Json?
-  createdAt  DateTime @default(now())
+  createdAt  DateTime      @default(now())
 }
 
 // Carrier Model: Stores carrier details
 model Carrier {
-  id              Int        @id @default(autoincrement())
-  name            String
-  country         String      // Country where the carrier operates
-  region          String?     // Specific region or city (if applicable)
-  shippingRates   ShippingRate[]
-  shipments       Shipment[]
-  externalAPI     String?     // Carrier's API URL (if available)
-  supportedZones  Zone[]      // Zones that this carrier supports
-  capabilities    String?     // Additional capabilities or notes (e.g., 'Refrigerated', 'Express')
+  id             Int            @id @default(autoincrement())
+  name           String
+  country        String // Country where the carrier operates
+  region         String? // Specific region or city (if applicable)
+  shippingRates  ShippingRate[]
+  shipments      Shipment[]
+  externalAPI    String? // Carrier's API URL (if available)
+  supportedZones Zone[] // Zones that this carrier supports
+  capabilities   String? // Additional capabilities or notes (e.g., 'Refrigerated', 'Express')
 }
 
 // ShippingRate Model: Stores shippingRate details
 model ShippingRate {
-  id           Int       @id @default(autoincrement())
-  carrierId    Int
-  carrier      Carrier   @relation(fields: [carrierId], references: [id])
-  zoneId       Int
-  zone         Zone      @relation(fields: [zoneId], references: [id])
-  weightMin    Float     // Minimum weight in kg
-  weightMax    Float     // Maximum weight in kg
-  cost         Float     // Shipping cost for this weight range
-  currency     Currency    // Currency used for this rate (e.g., EUR, XOF)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id        Int      @id @default(autoincrement())
+  carrierId Int
+  carrier   Carrier  @relation(fields: [carrierId], references: [id])
+  zoneId    Int
+  zone      Zone     @relation(fields: [zoneId], references: [id])
+  weightMin Float // Minimum weight in kg
+  weightMax Float // Maximum weight in kg
+  cost      Float // Shipping cost for this weight range
+  currency  Currency // Currency used for this rate (e.g., EUR, XOF)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([carrierId, zoneId, weightMin, weightMax])
-  
 }
 
 // Shipment Model: Stores shipment details
 model Shipment {
-  id            Int       @id @default(autoincrement())
-  orderId       Int?       @unique
-  order         Order?     @relation(name: "OrderToShipment")
-  carrierId     Int
-  carrier       Carrier   @relation(fields: [carrierId], references: [id])
-  trackingNumber String
-  status        ShipmentStatus // Using enumeration for statuses
-  shippedAt     DateTime?
-  deliveredAt   DateTime?
+  id              Int            @id @default(autoincrement())
+  orderId         Int?           @unique
+  order           Order?         @relation(name: "OrderToShipment")
+  carrierId       Int
+  carrier         Carrier        @relation(fields: [carrierId], references: [id])
+  trackingNumber  String
+  status          ShipmentStatus // Using enumeration for statuses
+  shippedAt       DateTime?
+  deliveredAt     DateTime?
   statusUpdatedAt DateTime? // Date of the last status update
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 
   @@index([orderId, trackingNumber])
 }
 
 // Zone Model: Stores zone details
 model Zone {
-  id              Int       @id @default(autoincrement())
-  country         String    // Country name
-  region          String?   // Specific region or city (optional)
-  carriers        Carrier[] // Carriers serving this zone
+  id           Int            @id @default(autoincrement())
+  country      String // Country name
+  region       String? // Specific region or city (optional)
+  carriers     Carrier[] // Carriers serving this zone
   ShippingRate ShippingRate[]
 }
 
@@ -378,10 +376,10 @@ model Review {
   user      User     @relation(fields: [userId], references: [id])
   rating    Int      @default(1) // e.g., 1 to 5 stars
   comment   String?
-  flagged   Boolean @default(false)
-  verified   Boolean  @default(false)
+  flagged   Boolean  @default(false)
+  verified  Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt    DateTime       @updatedAt
+  updatedAt DateTime @updatedAt
 }
 
 // Newsletter Model: For email marketing subscriptions
@@ -389,32 +387,32 @@ model NewsletterSubscription {
   id           Int      @id @default(autoincrement())
   email        String   @unique
   subscribedAt DateTime @default(now())
-  isActive     Boolean  @default(true)    // Indicates if the subscription is active
+  isActive     Boolean  @default(true) // Indicates if the subscription is active
   shop         Shop     @relation(fields: [shopId], references: [id])
-  shopId       Int                              // Foreign key to reference the Shop
+  shopId       Int // Foreign key to reference the Shop
 }
 
 // Notification Model: For push notifications and email updates
 model Notification {
-  id      Int      @id @default(autoincrement())
+  id      Int              @id @default(autoincrement())
   userId  Int
-  user    User     @relation(fields: [userId], references: [id])
+  user    User             @relation(fields: [userId], references: [id])
   type    NotificationType // e.g., PROMOTION, ORDER_UPDATE
   content String
-  read    Boolean  @default(false)
-  sentAt  DateTime @default(now())
+  read    Boolean          @default(false)
+  sentAt  DateTime         @default(now())
 }
 
 // Ticket Model: For support requests
 model Ticket {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   userId      Int
-  user        User     @relation(fields: [userId], references: [id])
+  user        User         @relation(fields: [userId], references: [id])
   subject     String
   description String
   status      TicketStatus // e.g., OPEN, IN_PROGRESS, RESOLVED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 // Promotion Model: Represents Promotion plans for products
@@ -446,13 +444,13 @@ model Subscription {
 }
 
 model Refund {
-  id        Int      @id @default(autoincrement())
+  id        Int          @id @default(autoincrement())
   orderId   Int
-  order     Order    @relation(fields: [orderId], references: [id])
+  order     Order        @relation(fields: [orderId], references: [id])
   reason    String // refunf reason
   amount    Float
   status    RefundStatus // e.g., PENDING, APPROVED, REJECTED
-  createdAt DateTime @default(now())
+  createdAt DateTime     @default(now())
 }
 
 model Subsite {
@@ -465,25 +463,25 @@ model Subsite {
 }
 
 model UserActivity {
-  id        Int      @id @default(autoincrement())
+  id        Int                @id @default(autoincrement())
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User               @relation(fields: [userId], references: [id])
   action    UserActivityAction // e.g., VIEWED_PRODUCT, ADDED_TO_CART
   productId Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
 }
 
 model AuditLog {
-  id        Int      @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User           @relation(fields: [userId], references: [id])
   action    AuditLogAction // e.g., CREATED, UPDATED, DELETED
   entity    String // Entité concernée, par exemple "Product", "Order"
   entityId  Int
   changes   Json
   updatedAt DateTime       @updatedAt
-  createdAt DateTime @default(now())
+  createdAt DateTime       @default(now())
 }
 
 // Marketplace Model: To list all generated shops and provide a directory

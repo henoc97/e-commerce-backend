@@ -88,7 +88,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
       const result = await prisma.subscription.findMany({
         where: { vendors: { some: { id: vendorId } } },
       });
-      return result.map(fromSubscriptionPrisma);
+      return result?.map(fromSubscriptionPrisma);
     } catch (error) {
       console.error('Error fetching subscriptions by vendor:', error);
       throw new Error('Unable to fetch subscriptions.');
@@ -114,7 +114,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
           },
         },
       });
-      return result.map(fromSubscriptionPrisma);
+      return result?.map(fromSubscriptionPrisma);
     } catch (error) {
       console.error('Error fetching subscriptions by price range:', error);
       throw new Error('Unable to fetch subscriptions.');
@@ -138,7 +138,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
           },
         },
       });
-      return result.map(fromSubscriptionPrisma);
+      return result?.map(fromSubscriptionPrisma);
     } catch (error) {
       console.error('Error fetching active subscriptions:', error);
       throw new Error('Unable to fetch active subscriptions.');
@@ -159,7 +159,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
           },
         },
       });
-      return result.map(fromSubscriptionPrisma);
+      return result?.map(fromSubscriptionPrisma);
     } catch (error) {
       console.error('Error fetching expired subscriptions:', error);
       throw new Error('Unable to fetch expired subscriptions.');
@@ -183,7 +183,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
           },
         },
       });
-      return result.map(fromSubscriptionPrisma);
+      return result?.map(fromSubscriptionPrisma);
     } catch (error) {
       console.error('Error fetching expiring subscriptions:', error);
       throw new Error('Unable to fetch expiring subscriptions.');

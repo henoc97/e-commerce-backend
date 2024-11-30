@@ -8,7 +8,7 @@ import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subs
  */
 @Injectable()
 export class FetchNewsletterSubscriptionsByDateRange {
-  constructor(private readonly service: NewsletterSubscriptionService) {}
+  constructor(private readonly service: NewsletterSubscriptionService) { }
 
   /**
    * Execute the use case to fetch subscriptions within a date range.
@@ -27,6 +27,6 @@ export class FetchNewsletterSubscriptionsByDateRange {
       startDate,
       endDate,
     );
-    return subscriptions.map(toNewsletterSubscriptionDTO);
+    return subscriptions?.map(toNewsletterSubscriptionDTO);
   }
 }

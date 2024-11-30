@@ -9,7 +9,7 @@ import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activit
  */
 @Injectable()
 export class ListActivitiesByDateRange {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the list-activities-by-date-range use case.
@@ -23,6 +23,6 @@ export class ListActivitiesByDateRange {
       end,
     );
 
-    return activities.map(toUserActivityDTO);
+    return activities?.map(toUserActivityDTO);
   }
 }

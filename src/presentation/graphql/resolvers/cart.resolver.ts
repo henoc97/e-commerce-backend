@@ -77,7 +77,7 @@ export class CartResolver {
   @Query(() => [CartOutput])
   async fetchCartByUserId(@Args('userId') userId: number): Promise<CartOutput[]> {
     const result = await this.fetchCartByUserIdUseCase.execute(userId);
-    return result.map(transformCartDTOToGraphQL);
+    return result?.map(transformCartDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)

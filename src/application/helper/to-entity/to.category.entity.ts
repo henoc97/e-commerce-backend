@@ -16,8 +16,8 @@ export function fromCategoryDTO(
     categoryDTO.name,
     categoryDTO.parentId,
     categoryDTO.parent ? fromCategoryDTO(categoryDTO.parent) : undefined,
-    categoryDTO.children.map((child) => fromCategoryDTO(child)),
-    categoryDTO.products.map((product) => fromProductDTO(product)),
+    categoryDTO.children?.map((child) => fromCategoryDTO(child)),
+    categoryDTO.products?.map((product) => fromProductDTO(product)),
     categoryDTO.shopId,
     categoryDTO.shop ? fromShopDTO(categoryDTO.shop) : undefined,
   );

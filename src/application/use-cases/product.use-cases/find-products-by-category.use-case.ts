@@ -8,7 +8,7 @@ import { ProductDTO } from 'src/presentation/dtos/product.dto';
  */
 @Injectable()
 export class FindProductsByCategory {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to find products by category.
@@ -19,6 +19,6 @@ export class FindProductsByCategory {
     const products =
       await this.productService.findProductsByCategory(categoryId);
 
-    return products.map(toProductDTO);
+    return products?.map(toProductDTO);
   }
 }

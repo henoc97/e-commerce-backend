@@ -9,7 +9,7 @@ import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
  */
 @Injectable()
 export class FetchNotificationsByType {
-  constructor(private readonly service: NotificationService) {}
+  constructor(private readonly service: NotificationService) { }
 
   /**
    * Executes the use case.
@@ -18,6 +18,6 @@ export class FetchNotificationsByType {
    */
   async execute(type: NotificationType): Promise<NotificationDTO[]> {
     const notifications = await this.service.getNotificationsByType(type);
-    return notifications.map(toNotificationDTO);
+    return notifications?.map(toNotificationDTO);
   }
 }

@@ -8,7 +8,7 @@ import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
  */
 @Injectable()
 export class FetchRecentOrdersByShop {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   /**
    * Retrieves the most recent orders for a specific shop.
@@ -18,6 +18,6 @@ export class FetchRecentOrdersByShop {
    */
   async execute(shopId: number, limit: number): Promise<OrderDTO[]> {
     const orders = await this.orderService.getRecentOrdersByShop(shopId, limit);
-    return orders.map(toOrderDTO);
+    return orders?.map(toOrderDTO);
   }
 }

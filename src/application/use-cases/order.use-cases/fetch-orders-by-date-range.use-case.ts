@@ -8,7 +8,7 @@ import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
  */
 @Injectable()
 export class FetchOrdersByDateRange {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   /**
    * Retrieves all orders created within a specific date range.
@@ -21,6 +21,6 @@ export class FetchOrdersByDateRange {
       startDate,
       endDate,
     );
-    return orders.map(toOrderDTO);
+    return orders?.map(toOrderDTO);
   }
 }

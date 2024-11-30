@@ -9,7 +9,7 @@ import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
  */
 @Injectable()
 export class FetchOrderItemsByOrderId {
-  constructor(private readonly service: OrderItemService) {}
+  constructor(private readonly service: OrderItemService) { }
 
   /**
    * Execute the fetch-order-items-by-order-id use case.
@@ -18,6 +18,6 @@ export class FetchOrderItemsByOrderId {
    */
   async execute(orderId: number): Promise<OrderItemDTO[]> {
     const items = await this.service.getByOrderId(orderId);
-    return items.map(toOrderItemDTO);
+    return items?.map(toOrderItemDTO);
   }
 }

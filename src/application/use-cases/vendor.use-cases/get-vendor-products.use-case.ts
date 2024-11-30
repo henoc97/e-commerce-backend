@@ -20,6 +20,6 @@
 //   async execute(vendorId: number): Promise<ProductDTO[]> {
 //     const products = await this.vendorService.getVendorProducts(vendorId);
 
-//     return products.map(toProductDTO);
+//     return products?.map(toProductDTO);
 //   }
 // }

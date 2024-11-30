@@ -49,7 +49,7 @@ export class MarketplaceRepository implements IMarketplaceRepository {
   async list(): Promise<Marketplace[]> {
     try {
       const result = await prisma.marketplace.findMany();
-      return result.map(fromMarketplacePrisma);
+      return result?.map(fromMarketplacePrisma);
     } catch (error) {
       console.error('Error listing marketplaces:', error);
       throw error;

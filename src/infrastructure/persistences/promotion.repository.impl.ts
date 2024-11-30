@@ -86,7 +86,7 @@ export class PromotionRepository implements IPromotionRepository {
       const result = await prisma.promotion.findMany({
         where: { productId },
       });
-      return result.map(fromPromotionPrisma);
+      return result?.map(fromPromotionPrisma);
     } catch (error) {
       console.error('Error retrieving promotions by product:', error);
       throw new Error(
@@ -109,7 +109,7 @@ export class PromotionRepository implements IPromotionRepository {
           endDate: { lte: end },
         },
       });
-      return result.map(fromPromotionPrisma);
+      return result?.map(fromPromotionPrisma);
     } catch (error) {
       console.error('Error retrieving active promotions:', error);
       throw new Error('Could not retrieve active promotions, error: ' + error);
@@ -129,7 +129,7 @@ export class PromotionRepository implements IPromotionRepository {
           endDate: { gte: now },
         },
       });
-      return result.map(fromPromotionPrisma);
+      return result?.map(fromPromotionPrisma);
     } catch (error) {
       console.error('Error retrieving active promotions:', error);
       throw new Error('Could not retrieve active promotions, error: ' + error);

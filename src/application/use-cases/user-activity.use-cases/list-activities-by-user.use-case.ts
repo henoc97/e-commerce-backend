@@ -9,7 +9,7 @@ import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activit
  */
 @Injectable()
 export class ListActivitiesByUser {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the list-activities-by-user use case.
@@ -19,6 +19,6 @@ export class ListActivitiesByUser {
   async execute(userId: number): Promise<UserActivityDTO[]> {
     const activities = await this.activityService.listActivitiesByUser(userId);
 
-    return activities.map(toUserActivityDTO);
+    return activities?.map(toUserActivityDTO);
   }
 }

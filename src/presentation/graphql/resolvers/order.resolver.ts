@@ -50,7 +50,7 @@ export class OrderResolver {
   @Query(() => [OrderOutput])
   async getOrders(): Promise<OrderOutput[]> {
     const result = await this.fetchOrdersUseCase.execute();
-    return result.map(transformOrderDTOToGraphQL);
+    return result?.map(transformOrderDTOToGraphQL);
   }
 
   @Mutation(() => OrderOutput)
@@ -107,13 +107,13 @@ export class OrderResolver {
     @Args('endDate') endDate: Date,
   ): Promise<OrderOutput[]> {
     const result = await this.fetchOrdersByDateRangeUseCase.execute(startDate, endDate);
-    return result.map(transformOrderDTOToGraphQL);
+    return result?.map(transformOrderDTOToGraphQL);
   }
 
   @Query(() => [OrderOutput])
   async getOrdersByShopId(@Args('shopId') shopId: number): Promise<OrderOutput[]> {
     const result = await this.fetchOrdersByShopIdUseCase.execute(shopId);
-    return result.map(transformOrderDTOToGraphQL);
+    return result?.map(transformOrderDTOToGraphQL);
   }
 
   @Query(() => [OrderOutput])
@@ -121,13 +121,13 @@ export class OrderResolver {
     @Args('status') status: OrderStatus,
   ): Promise<OrderOutput[]> {
     const result = await this.fetchOrdersByStatusUseCase.execute(status);
-    return result.map(transformOrderDTOToGraphQL);
+    return result?.map(transformOrderDTOToGraphQL);
   }
 
   @Query(() => [OrderOutput])
   async getOrdersByUserId(@Args('userId') userId: number): Promise<OrderOutput[]> {
     const result = await this.fetchOrdersByUserIdUseCase.execute(userId);
-    return result.map(transformOrderDTOToGraphQL);
+    return result?.map(transformOrderDTOToGraphQL);
   }
 
   @Query(() => [OrderOutput])
@@ -136,13 +136,13 @@ export class OrderResolver {
     @Args('limit') limit: number,
   ): Promise<OrderOutput[]> {
     const result = await this.fetchRecentOrdersByShopUseCase.execute(shopId, limit);
-    return result.map(transformOrderDTOToGraphQL);;
+    return result?.map(transformOrderDTOToGraphQL);;
   }
 
   @Query(() => [OrderOutput])
   async getTopOrdersByAmount(@Args('topN') topN: number): Promise<OrderOutput[]> {
     const result = await this.fetchTopOrdersByAmountUseCase.execute(topN);
-    return result.map(transformOrderDTOToGraphQL);
+    return result?.map(transformOrderDTOToGraphQL);
   }
 
   @Mutation(() => OrderOutput)

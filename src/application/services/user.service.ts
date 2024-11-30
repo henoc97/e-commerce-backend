@@ -24,7 +24,25 @@ export class UserService {
   async createUser(userDTO: UserDTO): Promise<User> {
     const user = fromUserDTO(userDTO);
     const result = await this.userRepository.create(user);
-    if (result) this.kafkaService.emit('user.created', JSON.stringify(result));
+
+    if (result) {
+      // Ne sérialiser que les données essentielles
+      const kafkaPayload = {
+        id: result.id,
+        email: result.email,
+        name: result.name,
+        role: result.role,
+        createdAt: result.createdAt
+      };
+
+      try {
+        this.kafkaService.emit('user.created', JSON.stringify(kafkaPayload));
+        console.log('Message Kafka émis avec succès:', kafkaPayload);
+      } catch (error) {
+        console.error('Erreur lors de l\'émission du message Kafka:', error);
+      }
+    }
+
     return result;
   }
 

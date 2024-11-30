@@ -14,7 +14,7 @@ export function toSubscriptionDTO(subscription: any): SubscriptionDTO {
     subscription.price,
     subscription.duration,
     subscription.description,
-    subscription.vendors.map((vendor) => toVendorDTO(vendor)),
+    subscription.vendors?.map((vendor) => toVendorDTO(vendor)),
     subscription.createdAt,
     subscription.updatedAt,
   );

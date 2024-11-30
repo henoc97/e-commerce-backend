@@ -31,7 +31,7 @@ export class MarketplaceResolver {
   @Query(() => [MarketplaceOutput])
   async listMarketplaces(): Promise<MarketplaceOutput[]> {
     const result = await this.listMarketplacesUseCase.execute();
-    return result.map(transformMarketplaceDTOToGraphQL);
+    return result?.map(transformMarketplaceDTOToGraphQL);
   }
 
   @Query(() => MarketplaceOutput, { nullable: true })

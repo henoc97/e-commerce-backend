@@ -124,7 +124,7 @@ export class ProductResolver {
   @Query(() => [ProductOutput])
   async fetchFeaturedProducts(): Promise<ProductOutput[]> {
     const result = await this.fetchFeaturedProductsUseCase.execute();
-    return result.map(transformProductDTOToGraphQL)
+    return result?.map(transformProductDTOToGraphQL)
   }
 
   @Query(() => ProductOutput, { nullable: true })
@@ -145,7 +145,7 @@ export class ProductResolver {
   // @Query(() => [ProductOutput])
   // async fetchProducts(): Promise<ProductOutput[]> {
   //   const result = awaiteturn this.fetchProductsUseCase.execute();
-  // return result.map(transformProductDTOToGraphQL)
+  // return result?.map(transformProductDTOToGraphQL)
   // }
 
   @Query(() => [ProductOutput])
@@ -153,13 +153,13 @@ export class ProductResolver {
     @Args('categoryId') categoryId: number,
   ): Promise<ProductOutput[]> {
     const result = await this.findProductsByCategoryUseCase.execute(categoryId);
-    return result.map(transformProductDTOToGraphQL)
+    return result?.map(transformProductDTOToGraphQL)
   }
 
   @Query(() => [ProductOutput])
   async findProductsByName(@Args('name') name: string): Promise<ProductOutput[]> {
     const result = await this.findProductsByNameUseCase.execute(name);
-    return result.map(transformProductDTOToGraphQL)
+    return result?.map(transformProductDTOToGraphQL)
   }
 
   @Query(() => [ProductOutput])
@@ -168,7 +168,7 @@ export class ProductResolver {
     @Args('maxPrice') maxPrice: number,
   ): Promise<ProductOutput[]> {
     const result = await this.findProductsByPriceRangeUseCase.execute(minPrice, maxPrice);
-    return result.map(transformProductDTOToGraphQL)
+    return result?.map(transformProductDTOToGraphQL)
   }
 
   @Mutation(() => ProductOutput, { nullable: true })

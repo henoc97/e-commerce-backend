@@ -103,7 +103,7 @@ export class NewsletterSubscriptionRepository
           shopId,
         },
       });
-      return result.map(fromNewsletterSubscriptionPrisma);
+      return result?.map(fromNewsletterSubscriptionPrisma);
     } catch (error) {
       console.error(
         'Error listing all newsletter subscriptions for shop:',
@@ -178,7 +178,7 @@ export class NewsletterSubscriptionRepository
           },
         },
       });
-      return result.map(fromNewsletterSubscriptionPrisma);
+      return result?.map(fromNewsletterSubscriptionPrisma);
     } catch (error) {
       console.error(
         'Error retrieving subscriptions by date range for shop:',

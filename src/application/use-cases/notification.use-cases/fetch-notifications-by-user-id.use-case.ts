@@ -8,7 +8,7 @@ import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
  */
 @Injectable()
 export class FetchNotificationsByUserId {
-  constructor(private readonly service: NotificationService) {}
+  constructor(private readonly service: NotificationService) { }
 
   /**
    * Executes the use case.
@@ -17,6 +17,6 @@ export class FetchNotificationsByUserId {
    */
   async execute(userId: number): Promise<NotificationDTO[]> {
     const notifications = await this.service.getNotificationsByUserId(userId);
-    return notifications.map(toNotificationDTO);
+    return notifications?.map(toNotificationDTO);
   }
 }

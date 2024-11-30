@@ -1,4 +1,4 @@
-﻿import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
+import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
 import { fromVendorDTO } from './to.vendor.entity';
 import { Subscription } from 'src/domain/entities/subscription.entity';
 

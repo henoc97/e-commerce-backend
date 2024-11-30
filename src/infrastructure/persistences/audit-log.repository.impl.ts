@@ -53,7 +53,7 @@ export class AuditLogRepository implements IAuditLogRepository {
       const result = await prisma.auditLog.findMany({
         where: { entity, entityId },
       });
-      return result.map(fromAuditLogPrisma);
+      return result?.map(fromAuditLogPrisma);
     } catch (error) {
       console.error('Error retrieving audit logs by entity:', error);
       throw error;
@@ -70,7 +70,7 @@ export class AuditLogRepository implements IAuditLogRepository {
       const result = await prisma.auditLog.findMany({
         where: { userId },
       });
-      return result.map(fromAuditLogPrisma);
+      return result?.map(fromAuditLogPrisma);
     } catch (error) {
       console.error('Error retrieving audit logs by user:', error);
       throw error;
@@ -130,7 +130,7 @@ export class AuditLogRepository implements IAuditLogRepository {
           },
         },
       });
-      return result.map(fromAuditLogPrisma);
+      return result?.map(fromAuditLogPrisma);
     } catch (error) {
       console.error('Error retrieving audit logs by date range:', error);
       throw error;
@@ -150,7 +150,7 @@ export class AuditLogRepository implements IAuditLogRepository {
         },
         take: limit,
       });
-      return result.map(fromAuditLogPrisma);
+      return result?.map(fromAuditLogPrisma);
     } catch (error) {
       console.error('Error retrieving recent audit logs:', error);
       throw error;
@@ -167,7 +167,7 @@ export class AuditLogRepository implements IAuditLogRepository {
       const result = await prisma.auditLog.findMany({
         where: { action },
       });
-      return result.map(fromAuditLogPrisma);
+      return result?.map(fromAuditLogPrisma);
     } catch (error) {
       console.error('Error retrieving audit logs by action:', error);
       throw error;

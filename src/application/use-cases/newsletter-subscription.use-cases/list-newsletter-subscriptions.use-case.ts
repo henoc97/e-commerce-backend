@@ -8,7 +8,7 @@ import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subs
  */
 @Injectable()
 export class ListNewsletterSubscriptions {
-  constructor(private readonly service: NewsletterSubscriptionService) {}
+  constructor(private readonly service: NewsletterSubscriptionService) { }
 
   /**
    * Execute the use case to list all subscriptions.
@@ -17,6 +17,6 @@ export class ListNewsletterSubscriptions {
    */
   async execute(shopId: number): Promise<NewsletterSubscriptionDTO[]> {
     const subscriptions = await this.service.listAllSubscriptions(shopId);
-    return subscriptions.map(toNewsletterSubscriptionDTO);
+    return subscriptions?.map(toNewsletterSubscriptionDTO);
   }
 }

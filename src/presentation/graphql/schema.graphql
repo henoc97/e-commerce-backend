@@ -581,9 +581,9 @@ type Mutation {
   updateShop(shopId: Float!, updates: ShopInput!): ShopOutput!
   removeCategoryFromShop(shopId: Float!, categoryId: Float!): Boolean!
   removeProductFromShop(shopId: Float!, productId: Float!): Boolean!
-  createSubscription(subscription: NewsletterSubscriptionInput!): SubscriptionOutput
+  createSubscription(subscription: SubscriptionInput!): SubscriptionOutput
   deleteSubscription(id: Float!): Boolean!
-  updateSubscription(id: Float!, updates: NewsletterSubscriptionInput!): SubscriptionOutput
+  updateSubscription(id: Float!, updates: SubscriptionInput!): SubscriptionOutput
   createSubsite(subsiteDTO: SubsiteInput!): SubsiteOutput!
   removeSubsite(id: Float!): Boolean!
   updateSubsite(id: Float!, updates: SubsiteInput!): SubsiteOutput!
@@ -606,7 +606,7 @@ type Mutation {
   updateUserPassword(userId: Float!, newPassword: String!): UserOutput!
   updateUser(userId: Float!, user: UserInput!): UserOutput!
   addProductToVendor(vendorId: Float!, productDTO: ProductInput!): VendorOutput
-  createVendor(vendorDTO: VendorInput!): VendorOutput
+  createVendor(vendor: VendorInput!): VendorOutput
   deleteVendor(vendorId: Float!): Boolean!
   removeProductFromVendor(vendorId: Float!, productId: Float!): VendorOutput
   setVendorShop(vendorId: Float!, shopDTO: ShopInput!): VendorOutput
@@ -750,6 +750,14 @@ input ShopInput {
   marketplaceId: Float!
 }
 
+input SubscriptionInput {
+  id: Float
+  name: String!
+  description: String
+  price: Float!
+  duration: Float!
+}
+
 input SubsiteInput {
   id: Float
   title: String!
@@ -777,13 +785,5 @@ input VendorInput {
   id: Float
   userId: Float!
   storeName: String!
-  subscriptionId: Float!
-}
-
-input SubscriptionInput {
-  id: Float!
-  name: String!
-  description: String!
-  price: Float!
-  duration: Float!
+  subscriptionId: Float
 }

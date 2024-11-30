@@ -9,7 +9,7 @@ import { toUserProfileDTO } from 'src/application/helper/to-dto/to.user-profile.
  */
 @Injectable()
 export class FetchUserProfilesByGender {
-  constructor(private readonly profileService: UserProfileService) {}
+  constructor(private readonly profileService: UserProfileService) { }
 
   /**
    * Execute the fetch-user-profiles-by-gender use case.
@@ -18,6 +18,6 @@ export class FetchUserProfilesByGender {
    */
   async execute(gender: string): Promise<UserProfileDTO[]> {
     const profiles = await this.profileService.getUserProfilesByGender(gender);
-    return profiles.map(toUserProfileDTO);
+    return profiles?.map(toUserProfileDTO);
   }
 }

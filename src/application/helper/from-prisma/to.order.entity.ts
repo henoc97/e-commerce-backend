@@ -17,14 +17,14 @@ export function fromOrderPrisma(orderPrisma: any): Order {
     orderPrisma.user ? fromUserPrisma(orderPrisma.user) : undefined,
     orderPrisma.shopId,
     orderPrisma.shop ? fromShopPrisma(orderPrisma.shop) : undefined,
-    orderPrisma.items.map((item: any) => fromOrderItemPrisma(item)),
+    orderPrisma.items?.map((item: any) => fromOrderItemPrisma(item)),
     orderPrisma.status,
     orderPrisma.totalAmount,
     orderPrisma.paymentId,
     orderPrisma.trackingNumber,
     orderPrisma.createdAt,
     orderPrisma.updatedAt,
-    orderPrisma.payments.map((payment: any) => fromPaymentPrisma(payment)),
-    orderPrisma.refunds.map((refund: any) => fromRefundPrisma(refund)),
+    orderPrisma.payments?.map((payment: any) => fromPaymentPrisma(payment)),
+    orderPrisma.refunds?.map((refund: any) => fromRefundPrisma(refund)),
   );
 }

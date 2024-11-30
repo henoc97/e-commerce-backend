@@ -88,7 +88,7 @@ export class CartItemRepository implements ICartItemRepository {
       const result = await prisma.cartItem.findMany({
         where: { cartId },
       });
-      return result.map(fromCartItemPrisma);
+      return result?.map(fromCartItemPrisma);
     } catch (error) {
       console.error('Error retrieving cart items by cart ID:', error);
       throw error;

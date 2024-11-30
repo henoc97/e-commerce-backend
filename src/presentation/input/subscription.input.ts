@@ -9,8 +9,8 @@ export class SubscriptionInput {
   /**
    * Unique identifier for the subscription.
    */
-  @Field()
-  id: number;
+  @Field({ nullable: true })
+  id?: number;
 
   /**
    * Name of the subscription plan (e.g., "Basic Plan", "Premium Plan").
@@ -22,7 +22,7 @@ export class SubscriptionInput {
    * Optional description of the subscription plan.
    * Provides additional details about the features or benefits of the plan.
    */
-  @Field()
+  @Field({ nullable: true })
   description?: string;
 
   /**

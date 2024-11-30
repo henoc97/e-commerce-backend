@@ -87,7 +87,7 @@ export class SubsiteRepository implements ISubsiteRepository {
       const subsites = await prisma.subsite.findMany({
         where: { userId },
       });
-      return subsites.map(fromSubsitePrisma);
+      return subsites?.map(fromSubsitePrisma);
     } catch (error) {
       console.error('Error retrieving subsites by user:', error);
       throw new Error('Failed to retrieve subsites for user');

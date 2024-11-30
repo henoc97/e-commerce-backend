@@ -8,7 +8,7 @@ import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
  */
 @Injectable()
 export class FetchLogsByDateRange {
-  constructor(private readonly auditLogService: AuditLogService) {}
+  constructor(private readonly auditLogService: AuditLogService) { }
 
   /**
    * Executes the fetch-logs-by-date-range use case.
@@ -21,6 +21,6 @@ export class FetchLogsByDateRange {
       startDate,
       endDate,
     );
-    return logs.map((log) => toAuditLogDTO(log));
+    return logs?.map((log) => toAuditLogDTO(log));
   }
 }

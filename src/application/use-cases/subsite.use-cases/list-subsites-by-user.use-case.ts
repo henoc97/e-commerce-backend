@@ -9,7 +9,7 @@ import { toSubsiteDTO } from 'src/application/helper/to-dto/to.sub-site.dto';
  */
 @Injectable()
 export class ListSubsitesByUser {
-  constructor(private readonly subsiteService: SubsiteService) {}
+  constructor(private readonly subsiteService: SubsiteService) { }
 
   /**
    * Execute the list-subsites-by-user use case.
@@ -18,6 +18,6 @@ export class ListSubsitesByUser {
    */
   async execute(userId: number): Promise<SubsiteDTO[]> {
     const subsites = await this.subsiteService.getSubsitesByUser(userId);
-    return subsites.map(toSubsiteDTO);
+    return subsites?.map(toSubsiteDTO);
   }
 }

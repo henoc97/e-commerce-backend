@@ -88,7 +88,7 @@ export class AddressRepository implements IAddressRepository {
       const result = await prisma.address.findMany({
         where: { userId },
       });
-      return result.map(fromAddressPrisma);
+      return result?.map(fromAddressPrisma);
     } catch (error) {
       console.error('Error retrieving addresses by user ID:', error);
       throw error;
@@ -129,7 +129,7 @@ export class AddressRepository implements IAddressRepository {
       const result = await prisma.address.findMany({
         where: { city },
       });
-      return result.map(fromAddressPrisma);
+      return result?.map(fromAddressPrisma);
     } catch (error) {
       console.error('Error retrieving addresses by city:', error);
       throw error;
@@ -146,7 +146,7 @@ export class AddressRepository implements IAddressRepository {
       const result = await prisma.address.findMany({
         where: { state },
       });
-      return result.map(fromAddressPrisma);
+      return result?.map(fromAddressPrisma);
     } catch (error) {
       console.error('Error retrieving addresses by state:', error);
       throw error;
@@ -163,7 +163,7 @@ export class AddressRepository implements IAddressRepository {
       const result = await prisma.address.findMany({
         where: { country },
       });
-      return result.map(fromAddressPrisma);
+      return result?.map(fromAddressPrisma);
     } catch (error) {
       console.error('Error retrieving addresses by country:', error);
       throw error;
@@ -180,7 +180,7 @@ export class AddressRepository implements IAddressRepository {
       const result = await prisma.address.findMany({
         where: { postalCode },
       });
-      return result.map(fromAddressPrisma);
+      return result?.map(fromAddressPrisma);
     } catch (error) {
       console.error('Error retrieving addresses by postal code:', error);
       throw error;

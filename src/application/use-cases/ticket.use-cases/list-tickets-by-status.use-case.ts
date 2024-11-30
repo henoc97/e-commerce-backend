@@ -10,7 +10,7 @@ import { toTicketDTO } from 'src/application/helper/to-dto/to.ticket.dto';
  */
 @Injectable()
 export class ListTicketsByStatus {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   /**
    * Execute the list-tickets-by-status use case.
@@ -20,6 +20,6 @@ export class ListTicketsByStatus {
   async execute(status: TicketStatus): Promise<TicketDTO[]> {
     const tickets = await this.ticketService.getTicketsByStatus(status);
 
-    return tickets.map(toTicketDTO);
+    return tickets?.map(toTicketDTO);
   }
 }

@@ -9,7 +9,7 @@ import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activit
  */
 @Injectable()
 export class GetRecentActivitiesByUser {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the get-recent-activities-by-user use case.
@@ -23,6 +23,6 @@ export class GetRecentActivitiesByUser {
       limit,
     );
 
-    return activities.map(toUserActivityDTO);
+    return activities?.map(toUserActivityDTO);
   }
 }

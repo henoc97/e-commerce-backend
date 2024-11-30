@@ -8,7 +8,7 @@ import { ProductDTO } from 'src/presentation/dtos/product.dto';
  */
 @Injectable()
 export class FindProductsByPriceRange {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to find products by price range.
@@ -22,6 +22,6 @@ export class FindProductsByPriceRange {
       maxPrice,
     );
 
-    return products.map(toProductDTO);
+    return products?.map(toProductDTO);
   }
 }

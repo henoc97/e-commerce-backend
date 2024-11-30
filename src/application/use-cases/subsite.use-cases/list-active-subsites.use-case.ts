@@ -9,7 +9,7 @@ import { toSubsiteDTO } from 'src/application/helper/to-dto/to.sub-site.dto';
  */
 @Injectable()
 export class ListActiveSubsites {
-  constructor(private readonly subsiteService: SubsiteService) {}
+  constructor(private readonly subsiteService: SubsiteService) { }
 
   /**
    * Execute the list-active-subsites use case.
@@ -17,6 +17,6 @@ export class ListActiveSubsites {
    */
   async execute(): Promise<SubsiteDTO[]> {
     const subsites = await this.subsiteService.getActiveSubsites();
-    return subsites.map(toSubsiteDTO);
+    return subsites?.map(toSubsiteDTO);
   }
 }

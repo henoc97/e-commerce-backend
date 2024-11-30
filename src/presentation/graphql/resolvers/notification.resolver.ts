@@ -69,7 +69,7 @@ export class NotificationResolver {
       startDate,
       endDate,
     );
-    return result.map(transformNotificationDTOToGraphQL)
+    return result?.map(transformNotificationDTOToGraphQL)
   }
 
   @Query(() => [NotificationOutput])
@@ -78,7 +78,7 @@ export class NotificationResolver {
   ): Promise<NotificationOutput[]> {
     const _type = type as unknown as NotificationType
     const result = await this.fetchNotificationsByTypeUseCase.execute(_type);
-    return result.map(transformNotificationDTOToGraphQL)
+    return result?.map(transformNotificationDTOToGraphQL)
   }
 
   @Query(() => [NotificationOutput])
@@ -86,7 +86,7 @@ export class NotificationResolver {
     @Args('userId') userId: number,
   ): Promise<NotificationOutput[]> {
     const result = await this.fetchNotificationsByUserIdUseCase.execute(userId);
-    return result.map(transformNotificationDTOToGraphQL)
+    return result?.map(transformNotificationDTOToGraphQL)
   }
 
   @Query(() => [NotificationOutput])
@@ -94,7 +94,7 @@ export class NotificationResolver {
     @Args('userId') userId: number,
   ): Promise<NotificationOutput[]> {
     const result = await this.fetchRecentNotificationsUseCase.execute(userId);
-    return result.map(transformNotificationDTOToGraphQL)
+    return result?.map(transformNotificationDTOToGraphQL)
   }
 
   @Mutation(() => NotificationOutput, { nullable: true })

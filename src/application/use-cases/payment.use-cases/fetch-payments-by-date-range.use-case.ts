@@ -8,7 +8,7 @@ import { toPaymentDTO } from 'src/application/helper/to-dto/to.payment.dto';
  */
 @Injectable()
 export class FetchPaymentsByDateRange {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) { }
 
   /**
    * Execute the fetch-payments-by-date-range use case.
@@ -21,6 +21,6 @@ export class FetchPaymentsByDateRange {
       startDate,
       endDate,
     );
-    return payments.map(toPaymentDTO);
+    return payments?.map(toPaymentDTO);
   }
 }

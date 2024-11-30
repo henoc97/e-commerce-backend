@@ -39,7 +39,7 @@ export class AddressResolver {
   @Query(() => [AddressOutput])
   async addressesByCity(@Args('city') city: string): Promise<AddressOutput[]> {
     const result = await this.listAddressesByCity.execute(city)
-    return result.map(transformAddressDTOToGraphQL);
+    return result?.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -73,14 +73,14 @@ export class AddressResolver {
     @Args('country') country: string,
   ): Promise<AddressOutput[]> {
     const result = await this.listAddressesByCountry.execute(country);
-    return result.map(transformAddressDTOToGraphQL);
+    return result?.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
   @Query(() => [AddressOutput])
   async addressesByState(@Args('state') state: string): Promise<AddressOutput[]> {
     const result = await this.listAddressesByState.execute(state);
-    return result.map(transformAddressDTOToGraphQL);
+    return result?.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -89,13 +89,13 @@ export class AddressResolver {
     @Args('postalCode') postalCode: string,
   ): Promise<AddressOutput[]> {
     const result = await this.listAddressesByPostalCode.execute(postalCode);
-    return result.map(transformAddressDTOToGraphQL);
+    return result?.map(transformAddressDTOToGraphQL);
   }
 
   @UseGuards(JwtAuthGuard)
   @Query(() => [AddressOutput])
   async addressesByUser(@Args('userId') userId: number): Promise<AddressOutput[]> {
     const result = await this.listAddressesByUser.execute(userId);
-    return result.map(transformAddressDTOToGraphQL);
+    return result?.map(transformAddressDTOToGraphQL);
   }
 }

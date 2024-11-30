@@ -9,7 +9,7 @@ import { UserDTO } from 'src/presentation/dtos/user.dto';
  * Use case to retrieve users by role.
  */
 export class GetUsersByRoleUseCase {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Executes the use case to fetch users by their role.
@@ -18,6 +18,6 @@ export class GetUsersByRoleUseCase {
    */
   async execute(role: UserRole): Promise<UserDTO[]> {
     const users = await this.userService.getUsersByRole(role);
-    return users.map((user) => toUserDTO(user));
+    return users?.map((user) => toUserDTO(user));
   }
 }

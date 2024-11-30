@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Load Generic Libraries
+. /opt/bitnami/scripts/liblog.sh
+
+warn "You are probably using an old version of the bitnami/zookeeper Helm Chart. Please consider upgrading to 5.0.0 or later."
+
+exec /opt/bitnami/scripts/entrypoint.sh /opt/bitnami/scripts/run.sh

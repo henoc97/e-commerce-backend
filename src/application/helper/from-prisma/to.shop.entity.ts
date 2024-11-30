@@ -16,11 +16,11 @@ export function fromShopPrisma(shopPrisma: any): Shop {
     shopPrisma.name,
     shopPrisma.url,
     shopPrisma.vendorId,
-    shopPrisma.products.map((productPrisma: any) =>
+    shopPrisma.products?.map((productPrisma: any) =>
       fromProductPrisma(productPrisma),
     ),
-    shopPrisma.orders.map((orderPrisma: any) => fromOrderPrisma(orderPrisma)),
-    shopPrisma.categories.map((categoryPrisma: any) =>
+    shopPrisma.orders?.map((orderPrisma: any) => fromOrderPrisma(orderPrisma)),
+    shopPrisma.categories?.map((categoryPrisma: any) =>
       fromCategoryPrisma(categoryPrisma),
     ),
     shopPrisma.createdAt,

@@ -8,7 +8,7 @@ import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
  */
 @Injectable()
 export class ListMarketplaces {
-  constructor(private readonly service: MarketplaceService) {}
+  constructor(private readonly service: MarketplaceService) { }
 
   /**
    * Execute the list-marketplaces use case.
@@ -16,6 +16,6 @@ export class ListMarketplaces {
    */
   async execute(): Promise<MarketplaceDTO[]> {
     const marketplaces = await this.service.listMarketplaces();
-    return marketplaces.map(toMarketplaceDTO);
+    return marketplaces?.map(toMarketplaceDTO);
   }
 }

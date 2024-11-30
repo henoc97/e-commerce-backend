@@ -8,7 +8,7 @@ import { ProductDTO } from 'src/presentation/dtos/product.dto';
  */
 @Injectable()
 export class FetchFeaturedProducts {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to fetch featured products.
@@ -16,6 +16,6 @@ export class FetchFeaturedProducts {
    */
   async execute(): Promise<ProductDTO[]> {
     const products = await this.productService.getFeaturedProducts();
-    return products.map(toProductDTO);
+    return products?.map(toProductDTO);
   }
 }

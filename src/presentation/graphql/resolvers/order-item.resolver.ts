@@ -53,7 +53,7 @@ export class OrderItemResolver {
     @Args('threshold') threshold: number,
   ): Promise<OrderItemOutput[]> {
     const result = await this.fetchLowStockItems.execute(threshold);
-    return result.map(transformOrderItemDTOToGraphQL);
+    return result?.map(transformOrderItemDTOToGraphQL);
   }
 
   @Query(() => [OrderItemOutput])
@@ -61,7 +61,7 @@ export class OrderItemResolver {
     @Args('orderId') orderId: number,
   ): Promise<OrderItemOutput[]> {
     const result = await this.fetchOrderItemsByOrderId.execute(orderId);
-    return result.map(transformOrderItemDTOToGraphQL);
+    return result?.map(transformOrderItemDTOToGraphQL);
   }
 
   @Query(() => [OrderItemOutput])
@@ -69,7 +69,7 @@ export class OrderItemResolver {
     @Args('productId') productId: number,
   ): Promise<OrderItemOutput[]> {
     const result = await this.fetchOrderItemsByProductId.execute(productId);
-    return result.map(transformOrderItemDTOToGraphQL);
+    return result?.map(transformOrderItemDTOToGraphQL);
   }
 
   @Query(() => [OrderItemOutput])
@@ -77,7 +77,7 @@ export class OrderItemResolver {
     @Args('orderId') orderId: number,
   ): Promise<OrderItemOutput[]> {
     const result = await this.fetchRecentOrderItems.execute(orderId);
-    return result.map(transformOrderItemDTOToGraphQL);
+    return result?.map(transformOrderItemDTOToGraphQL);
   }
 
   @Mutation(() => OrderItemOutput, { nullable: true })

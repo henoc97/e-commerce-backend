@@ -10,7 +10,7 @@ import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
  */
 @Injectable()
 export class FindVendorsByUser {
-  constructor(private readonly vendorService: VendorService) {}
+  constructor(private readonly vendorService: VendorService) { }
 
   /**
    * Execute the find-vendors-by-user use case.
@@ -20,6 +20,6 @@ export class FindVendorsByUser {
   async execute(userId: number): Promise<VendorDTO[]> {
     const vendors = await this.vendorService.findVendorsByUser(userId);
 
-    return vendors.map(toVendorDTO);
+    return vendors?.map(toVendorDTO);
   }
 }

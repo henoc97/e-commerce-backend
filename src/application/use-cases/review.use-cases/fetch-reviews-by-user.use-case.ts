@@ -9,7 +9,7 @@ import { ReviewDTO } from 'src/presentation/dtos/review.dto';
  */
 @Injectable()
 export class FetchReviewsByUser {
-  constructor(private readonly service: ReviewService) {}
+  constructor(private readonly service: ReviewService) { }
 
   /**
    * Execute the fetch-reviews-by-user use case.
@@ -18,6 +18,6 @@ export class FetchReviewsByUser {
    */
   async execute(userId: number): Promise<ReviewDTO[]> {
     const reviews = await this.service.getReviewsByUser(userId);
-    return reviews.map(toReviewDTO);
+    return reviews?.map(toReviewDTO);
   }
 }

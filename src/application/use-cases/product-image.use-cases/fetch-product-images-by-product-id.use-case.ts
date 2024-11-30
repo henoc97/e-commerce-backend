@@ -8,7 +8,7 @@ import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
  */
 @Injectable()
 export class FetchProductImagesByProductId {
-  constructor(private readonly productImageService: ProductImageService) {}
+  constructor(private readonly productImageService: ProductImageService) { }
 
   /**
    * Execute the fetch-product-images-by-product-id use case.
@@ -18,6 +18,6 @@ export class FetchProductImagesByProductId {
   async execute(productId: number): Promise<ProductImageDTO[]> {
     const images =
       await this.productImageService.getProductImagesByProductId(productId);
-    return images.map(toProductImageDTO);
+    return images?.map(toProductImageDTO);
   }
 }

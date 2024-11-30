@@ -42,7 +42,7 @@ export class PromotionResolver {
   async combinePromotions(
     @Args({ name: 'promotions', type: () => [PromotionInput] }) promotions: PromotionInput[],
   ): Promise<PromotionOutput | null> {
-    const dto = promotions.map(toPromotionDTO)
+    const dto = promotions?.map(toPromotionDTO)
     const result = await this.combinePromotionsUseCase.execute(dto);
     return transformPromotionDTOToGraphQL(result)
   }
@@ -69,13 +69,13 @@ export class PromotionResolver {
     @Args('end') end: Date,
   ): Promise<PromotionOutput[]> {
     const result = await this.fetchActivePromotionsBetweenUseCase.execute(start, end);
-    return result.map(transformPromotionDTOToGraphQL)
+    return result?.map(transformPromotionDTOToGraphQL)
   }
 
   @Query(() => [PromotionOutput])
   async fetchActivePromotions(): Promise<PromotionOutput[]> {
     const result = await this.fetchActivePromotionsUseCase.execute();
-    return result.map(transformPromotionDTOToGraphQL)
+    return result?.map(transformPromotionDTOToGraphQL)
   }
 
   @Query(() => PromotionOutput, { nullable: true })
@@ -99,7 +99,7 @@ export class PromotionResolver {
     @Args('productId') productId: number,
   ): Promise<PromotionOutput[]> {
     const result = await this.fetchPromotionsByProductUseCase.execute(productId);
-    return result.map(transformPromotionDTOToGraphQL)
+    return result?.map(transformPromotionDTOToGraphQL)
   }
 
   @Mutation(() => PromotionOutput, { nullable: true })

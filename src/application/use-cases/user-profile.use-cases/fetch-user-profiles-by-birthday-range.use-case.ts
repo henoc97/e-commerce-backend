@@ -9,7 +9,7 @@ import { toUserProfileDTO } from 'src/application/helper/to-dto/to.user-profile.
  */
 @Injectable()
 export class FetchUserProfilesByBirthdayRange {
-  constructor(private readonly profileService: UserProfileService) {}
+  constructor(private readonly profileService: UserProfileService) { }
 
   /**
    * Execute the fetch-user-profiles-by-birthday-range use case.
@@ -22,6 +22,6 @@ export class FetchUserProfilesByBirthdayRange {
       startDate,
       endDate,
     );
-    return profiles.map(toUserProfileDTO);
+    return profiles?.map(toUserProfileDTO);
   }
 }
