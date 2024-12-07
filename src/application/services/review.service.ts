@@ -3,7 +3,7 @@ import { Review } from 'src/domain/entities/review.entity';
 import { IReviewRepository } from 'src/domain/repositories/review.repository';
 import { ReviewDTO } from 'src/presentation/dtos/review.dto';
 import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
-import { ClientKafka } from '@nestjs/microservices';
+import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
 /**
  * Service for managing product reviews.
  * Provides methods to handle review-related operations such as creation, retrieval, and updating.
@@ -12,7 +12,8 @@ import { ClientKafka } from '@nestjs/microservices';
 export class ReviewService {
   constructor(
     @Inject('IReviewRepository') private readonly reviewRepository: IReviewRepository,
-    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    private readonly kafkaProducerService: KafkaProducerService,
+
   ) { }
 
   /**
@@ -23,7 +24,7 @@ export class ReviewService {
   async createReview(reviewDTO: ReviewDTO): Promise<Review> {
     const review = fromReviewDTO(reviewDTO);
     const result = await this.reviewRepository.create(review);
-    if (result) this.kafkaService.emit('review.created', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('review.created', JSON.stringify(result));
     return result;
   }
 
@@ -45,7 +46,7 @@ export class ReviewService {
   async updateReview(id: number, updates: Partial<ReviewDTO>): Promise<Review> {
     const updateReview = fromReviewDTO(updates);
     const result = this.reviewRepository.modify(id, updateReview);
-    if (result) this.kafkaService.emit('review.updated', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('review.updated', JSON.stringify(result));
     return result;
   }
 

@@ -12,7 +12,7 @@ import { FetchLogsByUser } from 'src/application/use-cases/audit-log.use-cases/f
 import { FetchRecentLogs } from 'src/application/use-cases/audit-log.use-cases/fetch-recent-logs.use-case';
 import { UpdateLog } from 'src/application/use-cases/audit-log.use-cases/update-log.use-case';
 import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
-import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/infrastructure/external-services/auth/jwt-auth.guard';
 import { AuditLogInput } from 'src/presentation/input/audit-log.input';
 import { AuditLogOutput } from 'src/presentation/output/audit-log.output';
 

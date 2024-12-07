@@ -11,7 +11,7 @@ import { Logger } from 'winston';
 import { Response, Request } from 'express';
 import * as Sentry from '@sentry/node';
 import { WithSentry } from '@sentry/nestjs';
-import { SentryInit } from 'src/infrastructure/external-servicies/sentry/instrument';
+import { SentryInit } from 'src/infrastructure/external-services/sentry/instrument';
 
 @Catch()
 export class ErrorLoggingFilter implements ExceptionFilter {

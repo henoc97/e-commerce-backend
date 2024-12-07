@@ -7,7 +7,7 @@ import { FetchProductById } from '../use-cases/product.use-cases/fetch-product-b
 import { FindProductsByName } from '../use-cases/product.use-cases/find-products-by-name.use-case';
 import { FindProductsByCategory } from '../use-cases/product.use-cases/find-products-by-category.use-case';
 import { FindProductsByPriceRange } from '../use-cases/product.use-cases/find-products-by-price-range.use-case';
-import { KafkaModule } from 'src/infrastructure/external-servicies/kafka/kafka.module';
+import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
 import { PromotionModule } from './promotion.module';
 import { CartItemModule } from './cart-item.module';
 import { ProductVariantModule } from './product-variant.module';

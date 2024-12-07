@@ -1,4 +1,3 @@
-version: '2'
 services:
   zookeeper:
     image: 'bitnami/zookeeper:latest'
@@ -9,9 +8,11 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
       ZOOKEEPER_SYNC_LIMIT: 2
       ALLOW_ANONYMOUS_LOGIN: "yes"
+    volumes:
+      - /mnt/c/Users/amavi/projects-studio/ecommerce/e-commerce-backend/src/infrastructure/external-services/kafka/zookeeper-data:/bitnami/zookeeper
 
   kafka:
-    image: 'wurstmeister/kafka:latest'
+    image: 'confluentinc/cp-kafka:latest'
     ports:
       - '9092:9092'
       - '9093:9093'
@@ -20,7 +21,10 @@ services:
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,PLAINTEXT://0.0.0.0:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,PLAINTEXT:PLAINTEXT
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_MESSAGE_MAX_BYTES: 2097152000
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 2097152000
+      KAFKA_MAX_REQUEST_SIZE: 2097152000
     volumes:
-      - /mnt/c/Users/amavi/projects-studio/ecommerce/e-commerce-backend/src/infrastructure/external-servicies/kafka/data:/var/lib/kafka/data
+      - /mnt/c/Users/amavi/projects-studio/ecommerce/e-commerce-backend/src/infrastructure/external-services/kafka/data:/var/lib/kafka/data
     depends_on:
       - zookeeper

@@ -3,7 +3,7 @@ import { IUserActivityRepository } from 'src/domain/repositories/user-activity.r
 import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
 import { fromUserActivityDTO } from '../helper/to-entity/to.user-activity.entity';
 import { Inject } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
+import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
 
 /**
  * Service for managing user activities.
@@ -12,7 +12,8 @@ import { ClientKafka } from '@nestjs/microservices';
 export class UserActivityService {
   constructor(
     @Inject('IUserActivityRepository') private readonly userActivityRepository: IUserActivityRepository,
-    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    private readonly kafkaProducerService: KafkaProducerService,
+
   ) { }
 
   /**
@@ -26,7 +27,7 @@ export class UserActivityService {
     // Use repository to create a new activity record
     const result = await this.userActivityRepository.create(activity);
     // Emit user activity through kafka
-    if (result) this.kafkaService.emit('interaction.created', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('interaction.created', JSON.stringify(result));
     return result;
   }
 
@@ -72,7 +73,7 @@ export class UserActivityService {
     // Use repository to update the activity record
     const result = await this.userActivityRepository.update(id, updatedActivity);
     // Emit user activity through kafka
-    if (result) this.kafkaService.emit('interaction.updated', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('interaction.updated', JSON.stringify(result));
     return result;
   }
 

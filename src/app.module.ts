@@ -28,7 +28,7 @@ import { UserProfileModule } from './application/modules/user-profile.module';
 import { UserModule } from './application/modules/user.module';
 import { VendorModule } from './application/modules/vendor.module';
 import { MyGraphQLModule } from './presentation/graphql/graphql.module';
-import { KafkaModule } from './infrastructure/external-servicies/kafka/kafka.module';
+import { KafkaModule } from './infrastructure/external-services/kafka/kafka.module';
 
 @Module({
   imports: [

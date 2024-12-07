@@ -59,3 +59,8 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Sentry Config File
 .sentryclirc
+
+
+# Kafka
+src/infrastructure/external-services/kafka/data
+src/infrastructure/external-services/kafka/zookeeper-data/data/

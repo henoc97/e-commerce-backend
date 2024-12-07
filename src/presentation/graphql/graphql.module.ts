@@ -5,7 +5,7 @@ import { resolvers } from './resolver.index';
 import { SentryModule } from '@sentry/nestjs/setup';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import allLogicModules from "../../application/modules/all-logic-modules"
-import { AuthModule } from 'src/infrastructure/external-servicies/auth/auth.module';
+import { AuthModule } from 'src/infrastructure/external-services/auth/auth.module';
 
 @Module({
   imports: [

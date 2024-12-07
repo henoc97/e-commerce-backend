@@ -10,7 +10,7 @@ import { DeleteOrderItem } from '../use-cases/order-item.use-case/delete-order-i
 import { FetchOrderItemById } from '../use-cases/order-item.use-case/fetch-order-item-by-id.use-case';
 import { CalculateTotalPriceForOrder } from '../use-cases/order-item.use-case/calculate-total-price-for-order.use-case';
 import { FetchLowStockItems } from '../use-cases/order-item.use-case/fetch-low-stock-items.use-case';
-import { KafkaModule } from 'src/infrastructure/external-servicies/kafka/kafka.module';
+import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
 
 const orderItemUseCases = [
     CreateOrderItem,

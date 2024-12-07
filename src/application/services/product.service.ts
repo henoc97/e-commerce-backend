@@ -13,7 +13,7 @@ import { ProductImageService } from './product-image.service';
 import { ProductVariantService } from './product-variant.service';
 import { ReviewService } from './review.service';
 import { CartItemService } from './cart-item.service';
-import { ClientKafka } from '@nestjs/microservices';
+import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
 import { privateDecrypt } from 'crypto';
 
 /**
@@ -23,7 +23,8 @@ import { privateDecrypt } from 'crypto';
 export default class ProductService {
   constructor(
     @Inject('IProductRepository') private readonly productRepository: IProductRepository,
-    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    private readonly kafkaProducerService: KafkaProducerService,
+
     private readonly promotionService: PromotionService,
     private readonly productImageService: ProductImageService,
     private readonly productVariantService: ProductVariantService,
@@ -39,7 +40,7 @@ export default class ProductService {
   async createProduct(product: ProductDTO): Promise<Product> {
     const p = fromProductDTO(product);
     const result = await this.productRepository.create(p);
-    if (result) this.kafkaService.emit('product.created', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('product.created', JSON.stringify(result));
     return result;
   }
 
@@ -64,7 +65,7 @@ export default class ProductService {
   ): Promise<Product> {
     const updatedProduct = fromProductDTO(updates);
     const result = await this.productRepository.update(id, updatedProduct);
-    if (result) this.kafkaService.emit('product.updated', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('product.updated', JSON.stringify(result));
     return result;
   }
 
@@ -190,7 +191,7 @@ export default class ProductService {
     quantity: number,
   ): Promise<Product> {
     const result = await this.productRepository.updateStock(productId, quantity);
-    if (result) this.kafkaService.emit('product.updated', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('product.updated', JSON.stringify(result));
     return result;
   }
 

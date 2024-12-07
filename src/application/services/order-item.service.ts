@@ -3,7 +3,7 @@ import { IOrderItemRepository } from 'src/domain/repositories/order-item.reposit
 import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
 import { fromOrderItemDTO } from '../helper/to-entity/to.order-item.entity';
 import { Inject } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
+import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
 
 /**
  * Service class for managing OrderItems.
@@ -16,7 +16,8 @@ export class OrderItemService {
    */
   constructor(
     @Inject('IOrderItemRepository') private readonly repository: IOrderItemRepository,
-    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    private readonly kafkaProducerService: KafkaProducerService,
+
   ) { }
 
   /**
@@ -29,7 +30,7 @@ export class OrderItemService {
     // Create a new OrderItem
     const result = await this.repository.create(orderItem);
     // Emit the OrderItem through kafka
-    if (result) this.kafkaService.emit('order-item.created', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('order-item.created', JSON.stringify(result));
     return result;
   }
 
@@ -51,7 +52,7 @@ export class OrderItemService {
   async update(id: number, updates: Partial<OrderItemDTO>): Promise<OrderItem> {
     const updateData = fromOrderItemDTO(updates);
     const result = await this.repository.update(id, updateData);
-    if (result) this.kafkaService.emit('order-item.updated', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('order-item.updated', JSON.stringify(result));
     return result;
   }
 

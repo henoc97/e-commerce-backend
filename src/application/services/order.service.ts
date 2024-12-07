@@ -4,7 +4,7 @@ import { IOrderRepository } from 'src/domain/repositories/order.repository';
 import { OrderDTO } from 'src/presentation/dtos/order.dto';
 import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
 import { Inject } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
+import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
 
 /**
  * Service class for managing Order entities.
@@ -13,7 +13,8 @@ import { ClientKafka } from '@nestjs/microservices';
 export class OrderService {
   constructor(
     @Inject('IOrderRepository') private readonly orderRepository: IOrderRepository,
-    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    private readonly kafkaProducerService: KafkaProducerService,
+
   ) { }
 
   /**
@@ -24,7 +25,7 @@ export class OrderService {
   async createOrder(orderDTO: OrderDTO): Promise<Order> {
     const order = fromOrderDTO(orderDTO);
     const result = await this.orderRepository.create(order);
-    if (result) this.kafkaService.emit('order.created', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('order.created', JSON.stringify(result));
     return result;
   }
 
@@ -46,7 +47,7 @@ export class OrderService {
   async updateOrder(id: number, updates: Partial<OrderDTO>): Promise<Order> {
     const updatedOrder = fromOrderDTO(updates);
     const result = await this.orderRepository.update(id, updatedOrder);
-    if (result) this.kafkaService.emit('order.updated', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('order.updated', JSON.stringify(result));
     return result;
   }
 
@@ -94,7 +95,7 @@ export class OrderService {
    */
   async updateOrderStatus(id: number, status: OrderStatus): Promise<Order> {
     const result = this.orderRepository.updateStatus(id, status);
-    if (result) this.kafkaService.emit('order.updates', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('order.updates', JSON.stringify(result));
     return result;
   }
 

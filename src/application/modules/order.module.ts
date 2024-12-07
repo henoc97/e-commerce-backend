@@ -17,7 +17,7 @@ import { FetchTopOrdersByAmount } from '../use-cases/order.use-cases/fetch-top-o
 import { FetchRecentOrdersByShop } from '../use-cases/order.use-cases/fetch-recent-orders-by-shop.use-case';
 import { FetchOrdersByDateRange } from '../use-cases/order.use-cases/fetch-orders-by-date-range.use-case';
 import { Kafka } from 'kafkajs';
-import { KafkaModule } from 'src/infrastructure/external-servicies/kafka/kafka.module';
+import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
 
 const orderUseCases = [
   CreateOrder,

@@ -9,7 +9,7 @@ import { ListAddressesByState } from 'src/application/use-cases/address.use-case
 import { ListAddressesByPostalCode } from 'src/application/use-cases/address.use-cases/list-addresses-by-postal-code.use-case';
 import { ListAddressesByUser } from 'src/application/use-cases/address.use-cases/list-addresses-by-user.use-case';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/infrastructure/external-services/auth/jwt-auth.guard';
 import { transformAddressDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { AddressOutput } from 'src/presentation/output/address.output';
 import { AddressInput } from 'src/presentation/input/address.input';

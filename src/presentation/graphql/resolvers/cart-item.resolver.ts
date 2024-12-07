@@ -12,7 +12,7 @@ import { FetchCartItemsByCartId } from 'src/application/use-cases/cart-item.use-
 import { FetchHighestQuantityItem } from 'src/application/use-cases/cart-item.use-cases/fetch-highest-quantity-item.use-case';
 import { UpdateCartItemQuantity } from 'src/application/use-cases/cart-item.use-cases/update-cart-item-quantity.use-case';
 import { UpdateCartItem } from 'src/application/use-cases/cart-item.use-cases/update-cart-item.use-case';
-import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/infrastructure/external-services/auth/jwt-auth.guard';
 import { CartItemInput } from 'src/presentation/input/cart-item.input';
 import { CartItemOutput } from 'src/presentation/output/cart-item.output';
 

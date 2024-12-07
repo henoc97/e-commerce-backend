@@ -14,7 +14,7 @@ import { FetchPopularReviews } from '../use-cases/review.use-cases/fetch-popular
 import { FetchReviewsByRating } from '../use-cases/review.use-cases/fetch-reviews-by-rating.use-case';
 import { FetchAverageRating } from '../use-cases/review.use-cases/fetch-average-rating.use-case';
 import { FetchReviewsByDateRange } from '../use-cases/review.use-cases/fetch-reviews-by-date-range.use-case';
-import { KafkaModule } from 'src/infrastructure/external-servicies/kafka/kafka.module';
+import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
 
 const reviewUseCases = [
   CreateReview,

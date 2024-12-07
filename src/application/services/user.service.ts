@@ -5,14 +5,15 @@ import { IUserRepository } from 'src/domain/repositories/user.repository';
 import { UserDTO } from 'src/presentation/dtos/user.dto';
 import { fromUserDTO } from '../helper/to-entity/to.user.entity';
 import { AddressDTO } from 'src/presentation/dtos/address.dto';
-import { ClientKafka } from '@nestjs/microservices';
 import { AddressService } from './address.service';
+import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject('IUserRepository') private readonly userRepository: IUserRepository,
-    @Inject('KAFKA_SERVICE') private readonly kafkaService: ClientKafka,
+    private readonly kafkaProducerService: KafkaProducerService,
+
     private readonly addressService: AddressService,
   ) { }
 
@@ -36,7 +37,7 @@ export class UserService {
       };
 
       try {
-        this.kafkaService.emit('user.created', JSON.stringify(kafkaPayload));
+        await this.kafkaProducerService.emitEvent('user.created', JSON.stringify(kafkaPayload));
         console.log('Message Kafka émis avec succès:', kafkaPayload);
       } catch (error) {
         console.error('Erreur lors de l\'émission du message Kafka:', error);
@@ -64,7 +65,7 @@ export class UserService {
   async updateUser(id: number, updates: Partial<UserDTO>): Promise<User> {
     const updatedUser = fromUserDTO(updates);
     const result = await this.userRepository.update(id, updatedUser);
-    if (result) this.kafkaService.emit('user.update', JSON.stringify(result));
+    if (result) this.kafkaProducerService.emitEvent('user.update', JSON.stringify(result));
     return result;
   }
 

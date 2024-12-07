@@ -13,7 +13,7 @@ import { UpdateCart } from 'src/application/use-cases/cart.use-cases/update-cart
 import { CartDTO } from 'src/presentation/dtos/cart.dto';
 import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/infrastructure/external-servicies/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/infrastructure/external-services/auth/jwt-auth.guard';
 import { transformCartDTOToGraphQL } from 'src/application/helper/utils/transformers';
 import { CartOutput } from 'src/presentation/output/cart.output';
 import { CartItemInput } from 'src/presentation/input/cart-item.input';

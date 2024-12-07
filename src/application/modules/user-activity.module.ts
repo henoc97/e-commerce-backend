@@ -11,7 +11,7 @@ import { DeleteActivity } from '../use-cases/user-activity.use-cases/delete-acti
 import { FetchActivityById } from '../use-cases/user-activity.use-cases/fetch-activity-by-id.use-case';
 import { ValidateActivity } from '../use-cases/user-activity.use-cases/validate-activity.use-case';
 import { ListActivitiesByDateRange } from '../use-cases/user-activity.use-cases/list-activities-by-date-range.use-case';
-import { KafkaModule } from 'src/infrastructure/external-servicies/kafka/kafka.module';
+import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
 
 const userActivityUseCases = [
   ListActivitiesByUser,
