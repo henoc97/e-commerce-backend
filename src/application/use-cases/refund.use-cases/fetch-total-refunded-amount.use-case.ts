@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RefundService } from 'src/application/services/refund.service';
+import { RefundService } from '../../../application/services/refund.service';
 
 /**
  * Use case class for fetching the total refunded amount by order ID.
@@ -7,7 +7,7 @@ import { RefundService } from 'src/application/services/refund.service';
  */
 @Injectable()
 export class FetchTotalRefundedAmount {
-  constructor(private readonly service: RefundService) {}
+  constructor(private readonly service: RefundService) { }
 
   /**
    * Execute the fetch-total-refunded-amount use case.

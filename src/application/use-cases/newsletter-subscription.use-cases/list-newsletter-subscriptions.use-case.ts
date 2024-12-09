@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { NewsletterSubscriptionService } from 'src/application/services/newsletter-subscription.service';
-import { toNewsletterSubscriptionDTO } from 'src/application/helper/to-dto/to.newsletter-subscription.dto';
-import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
+import { NewsletterSubscriptionService } from '../../../application/services/newsletter-subscription.service';
+import { toNewsletterSubscriptionDTO } from '../../../application/helper/to-dto/to.newsletter-subscription.dto';
+import { NewsletterSubscriptionDTO } from '../../../presentation/dtos/newsletter-subscription.dto';
 
 /**
  * Use case class to list all newsletter subscriptions.

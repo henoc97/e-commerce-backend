@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { TicketStatus } from "src/domain/enums/ticket-status.enum";
+import { TicketStatus } from "../../domain/enums/ticket-status.enum";
 
 
 /**

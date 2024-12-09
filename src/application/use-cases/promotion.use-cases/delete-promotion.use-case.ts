@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PromotionService } from 'src/application/services/promotion.service';
+import { PromotionService } from '../../../application/services/promotion.service';
 
 /**
  * Use case class for deleting a promotion.
  */
 @Injectable()
 export class DeletePromotion {
-  constructor(private readonly promotionService: PromotionService) {}
+  constructor(private readonly promotionService: PromotionService) { }
 
   /**
    * Executes the use case to delete a promotion.

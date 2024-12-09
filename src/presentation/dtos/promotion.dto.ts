@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductDTO } from './product.dto';
-import { DiscountType } from 'src/domain/enums/discount-type.enum';
+import { DiscountType } from '../../domain/enums/discount-type.enum';
 
 /**
  * Data Transfer Object for Promotion.

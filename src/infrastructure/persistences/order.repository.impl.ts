@@ -1,8 +1,8 @@
-import { fromOrderPrisma } from 'src/application/helper/from-prisma/to.order.entity';
-import { Order } from 'src/domain/entities/order.entity';
-import { OrderStatus } from 'src/domain/enums/order-status.enum';
-import { IOrderRepository } from 'src/domain/repositories/order.repository';
-import prisma from 'prisma/prisma.service';
+import { fromOrderPrisma } from '../../application/helper/from-prisma/to.order.entity';
+import { Order } from '../../domain/entities/order.entity';
+import { OrderStatus } from '../../domain/enums/order-status.enum';
+import { IOrderRepository } from '../../domain/repositories/order.repository';
+import prisma from '../../../prisma/prisma.service';
 
 /**
  * Represents the Order repository responsible for handling order-related database operations.

@@ -1,6 +1,6 @@
-﻿import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
+﻿import { ProductVariantDTO } from '../../../presentation/dtos/product-variant.dto';
 import { toProductDTO } from './to.product.dto';
-import { ProductVariant } from 'src/domain/entities/product-variant.entity';
+import { ProductVariant } from '../../../domain/entities/product-variant.entity';
 
 /**
  * Converts a ProductVariant entity to a ProductVariantDTO.

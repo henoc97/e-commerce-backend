@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ShopService } from 'src/application/services/shop.service';
+import { ShopService } from '../../../application/services/shop.service';
 
 /**
  * Use case for fetching total sales of a shop.
@@ -7,7 +7,7 @@ import { ShopService } from 'src/application/services/shop.service';
  */
 @Injectable()
 export class FetchTotalSalesForShop {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ShopService) { }
 
   /**
    * Executes the fetch-total-sales-for-shop use case.

@@ -1,12 +1,12 @@
 ﻿import { Injectable } from '@nestjs/common';
-import { MarketplaceService } from 'src/application/services/marketplace.service';
+import { MarketplaceService } from '../../../application/services/marketplace.service';
 
 /**
  * Use case class for deleting a marketplace.
  */
 @Injectable()
 export class DeleteMarketplace {
-  constructor(private readonly service: MarketplaceService) {}
+  constructor(private readonly service: MarketplaceService) { }
 
   /**
    * Execute the delete-marketplace use case.

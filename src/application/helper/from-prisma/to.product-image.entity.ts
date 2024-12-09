@@ -1,4 +1,4 @@
-﻿import { ProductImage } from 'src/domain/entities/product-image.entity';
+﻿import { ProductImage } from '../../../domain/entities/product-image.entity';
 import { fromProductPrisma } from './to.product.entity';
 
 /**

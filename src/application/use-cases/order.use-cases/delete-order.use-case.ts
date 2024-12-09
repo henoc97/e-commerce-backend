@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { OrderService } from 'src/application/services/order.service';
+import { OrderService } from '../../../application/services/order.service';
 
 /**
  * Use case for deleting an order.
  */
 @Injectable()
 export class DeleteOrder {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   /**
    * Deletes an order by its ID.

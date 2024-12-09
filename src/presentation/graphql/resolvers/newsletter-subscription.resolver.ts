@@ -1,16 +1,16 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { CheckEmailSubscribed } from 'src/application/use-cases/newsletter-subscription.use-cases/check-email-subscribed.use-case';
-import { CountTotalNewsletterSubscriptions } from 'src/application/use-cases/newsletter-subscription.use-cases/count-total-newsletter-subscriptions.use-case';
-import { CreateNewsletterSubscription } from 'src/application/use-cases/newsletter-subscription.use-cases/create-newsletter-subscription.use-case';
-import { DeleteNewsletterSubscription } from 'src/application/use-cases/newsletter-subscription.use-cases/delete-newsletter-subscription.use-case';
-import { FetchNewsletterSubscriptionByEmail } from 'src/application/use-cases/newsletter-subscription.use-cases/fetch-newsletter-subscription-by-email.use-case';
-import { FetchNewsletterSubscriptionById } from 'src/application/use-cases/newsletter-subscription.use-cases/fetch-newsletter-subscription-by-id.use-case';
-import { FetchNewsletterSubscriptionsByDateRange } from 'src/application/use-cases/newsletter-subscription.use-cases/fetch-newsletter-subscriptions-by-date-range.use-case';
-import { ListNewsletterSubscriptions } from 'src/application/use-cases/newsletter-subscription.use-cases/list-newsletter-subscriptions.use-case';
-import { UpdateNewsletterSubscription } from 'src/application/use-cases/newsletter-subscription.use-cases/update-newsletter-subscription.use-case';
-import { transformNewsletterDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { NewsletterSubscriptionOutput } from 'src/presentation/output/newsletter-subscription.output';
-import { NewsletterSubscriptionInput } from 'src/presentation/input/newsletter-subscription.input';
+import { CheckEmailSubscribed } from '../../../application/use-cases/newsletter-subscription.use-cases/check-email-subscribed.use-case';
+import { CountTotalNewsletterSubscriptions } from '../../../application/use-cases/newsletter-subscription.use-cases/count-total-newsletter-subscriptions.use-case';
+import { CreateNewsletterSubscription } from '../../../application/use-cases/newsletter-subscription.use-cases/create-newsletter-subscription.use-case';
+import { DeleteNewsletterSubscription } from '../../../application/use-cases/newsletter-subscription.use-cases/delete-newsletter-subscription.use-case';
+import { FetchNewsletterSubscriptionByEmail } from '../../../application/use-cases/newsletter-subscription.use-cases/fetch-newsletter-subscription-by-email.use-case';
+import { FetchNewsletterSubscriptionById } from '../../../application/use-cases/newsletter-subscription.use-cases/fetch-newsletter-subscription-by-id.use-case';
+import { FetchNewsletterSubscriptionsByDateRange } from '../../../application/use-cases/newsletter-subscription.use-cases/fetch-newsletter-subscriptions-by-date-range.use-case';
+import { ListNewsletterSubscriptions } from '../../../application/use-cases/newsletter-subscription.use-cases/list-newsletter-subscriptions.use-case';
+import { UpdateNewsletterSubscription } from '../../../application/use-cases/newsletter-subscription.use-cases/update-newsletter-subscription.use-case';
+import { transformNewsletterDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { NewsletterSubscriptionOutput } from '../../../presentation/output/newsletter-subscription.output';
+import { NewsletterSubscriptionInput } from '../../../presentation/input/newsletter-subscription.input';
 
 @Resolver(() => NewsletterSubscriptionOutput)
 export class NewsletterSubscriptionResolver {

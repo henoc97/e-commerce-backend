@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { toAuditLogDTO } from 'src/application/helper/to-dto/to.audit-log.dto';
-import { AuditLogService } from 'src/application/services/audit-log.service';
-import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
-import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+import { toAuditLogDTO } from '../../../application/helper/to-dto/to.audit-log.dto';
+import { AuditLogService } from '../../../application/services/audit-log.service';
+import { AuditLogAction } from '../../../domain/enums/audit-log-action.enum';
+import { AuditLogDTO } from '../../../presentation/dtos/audit-log.dto';
 
 /**
  * Use case class for fetching audit logs by action type.

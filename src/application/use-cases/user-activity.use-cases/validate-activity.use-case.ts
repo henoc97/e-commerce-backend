@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserActivityService } from 'src/application/services/user-activity.service';
-import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
+import { UserActivityService } from '../../../application/services/user-activity.service';
+import { UserActivityDTO } from '../../../presentation/dtos/user-activity.dto';
 
 /**
  * Use case class for validating an activity.
@@ -8,7 +8,7 @@ import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
  */
 @Injectable()
 export class ValidateActivity {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the validate-activity use case.

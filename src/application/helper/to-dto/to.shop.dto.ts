@@ -1,5 +1,5 @@
-﻿import { Shop } from 'src/domain/entities/shop.entity';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
+﻿import { Shop } from '../../../domain/entities/shop.entity';
+import { ShopDTO } from '../../../presentation/dtos/shop.dto';
 import { toCategoryDTO } from './to.category.dto';
 import { toOrderDTO } from './to.order.dto';
 import { toVendorDTO } from './to.vendor.dto';

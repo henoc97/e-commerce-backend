@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Subscription } from 'src/domain/entities/subscription.entity';
-import { ISubscriptionRepository } from 'src/domain/repositories/subscription.repository';
-import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
+import { Subscription } from '../../domain/entities/subscription.entity';
+import { ISubscriptionRepository } from '../../domain/repositories/subscription.repository';
+import { SubscriptionDTO } from '../../presentation/dtos/subscription.dto';
 import { fromSubscriptionDTO } from '../helper/to-entity/to.subscription.entity';
 /**
  * Service class for managing subscription plans.
@@ -12,7 +12,7 @@ export class SubscriptionService {
   constructor(
     @Inject('ISubscriptionRepository')
     private readonly subscriptionRepository: ISubscriptionRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new subscription.

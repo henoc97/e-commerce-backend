@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ProductImageService } from 'src/application/services/product-image.service';
+import { ProductImageService } from '../../../application/services/product-image.service';
 
 /**
  * Use case class for counting product images by product ID.
  */
 @Injectable()
 export class CountProductImagesByProductId {
-  constructor(private readonly productImageService: ProductImageService) {}
+  constructor(private readonly productImageService: ProductImageService) { }
 
   /**
    * Execute the count-product-images-by-product-id use case.

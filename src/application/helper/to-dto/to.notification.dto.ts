@@ -1,4 +1,4 @@
-﻿import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
+﻿import { NotificationDTO } from '../../../presentation/dtos/notification.dto';
 import { toUserDTO } from './to.user.dto';
 
 /**

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/application/services/user.service';
+import { UserService } from '../../../application/services/user.service';
 
 /**
  * Use case class for retrieving the count of active users.
@@ -8,7 +8,7 @@ import { UserService } from 'src/application/services/user.service';
  */
 @Injectable()
 export class GetActiveCount {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Execute the get-active-count use case.

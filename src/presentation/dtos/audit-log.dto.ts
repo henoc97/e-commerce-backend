@@ -9,7 +9,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
+import { AuditLogAction } from '../../domain/enums/audit-log-action.enum';
 import { UserDTO } from './user.dto';
 
 /**

@@ -1,6 +1,6 @@
-﻿import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
+﻿import { TicketDTO } from '../../../presentation/dtos/ticket.dto';
 import { toUserDTO } from './to.user.dto';
-import { Ticket } from 'src/domain/entities/ticket.entity';
+import { Ticket } from '../../../domain/entities/ticket.entity';
 
 /**
  * Converts a Ticket entity to TicketDTO.

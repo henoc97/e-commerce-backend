@@ -1,5 +1,5 @@
-import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
-import { Currency } from 'src/domain/enums/currencies.enum';
+import { PaymentStatus } from '../../domain/enums/payment-status.enum';
+import { Currency } from '../../domain/enums/currencies.enum';
 import { Field, InputType } from '@nestjs/graphql';
 
 /**

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { toAuditLogDTO } from 'src/application/helper/to-dto/to.audit-log.dto';
-import { AuditLogService } from 'src/application/services/audit-log.service';
-import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+import { toAuditLogDTO } from '../../../application/helper/to-dto/to.audit-log.dto';
+import { AuditLogService } from '../../../application/services/audit-log.service';
+import { AuditLogDTO } from '../../../presentation/dtos/audit-log.dto';
 
 /**
  * Use case class for updating an existing audit log entry.
  */
 @Injectable()
 export class UpdateLog {
-  constructor(private readonly auditLogService: AuditLogService) {}
+  constructor(private readonly auditLogService: AuditLogService) { }
 
   /**
    * Executes the update-log use case.

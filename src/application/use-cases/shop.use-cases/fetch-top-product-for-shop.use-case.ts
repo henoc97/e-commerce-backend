@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ShopService } from 'src/application/services/shop.service';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
+import { ShopService } from '../../../application/services/shop.service';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
+import { toProductDTO } from '../../../application/helper/to-dto/to.product.dto';
 
 /**
  * Use case for fetching the top-selling product for a shop.

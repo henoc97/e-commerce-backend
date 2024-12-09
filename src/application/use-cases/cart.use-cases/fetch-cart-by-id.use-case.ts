@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toCartDTO } from 'src/application/helper/to-dto/to.cart.dto';
-import { CartService } from 'src/application/services/cart.service';
-import { CartDTO } from 'src/presentation/dtos/cart.dto';
+import { toCartDTO } from '../../../application/helper/to-dto/to.cart.dto';
+import { CartService } from '../../../application/services/cart.service';
+import { CartDTO } from '../../../presentation/dtos/cart.dto';
 
 /**
  * Use case class for fetching a cart by its ID.
@@ -10,7 +10,7 @@ import { CartDTO } from 'src/presentation/dtos/cart.dto';
  */
 @Injectable()
 export class FetchCartById {
-  constructor(private readonly cartService: CartService) {}
+  constructor(private readonly cartService: CartService) { }
 
   /**
    * Executes the fetch-cart-by-id use case.

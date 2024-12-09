@@ -1,5 +1,5 @@
-﻿import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
-import { Notification } from 'src/domain/entities/notification.entity';
+﻿import { NotificationDTO } from '../../../presentation/dtos/notification.dto';
+import { Notification } from '../../../domain/entities/notification.entity';
 import { fromUserDTO } from './to.user.entity';
 
 /**

@@ -1,4 +1,4 @@
-﻿import { Marketplace } from 'src/domain/entities/marketplace.entity';
+﻿import { Marketplace } from '../../../domain/entities/marketplace.entity';
 import { fromShopPrisma } from './to.shop.entity';
 
 /**

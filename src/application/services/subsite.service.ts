@@ -1,8 +1,8 @@
-import { Subsite } from 'src/domain/entities/subsite.entity';
-import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
+import { Subsite } from '../../domain/entities/subsite.entity';
+import { SubsiteDTO } from '../../presentation/dtos/subsite.dto';
 import { fromSubsiteDTO } from '../helper/to-entity/to.sub-site.entity';
 import { Inject } from '@nestjs/common';
-import { ISubsiteRepository } from 'src/domain/repositories/subsite.repository';
+import { ISubsiteRepository } from '../../domain/repositories/subsite.repository';
 
 /**
  * Service for managing subsites.
@@ -12,7 +12,7 @@ export class SubsiteService {
   constructor(
     @Inject('ISubsiteRepository')
     private readonly subsiteRepository: ISubsiteRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new subsite.

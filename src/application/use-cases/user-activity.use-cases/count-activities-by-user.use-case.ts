@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserActivityService } from 'src/application/services/user-activity.service';
+import { UserActivityService } from '../../../application/services/user-activity.service';
 
 /**
  * Use case class for counting activities by user.
@@ -7,7 +7,7 @@ import { UserActivityService } from 'src/application/services/user-activity.serv
  */
 @Injectable()
 export class CountActivitiesByUser {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the count-activities-by-user use case.

@@ -1,5 +1,5 @@
-﻿import { Ticket } from 'src/domain/entities/ticket.entity';
-import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
+﻿import { Ticket } from '../../../domain/entities/ticket.entity';
+import { TicketDTO } from '../../../presentation/dtos/ticket.dto';
 import { fromUserDTO } from './to.user.entity';
 
 /**

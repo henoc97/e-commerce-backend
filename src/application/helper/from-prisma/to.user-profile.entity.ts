@@ -1,4 +1,4 @@
-﻿import { UserProfile } from 'src/domain/entities/user-profile.entity';
+﻿import { UserProfile } from '../../../domain/entities/user-profile.entity';
 import { fromUserPrisma } from './to.user.entity';
 
 /**

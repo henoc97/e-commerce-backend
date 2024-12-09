@@ -9,8 +9,8 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { OrderDTO } from './order.dto';
-import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
-import { Currency } from 'src/domain/enums/currencies.enum';
+import { PaymentStatus } from '../../domain/enums/payment-status.enum';
+import { Currency } from '../../domain/enums/currencies.enum';
 
 /**
  * Represents the data transfer object for a payment.

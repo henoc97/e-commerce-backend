@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { toNotificationDTO } from 'src/application/helper/to-dto/to.notification.dto';
-import { NotificationService } from 'src/application/services/notification.service';
-import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
+import { toNotificationDTO } from '../../../application/helper/to-dto/to.notification.dto';
+import { NotificationService } from '../../../application/services/notification.service';
+import { NotificationDTO } from '../../../presentation/dtos/notification.dto';
 
 /**
  * Use case for fetching a notification by its ID.
  */
 @Injectable()
 export class FetchNotificationById {
-  constructor(private readonly service: NotificationService) {}
+  constructor(private readonly service: NotificationService) { }
 
   /**
    * Executes the use case.

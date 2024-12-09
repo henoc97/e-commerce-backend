@@ -8,7 +8,7 @@ import {
   ValidateNested,
   IsBoolean,
 } from 'class-validator';
-import { NotificationType } from 'src/domain/enums/notification-type.enum';
+import { NotificationType } from '../../domain/enums/notification-type.enum';
 import { UserDTO } from './user.dto';
 
 /**

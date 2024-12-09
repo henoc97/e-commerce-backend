@@ -1,6 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { CartService } from '../services/cart.service';
-import { CartRepository } from 'src/infrastructure/persistences/cart.repository.impl';
+import { CartRepository } from '../../infrastructure/persistences/cart.repository.impl';
 import { CartItemModule } from './cart-item.module';
 import { AddItemToCart } from '../use-cases/cart.use-cases/add-item-to-cart.use-case';
 import { CreateCart } from '../use-cases/cart.use-cases/create-cart.use-case';

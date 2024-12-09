@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
-import { VendorService } from 'src/application/services/vendor.service';
-import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
+import { VendorDTO } from '../../../presentation/dtos/vendor.dto';
+import { VendorService } from '../../../application/services/vendor.service';
+import { toVendorDTO } from '../../../application/helper/to-dto/to.vendor.dto';
 
 /**
  * Use case class for updating a vendor's information.
@@ -10,7 +10,7 @@ import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
  */
 @Injectable()
 export class UpdateVendor {
-  constructor(private readonly vendorService: VendorService) {}
+  constructor(private readonly vendorService: VendorService) { }
 
   /**
    * Execute the update-vendor use case.

@@ -1,4 +1,4 @@
-﻿import { Vendor } from 'src/domain/entities/vendor.entity';
+﻿import { Vendor } from '../../../domain/entities//vendor.entity';
 import { fromProductPrisma } from './to.product.entity';
 import { fromShopPrisma } from './to.shop.entity';
 import { fromSubscriptionPrisma } from './to.subscription.entity';
@@ -15,7 +15,7 @@ export function fromVendorPrisma(vendorPrisma: any): Vendor {
     vendorPrisma.userId,
     vendorPrisma.user ? fromUserPrisma(vendorPrisma.user) : undefined,
     vendorPrisma.storeName,
-    vendorPrisma.products?.map((product) => fromProductPrisma(product)),
+    Array.isArray(vendorPrisma.products) ? vendorPrisma.products.map(fromProductPrisma) : undefined,
     vendorPrisma.subscriptionId,
     vendorPrisma.subscription
       ? fromSubscriptionPrisma(vendorPrisma.subscription)

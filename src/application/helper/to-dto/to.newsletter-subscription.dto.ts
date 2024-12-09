@@ -1,4 +1,4 @@
-﻿import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
+﻿import { NewsletterSubscriptionDTO } from '../../../presentation/dtos/newsletter-subscription.dto';
 
 /**
  * Converts a NewsletterSubscription entity to NewsletterSubscriptionDTO.

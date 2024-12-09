@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CartService } from 'src/application/services/cart.service';
+import { CartService } from '../../../application/services/cart.service';
 
 @Injectable()
 export class FetchItemCount {
-  constructor(private readonly cartService: CartService) {}
+  constructor(private readonly cartService: CartService) { }
 
   /**
    * Retrieves the number of items in a specified cart.

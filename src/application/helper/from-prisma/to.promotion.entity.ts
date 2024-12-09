@@ -1,4 +1,4 @@
-﻿import { Promotion } from 'src/domain/entities/promotion.entity';
+﻿import { Promotion } from '../../../domain/entities/promotion.entity';
 import { fromProductPrisma } from './to.product.entity';
 
 /**

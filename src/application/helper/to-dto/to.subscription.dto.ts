@@ -1,6 +1,6 @@
-﻿import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
+﻿import { SubscriptionDTO } from '../../../presentation/dtos/subscription.dto';
 import { toVendorDTO } from './to.vendor.dto';
-import { Subscription } from 'src/domain/entities/subscription.entity';
+import { Subscription } from '../../../domain/entities/subscription.entity';
 
 /**
  * Converts a Subscription entity to a SubscriptionDTO.

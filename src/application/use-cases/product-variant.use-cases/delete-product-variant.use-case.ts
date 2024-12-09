@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ProductVariantService } from 'src/application/services/product-variant.service';
+import { ProductVariantService } from '../../../application/services/product-variant.service';
 
 /**
  * Use case class for deleting a product variant.
@@ -8,7 +8,7 @@ import { ProductVariantService } from 'src/application/services/product-variant.
  */
 @Injectable()
 export class DeleteProductVariant {
-  constructor(private readonly service: ProductVariantService) {}
+  constructor(private readonly service: ProductVariantService) { }
 
   /**
    * Execute the delete-product-variant use case.

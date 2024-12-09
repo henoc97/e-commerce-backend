@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { NewsletterSubscriptionService } from 'src/application/services/newsletter-subscription.service';
-import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
-import { toNewsletterSubscriptionDTO } from 'src/application/helper/to-dto/to.newsletter-subscription.dto';
+import { NewsletterSubscriptionService } from '../../../application/services/newsletter-subscription.service';
+import { NewsletterSubscriptionDTO } from '../../../presentation/dtos/newsletter-subscription.dto';
+import { toNewsletterSubscriptionDTO } from '../../../application/helper/to-dto/to.newsletter-subscription.dto';
 
 /**
  * Use case class to update a newsletter subscription.
  */
 @Injectable()
 export class UpdateNewsletterSubscription {
-  constructor(private readonly service: NewsletterSubscriptionService) {}
+  constructor(private readonly service: NewsletterSubscriptionService) { }
 
   /**
    * Execute the use case to update a subscription.

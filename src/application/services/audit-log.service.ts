@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { AuditLog } from 'src/domain/entities/audit-log.entity';
-import { IAuditLogRepository } from 'src/domain/repositories/auditlog.repository';
-import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+import { AuditLog } from '../../domain/entities/audit-log.entity';
+import { IAuditLogRepository } from '../../domain/repositories/auditlog.repository';
+import { AuditLogDTO } from '../../presentation/dtos/audit-log.dto';
 import { fromAuditLogDTO } from '../helper/to-entity/to.audit-log.entity';
-import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
+import { AuditLogAction } from '../../domain/enums/audit-log-action.enum';
 
 /**
  * Service for managing audit logs.
@@ -14,7 +14,7 @@ export class AuditLogService {
   constructor(
     @Inject('IAuditLogRepository')
     private readonly auditLogRepository: IAuditLogRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new audit log entry.

@@ -1,8 +1,8 @@
-import { fromMarketplacePrisma } from 'src/application/helper/from-prisma/to.marketplace.entity';
-import { Marketplace } from 'src/domain/entities/marketplace.entity';
-import { Shop } from 'src/domain/entities/shop.entity';
-import { IMarketplaceRepository } from 'src/domain/repositories/marketplace.repository';
-import prisma from 'prisma/prisma.service';
+import { fromMarketplacePrisma } from '../../application/helper/from-prisma/to.marketplace.entity';
+import { Marketplace } from '../../domain/entities/marketplace.entity';
+import { Shop } from '../../domain/entities/shop.entity';
+import { IMarketplaceRepository } from '../../domain/repositories/marketplace.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class MarketplaceRepository implements IMarketplaceRepository {
 

@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { NotificationType } from "src/domain/enums/notification-type.enum";
+import { NotificationType } from "../../domain/enums/notification-type.enum";
 
 
 /**

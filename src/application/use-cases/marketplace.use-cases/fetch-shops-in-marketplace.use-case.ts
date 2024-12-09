@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@nestjs/common';
-import { MarketplaceService } from 'src/application/services/marketplace.service';
-import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
+import { MarketplaceService } from '../../../application/services/marketplace.service';
+import { toShopDTO } from '../../../application/helper/to-dto/to.shop.dto';
+import { ShopDTO } from '../../../presentation/dtos/shop.dto';
 
 /**
  * Use case class for fetching all shops in a marketplace.

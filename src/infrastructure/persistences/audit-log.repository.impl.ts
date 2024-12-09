@@ -1,8 +1,8 @@
-import { fromAuditLogPrisma } from 'src/application/helper/from-prisma/to.audit-log.entity';
-import { AuditLog } from 'src/domain/entities/audit-log.entity';
-import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
-import { IAuditLogRepository } from 'src/domain/repositories/auditlog.repository';
-import prisma from 'prisma/prisma.service';
+import { fromAuditLogPrisma } from '../../application/helper/from-prisma/to.audit-log.entity';
+import { AuditLog } from '../../domain/entities/audit-log.entity';
+import { AuditLogAction } from '../../domain/enums/audit-log-action.enum';
+import { IAuditLogRepository } from '../../domain/repositories/auditlog.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class AuditLogRepository implements IAuditLogRepository {
 

@@ -1,18 +1,18 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { transformCategoryDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { CheckCategoryExistence } from 'src/application/use-cases/category.use-cases/check-category-existence.use-case';
-import { CreateCategory } from 'src/application/use-cases/category.use-cases/create-category.use-case';
-import { DeleteCategory } from 'src/application/use-cases/category.use-cases/delete-category.use-case';
-import { FetchCategoryById } from 'src/application/use-cases/category.use-cases/fetch-category-by-id.use-case';
-import { FetchCategoryHierarchy } from 'src/application/use-cases/category.use-cases/fetch-category-hierarchy.use-case';
-import { FetchChildren } from 'src/application/use-cases/category.use-cases/fetch-children.use-case';
-import { FetchProducts } from 'src/application/use-cases/category.use-cases/fetch-products.use-case';
-import { FetchTopLevelCategories } from 'src/application/use-cases/category.use-cases/fetch-top-level-categories.use-case';
-import { SetParent } from 'src/application/use-cases/category.use-cases/set-parent.use-case';
-import { UpdateCategory } from 'src/application/use-cases/category.use-cases/update-category.use-case';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { CategoryInput } from 'src/presentation/input/category.input';
-import { CategoryOutput } from 'src/presentation/output/category.output';
+import { transformCategoryDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { CheckCategoryExistence } from '../../../application/use-cases/category.use-cases/check-category-existence.use-case';
+import { CreateCategory } from '../../../application/use-cases/category.use-cases/create-category.use-case';
+import { DeleteCategory } from '../../../application/use-cases/category.use-cases/delete-category.use-case';
+import { FetchCategoryById } from '../../../application/use-cases/category.use-cases/fetch-category-by-id.use-case';
+import { FetchCategoryHierarchy } from '../../../application/use-cases/category.use-cases/fetch-category-hierarchy.use-case';
+import { FetchChildren } from '../../../application/use-cases/category.use-cases/fetch-children.use-case';
+import { FetchProducts } from '../../../application/use-cases/category.use-cases/fetch-products.use-case';
+import { FetchTopLevelCategories } from '../../../application/use-cases/category.use-cases/fetch-top-level-categories.use-case';
+import { SetParent } from '../../../application/use-cases/category.use-cases/set-parent.use-case';
+import { UpdateCategory } from '../../../application/use-cases/category.use-cases/update-category.use-case';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
+import { CategoryInput } from '../../../presentation/input/category.input';
+import { CategoryOutput } from '../../../presentation/output/category.output';
 
 @Resolver(() => CategoryOutput)
 export class CategoryResolver {

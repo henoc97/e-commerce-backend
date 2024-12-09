@@ -1,5 +1,5 @@
-﻿import { Payment } from 'src/domain/entities/payment.entity';
-import { PaymentDTO } from 'src/presentation/dtos/payment.dto';
+﻿import { Payment } from '../../../domain/entities/payment.entity';
+import { PaymentDTO } from '../../../presentation/dtos/payment.dto';
 import { fromOrderDTO } from './to.order.entity';
 
 /**

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserActivityService } from 'src/application/services/user-activity.service';
-import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
-import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activity.dto';
+import { UserActivityService } from '../../../application/services/user-activity.service';
+import { UserActivityDTO } from '../../../presentation/dtos/user-activity.dto';
+import { toUserActivityDTO } from '../../../application/helper/to-dto/to.user-activity.dto';
 
 /**
  * Use case class for listing activities by date range.

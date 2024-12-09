@@ -1,4 +1,4 @@
-﻿import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+﻿import { AuditLogDTO } from '../../../presentation/dtos/audit-log.dto';
 import { toUserDTO } from './to.user.dto';
 
 /**

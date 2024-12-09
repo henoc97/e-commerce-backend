@@ -1,5 +1,5 @@
-﻿import { UserActivity } from 'src/domain/entities/user-activity.entity';
-import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
+﻿import { UserActivity } from '../../../domain/entities/user-activity.entity';
+import { UserActivityDTO } from '../../../presentation/dtos/user-activity.dto';
 import { fromUserDTO } from './to.user.entity';
 
 /**

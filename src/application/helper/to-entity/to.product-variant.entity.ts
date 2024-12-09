@@ -1,5 +1,5 @@
-﻿import { ProductVariant } from 'src/domain/entities/product-variant.entity';
-import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
+﻿import { ProductVariant } from '../../../domain/entities/product-variant.entity';
+import { ProductVariantDTO } from '../../../presentation/dtos/product-variant.dto';
 import { fromProductDTO } from './to.product.entity';
 
 /**

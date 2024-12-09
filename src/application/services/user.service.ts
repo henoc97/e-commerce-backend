@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from 'src/domain/entities/user.entity';
-import { UserRole } from 'src/domain/enums/user-role.enum';
-import { IUserRepository } from 'src/domain/repositories/user.repository';
-import { UserDTO } from 'src/presentation/dtos/user.dto';
+import { User } from '../../domain/entities/user.entity';
+import { UserRole } from '../../domain/enums/user-role.enum';
+import { IUserRepository } from '../../domain/repositories/user.repository';
+import { UserDTO } from '../../presentation/dtos/user.dto';
 import { fromUserDTO } from '../helper/to-entity/to.user.entity';
-import { AddressDTO } from 'src/presentation/dtos/address.dto';
+import { AddressDTO } from '../../presentation/dtos/address.dto';
 import { AddressService } from './address.service';
-import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
+import { KafkaProducerService } from '../../infrastructure/external-services/kafka/services/kafka-producer.service';
 
 @Injectable()
 export class UserService {

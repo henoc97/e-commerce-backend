@@ -1,4 +1,4 @@
-﻿import { OrderDTO } from 'src/presentation/dtos/order.dto';
+﻿import { OrderDTO } from '../../../presentation/dtos/order.dto';
 import { toOrderItemDTO } from './to.order-item.dto';
 import { toShopDTO } from './to.shop.dto';
 import { toUserDTO } from './to.user.dto';

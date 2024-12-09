@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toSubscriptionDTO } from 'src/application/helper/to-dto/to.subscription.dto';
-import { SubscriptionService } from 'src/application/services/subscription.service';
-import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
+import { toSubscriptionDTO } from '../../../application/helper/to-dto/to.subscription.dto';
+import { SubscriptionService } from '../../../application/services/subscription.service';
+import { SubscriptionDTO } from '../../../presentation/dtos/subscription.dto';
 
 /**
  * Use case class for fetching the latest subscription.
@@ -9,7 +9,7 @@ import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
  */
 @Injectable()
 export class FetchLatestSubscription {
-  constructor(private readonly subscriptionService: SubscriptionService) {}
+  constructor(private readonly subscriptionService: SubscriptionService) { }
 
   /**
    * Execute the fetch-latest-subscription use case.

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { OrderService } from '../services/order.service';
-import { OrderRepository } from 'src/infrastructure/persistences/order.repository.impl';
+import { OrderRepository } from '../../infrastructure/persistences/order.repository.impl';
 import { CreateOrder } from '../use-cases/order.use-cases/create-order.use-case';
 import { AddPaymentToOrder } from '../use-cases/order.use-cases/add-payment-to-order.use-case';
 import { UpdateOrder } from '../use-cases/order.use-cases/update-order.use-case';
@@ -17,7 +17,7 @@ import { FetchTopOrdersByAmount } from '../use-cases/order.use-cases/fetch-top-o
 import { FetchRecentOrdersByShop } from '../use-cases/order.use-cases/fetch-recent-orders-by-shop.use-case';
 import { FetchOrdersByDateRange } from '../use-cases/order.use-cases/fetch-orders-by-date-range.use-case';
 import { Kafka } from 'kafkajs';
-import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
+import { KafkaModule } from '../../infrastructure/external-services/kafka/kafka.module';
 
 const orderUseCases = [
   CreateOrder,

@@ -1,22 +1,22 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { toReviewDTO } from 'src/application/helper/to-dto/to.review.dto';
-import { transformReviewDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { CreateReview } from 'src/application/use-cases/review.use-cases/create-review.use-case';
-import { DeleteReview } from 'src/application/use-cases/review.use-cases/delete-review.use-case';
-import { FetchAverageRating } from 'src/application/use-cases/review.use-cases/fetch-average-rating.use-case';
-import { FetchFlaggedReviews } from 'src/application/use-cases/review.use-cases/fetch-flagged-reviews.use-case';
-import { FetchPopularReviews } from 'src/application/use-cases/review.use-cases/fetch-popular-reviews.use-case';
-import { FetchReviewById } from 'src/application/use-cases/review.use-cases/fetch-review-by-id.use-case';
-import { FetchReviewsByDateRange } from 'src/application/use-cases/review.use-cases/fetch-reviews-by-date-range.use-case';
-import { FetchReviewsByProduct } from 'src/application/use-cases/review.use-cases/fetch-reviews-by-product.use-case';
-import { FetchReviewsByRating } from 'src/application/use-cases/review.use-cases/fetch-reviews-by-rating.use-case';
-import { FetchReviewsByUser } from 'src/application/use-cases/review.use-cases/fetch-reviews-by-user.use-case';
-import { FlagReview } from 'src/application/use-cases/review.use-cases/flag-review.use-case';
-import { UpdateReview } from 'src/application/use-cases/review.use-cases/update-review.use-case';
-import { VerifyReview } from 'src/application/use-cases/review.use-cases/verify-review.use-case';
-import { ReviewDTO } from 'src/presentation/dtos/review.dto';
-import { ReviewInput } from 'src/presentation/input/review.input';
-import { ReviewOutput } from 'src/presentation/output/review.output';
+import { toReviewDTO } from '../../../application/helper/to-dto/to.review.dto';
+import { transformReviewDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { CreateReview } from '../../../application/use-cases/review.use-cases/create-review.use-case';
+import { DeleteReview } from '../../../application/use-cases/review.use-cases/delete-review.use-case';
+import { FetchAverageRating } from '../../../application/use-cases/review.use-cases/fetch-average-rating.use-case';
+import { FetchFlaggedReviews } from '../../../application/use-cases/review.use-cases/fetch-flagged-reviews.use-case';
+import { FetchPopularReviews } from '../../../application/use-cases/review.use-cases/fetch-popular-reviews.use-case';
+import { FetchReviewById } from '../../../application/use-cases/review.use-cases/fetch-review-by-id.use-case';
+import { FetchReviewsByDateRange } from '../../../application/use-cases/review.use-cases/fetch-reviews-by-date-range.use-case';
+import { FetchReviewsByProduct } from '../../../application/use-cases/review.use-cases/fetch-reviews-by-product.use-case';
+import { FetchReviewsByRating } from '../../../application/use-cases/review.use-cases/fetch-reviews-by-rating.use-case';
+import { FetchReviewsByUser } from '../../../application/use-cases/review.use-cases/fetch-reviews-by-user.use-case';
+import { FlagReview } from '../../../application/use-cases/review.use-cases/flag-review.use-case';
+import { UpdateReview } from '../../../application/use-cases/review.use-cases/update-review.use-case';
+import { VerifyReview } from '../../../application/use-cases/review.use-cases/verify-review.use-case';
+import { ReviewDTO } from '../../../presentation/dtos/review.dto';
+import { ReviewInput } from '../../../presentation/input/review.input';
+import { ReviewOutput } from '../../../presentation/output/review.output';
 
 @Resolver('Review')
 export class ReviewResolver {

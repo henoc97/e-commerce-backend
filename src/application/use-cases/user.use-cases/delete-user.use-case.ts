@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/application/services/user.service';
+import { UserService } from '../../../application/services/user.service';
 
 /**
  * Use case class for deleting a user.
@@ -8,7 +8,7 @@ import { UserService } from 'src/application/services/user.service';
  */
 @Injectable()
 export class DeleteUser {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Execute the delete-user use case.

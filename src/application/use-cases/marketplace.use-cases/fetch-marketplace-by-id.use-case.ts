@@ -1,14 +1,14 @@
 ﻿import { Injectable } from '@nestjs/common';
-import { MarketplaceService } from 'src/application/services/marketplace.service';
-import { toMarketplaceDTO } from 'src/application/helper/to-dto/to.marketplace.dto';
-import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
+import { MarketplaceService } from '../../../application/services/marketplace.service';
+import { toMarketplaceDTO } from '../../../application/helper/to-dto/to.marketplace.dto';
+import { MarketplaceDTO } from '../../../presentation/dtos/marketplace.dto';
 
 /**
  * Use case class for fetching a marketplace by its ID.
  */
 @Injectable()
 export class FetchMarketplaceById {
-  constructor(private readonly service: MarketplaceService) {}
+  constructor(private readonly service: MarketplaceService) { }
 
   /**
    * Execute the fetch-marketplace-by-id use case.

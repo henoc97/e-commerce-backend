@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserProfileService } from '../services/user-profile.service';
-import { UserProfileRepository } from 'src/infrastructure/persistences/user-profile.repository.impl';
+import { UserProfileRepository } from '../../infrastructure/persistences/user-profile.repository.impl';
 import { CreateUserProfile } from '../use-cases/user-profile.use-cases/create-user-profile.use-case';
 import { UpdateUserProfile } from '../use-cases/user-profile.use-cases/update-user-profile.use-case';
 import { DeleteUserProfile } from '../use-cases/user-profile.use-cases/delete-user-profile.use-case';

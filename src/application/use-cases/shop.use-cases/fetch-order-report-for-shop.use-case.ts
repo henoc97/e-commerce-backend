@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ShopService } from 'src/application/services/shop.service';
+import { ShopService } from '../../../application/services/shop.service';
 
 /**
  * Use case class for retrieving a report of orders for a shop.
@@ -7,7 +7,7 @@ import { ShopService } from 'src/application/services/shop.service';
  */
 @Injectable()
 export class FetchOrderReportForShop {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ShopService) { }
 
   /**
    * Execute the fetch-order-report-for-shop use case.

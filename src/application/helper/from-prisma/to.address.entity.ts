@@ -1,4 +1,4 @@
-﻿import { Address } from 'src/domain/entities/address.entity';
+﻿import { Address } from '../../../domain/entities/address.entity';
 import { fromUserPrisma } from './to.user.entity';
 
 /**

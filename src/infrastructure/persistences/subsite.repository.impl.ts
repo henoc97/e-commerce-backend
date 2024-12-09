@@ -1,7 +1,7 @@
-import { fromSubsitePrisma } from 'src/application/helper/from-prisma/to.sub-site.entity';
-import { Subsite } from 'src/domain/entities/subsite.entity';
-import { ISubsiteRepository } from 'src/domain/repositories/subsite.repository';
-import prisma from 'prisma/prisma.service';
+import { fromSubsitePrisma } from '../../application/helper/from-prisma/to.sub-site.entity';
+import { Subsite } from '../../domain/entities/subsite.entity';
+import { ISubsiteRepository } from '../../domain/repositories/subsite.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class SubsiteRepository implements ISubsiteRepository {
 

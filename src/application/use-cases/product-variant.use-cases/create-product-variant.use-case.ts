@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ProductVariantService } from 'src/application/services/product-variant.service';
-import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
-import { toProductVariantDTO } from 'src/application/helper/to-dto/to.product-variant.dto';
+import { ProductVariantService } from '../../../application/services/product-variant.service';
+import { ProductVariantDTO } from '../../../presentation/dtos/product-variant.dto';
+import { toProductVariantDTO } from '../../../application/helper/to-dto/to.product-variant.dto';
 
 /**
  * Use case class for creating a new product variant.
@@ -10,7 +10,7 @@ import { toProductVariantDTO } from 'src/application/helper/to-dto/to.product-va
  */
 @Injectable()
 export class CreateProductVariant {
-  constructor(private readonly service: ProductVariantService) {}
+  constructor(private readonly service: ProductVariantService) { }
 
   /**
    * Execute the create-product-variant use case.

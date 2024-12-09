@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toAddressDTO } from 'src/application/helper/to-dto/to.address.dto';
-import { AddressService } from 'src/application/services/address.service';
-import { AddressDTO } from 'src/presentation/dtos/address.dto';
+import { toAddressDTO } from '../../../application/helper/to-dto/to.address.dto';
+import { AddressService } from '../../../application/services/address.service';
+import { AddressDTO } from '../../../presentation/dtos/address.dto';
 
 /**
  * Use case class for listing addresses by city.

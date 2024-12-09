@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { RefundService } from 'src/application/services/refund.service';
-import { RefundDTO } from 'src/presentation/dtos/refund.dto';
-import { RefundStatus } from 'src/domain/enums/refund-status.enum';
-import { toRefundDTO } from 'src/application/helper/to-dto/to.refund.dto';
+import { RefundService } from '../../../application/services/refund.service';
+import { RefundDTO } from '../../../presentation/dtos/refund.dto';
+import { RefundStatus } from '../../../domain/enums/refund-status.enum';
+import { toRefundDTO } from '../../../application/helper/to-dto/to.refund.dto';
 
 /**
  * Use case class for fetching refunds by status.

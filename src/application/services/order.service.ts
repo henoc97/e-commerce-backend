@@ -1,10 +1,10 @@
-import { Order } from 'src/domain/entities/order.entity';
-import { OrderStatus } from 'src/domain/enums/order-status.enum';
-import { IOrderRepository } from 'src/domain/repositories/order.repository';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
+import { Order } from '../../domain/entities/order.entity';
+import { OrderStatus } from '../../domain/enums/order-status.enum';
+import { IOrderRepository } from '../../domain/repositories/order.repository';
+import { OrderDTO } from '../../presentation/dtos/order.dto';
 import { fromOrderDTO } from '../helper/to-entity/to.order.entity';
 import { Inject } from '@nestjs/common';
-import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
+import { KafkaProducerService } from '../../infrastructure/external-services/kafka/services/kafka-producer.service';
 
 /**
  * Service class for managing Order entities.

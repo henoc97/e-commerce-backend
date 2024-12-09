@@ -1,8 +1,8 @@
-import { fromNotificationPrisma } from 'src/application/helper/from-prisma/to.notification.entity';
-import { Notification } from 'src/domain/entities/notification.entity';
-import { NotificationType } from 'src/domain/enums/notification-type.enum';
-import { INotificationRepository } from 'src/domain/repositories/notification.repository';
-import prisma from 'prisma/prisma.service';
+import { fromNotificationPrisma } from '../../application/helper/from-prisma/to.notification.entity';
+import { Notification } from '../../domain/entities/notification.entity';
+import { NotificationType } from '../../domain/enums/notification-type.enum';
+import { INotificationRepository } from '../../domain/repositories/notification.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class NotificationRepository implements INotificationRepository {
 

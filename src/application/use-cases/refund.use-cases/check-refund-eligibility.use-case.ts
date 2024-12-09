@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { RefundService } from 'src/application/services/refund.service';
-import { RefundDTO } from 'src/presentation/dtos/refund.dto';
+import { RefundService } from '../../../application/services/refund.service';
+import { RefundDTO } from '../../../presentation/dtos/refund.dto';
 
 /**
  * Use case class for checking refund eligibility.
@@ -8,7 +8,7 @@ import { RefundDTO } from 'src/presentation/dtos/refund.dto';
  */
 @Injectable()
 export class CheckRefundEligibility {
-  constructor(private readonly service: RefundService) {}
+  constructor(private readonly service: RefundService) { }
 
   /**
    * Execute the check-refund-eligibility use case.

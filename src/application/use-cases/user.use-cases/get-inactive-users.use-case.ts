@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toUserDTO } from 'src/application/helper/to-dto/to.user.dto';
-import { UserService } from 'src/application/services/user.service';
-import { UserDTO } from 'src/presentation/dtos/user.dto';
+import { toUserDTO } from '../../../application/helper/to-dto/to.user.dto';
+import { UserService } from '../../../application/services/user.service';
+import { UserDTO } from '../../../presentation/dtos/user.dto';
 
 @Injectable()
 /**

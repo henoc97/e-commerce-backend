@@ -1,4 +1,4 @@
-﻿import { Payment } from 'src/domain/entities/payment.entity';
+﻿import { Payment } from '../../../domain/entities/payment.entity';
 import { fromOrderPrisma } from './to.order.entity';
 
 /**

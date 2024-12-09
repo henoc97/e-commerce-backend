@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { toUserDTO } from 'src/application/helper/to-dto/to.user.dto';
-import { UserService } from 'src/application/services/user.service';
-import { UserDTO } from 'src/presentation/dtos/user.dto';
+import { toUserDTO } from '../../../application/helper/to-dto/to.user.dto';
+import { UserService } from '../../../application/services/user.service';
+import { UserDTO } from '../../../presentation/dtos/user.dto';
 
 @Injectable()
 /**
  * Use case to update a user's password.
  */
 export class UpdateUserPasswordUseCase {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Executes the use case to update the user's password.

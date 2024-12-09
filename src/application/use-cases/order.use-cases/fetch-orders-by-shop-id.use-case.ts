@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { OrderService } from 'src/application/services/order.service';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
+import { OrderService } from '../../../application/services/order.service';
+import { OrderDTO } from '../../../presentation/dtos/order.dto';
+import { toOrderDTO } from '../../../application/helper/to-dto/to.order.dto';
 
 /**
  * Use case for fetching orders by shop ID.

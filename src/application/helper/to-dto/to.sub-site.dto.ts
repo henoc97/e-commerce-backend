@@ -1,5 +1,5 @@
-﻿import { Subsite } from 'src/domain/entities/subsite.entity';
-import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
+﻿import { Subsite } from '../../../domain/entities/subsite.entity';
+import { SubsiteDTO } from '../../../presentation/dtos/subsite.dto';
 import { toUserDTO } from './to.user.dto';
 
 /**

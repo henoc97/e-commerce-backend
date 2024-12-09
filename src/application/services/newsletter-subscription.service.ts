@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { NewsletterSubscription } from 'src/domain/entities/newsletter-subscription.entity';
-import { INewsletterSubscriptionRepository } from 'src/domain/repositories/newsletter-subscription.repository';
-import { NewsletterSubscriptionDTO } from 'src/presentation/dtos/newsletter-subscription.dto';
+import { NewsletterSubscription } from '../../domain/entities/newsletter-subscription.entity';
+import { INewsletterSubscriptionRepository } from '../../domain/repositories/newsletter-subscription.repository';
+import { NewsletterSubscriptionDTO } from '../../presentation/dtos/newsletter-subscription.dto';
 import { fromNewsletterSubscriptionDTO } from '../helper/to-entity/to.newsletter-subscription.entity';
 
 /**
@@ -13,7 +13,7 @@ export class NewsletterSubscriptionService {
   constructor(
     @Inject('INewsletterSubscriptionRepository')
     private readonly newsletterSubscriptionRepository: INewsletterSubscriptionRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new newsletter subscription for a specific shop.

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ProductRepository } from 'src/infrastructure/persistences/product.repository.impl';
+import { ProductRepository } from '../../infrastructure/persistences/product.repository.impl';
 import { RemovePromotionFromProduct } from '../use-cases/product.use-cases/remove-promotion-from-product.use-case';
 import { DeleteProduct } from '../use-cases/product.use-cases/delete-product.use-case';
 import { RemoveImageFromProduct } from '../use-cases/product.use-cases/remove-image-from-product.use-case';
@@ -7,7 +7,7 @@ import { FetchProductById } from '../use-cases/product.use-cases/fetch-product-b
 import { FindProductsByName } from '../use-cases/product.use-cases/find-products-by-name.use-case';
 import { FindProductsByCategory } from '../use-cases/product.use-cases/find-products-by-category.use-case';
 import { FindProductsByPriceRange } from '../use-cases/product.use-cases/find-products-by-price-range.use-case';
-import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
+import { KafkaModule } from '../../infrastructure/external-services/kafka/kafka.module';
 import { PromotionModule } from './promotion.module';
 import { CartItemModule } from './cart-item.module';
 import { ProductVariantModule } from './product-variant.module';

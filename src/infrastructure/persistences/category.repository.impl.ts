@@ -1,7 +1,7 @@
-import { fromCategoryPrisma } from 'src/application/helper/from-prisma/to.category.entity';
-import { Category } from 'src/domain/entities/category.entity';
-import { ICategoryRepository } from 'src/domain/repositories/category.repository';
-import prisma from 'prisma/prisma.service';
+import { fromCategoryPrisma } from '../../application/helper/from-prisma/to.category.entity';
+import { Category } from '../../domain/entities/category.entity';
+import { ICategoryRepository } from '../../domain/repositories/category.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class CategoryRepository implements ICategoryRepository {
 

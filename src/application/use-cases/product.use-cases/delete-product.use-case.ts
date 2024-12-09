@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import ProductService from 'src/application/services/product.service';
+import ProductService from '../../../application/services/product.service';
 
 /**
  * Use case class for deleting a product.
  */
 @Injectable()
 export class DeleteProduct {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to delete a product.

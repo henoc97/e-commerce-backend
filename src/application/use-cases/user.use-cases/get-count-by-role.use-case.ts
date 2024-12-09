@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/application/services/user.service';
-import { UserRole } from 'src/domain/enums/user-role.enum';
+import { UserService } from '../../../application/services/user.service';
+import { UserRole } from '../../../domain/enums/user-role.enum';
 
 /**
  * Use case class for retrieving the count of users by role.
@@ -9,7 +9,7 @@ import { UserRole } from 'src/domain/enums/user-role.enum';
  */
 @Injectable()
 export class GetCountByRole {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Execute the get-count-by-role use case.

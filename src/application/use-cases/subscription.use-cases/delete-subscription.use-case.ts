@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SubscriptionService } from 'src/application/services/subscription.service';
+import { SubscriptionService } from '../../../application/services/subscription.service';
 
 /**
  * Use case class for deleting a subscription.
@@ -7,7 +7,7 @@ import { SubscriptionService } from 'src/application/services/subscription.servi
  */
 @Injectable()
 export class DeleteSubscription {
-  constructor(private readonly subscriptionService: SubscriptionService) {}
+  constructor(private readonly subscriptionService: SubscriptionService) { }
 
   /**
    * Execute the delete-subscription use case.

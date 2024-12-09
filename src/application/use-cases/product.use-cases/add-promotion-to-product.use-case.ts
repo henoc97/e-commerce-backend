@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
-import ProductService from 'src/application/services/product.service';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
+import { toProductDTO } from '../../../application/helper/to-dto/to.product.dto';
+import ProductService from '../../../application/services/product.service';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
+import { PromotionDTO } from '../../../presentation/dtos/promotion.dto';
 
 /**
  * Use case class for adding a promotion to a product.
  */
 @Injectable()
 export class AddPromotionToProduct {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to add a promotion to a product.

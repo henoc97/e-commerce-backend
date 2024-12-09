@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuditLogService } from '../services/audit-log.service';
-import { AuditLogRepository } from 'src/infrastructure/persistences/audit-log.repository.impl';
+import { AuditLogRepository } from '../../infrastructure/persistences/audit-log.repository.impl';
 import { CreateLog } from '../use-cases/audit-log.use-cases/create-log.use-case';
 import { FetchLogsByUser } from '../use-cases/audit-log.use-cases/fetch-logs-by-user.use-case';
 import { UpdateLog } from '../use-cases/audit-log.use-cases/update-log.use-case';

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { toProductImageDTO } from 'src/application/helper/to-dto/to.product-image.dto';
-import { ProductImageService } from 'src/application/services/product-image.service';
-import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
+import { toProductImageDTO } from '../../../application/helper/to-dto/to.product-image.dto';
+import { ProductImageService } from '../../../application/services/product-image.service';
+import { ProductImageDTO } from '../../../presentation/dtos/product-image.dto';
 
 /**
  * Use case class for fetching a product image by its ID.
  */
 @Injectable()
 export class FetchProductImageById {
-  constructor(private readonly productImageService: ProductImageService) {}
+  constructor(private readonly productImageService: ProductImageService) { }
 
   /**
    * Execute the fetch-product-image-by-id use case.

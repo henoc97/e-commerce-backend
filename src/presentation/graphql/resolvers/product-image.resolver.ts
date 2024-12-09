@@ -1,19 +1,19 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { transformProductImageDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { CheckProductImageExistence } from 'src/application/use-cases/product-image.use-cases/check-product-image-existence.use-case';
-import { CountProductImagesByProductId } from 'src/application/use-cases/product-image.use-cases/count-product-images-by-product-id.use-case';
-import { CreateProductImage } from 'src/application/use-cases/product-image.use-cases/create-product-image.use-case';
-import { DeleteProductImage } from 'src/application/use-cases/product-image.use-cases/delete-product-image.use-case';
-import { DeleteProductImagesByProductId } from 'src/application/use-cases/product-image.use-cases/delete-product-images-by-product-id.use-case';
-import { FetchPrimaryProductImage } from 'src/application/use-cases/product-image.use-cases/fetch-primary-product-image.use-case';
-import { FetchProductImageById } from 'src/application/use-cases/product-image.use-cases/fetch-product-image-by-id.use-case';
-import { FetchProductImagesByProductId } from 'src/application/use-cases/product-image.use-cases/fetch-product-images-by-product-id.use-case';
-import { UpdateProductImageUrl } from 'src/application/use-cases/product-image.use-cases/update-product-image-url.use-case';
-import { UpdateProductImage } from 'src/application/use-cases/product-image.use-cases/update-product-image.use-case';
-import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
-import { toProductImageDTO } from 'src/application/helper/to-dto/to.product-image.dto';
-import { ProductImageOutput } from 'src/presentation/output/product-image.output';
-import { ProductImageInput } from 'src/presentation/input/product-image.input';
+import { transformProductImageDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { CheckProductImageExistence } from '../../../application/use-cases/product-image.use-cases/check-product-image-existence.use-case';
+import { CountProductImagesByProductId } from '../../../application/use-cases/product-image.use-cases/count-product-images-by-product-id.use-case';
+import { CreateProductImage } from '../../../application/use-cases/product-image.use-cases/create-product-image.use-case';
+import { DeleteProductImage } from '../../../application/use-cases/product-image.use-cases/delete-product-image.use-case';
+import { DeleteProductImagesByProductId } from '../../../application/use-cases/product-image.use-cases/delete-product-images-by-product-id.use-case';
+import { FetchPrimaryProductImage } from '../../../application/use-cases/product-image.use-cases/fetch-primary-product-image.use-case';
+import { FetchProductImageById } from '../../../application/use-cases/product-image.use-cases/fetch-product-image-by-id.use-case';
+import { FetchProductImagesByProductId } from '../../../application/use-cases/product-image.use-cases/fetch-product-images-by-product-id.use-case';
+import { UpdateProductImageUrl } from '../../../application/use-cases/product-image.use-cases/update-product-image-url.use-case';
+import { UpdateProductImage } from '../../../application/use-cases/product-image.use-cases/update-product-image.use-case';
+import { ProductImageDTO } from '../../../presentation/dtos/product-image.dto';
+import { toProductImageDTO } from '../../../application/helper/to-dto/to.product-image.dto';
+import { ProductImageOutput } from '../../../presentation/output/product-image.output';
+import { ProductImageInput } from '../../../presentation/input/product-image.input';
 
 @Resolver(() => ProductImageOutput)
 export class ProductImageResolver {

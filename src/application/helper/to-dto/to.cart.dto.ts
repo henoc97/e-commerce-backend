@@ -1,7 +1,7 @@
-import { CartDTO } from 'src/presentation/dtos/cart.dto';
+import { CartDTO } from '../../../presentation/dtos/cart.dto';
 import { toCartItemDTO } from './to.cart-item.dto';
 import { toUserDTO } from './to.user.dto';
-import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+import { CartItemDTO } from '../../../presentation/dtos/cart-item.dto';
 
 /**
  * Converts a Cart entity to a CartDTO.

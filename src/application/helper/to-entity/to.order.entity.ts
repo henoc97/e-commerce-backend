@@ -1,5 +1,5 @@
-﻿import { Order } from 'src/domain/entities/order.entity';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
+﻿import { Order } from '../../../domain/entities/order.entity';
+import { OrderDTO } from '../../../presentation/dtos/order.dto';
 import { fromPaymentDTO } from './to.payment.entity';
 import { fromShopDTO } from './to.shop.entity';
 import { fromUserDTO } from './to.user.entity';

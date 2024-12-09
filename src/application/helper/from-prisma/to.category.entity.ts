@@ -1,4 +1,4 @@
-﻿import { Category } from 'src/domain/entities/category.entity';
+﻿import { Category } from '../../../domain/entities/category.entity';
 import { fromProductPrisma } from './to.product.entity';
 import { fromShopPrisma } from './to.shop.entity';
 

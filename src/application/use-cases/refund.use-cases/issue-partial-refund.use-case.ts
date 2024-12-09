@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toRefundDTO } from 'src/application/helper/to-dto/to.refund.dto';
-import { RefundService } from 'src/application/services/refund.service';
-import { RefundDTO } from 'src/presentation/dtos/refund.dto';
+import { toRefundDTO } from '../../../application/helper/to-dto/to.refund.dto';
+import { RefundService } from '../../../application/services/refund.service';
+import { RefundDTO } from '../../../presentation/dtos/refund.dto';
 
 /**
  * Use case class for issuing a partial refund.
@@ -9,7 +9,7 @@ import { RefundDTO } from 'src/presentation/dtos/refund.dto';
  */
 @Injectable()
 export class IssuePartialRefund {
-  constructor(private readonly service: RefundService) {}
+  constructor(private readonly service: RefundService) { }
 
   /**
    * Execute the issue-partial-refund use case.

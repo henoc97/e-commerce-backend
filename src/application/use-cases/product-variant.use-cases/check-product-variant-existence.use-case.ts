@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ProductVariantService } from 'src/application/services/product-variant.service';
+import { ProductVariantService } from '../../../application/services/product-variant.service';
 
 /**
  * Use case class for checking the existence of a product variant.
@@ -8,7 +8,7 @@ import { ProductVariantService } from 'src/application/services/product-variant.
  */
 @Injectable()
 export class CheckProductVariantExistence {
-  constructor(private readonly service: ProductVariantService) {}
+  constructor(private readonly service: ProductVariantService) { }
 
   /**
    * Execute the check-product-variant-existence use case.

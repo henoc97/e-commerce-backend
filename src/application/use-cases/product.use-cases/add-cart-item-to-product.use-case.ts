@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
-import ProductService from 'src/application/services/product.service';
-import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
+import { toProductDTO } from '../../../application/helper/to-dto/to.product.dto';
+import ProductService from '../../../application/services/product.service';
+import { CartItemDTO } from '../../../presentation/dtos/cart-item.dto';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
 
 /**
  * Use case class for adding a cart item to a product.
  */
 @Injectable()
 export class AddCartItemToProduct {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to add a cart item to a product.

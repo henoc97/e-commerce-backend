@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
+import { AuditLogAction } from '../../domain/enums/audit-log-action.enum';
 import { UserOutput } from './user.output';
 import { Type } from 'class-transformer';
 

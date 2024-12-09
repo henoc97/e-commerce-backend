@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
-import ProductService from 'src/application/services/product.service';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
+import { toProductDTO } from '../../../application/helper/to-dto/to.product.dto';
+import ProductService from '../../../application/services/product.service';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
 
 /**
  * Use case class for finding products by category.

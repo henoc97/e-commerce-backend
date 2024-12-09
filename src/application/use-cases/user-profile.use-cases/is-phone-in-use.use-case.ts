@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserProfileService } from 'src/application/services/user-profile.service';
+import { UserProfileService } from '../../../application/services/user-profile.service';
 
 /**
  * Use case class for checking if a phone number is in use.
@@ -7,7 +7,7 @@ import { UserProfileService } from 'src/application/services/user-profile.servic
  */
 @Injectable()
 export class IsPhoneInUse {
-  constructor(private readonly profileService: UserProfileService) {}
+  constructor(private readonly profileService: UserProfileService) { }
 
   /**
    * Execute the is-phone-in-use use case.

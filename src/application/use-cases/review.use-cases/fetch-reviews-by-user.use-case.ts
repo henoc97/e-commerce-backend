@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toReviewDTO } from 'src/application/helper/to-dto/to.review.dto';
-import { ReviewService } from 'src/application/services/review.service';
-import { ReviewDTO } from 'src/presentation/dtos/review.dto';
+import { toReviewDTO } from '../../../application/helper/to-dto/to.review.dto';
+import { ReviewService } from '../../../application/services/review.service';
+import { ReviewDTO } from '../../../presentation/dtos/review.dto';
 
 /**
  * Use case class for fetching all reviews written by a specific user.

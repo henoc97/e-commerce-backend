@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CategoryService } from 'src/application/services/category.service';
+import { CategoryService } from '../../../application/services/category.service';
 
 /**
  * Use case class for checking category existence.
@@ -8,7 +8,7 @@ import { CategoryService } from 'src/application/services/category.service';
  */
 @Injectable()
 export class CheckCategoryExistence {
-  constructor(private readonly service: CategoryService) {}
+  constructor(private readonly service: CategoryService) { }
 
   /**
    * Execute the check-category-existence use case.

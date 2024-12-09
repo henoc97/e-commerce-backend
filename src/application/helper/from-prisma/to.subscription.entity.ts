@@ -1,5 +1,5 @@
 import { fromVendorPrisma } from './to.vendor.entity';
-import { Subscription } from 'src/domain/entities/subscription.entity';
+import { Subscription } from '../../../domain/entities/subscription.entity';
 
 /**
  * Converts a SubscriptionPrisma to a Subscription entity.

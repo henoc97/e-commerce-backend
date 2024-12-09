@@ -1,22 +1,22 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { ApproveRefund } from 'src/application/use-cases/refund.use-cases/approve-refund.use-case';
-import { CancelRefund } from 'src/application/use-cases/refund.use-cases/cancel-refund.use-case';
-import { CheckRefundEligibility } from 'src/application/use-cases/refund.use-cases/check-refund-eligibility.use-case';
-import { CreateRefund } from 'src/application/use-cases/refund.use-cases/create-refund.use-case';
-import { DeleteRefund } from 'src/application/use-cases/refund.use-cases/delete-refund.use-case';
-import { FetchRefundById } from 'src/application/use-cases/refund.use-cases/fetch-refund-by-id.use-case';
-import { FetchRefundsByOrder } from 'src/application/use-cases/refund.use-cases/fetch-refunds-by-order.use-case';
-import { FetchRefundsByStatus } from 'src/application/use-cases/refund.use-cases/fetch-refunds-by-status.use-case';
-import { FetchTotalRefundedAmount } from 'src/application/use-cases/refund.use-cases/fetch-total-refunded-amount.use-case';
-import { IssuePartialRefund } from 'src/application/use-cases/refund.use-cases/issue-partial-refund.use-case';
-import { ProcessRefund } from 'src/application/use-cases/refund.use-cases/process-refund.use-case';
-import { UpdateRefund } from 'src/application/use-cases/refund.use-cases/update-refund.use-case';
-import { RefundDTO } from 'src/presentation/dtos/refund.dto';
-import { RefundStatus } from 'src/domain/enums/refund-status.enum';
-import { transformRefundDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { RefundOutput } from 'src/presentation/output/refund.output';
-import { toRefundDTO } from 'src/application/helper/to-dto/to.refund.dto';
-import { RefundInput } from 'src/presentation/input/refund.input';
+import { ApproveRefund } from '../../../application/use-cases/refund.use-cases/approve-refund.use-case';
+import { CancelRefund } from '../../../application/use-cases/refund.use-cases/cancel-refund.use-case';
+import { CheckRefundEligibility } from '../../../application/use-cases/refund.use-cases/check-refund-eligibility.use-case';
+import { CreateRefund } from '../../../application/use-cases/refund.use-cases/create-refund.use-case';
+import { DeleteRefund } from '../../../application/use-cases/refund.use-cases/delete-refund.use-case';
+import { FetchRefundById } from '../../../application/use-cases/refund.use-cases/fetch-refund-by-id.use-case';
+import { FetchRefundsByOrder } from '../../../application/use-cases/refund.use-cases/fetch-refunds-by-order.use-case';
+import { FetchRefundsByStatus } from '../../../application/use-cases/refund.use-cases/fetch-refunds-by-status.use-case';
+import { FetchTotalRefundedAmount } from '../../../application/use-cases/refund.use-cases/fetch-total-refunded-amount.use-case';
+import { IssuePartialRefund } from '../../../application/use-cases/refund.use-cases/issue-partial-refund.use-case';
+import { ProcessRefund } from '../../../application/use-cases/refund.use-cases/process-refund.use-case';
+import { UpdateRefund } from '../../../application/use-cases/refund.use-cases/update-refund.use-case';
+import { RefundDTO } from '../../../presentation/dtos/refund.dto';
+import { RefundStatus } from '../../../domain/enums/refund-status.enum';
+import { transformRefundDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { RefundOutput } from '../../../presentation/output/refund.output';
+import { toRefundDTO } from '../../../application/helper/to-dto/to.refund.dto';
+import { RefundInput } from '../../../presentation/input/refund.input';
 
 @Resolver()
 export class RefundResolver {

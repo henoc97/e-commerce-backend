@@ -1,7 +1,7 @@
-import { fromNewsletterSubscriptionPrisma } from 'src/application/helper/from-prisma/to.newsletter-subscription.entity';
-import { NewsletterSubscription } from 'src/domain/entities/newsletter-subscription.entity';
-import { INewsletterSubscriptionRepository } from 'src/domain/repositories/newsletter-subscription.repository';
-import prisma from 'prisma/prisma.service';
+import { fromNewsletterSubscriptionPrisma } from '../../application/helper/from-prisma/to.newsletter-subscription.entity';
+import { NewsletterSubscription } from '../../domain/entities/newsletter-subscription.entity';
+import { INewsletterSubscriptionRepository } from '../../domain/repositories/newsletter-subscription.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class NewsletterSubscriptionRepository
   implements INewsletterSubscriptionRepository {

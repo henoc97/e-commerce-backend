@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AddressService } from '../services/address.service';
-import { AddressRepository } from 'src/infrastructure/persistences/address.repository.impl';
+import { AddressRepository } from '../../infrastructure/persistences/address.repository.impl';
 import { CreateAddress } from '../use-cases/address.use-cases/create-address.use-case';
 import { ListAddressesByUser } from '../use-cases/address.use-cases/list-addresses-by-user.use-case';
 import { ListAddressesByCountry } from '../use-cases/address.use-cases/list-addresses-by-country.use-case';

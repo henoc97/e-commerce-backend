@@ -1,4 +1,4 @@
-﻿import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+﻿import { CategoryDTO } from '../../../presentation/dtos/category.dto';
 import { toProductDTO } from './to.product.dto';
 import { toShopDTO } from './to.shop.dto';
 

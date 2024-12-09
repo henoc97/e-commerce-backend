@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { OrderService } from 'src/application/services/order.service';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { toOrderDTO } from 'src/application/helper/to-dto/to.order.dto';
-import { OrderStatus } from 'src/domain/enums/order-status.enum';
+import { OrderService } from '../../../application/services/order.service';
+import { OrderDTO } from '../../../presentation/dtos/order.dto';
+import { toOrderDTO } from '../../../application/helper/to-dto/to.order.dto';
+import { OrderStatus } from '../../../domain/enums/order-status.enum';
 
 /**
  * Use case for updating the status of an order.
  */
 @Injectable()
 export class UpdateOrderStatus {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   /**
    * Updates the status of an order.

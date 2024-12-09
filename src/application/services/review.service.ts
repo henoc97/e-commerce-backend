@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Review } from 'src/domain/entities/review.entity';
-import { IReviewRepository } from 'src/domain/repositories/review.repository';
-import { ReviewDTO } from 'src/presentation/dtos/review.dto';
+import { Review } from '../../domain/entities/review.entity';
+import { IReviewRepository } from '../../domain/repositories/review.repository';
+import { ReviewDTO } from '../../presentation/dtos/review.dto';
 import { fromReviewDTO } from '../helper/to-entity/to.review.entity';
-import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
+import { KafkaProducerService } from '../../infrastructure/external-services/kafka/services/kafka-producer.service';
 /**
  * Service for managing product reviews.
  * Provides methods to handle review-related operations such as creation, retrieval, and updating.

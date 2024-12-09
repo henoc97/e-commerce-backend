@@ -1,5 +1,5 @@
 
-import { UserDTO } from "src/presentation/dtos/user.dto";
+import { UserDTO } from "../../../presentation/dtos/user.dto";
 import { fromAddressDTO } from "./to.address.entity";
 import { fromAuditLogDTO } from "./to.audit-log.entity";
 import { fromCartDTO } from "./to.cart.entity";
@@ -11,7 +11,7 @@ import { fromTicketDTO } from "./to.ticket.entity";
 import { fromUserActivityDTO } from "./to.user-activity.entity";
 import { fromUserProfileDTO } from "./to.user-profile.entity";
 import { fromVendorDTO } from "./to.vendor.entity";
-import { User } from "src/domain/entities/user.entity";
+import { User } from "../../../domain/entities/user.entity";
 
 
 /**

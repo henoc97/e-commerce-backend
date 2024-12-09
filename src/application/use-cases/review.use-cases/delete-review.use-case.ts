@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ReviewService } from 'src/application/services/review.service';
+import { ReviewService } from '../../../application/services/review.service';
 
 /**
  * Use case class for deleting a review.
@@ -7,7 +7,7 @@ import { ReviewService } from 'src/application/services/review.service';
  */
 @Injectable()
 export class DeleteReview {
-  constructor(private readonly service: ReviewService) {}
+  constructor(private readonly service: ReviewService) { }
 
   /**
    * Execute the delete-review use case.

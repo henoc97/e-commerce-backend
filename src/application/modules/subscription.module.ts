@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SubscriptionService } from '../services/subscription.service';
-import { SubscriptionRepository } from 'src/infrastructure/persistences/subscription.repository.impl';
+import { SubscriptionRepository } from '../../infrastructure/persistences/subscription.repository.impl';
 import { CountSubscriptionsByVendor } from '../use-cases/subscription.use-cases/count-subscriptions-by-vendor.use-case';
 import { CreateSubscription } from '../use-cases/subscription.use-cases/create-subscription.use-case';
 import { DeleteSubscription } from '../use-cases/subscription.use-cases/delete-subscription.use-case';

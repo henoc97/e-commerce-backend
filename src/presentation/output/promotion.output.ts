@@ -1,6 +1,6 @@
 
 import { Field, ObjectType } from '@nestjs/graphql';
-import { DiscountType } from 'src/domain/enums/discount-type.enum';
+import { DiscountType } from '../../domain/enums/discount-type.enum';
 import { ProductOutput } from './product.output';
 import { Type } from 'class-transformer';
 

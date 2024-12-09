@@ -1,5 +1,5 @@
-﻿import { Promotion } from 'src/domain/entities/promotion.entity';
-import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
+﻿import { Promotion } from '../../../domain/entities/promotion.entity';
+import { PromotionDTO } from '../../../presentation/dtos/promotion.dto';
 import { toProductDTO } from './to.product.dto';
 
 /**

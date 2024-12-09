@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserProfileService } from 'src/application/services/user-profile.service';
-import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
-import { toUserProfileDTO } from 'src/application/helper/to-dto/to.user-profile.dto';
+import { UserProfileService } from '../../../application/services/user-profile.service';
+import { UserProfileDTO } from '../../../presentation/dtos/user-profile.dto';
+import { toUserProfileDTO } from '../../../application/helper/to-dto/to.user-profile.dto';
 
 /**
  * Use case class for finding matching user profiles.

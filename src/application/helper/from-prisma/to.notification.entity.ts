@@ -1,4 +1,4 @@
-﻿import { Notification } from 'src/domain/entities/notification.entity';
+﻿import { Notification } from '../../../domain/entities/notification.entity';
 import { fromUserPrisma } from './to.user.entity';
 
 /**

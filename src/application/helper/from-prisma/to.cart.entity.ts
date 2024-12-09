@@ -1,4 +1,4 @@
-﻿import { Cart } from 'src/domain/entities/cart.entity';
+﻿import { Cart } from '../../../domain/entities/cart.entity';
 import { fromCartItemPrisma } from './to.cart-item.entity';
 import { fromUserPrisma } from './to.user.entity';
 

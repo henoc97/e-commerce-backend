@@ -1,4 +1,4 @@
-﻿import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
+﻿import { MarketplaceDTO } from '../../../presentation/dtos/marketplace.dto';
 import { toShopDTO } from './to.shop.dto';
 
 /**

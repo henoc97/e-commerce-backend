@@ -1,8 +1,8 @@
-import { Payment } from 'src/domain/entities/payment.entity';
-import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
-import { IPaymentRepository } from 'src/domain/repositories/payment.repository';
-import { fromPaymentPrisma } from 'src/application/helper/from-prisma/to.payment.entity';
-import prisma from 'prisma/prisma.service';
+import { Payment } from '../../domain/entities/payment.entity';
+import { PaymentStatus } from '../../domain/enums/payment-status.enum';
+import { IPaymentRepository } from '../../domain/repositories/payment.repository';
+import { fromPaymentPrisma } from '../../application/helper/from-prisma/to.payment.entity';
+import prisma from '../../../prisma/prisma.service';
 
 export class PaymentRepository implements IPaymentRepository {
 

@@ -1,7 +1,7 @@
-import { Ticket } from 'src/domain/entities/ticket.entity';
-import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
-import { ITicketRepository } from 'src/domain/repositories/ticket.repository';
-import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
+import { Ticket } from '../../domain/entities/ticket.entity';
+import { TicketStatus } from '../../domain/enums/ticket-status.enum';
+import { ITicketRepository } from '../../domain/repositories/ticket.repository';
+import { TicketDTO } from '../../presentation/dtos/ticket.dto';
 import { fromTicketDTO } from '../helper/to-entity/to.ticket.entity';
 import { Inject } from '@nestjs/common';
 
@@ -17,7 +17,7 @@ export class TicketService {
   constructor(
     @Inject('ITicketRepository')
     private readonly ticketRepository: ITicketRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new support ticket.

@@ -1,4 +1,4 @@
-﻿import { AuditLog } from 'src/domain/entities/audit-log.entity';
+﻿import { AuditLog } from '../../../domain/entities/audit-log.entity';
 import { fromUserPrisma } from './to.user.entity';
 
 /**

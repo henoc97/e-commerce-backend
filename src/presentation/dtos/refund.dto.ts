@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { OrderDTO } from './order.dto';
-import { RefundStatus } from 'src/domain/enums/refund-status.enum';
+import { RefundStatus } from '../../domain/enums/refund-status.enum';
 
 /**
  * Data Transfer Object for Refund.

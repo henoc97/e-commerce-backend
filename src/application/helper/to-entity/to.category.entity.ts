@@ -1,5 +1,5 @@
-﻿import { Category } from 'src/domain/entities/category.entity';
-import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+﻿import { Category } from '../../../domain/entities/category.entity';
+import { CategoryDTO } from '../../../presentation/dtos/category.dto';
 import { fromShopDTO } from './to.shop.entity';
 import { fromProductDTO } from './to.product.entity';
 

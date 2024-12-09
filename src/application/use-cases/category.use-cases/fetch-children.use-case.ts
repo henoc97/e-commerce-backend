@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toCategoryDTO } from 'src/application/helper/to-dto/to.category.dto';
-import { CategoryService } from 'src/application/services/category.service';
-import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+import { toCategoryDTO } from '../../../application/helper/to-dto/to.category.dto';
+import { CategoryService } from '../../../application/services/category.service';
+import { CategoryDTO } from '../../../presentation/dtos/category.dto';
 
 /**
  * Use case class for fetching child categories.

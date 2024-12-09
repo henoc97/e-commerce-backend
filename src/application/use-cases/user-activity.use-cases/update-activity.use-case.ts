@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserActivityService } from 'src/application/services/user-activity.service';
-import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
-import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activity.dto';
+import { UserActivityService } from '../../../application/services/user-activity.service';
+import { UserActivityDTO } from '../../../presentation/dtos/user-activity.dto';
+import { toUserActivityDTO } from '../../../application/helper/to-dto/to.user-activity.dto';
 
 /**
  * Use case class for updating an activity.
@@ -9,7 +9,7 @@ import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activit
  */
 @Injectable()
 export class UpdateActivity {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the update-activity use case.

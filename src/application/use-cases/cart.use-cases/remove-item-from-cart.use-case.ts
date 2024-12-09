@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CartService } from 'src/application/services/cart.service';
-import { CartDTO } from 'src/presentation/dtos/cart.dto';
-import { toCartDTO } from 'src/application/helper/to-dto/to.cart.dto';
+import { CartService } from '../../../application/services/cart.service';
+import { CartDTO } from '../../../presentation/dtos/cart.dto';
+import { toCartDTO } from '../../../application/helper/to-dto/to.cart.dto';
 
 @Injectable()
 export class RemoveItemFromCart {
-  constructor(private readonly cartService: CartService) {}
+  constructor(private readonly cartService: CartService) { }
 
   /**
    * Removes an item from a specified cart.

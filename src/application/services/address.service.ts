@@ -3,9 +3,9 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Address } from 'src/domain/entities/address.entity';
-import { IAddressRepository } from 'src/domain/repositories/address.repository';
-import { AddressDTO } from 'src/presentation/dtos/address.dto';
+import { Address } from '../../domain/entities/address.entity';
+import { IAddressRepository } from '../../domain/repositories/address.repository';
+import { AddressDTO } from '../../presentation/dtos/address.dto';
 import { fromAddressDTO } from '../helper/to-entity/to.address.entity';
 
 /**
@@ -17,7 +17,7 @@ export class AddressService {
   constructor(
     @Inject('IAddressRepository')
     private readonly addressRepository: IAddressRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new address entry.

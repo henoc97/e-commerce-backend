@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ShopService } from 'src/application/services/shop.service';
+import { ShopService } from '../../../application/services/shop.service';
 
 /**
  * Use case class for retrieving a sales report for a shop.

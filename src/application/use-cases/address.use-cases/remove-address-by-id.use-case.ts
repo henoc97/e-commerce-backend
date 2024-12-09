@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AddressService } from 'src/application/services/address.service';
+import { AddressService } from '../../../application/services/address.service';
 
 /**
  * Use case class for removing an address by ID.
@@ -7,7 +7,7 @@ import { AddressService } from 'src/application/services/address.service';
  */
 @Injectable()
 export class RemoveAddressById {
-  constructor(private readonly service: AddressService) {}
+  constructor(private readonly service: AddressService) { }
 
   /**
    * Execute the remove-address-by-id use case.

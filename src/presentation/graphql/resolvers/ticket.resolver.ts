@@ -1,21 +1,21 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
-import { CreateTicket } from 'src/application/use-cases/ticket.use-cases/create-ticket.use-case';
-import { CloseTicket } from 'src/application/use-cases/ticket.use-cases/close-ticket.use-case';
-import { FetchTicketById } from 'src/application/use-cases/ticket.use-cases/fetch-ticket-by-id.use-case';
-import { ListTicketsByUser } from 'src/application/use-cases/ticket.use-cases/list-tickets-by-user.use-case';
-import { DeleteTicket } from 'src/application/use-cases/ticket.use-cases/delete-ticket.use-case';
-import { FetchLatestTicket } from 'src/application/use-cases/ticket.use-cases/fetch-latest-ticket.use-case';
-import { ListHighPriorityTickets } from 'src/application/use-cases/ticket.use-cases/list-high-priority-tickets.use-case';
-import { ListTicketsByDateRange } from 'src/application/use-cases/ticket.use-cases/list-tickets-by-date-range.use-case';
-import { ListTicketsByStatus } from 'src/application/use-cases/ticket.use-cases/list-tickets-by-status.use-case';
-import { UpdateTicket } from 'src/application/use-cases/ticket.use-cases/update-ticket.use-case';
-import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
-import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
-import { CountOpenTicketsByUser } from 'src/application/use-cases/ticket.use-cases/count-open-tickets-by-user.use-case';
-import { transformTicketDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { TicketOutput } from 'src/presentation/output/ticket.output';
-import { TicketInput } from 'src/presentation/input/ticket.input';
-import { toTicketDTO } from 'src/application/helper/to-dto/to.ticket.dto';
+import { CreateTicket } from '../../../application/use-cases/ticket.use-cases/create-ticket.use-case';
+import { CloseTicket } from '../../../application/use-cases/ticket.use-cases/close-ticket.use-case';
+import { FetchTicketById } from '../../../application/use-cases/ticket.use-cases/fetch-ticket-by-id.use-case';
+import { ListTicketsByUser } from '../../../application/use-cases/ticket.use-cases/list-tickets-by-user.use-case';
+import { DeleteTicket } from '../../../application/use-cases/ticket.use-cases/delete-ticket.use-case';
+import { FetchLatestTicket } from '../../../application/use-cases/ticket.use-cases/fetch-latest-ticket.use-case';
+import { ListHighPriorityTickets } from '../../../application/use-cases/ticket.use-cases/list-high-priority-tickets.use-case';
+import { ListTicketsByDateRange } from '../../../application/use-cases/ticket.use-cases/list-tickets-by-date-range.use-case';
+import { ListTicketsByStatus } from '../../../application/use-cases/ticket.use-cases/list-tickets-by-status.use-case';
+import { UpdateTicket } from '../../../application/use-cases/ticket.use-cases/update-ticket.use-case';
+import { TicketDTO } from '../../../presentation/dtos/ticket.dto';
+import { TicketStatus } from '../../../domain/enums/ticket-status.enum';
+import { CountOpenTicketsByUser } from '../../../application/use-cases/ticket.use-cases/count-open-tickets-by-user.use-case';
+import { transformTicketDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { TicketOutput } from '../../../presentation/output/ticket.output';
+import { TicketInput } from '../../../presentation/input/ticket.input';
+import { toTicketDTO } from '../../../application/helper/to-dto/to.ticket.dto';
 
 @Resolver(() => TicketOutput)
 export class TicketResolver {

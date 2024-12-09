@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { toCartItemDTO } from 'src/application/helper/to-dto/to.cart-item.dto';
-import { CartItemService } from 'src/application/services/cart-item.service';
-import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+import { toCartItemDTO } from '../../../application/helper/to-dto/to.cart-item.dto';
+import { CartItemService } from '../../../application/services/cart-item.service';
+import { CartItemDTO } from '../../../presentation/dtos/cart-item.dto';
 
 /**
  * Use case class for retrieving a cart item by its product ID and cart ID.
  */
 @Injectable()
 export class FetchCartItemByProductAndCart {
-  constructor(private readonly cartItemService: CartItemService) {}
+  constructor(private readonly cartItemService: CartItemService) { }
 
   /**
    * Executes the fetch-cart-item-by-product-and-cart use case.

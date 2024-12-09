@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { SubsiteService } from 'src/application/services/subsite.service';
-import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
+import { SubsiteService } from '../../../application/services/subsite.service';
+import { SubsiteDTO } from '../../../presentation/dtos/subsite.dto';
 
 /**
  * Use case class for validating a subsite.
@@ -8,7 +8,7 @@ import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
  */
 @Injectable()
 export class ValidateSubsite {
-  constructor(private readonly subsiteService: SubsiteService) {}
+  constructor(private readonly subsiteService: SubsiteService) { }
 
   /**
    * Execute the validate-subsite use case.

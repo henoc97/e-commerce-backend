@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ProductVariantService } from 'src/application/services/product-variant.service';
-import { toProductVariantDTO } from 'src/application/helper/to-dto/to.product-variant.dto';
-import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
+import { ProductVariantService } from '../../../application/services/product-variant.service';
+import { toProductVariantDTO } from '../../../application/helper/to-dto/to.product-variant.dto';
+import { ProductVariantDTO } from '../../../presentation/dtos/product-variant.dto';
 
 /**
  * Use case class for fetching product variants by name.

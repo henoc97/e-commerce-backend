@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { TicketService } from 'src/application/services/ticket.service';
-import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
-import { toTicketDTO } from 'src/application/helper/to-dto/to.ticket.dto';
+import { TicketService } from '../../../application/services/ticket.service';
+import { TicketDTO } from '../../../presentation/dtos/ticket.dto';
+import { toTicketDTO } from '../../../application/helper/to-dto/to.ticket.dto';
 
 /**
  * Use case class for fetching a ticket by its ID.
@@ -9,7 +9,7 @@ import { toTicketDTO } from 'src/application/helper/to-dto/to.ticket.dto';
  */
 @Injectable()
 export class FetchTicketById {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   /**
    * Execute the fetch-ticket-by-id use case.

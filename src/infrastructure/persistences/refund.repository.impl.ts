@@ -1,8 +1,8 @@
-import { fromRefundPrisma } from 'src/application/helper/from-prisma/to.refund.entity';
-import { Refund } from 'src/domain/entities/refund.entity';
-import { RefundStatus } from 'src/domain/enums/refund-status.enum';
-import { IRefundRepository } from 'src/domain/repositories/refund.repository';
-import prisma from 'prisma/prisma.service';
+import { fromRefundPrisma } from '../../application/helper/from-prisma/to.refund.entity';
+import { Refund } from '../../domain/entities/refund.entity';
+import { RefundStatus } from '../../domain/enums/refund-status.enum';
+import { IRefundRepository } from '../../domain/repositories/refund.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class RefundRepository implements IRefundRepository {
 

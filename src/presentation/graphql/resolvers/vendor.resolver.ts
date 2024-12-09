@@ -1,34 +1,34 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
-import { AddProductToVendor } from 'src/application/use-cases/vendor.use-cases/add-product-to-vendor.use-case';
-import { CreateVendor } from 'src/application/use-cases/vendor.use-cases/create-vendor.use-case';
-import { DeleteVendor } from 'src/application/use-cases/vendor.use-cases/delete-vendor.use-case';
-import { FindVendorById } from 'src/application/use-cases/vendor.use-cases/find-vendor-by-id.use-case';
-import { FindVendorsByStoreName } from 'src/application/use-cases/vendor.use-cases/find-vendors-by-store-name.use-case';
-import { FindVendorsBySubscription } from 'src/application/use-cases/vendor.use-cases/find-vendors-by-subscription.use-case';
-import { FindVendorsByUser } from 'src/application/use-cases/vendor.use-cases/find-vendors-by-user.use-case';
-// import { GetLatestVendor } from 'src/application/use-cases/vendor.use-cases/get-latest-vendor.use-case';
-// import { GetVendorProducts } from 'src/application/use-cases/vendor.use-cases/get-vendor-products.use-case';
-// import { GetVendorShop } from 'src/application/use-cases/vendor.use-cases/get-vendor-shop.use-case';
-// import { GetVendorSubscription } from 'src/application/use-cases/vendor.use-cases/get-vendor-subscription.use-case';
-import { RemoveProductFromVendor } from 'src/application/use-cases/vendor.use-cases/remove-product-from-vendor.use-case';
-import { SetVendorShop } from 'src/application/use-cases/vendor.use-cases/set-vendor-shop.use-case';
-import { SetVendorSubscription } from 'src/application/use-cases/vendor.use-cases/set-vendor-subscription.use-case';
-import { UpdateVendor } from 'src/application/use-cases/vendor.use-cases/update-vendor.use-case';
-import { VendorList } from 'src/application/use-cases/vendor.use-cases/vendor-list.use-case';
-import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
-import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
-import { transformVendorDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { VendorOutput } from 'src/presentation/output/vendor.output';
-import { ProductInput } from 'src/presentation/input/product.input';
-import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
-import { VendorInput } from 'src/presentation/input/vendor.input';
-import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
-import { ShopInput } from 'src/presentation/input/shop.input';
-import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
-import { SubscriptionInput } from 'src/presentation/input/subscription.input';
-import { toSubscriptionDTO } from 'src/application/helper/to-dto/to.subscription.dto';
+import { AddProductToVendor } from '../../../application/use-cases/vendor.use-cases/add-product-to-vendor.use-case';
+import { CreateVendor } from '../../../application/use-cases/vendor.use-cases/create-vendor.use-case';
+import { DeleteVendor } from '../../../application/use-cases/vendor.use-cases/delete-vendor.use-case';
+import { FindVendorById } from '../../../application/use-cases/vendor.use-cases/find-vendor-by-id.use-case';
+import { FindVendorsByStoreName } from '../../../application/use-cases/vendor.use-cases/find-vendors-by-store-name.use-case';
+import { FindVendorsBySubscription } from '../../../application/use-cases/vendor.use-cases/find-vendors-by-subscription.use-case';
+import { FindVendorsByUser } from '../../../application/use-cases/vendor.use-cases/find-vendors-by-user.use-case';
+// import { GetLatestVendor } from '../../../application/use-cases/vendor.use-cases/get-latest-vendor.use-case';
+// import { GetVendorProducts } from '../../../application/use-cases/vendor.use-cases/get-vendor-products.use-case';
+// import { GetVendorShop } from '../../../application/use-cases/vendor.use-cases/get-vendor-shop.use-case';
+// import { GetVendorSubscription } from '../../../application/use-cases/vendor.use-cases/get-vendor-subscription.use-case';
+import { RemoveProductFromVendor } from '../../../application/use-cases/vendor.use-cases/remove-product-from-vendor.use-case';
+import { SetVendorShop } from '../../../application/use-cases/vendor.use-cases/set-vendor-shop.use-case';
+import { SetVendorSubscription } from '../../../application/use-cases/vendor.use-cases/set-vendor-subscription.use-case';
+import { UpdateVendor } from '../../../application/use-cases/vendor.use-cases/update-vendor.use-case';
+import { VendorList } from '../../../application/use-cases/vendor.use-cases/vendor-list.use-case';
+import { VendorDTO } from '../../../presentation/dtos/vendor.dto';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
+import { ShopDTO } from '../../../presentation/dtos/shop.dto';
+import { SubscriptionDTO } from '../../../presentation/dtos/subscription.dto';
+import { transformVendorDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { VendorOutput } from '../../../presentation/output/vendor.output';
+import { ProductInput } from '../../../presentation/input/product.input';
+import { toProductDTO } from '../../../application/helper/to-dto/to.product.dto';
+import { VendorInput } from '../../../presentation/input/vendor.input';
+import { toVendorDTO } from '../../../application/helper/to-dto/to.vendor.dto';
+import { ShopInput } from '../../../presentation/input/shop.input';
+import { toShopDTO } from '../../../application/helper/to-dto/to.shop.dto';
+import { SubscriptionInput } from '../../../presentation/input/subscription.input';
+import { toSubscriptionDTO } from '../../../application/helper/to-dto/to.subscription.dto';
 
 @Resolver(() => VendorOutput)
 export class VendorResolver {
@@ -76,7 +76,14 @@ export class VendorResolver {
   async createVendor(
     @Args('vendor') vendor: VendorInput,
   ): Promise<VendorOutput | null> {
+    if (!vendor.storeName) {
+      throw new Error("Le champ 'storeName' est requis.");
+    }
+    if (!vendor.userId) {
+      throw new Error("Le champ 'userId' est requis.");
+    }
     const dto = toVendorDTO(vendor);
+    console.log("Données du vendeur à créer :", dto);
     const result = await this.createVendorUseCase.execute(dto);
     return transformVendorDTOToGraphQL(result)
   }

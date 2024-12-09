@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { RefundStatus } from 'src/domain/enums/refund-status.enum';
+import { RefundStatus } from '../../domain/enums/refund-status.enum';
 
 /**
  * Input Type for Refund.

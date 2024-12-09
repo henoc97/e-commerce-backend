@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { OrderItemService } from '../services/order-item.service';
-import { OrderItemRepository } from 'src/infrastructure/persistences/order-item.repository.impl';
+import { OrderItemRepository } from '../../infrastructure/persistences/order-item.repository.impl';
 import { CreateOrderItem } from '../use-cases/order-item.use-case/create-order-item.use-case';
 import { FetchOrderItemsByOrderId } from '../use-cases/order-item.use-case/fetch-order-items-by-order-id.use-case';
 import { FetchOrderItemsByProductId } from '../use-cases/order-item.use-case/fetch-order-items-by-product-id.use-case';
@@ -10,7 +10,7 @@ import { DeleteOrderItem } from '../use-cases/order-item.use-case/delete-order-i
 import { FetchOrderItemById } from '../use-cases/order-item.use-case/fetch-order-item-by-id.use-case';
 import { CalculateTotalPriceForOrder } from '../use-cases/order-item.use-case/calculate-total-price-for-order.use-case';
 import { FetchLowStockItems } from '../use-cases/order-item.use-case/fetch-low-stock-items.use-case';
-import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
+import { KafkaModule } from '../../infrastructure/external-services/kafka/kafka.module';
 
 const orderItemUseCases = [
     CreateOrderItem,

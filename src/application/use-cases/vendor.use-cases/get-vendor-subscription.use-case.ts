@@ -1,7 +1,7 @@
 // import { Injectable } from '@nestjs/common';
-// import { VendorService } from 'src/application/services/vendor.service';
-// import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
-// import { toSubscriptionDTO } from 'src/application/helper/to-dto/to.subscription.dto';
+// import { VendorService } from '../../../application/services/vendor.service';
+// import { SubscriptionDTO } from '../../../presentation/dtos/subscription.dto';
+// import { toSubscriptionDTO } from '../../../application/helper/to-dto/to.subscription.dto';
 
 // /**
 //  * Use case class for retrieving the subscription details of a vendor.

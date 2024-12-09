@@ -1,5 +1,5 @@
-﻿import { Review } from 'src/domain/entities/review.entity';
-import { ReviewDTO } from 'src/presentation/dtos/review.dto';
+﻿import { Review } from '../../../domain/entities/review.entity';
+import { ReviewDTO } from '../../../presentation/dtos/review.dto';
 import { fromUserDTO } from './to.user.entity';
 import { fromProductDTO } from './to.product.entity';
 

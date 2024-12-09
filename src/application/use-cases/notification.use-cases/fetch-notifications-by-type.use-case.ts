@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { toNotificationDTO } from 'src/application/helper/to-dto/to.notification.dto';
-import { NotificationService } from 'src/application/services/notification.service';
-import { NotificationType } from 'src/domain/enums/notification-type.enum';
-import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
+import { toNotificationDTO } from '../../../application/helper/to-dto/to.notification.dto';
+import { NotificationService } from '../../../application/services/notification.service';
+import { NotificationType } from '../../../domain/enums/notification-type.enum';
+import { NotificationDTO } from '../../../presentation/dtos/notification.dto';
 
 /**
  * Use case for fetching notifications by type.

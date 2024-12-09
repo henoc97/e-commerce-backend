@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TicketService } from 'src/application/services/ticket.service';
+import { TicketService } from '../../../application/services/ticket.service';
 
 /**
  * Use case class for counting open tickets by user.
@@ -7,7 +7,7 @@ import { TicketService } from 'src/application/services/ticket.service';
  */
 @Injectable()
 export class CountOpenTicketsByUser {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   /**
    * Execute the count-open-tickets-by-user use case.

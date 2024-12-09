@@ -1,9 +1,9 @@
-import { UserActivity } from 'src/domain/entities/user-activity.entity';
-import { IUserActivityRepository } from 'src/domain/repositories/user-activity.repository';
-import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
+import { UserActivity } from '../../domain/entities/user-activity.entity';
+import { IUserActivityRepository } from '../../domain/repositories/user-activity.repository';
+import { UserActivityDTO } from '../../presentation/dtos/user-activity.dto';
 import { fromUserActivityDTO } from '../helper/to-entity/to.user-activity.entity';
 import { Inject } from '@nestjs/common';
-import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
+import { KafkaProducerService } from '../../infrastructure/external-services/kafka/services/kafka-producer.service';
 
 /**
  * Service for managing user activities.

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { toAuditLogDTO } from 'src/application/helper/to-dto/to.audit-log.dto';
-import { AuditLogService } from 'src/application/services/audit-log.service';
-import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+import { toAuditLogDTO } from '../../../application/helper/to-dto/to.audit-log.dto';
+import { AuditLogService } from '../../../application/services/audit-log.service';
+import { AuditLogDTO } from '../../../presentation/dtos/audit-log.dto';
 
 /**
  * Use case class for fetching an audit log entry by its ID.
  */
 @Injectable()
 export class FetchLogById {
-  constructor(private readonly auditLogService: AuditLogService) {}
+  constructor(private readonly auditLogService: AuditLogService) { }
 
   /**
    * Executes the fetch-log-by-id use case.

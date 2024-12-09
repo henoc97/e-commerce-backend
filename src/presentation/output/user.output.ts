@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { AddressOutput } from "./address.output";
-import { UserRole } from "src/domain/enums/user-role.enum";
+import { UserRole } from "../../domain/enums/user-role.enum";
 import { UserProfileOutput } from "./user-profile.output";
 import { OrderOutput } from "./order.output";
 import { CartOutput } from "./cart.output";

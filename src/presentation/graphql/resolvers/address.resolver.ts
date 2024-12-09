@@ -1,18 +1,18 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { CreateAddress } from 'src/application/use-cases/address.use-cases/create-address.use-case';
-import { FetchAddressById } from 'src/application/use-cases/address.use-cases/fetch-address-by-id.use-case';
-import { ListAddressesByCity } from 'src/application/use-cases/address.use-cases/list-addresses-by-city.use-case';
-import { ModifyAddressById } from 'src/application/use-cases/address.use-cases/modify-address-by-id.use-case';
-import { RemoveAddressById } from 'src/application/use-cases/address.use-cases/remove-address-by-id.use-case';
-import { ListAddressesByCountry } from 'src/application/use-cases/address.use-cases/list-addresses-by-country.use-case';
-import { ListAddressesByState } from 'src/application/use-cases/address.use-cases/list-addresses-by-state.use-case';
-import { ListAddressesByPostalCode } from 'src/application/use-cases/address.use-cases/list-addresses-by-postal-code.use-case';
-import { ListAddressesByUser } from 'src/application/use-cases/address.use-cases/list-addresses-by-user.use-case';
+import { CreateAddress } from '../../../application/use-cases/address.use-cases/create-address.use-case';
+import { FetchAddressById } from '../../../application/use-cases/address.use-cases/fetch-address-by-id.use-case';
+import { ListAddressesByCity } from '../../../application/use-cases/address.use-cases/list-addresses-by-city.use-case';
+import { ModifyAddressById } from '../../../application/use-cases/address.use-cases/modify-address-by-id.use-case';
+import { RemoveAddressById } from '../../../application/use-cases/address.use-cases/remove-address-by-id.use-case';
+import { ListAddressesByCountry } from '../../../application/use-cases/address.use-cases/list-addresses-by-country.use-case';
+import { ListAddressesByState } from '../../../application/use-cases/address.use-cases/list-addresses-by-state.use-case';
+import { ListAddressesByPostalCode } from '../../../application/use-cases/address.use-cases/list-addresses-by-postal-code.use-case';
+import { ListAddressesByUser } from '../../../application/use-cases/address.use-cases/list-addresses-by-user.use-case';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/infrastructure/external-services/auth/jwt-auth.guard';
-import { transformAddressDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { AddressOutput } from 'src/presentation/output/address.output';
-import { AddressInput } from 'src/presentation/input/address.input';
+import { JwtAuthGuard } from '../../../infrastructure/external-services/auth/jwt-auth.guard';
+import { transformAddressDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { AddressOutput } from '../../../presentation/output/address.output';
+import { AddressInput } from '../../../presentation/input/address.input';
 
 @Resolver(() => AddressOutput)
 export class AddressResolver {

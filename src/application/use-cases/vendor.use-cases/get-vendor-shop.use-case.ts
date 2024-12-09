@@ -1,7 +1,7 @@
 // import { Injectable } from '@nestjs/common';
-// import { VendorService } from 'src/application/services/vendor.service';
-// import { ShopDTO } from 'src/presentation/dtos/shop.dto';
-// import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
+// import { VendorService } from '../../../application/services/vendor.service';
+// import { ShopDTO } from '../../../presentation/dtos/shop.dto';
+// import { toShopDTO } from '../../../application/helper/to-dto/to.shop.dto';
 
 // /**
 //  * Use case class for retrieving the shop associated with a vendor.

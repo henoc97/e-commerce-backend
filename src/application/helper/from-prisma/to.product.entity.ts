@@ -1,4 +1,4 @@
-﻿import { Product } from 'src/domain/entities/product.entity';
+﻿import { Product } from '../../../domain/entities/product.entity';
 import { fromCartItemPrisma } from './to.cart-item.entity';
 import { fromOrderItemPrisma } from './to.order-item.entity';
 import { fromPromotionPrisma } from './to.promotion.entity';

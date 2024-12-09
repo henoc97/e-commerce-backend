@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/application/services/user.service';
-import { toUserDTO } from 'src/application/helper/to-dto/to.user.dto';
-import { UserDTO } from 'src/presentation/dtos/user.dto';
+import { UserService } from '../../../application/services/user.service';
+import { toUserDTO } from '../../../application/helper/to-dto/to.user.dto';
+import { UserDTO } from '../../../presentation/dtos/user.dto';
 
 /**
  * Use case class for updating a user.
@@ -10,7 +10,7 @@ import { UserDTO } from 'src/presentation/dtos/user.dto';
  */
 @Injectable()
 export class UpdateUser {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Execute the update-user use case.

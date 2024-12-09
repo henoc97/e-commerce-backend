@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { UserDTO } from './user.dto';
-import { UserActivityAction } from 'src/domain/enums/user-activity-action.enum';
+import { UserActivityAction } from '../../domain/enums/user-activity-action.enum';
 
 /**
  * Data Transfer Object for UserActivity.

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { VendorService } from '../services/vendor.service';
-import { VendorRepository } from 'src/infrastructure/persistences/vendor.repository.impl';
+import { VendorRepository } from '../../infrastructure/persistences/vendor.repository.impl';
 import { CreateVendor } from '../use-cases/vendor.use-cases/create-vendor.use-case';
 import { FindVendorsByUser } from '../use-cases/vendor.use-cases/find-vendors-by-user.use-case';
 import { VendorList } from '../use-cases/vendor.use-cases/vendor-list.use-case';

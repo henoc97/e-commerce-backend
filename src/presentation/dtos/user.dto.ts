@@ -17,7 +17,7 @@ import { TicketDTO } from './ticket.dto';
 import { SubsiteDTO } from './subsite.dto';
 import { UserActivityDTO } from './user-activity.dto';
 import { AuditLogDTO } from './audit-log.dto';
-import { UserRole } from 'src/domain/enums/user-role.enum';
+import { UserRole } from '../../domain/enums/user-role.enum';
 import { NotificationDTO } from './notification.dto';
 import { VendorDTO } from './vendor.dto';
 

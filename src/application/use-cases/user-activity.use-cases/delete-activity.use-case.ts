@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserActivityService } from 'src/application/services/user-activity.service';
+import { UserActivityService } from '../../../application/services/user-activity.service';
 
 /**
  * Use case class for deleting an activity.
@@ -7,7 +7,7 @@ import { UserActivityService } from 'src/application/services/user-activity.serv
  */
 @Injectable()
 export class DeleteActivity {
-  constructor(private readonly activityService: UserActivityService) {}
+  constructor(private readonly activityService: UserActivityService) { }
 
   /**
    * Execute the delete-activity use case.

@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { Shop } from 'src/domain/entities/shop.entity';
-import { IShopRepository } from 'src/domain/repositories/shop.repository';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
+import { Shop } from '../../domain/entities/shop.entity';
+import { IShopRepository } from '../../domain/repositories/shop.repository';
+import { ShopDTO } from '../../presentation/dtos/shop.dto';
 import { fromShopDTO } from '../helper/to-entity/to.shop.entity';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+import { ProductDTO } from '../../presentation/dtos/product.dto';
+import { OrderDTO } from '../../presentation/dtos/order.dto';
+import { CategoryDTO } from '../../presentation/dtos/category.dto';
 import ProductService from './product.service';
 import { OrderService } from './order.service';
 import { CategoryService } from './category.service';

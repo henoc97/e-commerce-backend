@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { NewsletterSubscriptionService } from 'src/application/services/newsletter-subscription.service';
+import { NewsletterSubscriptionService } from '../../../application/services/newsletter-subscription.service';
 
 /**
  * Use case class to count the total number of newsletter subscriptions.
  */
 @Injectable()
 export class CountTotalNewsletterSubscriptions {
-  constructor(private readonly service: NewsletterSubscriptionService) {}
+  constructor(private readonly service: NewsletterSubscriptionService) { }
 
   /**
    * Execute the use case to count total subscriptions.

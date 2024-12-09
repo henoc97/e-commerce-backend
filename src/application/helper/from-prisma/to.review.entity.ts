@@ -1,4 +1,4 @@
-﻿import { Review } from 'src/domain/entities/review.entity';
+﻿import { Review } from '../../../domain/entities/review.entity';
 import { fromUserPrisma } from './to.user.entity';
 import { fromProductPrisma } from './to.product.entity';
 

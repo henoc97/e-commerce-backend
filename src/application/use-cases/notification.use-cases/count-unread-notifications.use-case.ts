@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { NotificationService } from 'src/application/services/notification.service';
+import { NotificationService } from '../../../application/services/notification.service';
 
 /**
  * Use case for counting unread notifications for a user.
  */
 @Injectable()
 export class CountUnreadNotifications {
-  constructor(private readonly service: NotificationService) {}
+  constructor(private readonly service: NotificationService) { }
 
   /**
    * Executes the use case.

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { SubsiteService } from 'src/application/services/subsite.service';
-import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
-import { toSubsiteDTO } from 'src/application/helper/to-dto/to.sub-site.dto';
+import { SubsiteService } from '../../../application/services/subsite.service';
+import { SubsiteDTO } from '../../../presentation/dtos/subsite.dto';
+import { toSubsiteDTO } from '../../../application/helper/to-dto/to.sub-site.dto';
 
 /**
  * Use case class for fetching a subsite by its ID.
@@ -9,7 +9,7 @@ import { toSubsiteDTO } from 'src/application/helper/to-dto/to.sub-site.dto';
  */
 @Injectable()
 export class FetchSubsiteById {
-  constructor(private readonly subsiteService: SubsiteService) {}
+  constructor(private readonly subsiteService: SubsiteService) { }
 
   /**
    * Execute the fetch-subsite-by-id use case.

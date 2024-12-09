@@ -6,7 +6,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
+import { TicketStatus } from '../../domain/enums/ticket-status.enum';
 import { UserDTO } from './user.dto';
 
 /**

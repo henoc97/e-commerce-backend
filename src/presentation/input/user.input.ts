@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { UserRole } from "src/domain/enums/user-role.enum";
+import { UserRole } from "../../domain/enums/user-role.enum";
 
 /**
  * Input Type for User.

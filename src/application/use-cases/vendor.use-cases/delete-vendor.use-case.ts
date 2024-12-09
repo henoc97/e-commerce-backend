@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { VendorService } from 'src/application/services/vendor.service';
+import { VendorService } from '../../../application/services/vendor.service';
 
 /**
  * Use case class for deleting a vendor.
@@ -8,7 +8,7 @@ import { VendorService } from 'src/application/services/vendor.service';
  */
 @Injectable()
 export class DeleteVendor {
-  constructor(private readonly vendorService: VendorService) {}
+  constructor(private readonly vendorService: VendorService) { }
 
   /**
    * Execute the delete-vendor use case.

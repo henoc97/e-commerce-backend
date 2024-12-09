@@ -1,4 +1,4 @@
-﻿import { OrderItem } from 'src/domain/entities/order-item.enttity';
+﻿import { OrderItem } from '../../../domain/entities/order-item.enttity';
 import { fromOrderPrisma } from './to.order.entity';
 import { fromProductPrisma } from './to.product.entity';
 

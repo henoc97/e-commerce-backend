@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { UserOutput } from "./user.output";
-import { TicketStatus } from "src/domain/enums/ticket-status.enum";
+import { TicketStatus } from "../../domain/enums/ticket-status.enum";
 import { Type } from "class-transformer"
 /**
  * Data Transfer Object for Ticket.

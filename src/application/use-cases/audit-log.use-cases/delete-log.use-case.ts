@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { AuditLogService } from 'src/application/services/audit-log.service';
+import { AuditLogService } from '../../../application/services/audit-log.service';
 
 /**
  * Use case class for deleting an audit log entry.
  */
 @Injectable()
 export class DeleteLog {
-  constructor(private readonly auditLogService: AuditLogService) {}
+  constructor(private readonly auditLogService: AuditLogService) { }
 
   /**
    * Executes the delete-log use case.

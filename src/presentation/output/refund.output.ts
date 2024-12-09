@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { RefundStatus } from 'src/domain/enums/refund-status.enum';
+import { RefundStatus } from '../../domain/enums/refund-status.enum';
 import { OrderOutput } from './order.output';
 import { Type } from 'class-transformer';
 

@@ -1,7 +1,7 @@
-import { Refund } from 'src/domain/entities/refund.entity';
-import { RefundStatus } from 'src/domain/enums/refund-status.enum';
-import { IRefundRepository } from 'src/domain/repositories/refund.repository';
-import { RefundDTO } from 'src/presentation/dtos/refund.dto';
+import { Refund } from '../../domain/entities/refund.entity';
+import { RefundStatus } from '../../domain/enums/refund-status.enum';
+import { IRefundRepository } from '../../domain/repositories/refund.repository';
+import { RefundDTO } from '../../presentation/dtos/refund.dto';
 import { fromRefundDTO } from '../helper/to-entity/to.refund.entity';
 import { Inject } from '@nestjs/common';
 
@@ -17,7 +17,7 @@ export class RefundService {
   constructor(
     @Inject('IRefundRepository')
     private readonly refundRepository: IRefundRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new refund.

@@ -1,5 +1,5 @@
-﻿import { Vendor } from 'src/domain/entities/vendor.entity';
-import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
+﻿import { Vendor } from '../../../domain/entities/vendor.entity';
+import { VendorDTO } from '../../../presentation/dtos/vendor.dto';
 import { fromShopDTO } from './to.shop.entity';
 import { fromProductDTO } from './to.product.entity';
 import { fromUserDTO } from './to.user.entity';

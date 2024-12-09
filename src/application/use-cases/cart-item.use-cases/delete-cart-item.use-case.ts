@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CartItemService } from 'src/application/services/cart-item.service';
+import { CartItemService } from '../../../application/services/cart-item.service';
 
 /**
  * Use case class for deleting a cart item by its ID.
  */
 @Injectable()
 export class DeleteCartItem {
-  constructor(private readonly cartItemService: CartItemService) {}
+  constructor(private readonly cartItemService: CartItemService) { }
 
   /**
    * Executes the delete-cart-item use case.

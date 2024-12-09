@@ -1,7 +1,7 @@
-import { fromAddressPrisma } from 'src/application/helper/from-prisma/to.address.entity';
-import { Address } from 'src/domain/entities/address.entity';
-import { IAddressRepository } from 'src/domain/repositories/address.repository';
-import prisma from 'prisma/prisma.service';
+import { fromAddressPrisma } from '../../application/helper/from-prisma/to.address.entity';
+import { Address } from '../../domain/entities/address.entity';
+import { IAddressRepository } from '../../domain/repositories/address.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class AddressRepository implements IAddressRepository {
 

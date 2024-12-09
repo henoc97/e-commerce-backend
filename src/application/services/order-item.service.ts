@@ -1,9 +1,9 @@
-import { OrderItem } from 'src/domain/entities/order-item.enttity';
-import { IOrderItemRepository } from 'src/domain/repositories/order-item.repository';
-import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
+import { OrderItem } from '../../domain/entities/order-item.enttity';
+import { IOrderItemRepository } from '../../domain/repositories/order-item.repository';
+import { OrderItemDTO } from '../../presentation/dtos/order-item.dto';
 import { fromOrderItemDTO } from '../helper/to-entity/to.order-item.entity';
 import { Inject } from '@nestjs/common';
-import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
+import { KafkaProducerService } from '../../infrastructure/external-services/kafka/services/kafka-producer.service';
 
 /**
  * Service class for managing OrderItems.

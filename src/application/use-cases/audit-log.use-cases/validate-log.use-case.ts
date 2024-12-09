@@ -1,6 +1,6 @@
 // import { Injectable } from '@nestjs/common';
-// import { AuditLogService } from 'src/application/services/audit-log.service';
-// import { AuditLogDTO } from 'src/presentation/dtos/audit-log.dto';
+// import { AuditLogService } from '../../../application/services/audit-log.service';
+// import { AuditLogDTO } from '../../../presentation/dtos/audit-log.dto';
 
 // /**
 //  * Use case class for validating an audit log entry.

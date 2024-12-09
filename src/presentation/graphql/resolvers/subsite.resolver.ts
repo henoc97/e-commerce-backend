@@ -1,20 +1,20 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { CountSubsitesByUser } from 'src/application/use-cases/subsite.use-cases/count-subsites-by-user.use-case';
-import { CreateSubsite } from 'src/application/use-cases/subsite.use-cases/create-subsite.use-case';
-import { FetchLatestSubsite } from 'src/application/use-cases/subsite.use-cases/fetch-latest-subsite.use-case';
-import { FetchSubsiteById } from 'src/application/use-cases/subsite.use-cases/fetch-subsite-by-id.use-case';
-import { ListActiveSubsites } from 'src/application/use-cases/subsite.use-cases/list-active-subsites.use-case';
-import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
-import { RemoveSubsite } from 'src/application/use-cases/subsite.use-cases/remove-subsite.use-case';
-import { UpdateSubsite } from 'src/application/use-cases/subsite.use-cases/update-subsite.use-case';
-import { ValidateSubsite } from 'src/application/use-cases/subsite.use-cases/validate-subsite.use-case';
-import { FetchSubsiteConfig } from 'src/application/use-cases/subsite.use-cases/fetch-subsite-config.use-case';
-import { ListSubsitesByUser } from 'src/application/use-cases/subsite.use-cases/list-subsites-by-user.use-case';
-import { UpdateSubsiteConfig } from 'src/application/use-cases/subsite.use-cases/update-subsite-config.use-case';
-import { transformSubsiteDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { SubsiteOutput } from 'src/presentation/output/subsite.output';
-import { SubsiteInput } from 'src/presentation/input/subsite.input';
-import { toSubsiteDTO } from 'src/application/helper/to-dto/to.sub-site.dto';
+import { CountSubsitesByUser } from '../../../application/use-cases/subsite.use-cases/count-subsites-by-user.use-case';
+import { CreateSubsite } from '../../../application/use-cases/subsite.use-cases/create-subsite.use-case';
+import { FetchLatestSubsite } from '../../../application/use-cases/subsite.use-cases/fetch-latest-subsite.use-case';
+import { FetchSubsiteById } from '../../../application/use-cases/subsite.use-cases/fetch-subsite-by-id.use-case';
+import { ListActiveSubsites } from '../../../application/use-cases/subsite.use-cases/list-active-subsites.use-case';
+import { SubsiteDTO } from '../../../presentation/dtos/subsite.dto';
+import { RemoveSubsite } from '../../../application/use-cases/subsite.use-cases/remove-subsite.use-case';
+import { UpdateSubsite } from '../../../application/use-cases/subsite.use-cases/update-subsite.use-case';
+import { ValidateSubsite } from '../../../application/use-cases/subsite.use-cases/validate-subsite.use-case';
+import { FetchSubsiteConfig } from '../../../application/use-cases/subsite.use-cases/fetch-subsite-config.use-case';
+import { ListSubsitesByUser } from '../../../application/use-cases/subsite.use-cases/list-subsites-by-user.use-case';
+import { UpdateSubsiteConfig } from '../../../application/use-cases/subsite.use-cases/update-subsite-config.use-case';
+import { transformSubsiteDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { SubsiteOutput } from '../../../presentation/output/subsite.output';
+import { SubsiteInput } from '../../../presentation/input/subsite.input';
+import { toSubsiteDTO } from '../../../application/helper/to-dto/to.sub-site.dto';
 
 @Resolver('Subsite')
 export class SubsiteResolver {

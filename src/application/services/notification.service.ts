@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { NotificationType } from 'src/domain/enums/notification-type.enum';
-import { INotificationRepository } from 'src/domain/repositories/notification.repository';
-import { NotificationDTO } from 'src/presentation/dtos/notification.dto';
+import { NotificationType } from '../../domain/enums/notification-type.enum';
+import { INotificationRepository } from '../../domain/repositories/notification.repository';
+import { NotificationDTO } from '../../presentation/dtos/notification.dto';
 import { Notification } from '../../domain/entities/notification.entity';
 import { fromNotificationDTO } from '../helper/to-entity/to.notification.entity';
 
@@ -14,7 +14,7 @@ export class NotificationService {
   constructor(
     @Inject('INotificationRepository')
     private readonly notificationRepository: INotificationRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new notification.

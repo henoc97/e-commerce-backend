@@ -1,7 +1,7 @@
-import { fromPromotionPrisma } from 'src/application/helper/from-prisma/to.promotion.entity';
-import { Promotion } from 'src/domain/entities/promotion.entity';
-import { IPromotionRepository } from 'src/domain/repositories/promotion.repository';
-import prisma from 'prisma/prisma.service';
+import { fromPromotionPrisma } from '../../application/helper/from-prisma/to.promotion.entity';
+import { Promotion } from '../../domain/entities/promotion.entity';
+import { IPromotionRepository } from '../../domain/repositories/promotion.repository';
+import prisma from '../../../prisma/prisma.service';
 
 /**
  * Repository for handling Promotion operations with Prisma.

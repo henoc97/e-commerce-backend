@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import ProductService from 'src/application/services/product.service';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { toProductDTO } from 'src/application/helper/to-dto/to.product.dto';
+import ProductService from '../../../application/services/product.service';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
+import { toProductDTO } from '../../../application/helper/to-dto/to.product.dto';
 
 /**
  * Use case class for updating the stock of a product.
  */
 @Injectable()
 export class UpdateProductStock {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   /**
    * Executes the use case to update a product's stock quantity.

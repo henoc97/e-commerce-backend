@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SubsiteService } from 'src/application/services/subsite.service';
+import { SubsiteService } from '../../../application/services/subsite.service';
 
 /**
  * Use case class for removing a subsite.
@@ -7,7 +7,7 @@ import { SubsiteService } from 'src/application/services/subsite.service';
  */
 @Injectable()
 export class RemoveSubsite {
-  constructor(private readonly subsiteService: SubsiteService) {}
+  constructor(private readonly subsiteService: SubsiteService) { }
 
   /**
    * Execute the remove-subsite use case.

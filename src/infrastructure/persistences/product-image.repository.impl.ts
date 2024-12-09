@@ -1,7 +1,7 @@
-import { fromProductImagePrisma } from 'src/application/helper/from-prisma/to.product-image.entity';
-import { ProductImage } from 'src/domain/entities/product-image.entity';
-import { IProductImageRepository } from 'src/domain/repositories/product-image.repository';
-import prisma from 'prisma/prisma.service';
+import { fromProductImagePrisma } from '../../application/helper/from-prisma/to.product-image.entity';
+import { ProductImage } from '../../domain/entities/product-image.entity';
+import { IProductImageRepository } from '../../domain/repositories/product-image.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class ProductImageRepository implements IProductImageRepository {
 

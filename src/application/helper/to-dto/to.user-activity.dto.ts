@@ -1,6 +1,6 @@
-﻿import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
+﻿import { UserActivityDTO } from '../../../presentation/dtos/user-activity.dto';
 import { toUserDTO } from './to.user.dto';
-import { UserActivity } from 'src/domain/entities/user-activity.entity';
+import { UserActivity } from '../../../domain/entities/user-activity.entity';
 
 /**
  * Converts a UserActivity entity to UserActivityDTO.

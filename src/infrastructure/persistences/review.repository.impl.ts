@@ -1,7 +1,7 @@
-import { fromReviewPrisma } from 'src/application/helper/from-prisma/to.review.entity';
-import { Review } from 'src/domain/entities/review.entity';
-import { IReviewRepository } from 'src/domain/repositories/review.repository';
-import prisma from 'prisma/prisma.service';
+import { fromReviewPrisma } from '../../application/helper/from-prisma/to.review.entity';
+import { Review } from '../../domain/entities/review.entity';
+import { IReviewRepository } from '../../domain/repositories/review.repository';
+import prisma from '../../../prisma/prisma.service';
 
 /**
  * Repository for handling Review-related operations using Prisma ORM.

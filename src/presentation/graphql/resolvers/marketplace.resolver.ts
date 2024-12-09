@@ -1,18 +1,18 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
-import { AddShopToMarketplace } from 'src/application/use-cases/marketplace.use-cases/add-shop-to-marketplace.use-case';
-import { CreateMarketplace } from 'src/application/use-cases/marketplace.use-cases/create-marketplace.use-case';
-import { DeleteMarketplace } from 'src/application/use-cases/marketplace.use-cases/delete-marketplace.use-case';
-import { FetchMarketplaceById } from 'src/application/use-cases/marketplace.use-cases/fetch-marketplace-by-id.use-case';
-import { FetchMarketplaceByShopId } from 'src/application/use-cases/marketplace.use-cases/fetch-marketplace-by-shop-id.use-case';
-import { FetchShopsInMarketplace } from 'src/application/use-cases/marketplace.use-cases/fetch-shops-in-marketplace.use-case';
-import { ListMarketplaces } from 'src/application/use-cases/marketplace.use-cases/list-marketplaces.use-case';
-import { RemoveShopFromMarketplace } from 'src/application/use-cases/marketplace.use-cases/remove-shop-from-marketplace.use-case';
-import { UpdateMarketplace } from 'src/application/use-cases/marketplace.use-cases/update-marketplace.use-case';
-import { MarketplaceOutput } from 'src/presentation/output/marketplace.output';
-import { transformMarketplaceDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { MarketplaceInput } from 'src/presentation/input/marketplace.input';
-import { ShopOutput } from 'src/presentation/output/shop.output';
+import { ShopDTO } from '../../../presentation/dtos/shop.dto';
+import { AddShopToMarketplace } from '../../../application/use-cases/marketplace.use-cases/add-shop-to-marketplace.use-case';
+import { CreateMarketplace } from '../../../application/use-cases/marketplace.use-cases/create-marketplace.use-case';
+import { DeleteMarketplace } from '../../../application/use-cases/marketplace.use-cases/delete-marketplace.use-case';
+import { FetchMarketplaceById } from '../../../application/use-cases/marketplace.use-cases/fetch-marketplace-by-id.use-case';
+import { FetchMarketplaceByShopId } from '../../../application/use-cases/marketplace.use-cases/fetch-marketplace-by-shop-id.use-case';
+import { FetchShopsInMarketplace } from '../../../application/use-cases/marketplace.use-cases/fetch-shops-in-marketplace.use-case';
+import { ListMarketplaces } from '../../../application/use-cases/marketplace.use-cases/list-marketplaces.use-case';
+import { RemoveShopFromMarketplace } from '../../../application/use-cases/marketplace.use-cases/remove-shop-from-marketplace.use-case';
+import { UpdateMarketplace } from '../../../application/use-cases/marketplace.use-cases/update-marketplace.use-case';
+import { MarketplaceOutput } from '../../../presentation/output/marketplace.output';
+import { transformMarketplaceDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { MarketplaceInput } from '../../../presentation/input/marketplace.input';
+import { ShopOutput } from '../../../presentation/output/shop.output';
 
 @Resolver(() => MarketplaceInput)
 export class MarketplaceResolver {

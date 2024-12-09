@@ -1,5 +1,5 @@
-﻿import { Product } from 'src/domain/entities/product.entity';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
+﻿import { Product } from '../../../domain/entities/product.entity';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
 import { fromCartItemDTO } from './to.cart-item.entity';
 import { fromOrderItemDTO } from './to.order-item.entity';
 import { fromProductImageDTO } from './to.product-image.entity';

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { TicketService } from 'src/application/services/ticket.service';
-import { TicketDTO } from 'src/presentation/dtos/ticket.dto';
-import { toTicketDTO } from 'src/application/helper/to-dto/to.ticket.dto';
+import { TicketService } from '../../../application/services/ticket.service';
+import { TicketDTO } from '../../../presentation/dtos/ticket.dto';
+import { toTicketDTO } from '../../../application/helper/to-dto/to.ticket.dto';
 
 /**
  * Use case class for listing high-priority tickets.

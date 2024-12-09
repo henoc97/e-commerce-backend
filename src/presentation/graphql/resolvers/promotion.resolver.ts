@@ -1,19 +1,19 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-// import { ApplyPromotionToProduct } from 'src/application/use-cases/promotion.use-cases/apply-promotion-to-product.use-case';
-import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
-import { CombinePromotions } from 'src/application/use-cases/promotion.use-cases/combine-promotions.use-case';
-import { CreatePromotion } from 'src/application/use-cases/promotion.use-cases/create-promotion.use-case';
-import { DeletePromotion } from 'src/application/use-cases/promotion.use-cases/delete-promotion.use-case';
-import { FetchActivePromotionsBetween } from 'src/application/use-cases/promotion.use-cases/fetch-active-promotions-between.use-case';
-import { FetchActivePromotions } from 'src/application/use-cases/promotion.use-cases/fetch-active-promotions.use-case';
-import { FetchBestPromotionForProduct } from 'src/application/use-cases/promotion.use-cases/fetch-best-promotion-for-product.use-case';
-import { FetchPromotionById } from 'src/application/use-cases/promotion.use-cases/fetch-promotion-by-id.use-case';
-import { FetchPromotionsByProduct } from 'src/application/use-cases/promotion.use-cases/fetch-promotions-by-product.use-case';
-import { UpdatePromotion } from 'src/application/use-cases/promotion.use-cases/update-promotion.use-case';
-import { transformPromotionDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { PromotionOutput } from 'src/presentation/output/promotion.output';
-import { toPromotionDTO } from 'src/application/helper/to-dto/to.promotion.dto';
-import { PromotionInput } from 'src/presentation/input/promotion.input';
+// import { ApplyPromotionToProduct } from '../../../application/use-cases/promotion.use-cases/apply-promotion-to-product.use-case';
+import { PromotionDTO } from '../../../presentation/dtos/promotion.dto';
+import { CombinePromotions } from '../../../application/use-cases/promotion.use-cases/combine-promotions.use-case';
+import { CreatePromotion } from '../../../application/use-cases/promotion.use-cases/create-promotion.use-case';
+import { DeletePromotion } from '../../../application/use-cases/promotion.use-cases/delete-promotion.use-case';
+import { FetchActivePromotionsBetween } from '../../../application/use-cases/promotion.use-cases/fetch-active-promotions-between.use-case';
+import { FetchActivePromotions } from '../../../application/use-cases/promotion.use-cases/fetch-active-promotions.use-case';
+import { FetchBestPromotionForProduct } from '../../../application/use-cases/promotion.use-cases/fetch-best-promotion-for-product.use-case';
+import { FetchPromotionById } from '../../../application/use-cases/promotion.use-cases/fetch-promotion-by-id.use-case';
+import { FetchPromotionsByProduct } from '../../../application/use-cases/promotion.use-cases/fetch-promotions-by-product.use-case';
+import { UpdatePromotion } from '../../../application/use-cases/promotion.use-cases/update-promotion.use-case';
+import { transformPromotionDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { PromotionOutput } from '../../../presentation/output/promotion.output';
+import { toPromotionDTO } from '../../../application/helper/to-dto/to.promotion.dto';
+import { PromotionInput } from '../../../presentation/input/promotion.input';
 
 @Resolver(() => PromotionOutput)
 export class PromotionResolver {

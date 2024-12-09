@@ -1,19 +1,19 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { toUserActivityDTO } from 'src/application/helper/to-dto/to.user-activity.dto';
-import { transformUserActivityDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { CountActivitiesByUser } from 'src/application/use-cases/user-activity.use-cases/count-activities-by-user.use-case';
-import { DeleteActivity } from 'src/application/use-cases/user-activity.use-cases/delete-activity.use-case';
-import { FetchActivityById } from 'src/application/use-cases/user-activity.use-cases/fetch-activity-by-id.use-case';
-import { GetRecentActivitiesByUser } from 'src/application/use-cases/user-activity.use-cases/get-recent-activities-by-user.use-case';
-import { ListActivitiesByDateRange } from 'src/application/use-cases/user-activity.use-cases/list-activities-by-date-range.use-case';
-import { ListActivitiesByProduct } from 'src/application/use-cases/user-activity.use-cases/list-activities-by-product.use-case';
-import { ListActivitiesByUser } from 'src/application/use-cases/user-activity.use-cases/list-activities-by-user.use-case';
-import { RecordActivity } from 'src/application/use-cases/user-activity.use-cases/record-activity.use-case';
-import { UpdateActivity } from 'src/application/use-cases/user-activity.use-cases/update-activity.use-case';
-import { ValidateActivity } from 'src/application/use-cases/user-activity.use-cases/validate-activity.use-case';
-import { UserActivityDTO } from 'src/presentation/dtos/user-activity.dto';
-import { UserActivityInput } from 'src/presentation/input/user-activity.input';
-import { UserActivityOutput } from 'src/presentation/output/user-activity.output';
+import { toUserActivityDTO } from '../../../application/helper/to-dto/to.user-activity.dto';
+import { transformUserActivityDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { CountActivitiesByUser } from '../../../application/use-cases/user-activity.use-cases/count-activities-by-user.use-case';
+import { DeleteActivity } from '../../../application/use-cases/user-activity.use-cases/delete-activity.use-case';
+import { FetchActivityById } from '../../../application/use-cases/user-activity.use-cases/fetch-activity-by-id.use-case';
+import { GetRecentActivitiesByUser } from '../../../application/use-cases/user-activity.use-cases/get-recent-activities-by-user.use-case';
+import { ListActivitiesByDateRange } from '../../../application/use-cases/user-activity.use-cases/list-activities-by-date-range.use-case';
+import { ListActivitiesByProduct } from '../../../application/use-cases/user-activity.use-cases/list-activities-by-product.use-case';
+import { ListActivitiesByUser } from '../../../application/use-cases/user-activity.use-cases/list-activities-by-user.use-case';
+import { RecordActivity } from '../../../application/use-cases/user-activity.use-cases/record-activity.use-case';
+import { UpdateActivity } from '../../../application/use-cases/user-activity.use-cases/update-activity.use-case';
+import { ValidateActivity } from '../../../application/use-cases/user-activity.use-cases/validate-activity.use-case';
+import { UserActivityDTO } from '../../../presentation/dtos/user-activity.dto';
+import { UserActivityInput } from '../../../presentation/input/user-activity.input';
+import { UserActivityOutput } from '../../../presentation/output/user-activity.output';
 
 @Resolver()
 export class UserActivityResolver {

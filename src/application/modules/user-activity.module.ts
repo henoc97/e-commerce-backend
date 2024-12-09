@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserActivityService } from '../services/user-activity.service';
-import { UserActivityRepository } from 'src/infrastructure/persistences/user-activity.repository.impl';
+import { UserActivityRepository } from '../../infrastructure/persistences/user-activity.repository.impl';
 import { ListActivitiesByUser } from '../use-cases/user-activity.use-cases/list-activities-by-user.use-case';
 import { CountActivitiesByUser } from '../use-cases/user-activity.use-cases/count-activities-by-user.use-case';
 import { ListActivitiesByProduct } from '../use-cases/user-activity.use-cases/list-activities-by-product.use-case';
@@ -11,7 +11,7 @@ import { DeleteActivity } from '../use-cases/user-activity.use-cases/delete-acti
 import { FetchActivityById } from '../use-cases/user-activity.use-cases/fetch-activity-by-id.use-case';
 import { ValidateActivity } from '../use-cases/user-activity.use-cases/validate-activity.use-case';
 import { ListActivitiesByDateRange } from '../use-cases/user-activity.use-cases/list-activities-by-date-range.use-case';
-import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
+import { KafkaModule } from '../../infrastructure/external-services/kafka/kafka.module';
 
 const userActivityUseCases = [
   ListActivitiesByUser,

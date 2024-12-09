@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { VendorService } from 'src/application/services/vendor.service';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
-import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
-import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
+import { VendorService } from '../../../application/services/vendor.service';
+import { ShopDTO } from '../../../presentation/dtos/shop.dto';
+import { toVendorDTO } from '../../../application/helper/to-dto/to.vendor.dto';
+import { VendorDTO } from '../../../presentation/dtos/vendor.dto';
 
 /**
  * Use case class for associating a shop with a vendor.
@@ -11,7 +11,7 @@ import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
  */
 @Injectable()
 export class SetVendorShop {
-  constructor(private readonly vendorService: VendorService) {}
+  constructor(private readonly vendorService: VendorService) { }
 
   /**
    * Execute the set-vendor-shop use case.

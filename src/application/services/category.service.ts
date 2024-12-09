@@ -1,7 +1,7 @@
-import { Category } from 'src/domain/entities/category.entity';
-import { Product } from 'src/domain/entities/product.entity';
-import { ICategoryRepository } from 'src/domain/repositories/category.repository';
-import { CategoryDTO } from 'src/presentation/dtos/category.dto';
+import { Category } from '../../domain/entities/category.entity';
+import { Product } from '../../domain/entities/product.entity';
+import { ICategoryRepository } from '../../domain/repositories/category.repository';
+import { CategoryDTO } from '../../presentation/dtos/category.dto';
 import { fromCategoryDTO } from '../helper/to-entity/to.category.entity';
 import { Inject, NotFoundException } from '@nestjs/common';
 import ProductService from './product.service';
@@ -15,7 +15,7 @@ export class CategoryService {
     @Inject('ICategoryRepository')
     private readonly categoryRepository: ICategoryRepository,
     private readonly productService: ProductService,
-  ) {}
+  ) { }
 
   /**
    * Creates a new category.

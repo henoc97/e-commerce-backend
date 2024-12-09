@@ -1,10 +1,10 @@
-import { fromVendorPrisma } from 'src/application/helper/from-prisma/to.vendor.entity';
-import { Product } from 'src/domain/entities/product.entity';
-import { Shop } from 'src/domain/entities/shop.entity';
-import { Subscription } from 'src/domain/entities/subscription.entity';
-import { Vendor } from 'src/domain/entities/vendor.entity';
-import { IVendorRepository } from 'src/domain/repositories/vendor.repository';
-import prisma from 'prisma/prisma.service';
+import { fromVendorPrisma } from '../../application/helper/from-prisma/to.vendor.entity';
+import { Product } from '../../domain/entities/product.entity';
+import { Shop } from '../../domain/entities/shop.entity';
+import { Subscription } from '../../domain/entities/subscription.entity';
+import { Vendor } from '../../domain/entities/vendor.entity';
+import { IVendorRepository } from '../../domain/repositories/vendor.repository';
+import prisma from '../../../prisma/prisma.service';
 
 /**
  * Repository class for managing vendor-related data operations.

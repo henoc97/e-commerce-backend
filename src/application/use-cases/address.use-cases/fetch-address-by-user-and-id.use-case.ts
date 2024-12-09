@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toAddressDTO } from 'src/application/helper/to-dto/to.address.dto';
-import { AddressService } from 'src/application/services/address.service';
-import { AddressDTO } from 'src/presentation/dtos/address.dto';
+import { toAddressDTO } from '../../../application/helper/to-dto/to.address.dto';
+import { AddressService } from '../../../application/services/address.service';
+import { AddressDTO } from '../../../presentation/dtos/address.dto';
 
 /**
  * Use case class for fetching an address by user ID and address ID.
@@ -9,7 +9,7 @@ import { AddressDTO } from 'src/presentation/dtos/address.dto';
  */
 @Injectable()
 export class FetchAddressByUserAndId {
-  constructor(private readonly service: AddressService) {}
+  constructor(private readonly service: AddressService) { }
 
   /**
    * Execute the fetch-address-by-user-and-id use case.

@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { NotificationType } from "src/domain/enums/notification-type.enum";
+import { NotificationType } from "../../domain/enums/notification-type.enum";
 import { UserOutput } from "./user.output";
 import { Type } from "class-transformer";
 

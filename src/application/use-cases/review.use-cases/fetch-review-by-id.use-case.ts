@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { toReviewDTO } from 'src/application/helper/to-dto/to.review.dto';
-import { ReviewService } from 'src/application/services/review.service';
-import { ReviewDTO } from 'src/presentation/dtos/review.dto';
+import { toReviewDTO } from '../../../application/helper/to-dto/to.review.dto';
+import { ReviewService } from '../../../application/services/review.service';
+import { ReviewDTO } from '../../../presentation/dtos/review.dto';
 
 /**
  * Use case class for fetching a review by its ID.
@@ -9,7 +9,7 @@ import { ReviewDTO } from 'src/presentation/dtos/review.dto';
  */
 @Injectable()
 export class FetchReviewById {
-  constructor(private readonly service: ReviewService) {}
+  constructor(private readonly service: ReviewService) { }
 
   /**
    * Execute the fetch-review-by-id use case.

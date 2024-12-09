@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
-import { ShopService } from 'src/application/services/shop.service';
-import { CategoryDTO } from 'src/presentation/dtos/category.dto';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
+import { toShopDTO } from '../../../application/helper/to-dto/to.shop.dto';
+import { ShopService } from '../../../application/services/shop.service';
+import { CategoryDTO } from '../../../presentation/dtos/category.dto';
+import { ShopDTO } from '../../../presentation/dtos/shop.dto';
 
 /**
  * Use case class for adding a category to a shop.
@@ -10,7 +10,7 @@ import { ShopDTO } from 'src/presentation/dtos/shop.dto';
  */
 @Injectable()
 export class AddCategoryToShop {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ShopService) { }
 
   /**
    * Execute the add-category-to-shop use case.

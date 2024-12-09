@@ -1,4 +1,4 @@
-import { DiscountType } from 'src/domain/enums/discount-type.enum';
+import { DiscountType } from '../../domain/enums/discount-type.enum';
 import { Field, InputType } from '@nestjs/graphql';
 
 /**

@@ -1,19 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Product } from 'src/domain/entities/product.entity';
-import { IProductRepository } from 'src/domain/repositories/product.repository';
+import { Product } from '../../domain/entities/product.entity';
+import { IProductRepository } from '../../domain/repositories/product.repository';
 import { fromProductDTO } from '../helper/to-entity/to.product.entity';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
-import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
-import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
-import { ReviewDTO } from 'src/presentation/dtos/review.dto';
-import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+import { ProductDTO } from '../../presentation/dtos/product.dto';
+import { PromotionDTO } from '../../presentation/dtos/promotion.dto';
+import { ProductImageDTO } from '../../presentation/dtos/product-image.dto';
+import { ProductVariantDTO } from '../../presentation/dtos/product-variant.dto';
+import { ReviewDTO } from '../../presentation/dtos/review.dto';
+import { CartItemDTO } from '../../presentation/dtos/cart-item.dto';
 import { PromotionService } from './promotion.service';
 import { ProductImageService } from './product-image.service';
 import { ProductVariantService } from './product-variant.service';
 import { ReviewService } from './review.service';
 import { CartItemService } from './cart-item.service';
-import { KafkaProducerService } from 'src/infrastructure/external-services/kafka/services/kafka-producer.service';
+import { KafkaProducerService } from '../../infrastructure/external-services/kafka/services/kafka-producer.service';
 import { privateDecrypt } from 'crypto';
 
 /**

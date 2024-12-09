@@ -1,7 +1,7 @@
-import { fromProductVariantPrisma } from 'src/application/helper/from-prisma/to.product-variant.entity';
-import { ProductVariant } from 'src/domain/entities/product-variant.entity';
-import { IProductVariantRepository } from 'src/domain/repositories/product-variant.repository';
-import prisma from 'prisma/prisma.service';
+import { fromProductVariantPrisma } from '../../application/helper/from-prisma/to.product-variant.entity';
+import { ProductVariant } from '../../domain/entities/product-variant.entity';
+import { IProductVariantRepository } from '../../domain/repositories/product-variant.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class ProductVariantRepository implements IProductVariantRepository {
 

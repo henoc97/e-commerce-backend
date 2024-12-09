@@ -1,9 +1,9 @@
-import prisma from 'prisma/prisma.service';
-import { fromUserPrisma } from 'src/application/helper/from-prisma/to.user.entity';
-import { User } from 'src/domain/entities/user.entity';
-import { UserActivityAction } from 'src/domain/enums/user-activity-action.enum';
-import { UserRole } from 'src/domain/enums/user-role.enum';
-import { IUserRepository } from 'src/domain/repositories/user.repository';
+import prisma from '../../../prisma/prisma.service';
+import { fromUserPrisma } from '../../application/helper/from-prisma/to.user.entity';
+import { User } from '../../domain/entities/user.entity';
+import { UserActivityAction } from '../../domain/enums/user-activity-action.enum';
+import { UserRole } from '../../domain/enums/user-role.enum';
+import { IUserRepository } from '../../domain/repositories/user.repository';
 
 export class UserRepository implements IUserRepository {
   constructor(

@@ -1,6 +1,6 @@
 
 import { Field, ObjectType } from '@nestjs/graphql';
-import { OrderStatus } from 'src/domain/enums/order-status.enum';
+import { OrderStatus } from '../../domain/enums/order-status.enum';
 import { OrderItemOutput } from './order-item.output';
 import { UserOutput } from './user.output';
 import { ShopOutput } from './shop.output';

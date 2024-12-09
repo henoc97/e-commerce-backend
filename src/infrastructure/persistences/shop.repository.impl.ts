@@ -1,7 +1,7 @@
-import { fromShopPrisma } from 'src/application/helper/from-prisma/to.shop.entity';
-import { Shop } from 'src/domain/entities/shop.entity';
-import { IShopRepository } from 'src/domain/repositories/shop.repository';
-import prisma from 'prisma/prisma.service';
+import { fromShopPrisma } from '../../application/helper/from-prisma/to.shop.entity';
+import { Shop } from '../../domain/entities/shop.entity';
+import { IShopRepository } from '../../domain/repositories/shop.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class ShopRepository implements IShopRepository {
 

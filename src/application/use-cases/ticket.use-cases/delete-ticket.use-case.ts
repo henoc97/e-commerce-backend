@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TicketService } from 'src/application/services/ticket.service';
+import { TicketService } from '../../../application/services/ticket.service';
 
 /**
  * Use case class for deleting a ticket.
@@ -7,7 +7,7 @@ import { TicketService } from 'src/application/services/ticket.service';
  */
 @Injectable()
 export class DeleteTicket {
-  constructor(private readonly ticketService: TicketService) {}
+  constructor(private readonly ticketService: TicketService) { }
 
   /**
    * Execute the delete-ticket use case.

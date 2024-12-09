@@ -1,4 +1,4 @@
-﻿import { UserActivity } from 'src/domain/entities/user-activity.entity';
+﻿import { UserActivity } from '../../../domain/entities/user-activity.entity';
 import { fromUserPrisma } from './to.user.entity';
 
 /**

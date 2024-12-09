@@ -1,14 +1,14 @@
 ﻿import { Injectable } from '@nestjs/common';
-import { MarketplaceService } from 'src/application/services/marketplace.service';
-import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
-import { toMarketplaceDTO } from 'src/application/helper/to-dto/to.marketplace.dto';
+import { MarketplaceService } from '../../../application/services/marketplace.service';
+import { MarketplaceDTO } from '../../../presentation/dtos/marketplace.dto';
+import { toMarketplaceDTO } from '../../../application/helper/to-dto/to.marketplace.dto';
 
 /**
  * Use case class for creating a marketplace.
  */
 @Injectable()
 export class CreateMarketplace {
-  constructor(private readonly service: MarketplaceService) {}
+  constructor(private readonly service: MarketplaceService) { }
 
   /**
    * Execute the create-marketplace use case.

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentService } from 'src/application/services/payment.service';
+import { PaymentService } from '../../../application/services/payment.service';
 
 /**
  * Use case class for deleting payments.
  */
 @Injectable()
 export class DeletePayment {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) { }
 
   /**
    * Execute the delete-payment use case.

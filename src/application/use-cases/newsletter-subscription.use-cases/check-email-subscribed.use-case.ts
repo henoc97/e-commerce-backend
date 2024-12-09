@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { NewsletterSubscriptionService } from 'src/application/services/newsletter-subscription.service';
+import { NewsletterSubscriptionService } from '../../../application/services/newsletter-subscription.service';
 
 /**
  * Use case class to check if an email is subscribed.
  */
 @Injectable()
 export class CheckEmailSubscribed {
-  constructor(private readonly service: NewsletterSubscriptionService) {}
+  constructor(private readonly service: NewsletterSubscriptionService) { }
 
   /**
    * Execute the use case to check email subscription status.

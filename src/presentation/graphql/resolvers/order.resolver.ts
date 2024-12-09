@@ -1,24 +1,24 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { AddPaymentToOrder } from 'src/application/use-cases/order.use-cases/add-payment-to-order.use-case';
-import { AddRefundToOrder } from 'src/application/use-cases/order.use-cases/add-refund-to-order.use-case';
-import { CreateOrder } from 'src/application/use-cases/order.use-cases/create-order.use-case';
-import { DeleteOrder } from 'src/application/use-cases/order.use-cases/delete-order.use-case';
-import { FetchOrderById } from 'src/application/use-cases/order.use-cases/fetch-order-by-id.use-case';
-import { FetchOrderByTrackingNumber } from 'src/application/use-cases/order.use-cases/fetch-order-by-tracking-number.use-case';
-import { FetchOrdersByDateRange } from 'src/application/use-cases/order.use-cases/fetch-orders-by-date-range.use-case';
-import { FetchOrdersByShopId } from 'src/application/use-cases/order.use-cases/fetch-orders-by-shop-id.use-case';
-import { FetchOrdersByStatus } from 'src/application/use-cases/order.use-cases/fetch-orders-by-status.use-case';
-import { FetchOrdersByUserId } from 'src/application/use-cases/order.use-cases/fetch-orders-by-user-id.use-case';
-import { FetchOrders } from 'src/application/use-cases/order.use-cases/fetch-orders.use-case';
-import { FetchRecentOrdersByShop } from 'src/application/use-cases/order.use-cases/fetch-recent-orders-by-shop.use-case';
-import { FetchTopOrdersByAmount } from 'src/application/use-cases/order.use-cases/fetch-top-orders-by-amount.use-case';
-import { UpdateOrderStatus } from 'src/application/use-cases/order.use-cases/update-order-status.use-case';
-import { UpdateOrder } from 'src/application/use-cases/order.use-cases/update-order.use-case';
-import { OrderStatus } from 'src/domain/enums/order-status.enum';
-import { OrderDTO } from 'src/presentation/dtos/order.dto';
-import { transformOrderDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { OrderOutput } from 'src/presentation/output/order.output';
-import { OrderInput } from 'src/presentation/input/order.input';
+import { AddPaymentToOrder } from '../../../application/use-cases/order.use-cases/add-payment-to-order.use-case';
+import { AddRefundToOrder } from '../../../application/use-cases/order.use-cases/add-refund-to-order.use-case';
+import { CreateOrder } from '../../../application/use-cases/order.use-cases/create-order.use-case';
+import { DeleteOrder } from '../../../application/use-cases/order.use-cases/delete-order.use-case';
+import { FetchOrderById } from '../../../application/use-cases/order.use-cases/fetch-order-by-id.use-case';
+import { FetchOrderByTrackingNumber } from '../../../application/use-cases/order.use-cases/fetch-order-by-tracking-number.use-case';
+import { FetchOrdersByDateRange } from '../../../application/use-cases/order.use-cases/fetch-orders-by-date-range.use-case';
+import { FetchOrdersByShopId } from '../../../application/use-cases/order.use-cases/fetch-orders-by-shop-id.use-case';
+import { FetchOrdersByStatus } from '../../../application/use-cases/order.use-cases/fetch-orders-by-status.use-case';
+import { FetchOrdersByUserId } from '../../../application/use-cases/order.use-cases/fetch-orders-by-user-id.use-case';
+import { FetchOrders } from '../../../application/use-cases/order.use-cases/fetch-orders.use-case';
+import { FetchRecentOrdersByShop } from '../../../application/use-cases/order.use-cases/fetch-recent-orders-by-shop.use-case';
+import { FetchTopOrdersByAmount } from '../../../application/use-cases/order.use-cases/fetch-top-orders-by-amount.use-case';
+import { UpdateOrderStatus } from '../../../application/use-cases/order.use-cases/update-order-status.use-case';
+import { UpdateOrder } from '../../../application/use-cases/order.use-cases/update-order.use-case';
+import { OrderStatus } from '../../../domain/enums/order-status.enum';
+import { OrderDTO } from '../../../presentation/dtos/order.dto';
+import { transformOrderDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { OrderOutput } from '../../../presentation/output/order.output';
+import { OrderInput } from '../../../presentation/input/order.input';
 
 
 @Resolver(() => OrderOutput)

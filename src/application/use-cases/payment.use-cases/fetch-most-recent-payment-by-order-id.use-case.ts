@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentService } from 'src/application/services/payment.service';
-import { PaymentDTO } from 'src/presentation/dtos/payment.dto';
-import { toPaymentDTO } from 'src/application/helper/to-dto/to.payment.dto';
+import { PaymentService } from '../../../application/services/payment.service';
+import { PaymentDTO } from '../../../presentation/dtos/payment.dto';
+import { toPaymentDTO } from '../../../application/helper/to-dto/to.payment.dto';
 
 /**
  * Use case class for fetching the most recent payment by order ID.
  */
 @Injectable()
 export class FetchMostRecentPaymentByOrderId {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) { }
 
   /**
    * Execute the fetch-most-recent-payment-by-order-id use case.

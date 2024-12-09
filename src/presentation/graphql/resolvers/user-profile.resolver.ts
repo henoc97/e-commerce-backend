@@ -1,19 +1,19 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { CreateUserProfile } from 'src/application/use-cases/user-profile.use-cases/create-user-profile.use-case';
-import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
-import { DeleteUserProfile } from 'src/application/use-cases/user-profile.use-cases/delete-user-profile.use-case';
-// import { FetchRecentlyUpdatedProfiles } from 'src/application/use-cases/user-profile.use-cases/fetch-recently-updated-profiles.use-case';
-import { FetchUserProfileById } from 'src/application/use-cases/user-profile.use-cases/fetch-user-profile-by-id.use-case';
-import { FetchUserProfileByUserId } from 'src/application/use-cases/user-profile.use-cases/fetch-user-profile-by-user-id.use-case';
-import { FetchUserProfilesByBirthdayRange } from 'src/application/use-cases/user-profile.use-cases/fetch-user-profiles-by-birthday-range.use-case';
-import { FetchUserProfilesByGender } from 'src/application/use-cases/user-profile.use-cases/fetch-user-profiles-by-gender.use-case';
-import { FindMatchingProfiles } from 'src/application/use-cases/user-profile.use-cases/find-matching-profiles.use-case';
-import { IsPhoneInUse } from 'src/application/use-cases/user-profile.use-cases/is-phone-in-use.use-case';
-import { UpdateUserProfile } from 'src/application/use-cases/user-profile.use-cases/update-user-profile.use-case';
-import { transformUserProfileDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { UserProfileOutput } from 'src/presentation/output/user-profile.output';
-import { toUserProfileDTO } from 'src/application/helper/to-dto/to.user-profile.dto';
-import { UserProfileInput } from 'src/presentation/input/user-profile.input';
+import { CreateUserProfile } from '../../../application/use-cases/user-profile.use-cases/create-user-profile.use-case';
+import { UserProfileDTO } from '../../../presentation/dtos/user-profile.dto';
+import { DeleteUserProfile } from '../../../application/use-cases/user-profile.use-cases/delete-user-profile.use-case';
+// import { FetchRecentlyUpdatedProfiles } from '../../../application/use-cases/user-profile.use-cases/fetch-recently-updated-profiles.use-case';
+import { FetchUserProfileById } from '../../../application/use-cases/user-profile.use-cases/fetch-user-profile-by-id.use-case';
+import { FetchUserProfileByUserId } from '../../../application/use-cases/user-profile.use-cases/fetch-user-profile-by-user-id.use-case';
+import { FetchUserProfilesByBirthdayRange } from '../../../application/use-cases/user-profile.use-cases/fetch-user-profiles-by-birthday-range.use-case';
+import { FetchUserProfilesByGender } from '../../../application/use-cases/user-profile.use-cases/fetch-user-profiles-by-gender.use-case';
+import { FindMatchingProfiles } from '../../../application/use-cases/user-profile.use-cases/find-matching-profiles.use-case';
+import { IsPhoneInUse } from '../../../application/use-cases/user-profile.use-cases/is-phone-in-use.use-case';
+import { UpdateUserProfile } from '../../../application/use-cases/user-profile.use-cases/update-user-profile.use-case';
+import { transformUserProfileDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { UserProfileOutput } from '../../../presentation/output/user-profile.output';
+import { toUserProfileDTO } from '../../../application/helper/to-dto/to.user-profile.dto';
+import { UserProfileInput } from '../../../presentation/input/user-profile.input';
 
 @Resolver(() => UserProfileOutput)
 export class UserProfileResolver {

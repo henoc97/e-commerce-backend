@@ -1,7 +1,7 @@
-import { fromUserProfilePrisma } from 'src/application/helper/from-prisma/to.user-profile.entity';
-import { UserProfile } from 'src/domain/entities/user-profile.entity';
-import { IUserProfileRepository } from 'src/domain/repositories/user-profile.repository';
-import prisma from 'prisma/prisma.service';
+import { fromUserProfilePrisma } from '../../application/helper/from-prisma/to.user-profile.entity';
+import { UserProfile } from '../../domain/entities/user-profile.entity';
+import { IUserProfileRepository } from '../../domain/repositories/user-profile.repository';
+import prisma from '../../../prisma/prisma.service';
 
 /**
  * Repository implementation for user profiles.

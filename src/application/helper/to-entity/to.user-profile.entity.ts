@@ -1,5 +1,5 @@
-﻿import { UserProfile } from 'src/domain/entities/user-profile.entity';
-import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
+﻿import { UserProfile } from '../../../domain/entities/user-profile.entity';
+import { UserProfileDTO } from '../../../presentation/dtos/user-profile.dto';
 import { fromUserDTO } from './to.user.entity';
 
 /**

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { AddressDTO } from 'src/presentation/dtos/address.dto';
-import { UserService } from 'src/application/services/user.service';
-import { toUserDTO } from 'src/application/helper/to-dto/to.user.dto';
-import { UserDTO } from 'src/presentation/dtos/user.dto';
+import { AddressDTO } from '../../../presentation/dtos/address.dto';
+import { UserService } from '../../../application/services/user.service';
+import { toUserDTO } from '../../../application/helper/to-dto/to.user.dto';
+import { UserDTO } from '../../../presentation/dtos/user.dto';
 
 /**
  * Use case class for adding an address to a user.
@@ -11,7 +11,7 @@ import { UserDTO } from 'src/presentation/dtos/user.dto';
  */
 @Injectable()
 export class AddAddressToUser {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   /**
    * Execute the add-address-to-user use case.

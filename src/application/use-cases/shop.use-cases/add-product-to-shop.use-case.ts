@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { toShopDTO } from 'src/application/helper/to-dto/to.shop.dto';
-import { ShopService } from 'src/application/services/shop.service';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
+import { toShopDTO } from '../../../application/helper/to-dto/to.shop.dto';
+import { ShopService } from '../../../application/services/shop.service';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
+import { ShopDTO } from '../../../presentation/dtos/shop.dto';
 
 /**
  * Use case class for adding a product to a shop.
@@ -10,7 +10,7 @@ import { ShopDTO } from 'src/presentation/dtos/shop.dto';
  */
 @Injectable()
 export class AddProductToShop {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ShopService) { }
 
   /**
    * Execute the add-product-to-shop use case.

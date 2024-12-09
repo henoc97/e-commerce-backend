@@ -1,20 +1,20 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { toAuditLogDTO } from 'src/application/helper/to-dto/to.audit-log.dto';
-import { transformAuditLogDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { CreateLog } from 'src/application/use-cases/audit-log.use-cases/create-log.use-case';
-import { DeleteLog } from 'src/application/use-cases/audit-log.use-cases/delete-log.use-case';
-import { FetchLogById } from 'src/application/use-cases/audit-log.use-cases/fetch-log-by-id.use-case';
-import { FetchLogsByAction } from 'src/application/use-cases/audit-log.use-cases/fetch-logs-by-action.use-case';
-import { FetchLogsByDateRange } from 'src/application/use-cases/audit-log.use-cases/fetch-logs-by-date-range.use-case';
-import { FetchLogsByEntity } from 'src/application/use-cases/audit-log.use-cases/fetch-logs-by-entity.use-case';
-import { FetchLogsByUser } from 'src/application/use-cases/audit-log.use-cases/fetch-logs-by-user.use-case';
-import { FetchRecentLogs } from 'src/application/use-cases/audit-log.use-cases/fetch-recent-logs.use-case';
-import { UpdateLog } from 'src/application/use-cases/audit-log.use-cases/update-log.use-case';
-import { AuditLogAction } from 'src/domain/enums/audit-log-action.enum';
-import { JwtAuthGuard } from 'src/infrastructure/external-services/auth/jwt-auth.guard';
-import { AuditLogInput } from 'src/presentation/input/audit-log.input';
-import { AuditLogOutput } from 'src/presentation/output/audit-log.output';
+import { toAuditLogDTO } from '../../../application/helper/to-dto/to.audit-log.dto';
+import { transformAuditLogDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { CreateLog } from '../../../application/use-cases/audit-log.use-cases/create-log.use-case';
+import { DeleteLog } from '../../../application/use-cases/audit-log.use-cases/delete-log.use-case';
+import { FetchLogById } from '../../../application/use-cases/audit-log.use-cases/fetch-log-by-id.use-case';
+import { FetchLogsByAction } from '../../../application/use-cases/audit-log.use-cases/fetch-logs-by-action.use-case';
+import { FetchLogsByDateRange } from '../../../application/use-cases/audit-log.use-cases/fetch-logs-by-date-range.use-case';
+import { FetchLogsByEntity } from '../../../application/use-cases/audit-log.use-cases/fetch-logs-by-entity.use-case';
+import { FetchLogsByUser } from '../../../application/use-cases/audit-log.use-cases/fetch-logs-by-user.use-case';
+import { FetchRecentLogs } from '../../../application/use-cases/audit-log.use-cases/fetch-recent-logs.use-case';
+import { UpdateLog } from '../../../application/use-cases/audit-log.use-cases/update-log.use-case';
+import { AuditLogAction } from '../../../domain/enums/audit-log-action.enum';
+import { JwtAuthGuard } from '../../../infrastructure/external-services/auth/jwt-auth.guard';
+import { AuditLogInput } from '../../../presentation/input/audit-log.input';
+import { AuditLogOutput } from '../../../presentation/output/audit-log.output';
 
 @Resolver(() => AuditLogOutput)
 export class AuditLogResolver {

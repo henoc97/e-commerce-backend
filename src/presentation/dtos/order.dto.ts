@@ -13,7 +13,7 @@ import { UserDTO } from './user.dto';
 import { PaymentDTO } from './payment.dto';
 import { RefundDTO } from './refund.dto';
 import { ShopDTO } from './shop.dto';
-import { OrderStatus } from 'src/domain/enums/order-status.enum';
+import { OrderStatus } from '../../domain/enums/order-status.enum';
 
 /**
  * Data Transfer Object for Order.

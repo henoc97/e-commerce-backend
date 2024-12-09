@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TicketService } from '../services/ticket.service';
-import { TicketRepository } from 'src/infrastructure/persistences/ticket.repository.impl';
+import { TicketRepository } from '../../infrastructure/persistences/ticket.repository.impl';
 import { ListTicketsByUser } from '../use-cases/ticket.use-cases/list-tickets-by-user.use-case';
 import { CountOpenTicketsByUser } from '../use-cases/ticket.use-cases/count-open-tickets-by-user.use-case';
 import { CreateTicket } from '../use-cases/ticket.use-cases/create-ticket.use-case';

@@ -1,7 +1,7 @@
-import { fromSubscriptionPrisma } from 'src/application/helper/from-prisma/to.subscription.entity';
-import { Subscription } from 'src/domain/entities/subscription.entity';
-import { ISubscriptionRepository } from 'src/domain/repositories/subscription.repository';
-import prisma from 'prisma/prisma.service';
+import { fromSubscriptionPrisma } from '../../application/helper/from-prisma/to.subscription.entity';
+import { Subscription } from '../../domain/entities/subscription.entity';
+import { ISubscriptionRepository } from '../../domain/repositories/subscription.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class SubscriptionRepository implements ISubscriptionRepository {
 

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SubsiteService } from '../services/subsite.service';
-import { SubsiteRepository } from 'src/infrastructure/persistences/subsite.repository.impl';
+import { SubsiteRepository } from '../../infrastructure/persistences/subsite.repository.impl';
 import { ListSubsitesByUser } from '../use-cases/subsite.use-cases/list-subsites-by-user.use-case';
 import { ListActiveSubsites } from '../use-cases/subsite.use-cases/list-active-subsites.use-case';
 import { CreateSubsite } from '../use-cases/subsite.use-cases/create-subsite.use-case';

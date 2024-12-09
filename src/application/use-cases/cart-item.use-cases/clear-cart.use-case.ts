@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CartItemService } from 'src/application/services/cart-item.service';
+import { CartItemService } from '../../../application/services/cart-item.service';
 
 /**
  * Use case class for clearing all items from a cart.
  */
 @Injectable()
 export class ClearCart {
-  constructor(private readonly cartItemService: CartItemService) {}
+  constructor(private readonly cartItemService: CartItemService) { }
 
   /**
    * Executes the clear-cart use case.

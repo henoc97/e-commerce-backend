@@ -1,6 +1,6 @@
-import { ProductVariant } from 'src/domain/entities/product-variant.entity';
-import { IProductVariantRepository } from 'src/domain/repositories/product-variant.repository';
-import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
+import { ProductVariant } from '../../domain/entities/product-variant.entity';
+import { IProductVariantRepository } from '../../domain/repositories/product-variant.repository';
+import { ProductVariantDTO } from '../../presentation/dtos/product-variant.dto';
 import { fromProductVariantDTO } from '../helper/to-entity/to.product-variant.entity';
 import { Inject } from '@nestjs/common';
 
@@ -12,7 +12,7 @@ export class ProductVariantService {
   constructor(
     @Inject('IProductVariantRepository')
     private readonly repository: IProductVariantRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates and saves a new ProductVariant.

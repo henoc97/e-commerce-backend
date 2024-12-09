@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { VendorService } from 'src/application/services/vendor.service';
-import { toVendorDTO } from 'src/application/helper/to-dto/to.vendor.dto';
-import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
+import { ProductDTO } from '../../../presentation/dtos/product.dto';
+import { VendorService } from '../../../application/services/vendor.service';
+import { toVendorDTO } from '../../../application/helper/to-dto/to.vendor.dto';
+import { VendorDTO } from '../../../presentation/dtos/vendor.dto';
 
 /**
  * Use case class for adding a product to a vendor.
@@ -11,7 +11,7 @@ import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
  */
 @Injectable()
 export class AddProductToVendor {
-  constructor(private readonly vendorService: VendorService) {}
+  constructor(private readonly vendorService: VendorService) { }
 
   /**
    * Execute the add-product-to-vendor use case.

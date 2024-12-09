@@ -1,6 +1,6 @@
-﻿import { AuditLogDTO } from "src/presentation/dtos/audit-log.dto";
+﻿import { AuditLogDTO } from "../../../presentation/dtos/audit-log.dto";
 import { fromUserDTO } from "./to.user.entity";
-import { AuditLog } from "src/domain/entities/audit-log.entity";
+import { AuditLog } from "../../../domain/entities/audit-log.entity";
 
 
 /**

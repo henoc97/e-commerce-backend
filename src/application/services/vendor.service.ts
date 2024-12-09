@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Vendor } from 'src/domain/entities/vendor.entity';
-import { IVendorRepository } from 'src/domain/repositories/vendor.repository';
-import { ProductDTO } from 'src/presentation/dtos/product.dto';
-import { ShopDTO } from 'src/presentation/dtos/shop.dto';
-import { SubscriptionDTO } from 'src/presentation/dtos/subscription.dto';
-import { VendorDTO } from 'src/presentation/dtos/vendor.dto';
+import { Vendor } from '../../domain/entities/vendor.entity';
+import { IVendorRepository } from '../../domain/repositories/vendor.repository';
+import { ProductDTO } from '../../presentation/dtos/product.dto';
+import { ShopDTO } from '../../presentation/dtos/shop.dto';
+import { SubscriptionDTO } from '../../presentation/dtos/subscription.dto';
+import { VendorDTO } from '../../presentation/dtos/vendor.dto';
 import { fromVendorDTO } from '../helper/to-entity/to.vendor.entity';
 import { fromProductDTO } from '../helper/to-entity/to.product.entity';
 import { SubscriptionService } from './subscription.service';

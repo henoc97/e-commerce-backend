@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Marketplace } from 'src/domain/entities/marketplace.entity';
-import { Shop } from 'src/domain/entities/shop.entity';
-import { IMarketplaceRepository } from 'src/domain/repositories/marketplace.repository';
-import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
+import { Marketplace } from '../../domain/entities/marketplace.entity';
+import { Shop } from '../../domain/entities/shop.entity';
+import { IMarketplaceRepository } from '../../domain/repositories/marketplace.repository';
+import { MarketplaceDTO } from '../../presentation/dtos/marketplace.dto';
 import { fromMarketplaceDTO } from '../helper/to-entity/to.marketplace.entity';
 import { ShopService } from './shop.service';
 
@@ -16,7 +16,7 @@ export class MarketplaceService {
     @Inject('IMarketplaceRepository')
     private readonly marketplaceRepository: IMarketplaceRepository,
     private readonly shopService: ShopService,
-  ) {}
+  ) { }
 
   /**
    * Creates a new Marketplace.

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentService } from 'src/application/services/payment.service';
+import { PaymentService } from '../../../application/services/payment.service';
 
 /**
  * Use case class for fetching the total amount of payments by date range.
  */
 @Injectable()
 export class FetchTotalAmountByDateRange {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) { }
 
   /**
    * Execute the fetch-total-amount-by-date-range use case.

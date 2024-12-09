@@ -8,7 +8,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { UserDTO } from './user.dto';
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
 /**
  * Data Transfer Object for Address.

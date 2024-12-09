@@ -1,4 +1,4 @@
-﻿import { AddressDTO } from 'src/presentation/dtos/address.dto';
+﻿import { AddressDTO } from '../../../presentation/dtos/address.dto';
 
 /**
  * Converts an Address entity to an AddressDTO.

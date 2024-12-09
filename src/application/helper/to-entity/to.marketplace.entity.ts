@@ -1,5 +1,5 @@
-﻿import { Marketplace } from 'src/domain/entities/marketplace.entity';
-import { MarketplaceDTO } from 'src/presentation/dtos/marketplace.dto';
+﻿import { Marketplace } from '../../../domain/entities/marketplace.entity';
+import { MarketplaceDTO } from '../../../presentation/dtos/marketplace.dto';
 import { fromShopDTO } from './to.shop.entity';
 
 /**

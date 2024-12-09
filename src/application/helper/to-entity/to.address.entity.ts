@@ -1,6 +1,6 @@
-﻿import { AddressDTO } from "src/presentation/dtos/address.dto";
+﻿import { AddressDTO } from "../../../presentation/dtos/address.dto";
 import { fromUserDTO } from './to.user.entity';
-import { Address } from 'src/domain/entities/address.entity';
+import { Address } from '../../../domain/entities/address.entity';
 
 /**
  * Converts an AddressDTO to an Address entity.

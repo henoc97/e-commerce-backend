@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Promotion } from 'src/domain/entities/promotion.entity';
-import { IPromotionRepository } from 'src/domain/repositories/promotion.repository';
-import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
+import { Promotion } from '../../domain/entities/promotion.entity';
+import { IPromotionRepository } from '../../domain/repositories/promotion.repository';
+import { PromotionDTO } from '../../presentation/dtos/promotion.dto';
 import { fromPromotionDTO } from '../helper/to-entity/to.promotion.entity';
 /**
  * Service for managing promotional offers with business logic.

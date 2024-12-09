@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RefundService } from 'src/application/services/refund.service';
+import { RefundService } from '../../../application/services/refund.service';
 
 /**
  * Use case class for deleting refunds.
@@ -7,7 +7,7 @@ import { RefundService } from 'src/application/services/refund.service';
  */
 @Injectable()
 export class DeleteRefund {
-  constructor(private readonly service: RefundService) {}
+  constructor(private readonly service: RefundService) { }
 
   /**
    * Execute the delete-refund use case.

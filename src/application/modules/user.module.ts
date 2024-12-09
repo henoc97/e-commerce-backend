@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { UserRepository } from 'src/infrastructure/persistences/user.repository.impl';
+import { UserRepository } from '../../infrastructure/persistences/user.repository.impl';
 import { CreateUser } from '../use-cases/user.use-cases/create-user.use-case';
 import { AddAddressToUser } from '../use-cases/user.use-cases/add-address-to-user.use-case';
 import { GetUser } from '../use-cases/user.use-cases/get-user.use-case';
@@ -12,7 +12,7 @@ import { GetInactiveUsersUseCase } from '../use-cases/user.use-cases/get-inactiv
 import { GetUserByEmailUseCase } from '../use-cases/user.use-cases/get-user-by-email.use-case';
 import { UpdateUserPasswordUseCase } from '../use-cases/user.use-cases/update-user-password.use-case';
 import { AddressModule } from './address.module';
-import { KafkaModule } from 'src/infrastructure/external-services/kafka/kafka.module';
+import { KafkaModule } from '../../infrastructure/external-services/kafka/kafka.module';
 import { RemoveAddressFromUserUseCase } from '../use-cases/user.use-cases/remove-address-from-user.use-case';
 import { GetCountByRole } from '../use-cases/user.use-cases/get-count-by-role.use-case';
 import { GetDetailedInfo } from '../use-cases/user.use-cases/get-detailed-info.use-case';

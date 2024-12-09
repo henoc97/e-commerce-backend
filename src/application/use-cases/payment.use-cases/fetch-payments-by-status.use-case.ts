@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentService } from 'src/application/services/payment.service';
-import { PaymentDTO } from 'src/presentation/dtos/payment.dto';
-import { PaymentStatus } from 'src/domain/enums/payment-status.enum';
-import { toPaymentDTO } from 'src/application/helper/to-dto/to.payment.dto';
+import { PaymentService } from '../../../application/services/payment.service';
+import { PaymentDTO } from '../../../presentation/dtos/payment.dto';
+import { PaymentStatus } from '../../../domain/enums/payment-status.enum';
+import { toPaymentDTO } from '../../../application/helper/to-dto/to.payment.dto';
 
 /**
  * Use case class for fetching payments by status.

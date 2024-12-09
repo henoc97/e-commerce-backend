@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { UserProfile } from 'src/domain/entities/user-profile.entity';
-import { IUserProfileRepository } from 'src/domain/repositories/user-profile.repository';
-import { UserProfileDTO } from 'src/presentation/dtos/user-profile.dto';
+import { UserProfile } from '../../domain/entities/user-profile.entity';
+import { IUserProfileRepository } from '../../domain/repositories/user-profile.repository';
+import { UserProfileDTO } from '../../presentation/dtos/user-profile.dto';
 import { fromUserProfileDTO } from '../helper/to-entity/to.user-profile.entity';
 /**
  * Service class for managing user profiles.
@@ -12,7 +12,7 @@ export class UserProfileService {
   constructor(
     @Inject('IUserProfileRepository')
     private readonly userProfileRepository: IUserProfileRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new user profile.

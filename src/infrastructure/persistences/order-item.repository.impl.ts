@@ -1,7 +1,7 @@
-import { fromOrderItemPrisma } from 'src/application/helper/from-prisma/to.order-item.entity';
-import { OrderItem } from 'src/domain/entities/order-item.enttity';
-import { IOrderItemRepository } from 'src/domain/repositories/order-item.repository';
-import prisma from 'prisma/prisma.service';
+import { fromOrderItemPrisma } from '../../application/helper/from-prisma/to.order-item.entity';
+import { OrderItem } from '../../domain/entities/order-item.enttity';
+import { IOrderItemRepository } from '../../domain/repositories/order-item.repository';
+import prisma from '../../../prisma/prisma.service';
 
 /**
  * Repository class for handling operations related to OrderItems.

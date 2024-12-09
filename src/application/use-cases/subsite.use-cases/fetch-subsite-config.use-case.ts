@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SubsiteService } from 'src/application/services/subsite.service';
+import { SubsiteService } from '../../../application/services/subsite.service';
 
 /**
  * Use case class for fetching subsite configuration.
@@ -7,7 +7,7 @@ import { SubsiteService } from 'src/application/services/subsite.service';
  */
 @Injectable()
 export class FetchSubsiteConfig {
-  constructor(private readonly subsiteService: SubsiteService) {}
+  constructor(private readonly subsiteService: SubsiteService) { }
 
   /**
    * Execute the fetch-subsite-config use case.

@@ -1,7 +1,7 @@
-import { fromUserActivityPrisma } from 'src/application/helper/from-prisma/to.user-activity.entity';
-import { UserActivity } from 'src/domain/entities/user-activity.entity';
-import { IUserActivityRepository } from 'src/domain/repositories/user-activity.repository';
-import prisma from 'prisma/prisma.service';
+import { fromUserActivityPrisma } from '../../application/helper/from-prisma/to.user-activity.entity';
+import { UserActivity } from '../../domain/entities/user-activity.entity';
+import { IUserActivityRepository } from '../../domain/repositories/user-activity.repository';
+import prisma from '../../../prisma/prisma.service';
 
 /**
  * UserActivityRepository provides access to user activity data in the database.

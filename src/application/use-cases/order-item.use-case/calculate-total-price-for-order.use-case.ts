@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OrderItemService } from 'src/application/services/order-item.service';
+import { OrderItemService } from '../../../application/services/order-item.service';
 
 /**
  * Use case class for calculating the total price of OrderItems in an Order.
@@ -7,7 +7,7 @@ import { OrderItemService } from 'src/application/services/order-item.service';
  */
 @Injectable()
 export class CalculateTotalPriceForOrder {
-  constructor(private readonly service: OrderItemService) {}
+  constructor(private readonly service: OrderItemService) { }
 
   /**
    * Execute the calculate-total-price use case.

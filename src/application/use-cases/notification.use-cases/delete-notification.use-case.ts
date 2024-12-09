@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { NotificationService } from 'src/application/services/notification.service';
+import { NotificationService } from '../../../application/services/notification.service';
 
 /**
  * Use case for deleting a notification by ID.
  */
 @Injectable()
 export class DeleteNotification {
-  constructor(private readonly service: NotificationService) {}
+  constructor(private readonly service: NotificationService) { }
 
   /**
    * Executes the use case.

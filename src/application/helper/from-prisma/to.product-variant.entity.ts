@@ -1,4 +1,4 @@
-﻿import { ProductVariant } from 'src/domain/entities/product-variant.entity';
+﻿import { ProductVariant } from '../../../domain/entities/product-variant.entity';
 import { fromProductPrisma } from './to.product.entity';
 
 /**

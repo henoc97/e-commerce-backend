@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OrderItemService } from 'src/application/services/order-item.service';
+import { OrderItemService } from '../../../application/services/order-item.service';
 
 /**
  * Use case class for deleting an OrderItem.
@@ -7,7 +7,7 @@ import { OrderItemService } from 'src/application/services/order-item.service';
  */
 @Injectable()
 export class DeleteOrderItem {
-  constructor(private readonly service: OrderItemService) {}
+  constructor(private readonly service: OrderItemService) { }
 
   /**
    * Execute the delete-order-item use case.

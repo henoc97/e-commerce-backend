@@ -1,4 +1,4 @@
-﻿import { Ticket } from 'src/domain/entities/ticket.entity';
+﻿import { Ticket } from '../../../domain/entities/ticket.entity';
 import { fromUserPrisma } from './to.user.entity';
 
 /**

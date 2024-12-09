@@ -1,18 +1,18 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { ProductVariantDTO } from 'src/presentation/dtos/product-variant.dto';
-import { CheckProductVariantExistence } from 'src/application/use-cases/product-variant.use-cases/check-product-variant-existence.use-case';
-import { CreateProductVariant } from 'src/application/use-cases/product-variant.use-cases/create-product-variant.use-case';
-import { DeleteProductVariant } from 'src/application/use-cases/product-variant.use-cases/delete-product-variant.use-case';
-import { DeleteProductVariantsByProductId } from 'src/application/use-cases/product-variant.use-cases/delete-product-variants-by-product-id.use-case';
-import { FetchMostPopularVariant } from 'src/application/use-cases/product-variant.use-cases/fetch-most-popular-variant.use-case';
-import { FetchProductVariantById } from 'src/application/use-cases/product-variant.use-cases/fetch-product-variant-by-id.use-case';
-import { FetchProductVariantsByName } from 'src/application/use-cases/product-variant.use-cases/fetch-product-variants-by-name.use-case';
-import { FetchProductVariantsByProductId } from 'src/application/use-cases/product-variant.use-cases/fetch-product-variants-by-product-id.use-case';
-import { UpdateProductVariantDetails } from 'src/application/use-cases/product-variant.use-cases/update-product-variant-details.use-case';
-import { transformProductVariantDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { toProductVariantDTO } from 'src/application/helper/to-dto/to.product-variant.dto';
-import { ProductVariantOutput } from 'src/presentation/output/product-variant.output';
-import { ProductVariantInput } from 'src/presentation/input/product-variant.input';
+import { ProductVariantDTO } from '../../../presentation/dtos/product-variant.dto';
+import { CheckProductVariantExistence } from '../../../application/use-cases/product-variant.use-cases/check-product-variant-existence.use-case';
+import { CreateProductVariant } from '../../../application/use-cases/product-variant.use-cases/create-product-variant.use-case';
+import { DeleteProductVariant } from '../../../application/use-cases/product-variant.use-cases/delete-product-variant.use-case';
+import { DeleteProductVariantsByProductId } from '../../../application/use-cases/product-variant.use-cases/delete-product-variants-by-product-id.use-case';
+import { FetchMostPopularVariant } from '../../../application/use-cases/product-variant.use-cases/fetch-most-popular-variant.use-case';
+import { FetchProductVariantById } from '../../../application/use-cases/product-variant.use-cases/fetch-product-variant-by-id.use-case';
+import { FetchProductVariantsByName } from '../../../application/use-cases/product-variant.use-cases/fetch-product-variants-by-name.use-case';
+import { FetchProductVariantsByProductId } from '../../../application/use-cases/product-variant.use-cases/fetch-product-variants-by-product-id.use-case';
+import { UpdateProductVariantDetails } from '../../../application/use-cases/product-variant.use-cases/update-product-variant-details.use-case';
+import { transformProductVariantDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { toProductVariantDTO } from '../../../application/helper/to-dto/to.product-variant.dto';
+import { ProductVariantOutput } from '../../../presentation/output/product-variant.output';
+import { ProductVariantInput } from '../../../presentation/input/product-variant.input';
 
 @Resolver(() => ProductVariantOutput)
 export class ProductVariantResolver {

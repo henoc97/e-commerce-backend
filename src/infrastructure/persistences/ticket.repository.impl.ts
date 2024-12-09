@@ -1,8 +1,8 @@
-import { fromTicketPrisma } from 'src/application/helper/from-prisma/to.ticket.entity';
-import { Ticket } from 'src/domain/entities/ticket.entity';
-import { TicketStatus } from 'src/domain/enums/ticket-status.enum';
-import { ITicketRepository } from 'src/domain/repositories/ticket.repository';
-import prisma from 'prisma/prisma.service';
+import { fromTicketPrisma } from '../../application/helper/from-prisma/to.ticket.entity';
+import { Ticket } from '../../domain/entities/ticket.entity';
+import { TicketStatus } from '../../domain/enums/ticket-status.enum';
+import { ITicketRepository } from '../../domain/repositories/ticket.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class TicketRepository implements ITicketRepository {
 

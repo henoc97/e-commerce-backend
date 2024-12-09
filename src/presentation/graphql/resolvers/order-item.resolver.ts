@@ -1,18 +1,18 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { CreateOrderItem } from 'src/application/use-cases/order-item.use-case/create-order-item.use-case';
-import { FetchOrderItemById } from 'src/application/use-cases/order-item.use-case/fetch-order-item-by-id.use-case';
-import { DeleteOrderItem } from 'src/application/use-cases/order-item.use-case/delete-order-item.use-case';
-import { FetchLowStockItems } from 'src/application/use-cases/order-item.use-case/fetch-low-stock-items.use-case';
-import { FetchOrderItemsByOrderId } from 'src/application/use-cases/order-item.use-case/fetch-order-items-by-order-id.use-case';
-import { FetchOrderItemsByProductId } from 'src/application/use-cases/order-item.use-case/fetch-order-items-by-product-id.use-case';
-import { FetchRecentOrderItems } from 'src/application/use-cases/order-item.use-case/fetch-recent-order-items.use-case';
-import { UpdateOrderItem } from 'src/application/use-cases/order-item.use-case/update-order-item.use-case';
-import { CalculateTotalPriceForOrder } from 'src/application/use-cases/order-item.use-case/calculate-total-price-for-order.use-case';
-import { OrderItemDTO } from 'src/presentation/dtos/order-item.dto';
-import { toOrderItemDTO } from 'src/application/helper/to-dto/to.order-item.dto';
-import { transformOrderItemDTOToGraphQL } from 'src/application/helper/utils/transformers';
-import { OrderItemInput } from 'src/presentation/input/order-item.input';
-import { OrderItemOutput } from 'src/presentation/output/order-item.output';
+import { CreateOrderItem } from '../../../application/use-cases/order-item.use-case/create-order-item.use-case';
+import { FetchOrderItemById } from '../../../application/use-cases/order-item.use-case/fetch-order-item-by-id.use-case';
+import { DeleteOrderItem } from '../../../application/use-cases/order-item.use-case/delete-order-item.use-case';
+import { FetchLowStockItems } from '../../../application/use-cases/order-item.use-case/fetch-low-stock-items.use-case';
+import { FetchOrderItemsByOrderId } from '../../../application/use-cases/order-item.use-case/fetch-order-items-by-order-id.use-case';
+import { FetchOrderItemsByProductId } from '../../../application/use-cases/order-item.use-case/fetch-order-items-by-product-id.use-case';
+import { FetchRecentOrderItems } from '../../../application/use-cases/order-item.use-case/fetch-recent-order-items.use-case';
+import { UpdateOrderItem } from '../../../application/use-cases/order-item.use-case/update-order-item.use-case';
+import { CalculateTotalPriceForOrder } from '../../../application/use-cases/order-item.use-case/calculate-total-price-for-order.use-case';
+import { OrderItemDTO } from '../../../presentation/dtos/order-item.dto';
+import { toOrderItemDTO } from '../../../application/helper/to-dto/to.order-item.dto';
+import { transformOrderItemDTOToGraphQL } from '../../../application/helper/utils/transformers';
+import { OrderItemInput } from '../../../presentation/input/order-item.input';
+import { OrderItemOutput } from '../../../presentation/output/order-item.output';
 
 @Resolver(() => OrderItemOutput)
 export class OrderItemResolver {

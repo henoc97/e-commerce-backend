@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CartItem } from 'src/domain/entities/cart-item.entity';
-import { ICartItemRepository } from 'src/domain/repositories/cart-item.repository';
-import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+import { CartItem } from '../../domain/entities/cart-item.entity';
+import { ICartItemRepository } from '../../domain/repositories/cart-item.repository';
+import { CartItemDTO } from '../../presentation/dtos/cart-item.dto';
 import { fromCartItemDTO } from '../helper/to-entity/to.cart-item.entity';
 
 /**
@@ -13,7 +13,7 @@ export class CartItemService {
   constructor(
     @Inject('ICartItemRepository')
     private readonly cartItemRepository: ICartItemRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new CartItem.

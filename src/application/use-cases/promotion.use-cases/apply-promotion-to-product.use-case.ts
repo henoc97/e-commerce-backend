@@ -1,7 +1,7 @@
 // import { Injectable } from '@nestjs/common';
-// import { toPromotionDTO } from 'src/application/helper/to-dto/to.promotion.dto';
-// import { PromotionService } from 'src/application/services/promotion.service';
-// import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
+// import { toPromotionDTO } from '../../../application/helper/to-dto/to.promotion.dto';
+// import { PromotionService } from '../../../application/services/promotion.service';
+// import { PromotionDTO } from '../../../presentation/dtos/promotion.dto';
 
 // /**
 //  * Use case class for applying a promotion to a product.

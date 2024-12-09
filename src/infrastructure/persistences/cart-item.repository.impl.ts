@@ -1,7 +1,7 @@
-import { fromCartItemPrisma } from 'src/application/helper/from-prisma/to.cart-item.entity';
-import { CartItem } from 'src/domain/entities/cart-item.entity';
-import { ICartItemRepository } from 'src/domain/repositories/cart-item.repository';
-import prisma from 'prisma/prisma.service';
+import { fromCartItemPrisma } from '../../application/helper/from-prisma/to.cart-item.entity';
+import { CartItem } from '../../domain/entities/cart-item.entity';
+import { ICartItemRepository } from '../../domain/repositories/cart-item.repository';
+import prisma from '../../../prisma/prisma.service';
 
 export class CartItemRepository implements ICartItemRepository {
 

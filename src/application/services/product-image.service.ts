@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ProductImage } from 'src/domain/entities/product-image.entity';
-import { IProductImageRepository } from 'src/domain/repositories/product-image.repository';
-import { ProductImageDTO } from 'src/presentation/dtos/product-image.dto';
+import { ProductImage } from '../../domain/entities/product-image.entity';
+import { IProductImageRepository } from '../../domain/repositories/product-image.repository';
+import { ProductImageDTO } from '../../presentation/dtos/product-image.dto';
 import { fromProductImageDTO } from '../helper/to-entity/to.product-image.entity';
 /**
  * Service for managing product images.
@@ -12,7 +12,7 @@ export class ProductImageService {
   constructor(
     @Inject('IProductImageRepository')
     private readonly productImageRepository: IProductImageRepository,
-  ) {}
+  ) { }
 
   /**
    * Creates a new ProductImage.

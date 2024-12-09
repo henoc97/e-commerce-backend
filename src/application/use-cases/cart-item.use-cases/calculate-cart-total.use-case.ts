@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CartItemService } from 'src/application/services/cart-item.service';
+import { CartItemService } from '../../../application/services/cart-item.service';
 
 /**
  * Use case class for calculating the total value of items in a cart.
  */
 @Injectable()
 export class CalculateCartTotal {
-  constructor(private readonly cartItemService: CartItemService) {}
+  constructor(private readonly cartItemService: CartItemService) { }
 
   /**
    * Executes the calculate-cart-total use case.

@@ -1,4 +1,4 @@
-﻿import { NewsletterSubscription } from 'src/domain/entities/newsletter-subscription.entity';
+﻿import { NewsletterSubscription } from '../../../domain/entities/newsletter-subscription.entity';
 
 /**
  * Converts a NewsletterSubscriptionPrisma to a NewsletterSubscription entity.

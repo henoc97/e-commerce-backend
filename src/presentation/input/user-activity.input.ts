@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { UserActivityAction } from "src/domain/enums/user-activity-action.enum";
+import { UserActivityAction } from "../../domain/enums/user-activity-action.enum";
 
 /**
  * Input Type for UserActivity.

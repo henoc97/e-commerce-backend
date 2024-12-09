@@ -1,5 +1,5 @@
-﻿import { CartItem } from 'src/domain/entities/cart-item.entity';
-import { CartItemDTO } from 'src/presentation/dtos/cart-item.dto';
+﻿import { CartItem } from '../../../domain/entities/cart-item.entity';
+import { CartItemDTO } from '../../../presentation/dtos/cart-item.dto';
 import { fromCartDTO } from './to.cart.entity';
 import { fromProductDTO } from './to.product.entity';
 

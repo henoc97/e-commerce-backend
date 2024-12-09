@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { SubsiteService } from 'src/application/services/subsite.service';
-import { toSubsiteDTO } from 'src/application/helper/to-dto/to.sub-site.dto';
-import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
+import { SubsiteService } from '../../../application/services/subsite.service';
+import { toSubsiteDTO } from '../../../application/helper/to-dto/to.sub-site.dto';
+import { SubsiteDTO } from '../../../presentation/dtos/subsite.dto';
 
 /**
  * Use case class for fetching the latest subsite.
@@ -9,7 +9,7 @@ import { SubsiteDTO } from 'src/presentation/dtos/subsite.dto';
  */
 @Injectable()
 export class FetchLatestSubsite {
-  constructor(private readonly subsiteService: SubsiteService) {}
+  constructor(private readonly subsiteService: SubsiteService) { }
 
   /**
    * Execute the fetch-latest-subsite use case.

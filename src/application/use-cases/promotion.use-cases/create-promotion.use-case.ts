@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { toPromotionDTO } from 'src/application/helper/to-dto/to.promotion.dto';
-import { PromotionService } from 'src/application/services/promotion.service';
-import { PromotionDTO } from 'src/presentation/dtos/promotion.dto';
+import { toPromotionDTO } from '../../../application/helper/to-dto/to.promotion.dto';
+import { PromotionService } from '../../../application/services/promotion.service';
+import { PromotionDTO } from '../../../presentation/dtos/promotion.dto';
 
 /**
  * Use case class for creating a new promotion.
  */
 @Injectable()
 export class CreatePromotion {
-  constructor(private readonly promotionService: PromotionService) {}
+  constructor(private readonly promotionService: PromotionService) { }
 
   /**
    * Executes the use case to create a new promotion.
