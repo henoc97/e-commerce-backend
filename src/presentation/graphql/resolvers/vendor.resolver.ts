@@ -83,7 +83,7 @@ export class VendorResolver {
       throw new Error("Le champ 'userId' est requis.");
     }
     const dto = toVendorDTO(vendor);
-    console.log("Données du vendeur à créer :", dto);
+    console.log("Données du vendeur à créer (resolver):", dto);
     const result = await this.createVendorUseCase.execute(dto);
     return transformVendorDTOToGraphQL(result)
   }

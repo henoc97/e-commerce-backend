@@ -20,7 +20,7 @@ export class VendorRepository implements IVendorRepository {
   async create(vendor: Vendor): Promise<Vendor> {
     try {
       const { id, user, products, subscription, shop, ...data } = vendor;
-      const result = prisma.vendor.create({ data: data, include: { user: true } });
+      const result = await prisma.vendor.create({ data: data, include: { user: true } });
       return fromVendorPrisma(result);
     } catch (error) {
       console.error('Error creating vendor:', error);
@@ -35,7 +35,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async findById(id: number): Promise<Vendor | null> {
     try {
-      const result = prisma.vendor.findUnique({ where: { id } });
+      const result = await prisma.vendor.findUnique({ where: { id } });
       return fromVendorPrisma(result);
     } catch (error) {
       console.error('Error finding vendor by ID:', error);
@@ -103,7 +103,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async addProduct(vendorId: number, product: Product): Promise<Vendor> {
     try {
-      const result = prisma.vendor.update({
+      const result = await prisma.vendor.update({
         where: { id: vendorId },
         data: { products: { connect: { id: product.id } } },
       });
@@ -122,7 +122,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async removeProduct(vendorId: number, productId: number): Promise<Vendor> {
     try {
-      const result = prisma.vendor.update({
+      const result = await prisma.vendor.update({
         where: { id: vendorId },
         data: { products: { disconnect: { id: productId } } },
       });
@@ -144,7 +144,7 @@ export class VendorRepository implements IVendorRepository {
     subscription: Subscription,
   ): Promise<Vendor> {
     try {
-      const result = prisma.vendor.update({
+      const result = await prisma.vendor.update({
         where: { id: vendorId },
         data: { subscription: { connect: { id: subscription.id } } },
       });
@@ -163,7 +163,7 @@ export class VendorRepository implements IVendorRepository {
    */
   async setShop(vendorId: number, shop: Shop): Promise<Vendor> {
     try {
-      const result = prisma.vendor.update({
+      const result = await prisma.vendor.update({
         where: { id: vendorId },
         data: { shop: { connect: { id: shop.id } } },
       });

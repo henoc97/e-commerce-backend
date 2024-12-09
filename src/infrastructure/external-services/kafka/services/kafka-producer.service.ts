@@ -6,7 +6,10 @@ export class KafkaProducerService implements OnModuleInit {
     constructor(@Inject('KAFKA_SERVICE') private readonly kafkaClient: ClientKafka) { }
 
     private kafkaTopics: string[] = [
-        "user.created", "user.updated"
+        "user.created", "user.updated",
+        "product.created", "product.updated",
+        "order-item.created", "order-item.updated",
+        "order.created", "order.updated",
     ]
     async onModuleInit() {
         // S'assurer que le topic est enregistré (optionnel si `allowAutoTopicCreation` est true)

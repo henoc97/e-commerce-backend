@@ -43,7 +43,6 @@ export class VendorService {
    */
   async createVendor(vendorDTO: VendorDTO): Promise<Vendor> {
     const vendorEntity = fromVendorDTO(vendorDTO);
-
     return await this.vendorRepository.create(vendorEntity);
   }
 
