@@ -10,14 +10,13 @@ import { FetchTotalValue } from '../../../application/use-cases/cart.use-cases/f
 import { MergeCarts } from '../../../application/use-cases/cart.use-cases/merge-carts.use-case';
 import { RemoveItemFromCart } from '../../../application/use-cases/cart.use-cases/remove-item-from-cart.use-case';
 import { UpdateCart } from '../../../application/use-cases/cart.use-cases/update-cart.use-case';
-import { CartDTO } from '../../../presentation/dtos/cart.dto';
-import { CartItemDTO } from '../../../presentation/dtos/cart-item.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../../infrastructure/external-services/auth/jwt-auth.guard';
 import { transformCartDTOToGraphQL } from '../../../application/helper/utils/transformers';
 import { CartOutput } from '../../../presentation/output/cart.output';
 import { CartItemInput } from '../../../presentation/input/cart-item.input';
 import { toCartDTO } from '../../../application/helper/to-dto/to.cart.dto';
+import { CartInput } from '../../input/cart.input';
 
 @Resolver(() => CartOutput)
 export class CartResolver {
@@ -35,7 +34,7 @@ export class CartResolver {
     private readonly updateCartUseCase: UpdateCart,
   ) { }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartOutput)
   async addItemToCart(
     @Args('cartId') cartId: number,
@@ -45,54 +44,54 @@ export class CartResolver {
     return transformCartDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartOutput)
   async clearCart(@Args('cartId') cartId: number): Promise<CartOutput | null> {
     const result = await this.clearCartUseCase.execute(cartId);
     return transformCartDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartOutput)
-  async createCart(@Args('input') input: CartItemInput): Promise<CartOutput> {
+  async createCart(@Args('cart') input: CartInput): Promise<CartOutput> {
     const dto = toCartDTO(input);
     const result = await this.createCartUseCase.execute(dto);
     return transformCartDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean)
   async deleteCart(@Args('cartId') cartId: number): Promise<boolean> {
     return this.deleteCartUseCase.execute(cartId);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => CartOutput, { nullable: true })
   async fetchCartById(@Args('id') id: number): Promise<CartOutput | null> {
     const result = await this.fetchCartByIdUseCase.execute(id);
     return transformCartDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => [CartOutput])
   async fetchCartByUserId(@Args('userId') userId: number): Promise<CartOutput[]> {
     const result = await this.fetchCartByUserIdUseCase.execute(userId);
     return result?.map(transformCartDTOToGraphQL);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => Number)
   async fetchItemCount(@Args('cartId') cartId: number): Promise<number> {
     return this.fetchItemCountUseCase.execute(cartId);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => Number)
   async fetchTotalValue(@Args('cartId') cartId: number): Promise<number> {
     return this.fetchTotalValueUseCase.execute(cartId);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartOutput)
   async mergeCarts(
     @Args('sourceCartId') sourceCartId: number,
@@ -102,7 +101,7 @@ export class CartResolver {
     return transformCartDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartOutput)
   async removeItemFromCart(
     @Args('cartId') cartId: number,
@@ -112,7 +111,7 @@ export class CartResolver {
     return transformCartDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartOutput)
   async updateCart(
     @Args('cartId') cartId: number,

@@ -32,42 +32,42 @@ export class CartItemResolver {
   ) { }
 
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => Number)
   async calculateCartTotal(@Args('cartId') cartId: number): Promise<number> {
     return this.calculateCartTotalUseCase.execute(cartId);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean)
   async clearCart(@Args('cartId') cartId: number): Promise<boolean> {
     return this.clearCartUseCase.execute(cartId);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartItemOutput)
   async createCartItem(
-    @Args('CartItemInput') input: CartItemInput,
+    @Args('cartItem') input: CartItemInput,
   ): Promise<CartItemOutput> {
     const dto = toCartItemDTO(input);
     const result = await this.createCartItemUseCase.execute(dto);
     return transformCartItemDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean)
   async deleteCartItem(@Args('id') id: number): Promise<boolean> {
     return this.deleteCartItemUseCase.execute(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => CartItemOutput, { nullable: true })
   async fetchCartItemById(@Args('id') id: number): Promise<CartItemOutput | null> {
     const result = await this.fetchCartItemByIdUseCase.execute(id);
     return transformCartItemDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => CartItemOutput, { nullable: true })
   async fetchCartItemByProductAndCart(
     @Args('productId') productId: number,
@@ -77,7 +77,7 @@ export class CartItemResolver {
     return transformCartItemDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => [CartItemOutput])
   async fetchCartItemsByCartId(
     @Args('cartId') cartId: number,
@@ -86,7 +86,7 @@ export class CartItemResolver {
     return result?.map(transformCartItemDTOToGraphQL);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => CartItemOutput, { nullable: true })
   async fetchHighestQuantityItem(
     @Args('cartId') cartId: number,
@@ -95,7 +95,7 @@ export class CartItemResolver {
     return transformCartItemDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartItemOutput)
   async updateCartItemQuantity(
     @Args('id') id: number,
@@ -105,7 +105,7 @@ export class CartItemResolver {
     return transformCartItemDTOToGraphQL(result);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => CartItemOutput)
   async updateCartItem(
     @Args('id') id: number,

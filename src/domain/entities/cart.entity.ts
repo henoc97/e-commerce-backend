@@ -16,6 +16,11 @@ export class Cart {
    */
   userId: number;
 
+  totalPrice: number;
+  totalQuantity: number;
+  estimatedShippingCost: number;
+  lastSaved: Date
+
   /**
    * The User who owns the Cart.
    */
@@ -33,9 +38,13 @@ export class Cart {
    * @param items - Items in the Cart (optional).
    * @param user - The User who owns the Cart.
    */
-  constructor(id: number, userId: number, items: CartItem[] = [], user?: User) {
+  constructor(id: number, userId: number, totalPrice: number, totalQuantity: number, estimatedShippingCost: number, lastSaved: Date, items: CartItem[] = [], user?: User) {
     this.id = id;
     this.userId = userId;
+    this.totalPrice = totalPrice;
+    this.totalQuantity = totalQuantity;
+    this.estimatedShippingCost = estimatedShippingCost;
+    this.lastSaved = lastSaved;
     this.user = user;
     this.items = items;
   }

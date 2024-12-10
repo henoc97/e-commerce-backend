@@ -6,7 +6,7 @@ import { Field, InputType } from "@nestjs/graphql";
  * Used as input data for GraphQL mutations.
  */
 @InputType()
-export class CartDTO {
+export class CartInput {
   /**
    * Unique identifier for the Cart.
    * Optional during creation, required for updates.
@@ -24,12 +24,12 @@ export class CartDTO {
    * Total price of the Cart.
    * Calculated by summing the prices of all items in the Cart.
    */
-  @Field()
-  totalPrice: number;
+  @Field({ nullable: true })
+  totalPrice: number = 0;
 
-  @Field()
-  totalQuantity: number;
+  @Field({ nullable: true })
+  totalQuantity: number = 0;
 
-  @Field()
-  estimatedShippingCost: number;
+  @Field({ nullable: true })
+  estimatedShippingCost: number = 0;
 }

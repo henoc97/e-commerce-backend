@@ -497,12 +497,12 @@ type Mutation {
   googleLogin(accessToken: String!): String!
   facebookLogin(accessToken: String!): String!
   clearCart(cartId: Float!): CartOutput!
-  createCartItem(CartItemInput: CartItemInput!): CartItemOutput!
+  createCartItem(cartItem: CartItemInput!): CartItemOutput!
   deleteCartItem(id: Float!): Boolean!
   updateCartItemQuantity(id: Float!, quantity: Float!): CartItemOutput!
   updateCartItem(id: Float!, UpdateCartItemQuantityInput: CartItemInput!): CartItemOutput!
   addItemToCart(cartId: Float!, item: CartItemInput!): CartOutput!
-  createCart(input: CartItemInput!): CartOutput!
+  createCart(cart: CartInput!): CartOutput!
   deleteCart(cartId: Float!): Boolean!
   mergeCarts(sourceCartId: Float!, targetCartId: Float!): CartOutput!
   removeItemFromCart(cartId: Float!, itemId: Float!): CartOutput!
@@ -638,6 +638,14 @@ input CartItemInput {
   cartId: Float!
   productId: Float!
   quantity: Float!
+}
+
+input CartInput {
+  id: Float
+  userId: Float!
+  totalPrice: Float = 0
+  totalQuantity: Float = 0
+  estimatedShippingCost: Float = 0
 }
 
 input CategoryInput {

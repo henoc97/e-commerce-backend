@@ -12,6 +12,10 @@ export function fromCartDTO(cartDTO: CartDTO | Partial<CartDTO>): Cart {
   return new Cart(
     cartDTO.id,
     cartDTO.userId,
+    cartDTO.totalPrice,
+    cartDTO.totalQuantity,
+    cartDTO.estimatedShippingCost,
+    cartDTO.lastSaved,
     cartDTO.items ? cartDTO.items?.map(fromCartItemDTO) : [],
     cartDTO.user ? fromUserDTO(cartDTO.user) : undefined,
   );

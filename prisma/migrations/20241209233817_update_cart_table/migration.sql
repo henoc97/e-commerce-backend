@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Cart" ADD COLUMN     "estimatedShippingCost" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+ADD COLUMN     "totalPrice" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "totalQuantity" INTEGER NOT NULL DEFAULT 0;

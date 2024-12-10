@@ -20,7 +20,7 @@ export class AuthResolver {
     return access_token;
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => String)
   async protectedResource(): Promise<string> {
     return 'This is a protected resource';

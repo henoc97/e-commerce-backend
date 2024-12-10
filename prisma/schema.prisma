@@ -9,6 +9,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// generator nestjs {
+  // provider = "prisma-generator-nestjs-dto"
+  // output   = "../src/dto" // Chemin où les DTO seront générés
+//}
+
 // Define the datasource (PostgreSQL)
 datasource db {
   provider = "postgresql"
@@ -245,12 +250,14 @@ model Category {
   shopId   Int?
 }
 
-// Cart Model: Stores user cart items
 model Cart {
-  id     Int        @id @default(autoincrement())
-  userId Int
-  user   User       @relation(fields: [userId], references: [id])
-  items  CartItem[]
+  id                   Int        @id @default(autoincrement())
+  userId               Int
+  totalPrice           Int        @default(0)
+  totalQuantity        Int        @default(0)
+  estimatedShippingCost Float     @default(0.0)
+  user                 User       @relation(fields: [userId], references: [id])
+  items                CartItem[]
 }
 
 // CartItem Model: Items in the cart

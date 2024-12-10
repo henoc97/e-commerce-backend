@@ -11,6 +11,10 @@ export function fromCartPrisma(cartPrisma: any): Cart {
   return new Cart(
     cartPrisma.id,
     cartPrisma.userId,
+    cartPrisma.totalPrice,
+    cartPrisma.totalQuantity,
+    cartPrisma.estimatedShippingCost,
+    cartPrisma.lastSaved,
     cartPrisma.items?.map((itemPrisma: any) => fromCartItemPrisma(itemPrisma)),
     cartPrisma.user ? fromUserPrisma(cartPrisma.user) : undefined,
   );

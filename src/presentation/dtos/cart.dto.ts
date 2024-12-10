@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
+import { IsDate, IsInt, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CartItemDTO } from './cart-item.dto';
 import { UserDTO } from './user.dto';
@@ -45,10 +45,16 @@ export class CartDTO {
    * Total price of the Cart.
    * Calculated by summing the prices of all items in the Cart.
    */
+  @IsInt()
   totalPrice: number;
 
+  @IsInt()
   totalQuantity: number;
+
+  @IsInt()
   estimatedShippingCost: number;
+
+  @IsDate()
   lastSaved: Date;
 
   /**
