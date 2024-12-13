@@ -49,6 +49,9 @@ export class UserOutput {
   @Field()
   role: UserRole;
 
+  @Field({ nullable: true })
+  token?: string;
+
   /**
    * Profile associated with the user.
    */
@@ -164,6 +167,7 @@ export class UserOutput {
     email?: string,
     password?: string,
     role?: UserRole,
+    token?: string,
     profile?: UserProfileOutput,
     addresses?: AddressOutput[],
     orders?: OrderOutput[],
@@ -184,6 +188,7 @@ export class UserOutput {
     this.password = password;
     this.name = name;
     this.role = role;
+    this.token = token;
     this.profile = profile;
     this.addresses = addresses;
     this.orders = orders;

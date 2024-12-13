@@ -7,11 +7,11 @@ import { AuthService } from './auth.service';
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '3600s' },
     }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   providers: [AuthService, JwtStrategy, GoogleStrategy],
   exports: [AuthService, PassportModule],

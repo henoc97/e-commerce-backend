@@ -1,8 +1,5 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { AuthService } from '../../../infrastructure/external-services/auth/auth.service';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../../infrastructure/external-services/auth/jwt-auth.guard';
-
 @Resolver('Auth')
 export class AuthResolver {
   constructor(private readonly authService: AuthService) { }

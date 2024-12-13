@@ -17,6 +17,19 @@ export class AuthService {
     this.googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   }
 
+  generateToken(user: any): string {
+    const payload = { email: user.email, sub: user.id };
+    return this.jwtService.sign(payload);
+  }
+
+  async validateToken(token: string): Promise<any> {
+    try {
+      return this.jwtService.verify(token); // Décode et valide le token
+    } catch (error) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+  }
+
   // Validation d'utilisateur pour le login normal
   async validateUser(username: string, pass: string): Promise<any> {
     const user = { username: 'test', password: 'test' }; // Remplacer par une vérification réelle

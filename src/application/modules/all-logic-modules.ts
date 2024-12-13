@@ -23,34 +23,39 @@ import { CartItemModule } from './cart-item.module';
 import { ProductVariantModule } from './product-variant.module';
 import { UserActivityModule } from './user-activity.module';
 import { UserModule } from './user.module';
+import { AuthModule } from '../../infrastructure/external-services/auth/auth.module';
+import { KafkaModule } from '../../infrastructure/external-services/kafka/kafka.module';
+import { MyGraphQLModule } from '../../presentation/graphql/graphql.module';
 
 const allLogicModules = [
-    ShopModule,
-    VendorModule,
-    MarketplaceModule,
-    TicketModule,
-    AuditLogModule,
+    AuthModule,
     AddressModule,
-    CategoryModule,
-    OrderModule,
+    AuditLogModule,
+    CartItemModule,
     CartModule,
+    CategoryModule,
+    MarketplaceModule,
     NewsletterSubscriptionModule,
+    NotificationModule,
+    OrderItemModule,
+    OrderModule,
     PaymentModule,
-    ProductModule,
     ProductImageModule,
     ProductVariantModule,
-    OrderItemModule,
-    SubscriptionModule,
-    UserProfileModule,
-    NotificationModule,
-    ReviewModule,
-    RefundModule,
+    ProductModule,
     PromotionModule,
+    RefundModule,
+    ReviewModule,
+    ShopModule,
+    SubscriptionModule,
     SubsiteModule,
-    CartItemModule,
-    ProductVariantModule,
+    TicketModule,
     UserActivityModule,
+    UserProfileModule,
     UserModule,
+    VendorModule,
+    // MyGraphQLModule,
+    KafkaModule
 ];
 
 export default allLogicModules; 

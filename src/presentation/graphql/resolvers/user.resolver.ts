@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
 import { AddAddressToUser } from '../../../application/use-cases/user.use-cases/add-address-to-user.use-case';
 // import { AddNotificationToUser } from '../../../application/use-cases/user.use-cases/add-notification-to-user.use-case';
 // import { AddOrderToUser } from '../../../application/use-cases/user.use-cases/add-order-to-user.use-case';
@@ -26,6 +26,11 @@ import { AddressInput } from '../../../presentation/input/address.input';
 import { UserOutput } from '../../../presentation/output/user.output';
 import { UserInput } from '../../../presentation/input/user.input';
 import { toUserDTO } from '../../../application/helper/to-dto/to.user.dto';
+import { AuthService } from '../../../infrastructure/external-services/auth/auth.service';
+import { JwtAuthGuard } from '../../../infrastructure/external-services/auth/jwt-auth.guard';
+import { ForbiddenException, UseGuards } from '@nestjs/common';
+import { RolesGuard } from '../../../infrastructure/external-services/auth/roles.guard';
+import { Roles } from '../../../infrastructure/external-services/auth/roles.decorator';
 
 @Resolver(() => UserOutput)
 export class UserResolver {
@@ -49,6 +54,7 @@ export class UserResolver {
     // private readonly removeSubsiteFromUserUseCase: RemoveSubsiteFromUserUseCase,
     private readonly updateUserPasswordUseCase: UpdateUserPasswordUseCase,
     private readonly updateUserUseCase: UpdateUser,
+    private readonly authService: AuthService
   ) { }
 
   @Mutation(() => UserOutput, { name: 'addAddressToUser' })
@@ -87,11 +93,28 @@ export class UserResolver {
   // return transformUserDTOToGraphQL(result);
   // }
 
+  @Query(() => String)
+  @UseGuards(JwtAuthGuard)
+  getProfile(@Context('user') user): string {
+    return `Hello, ${user.email}. Your ID is ${user.sub}.`;
+  }
+
+  @Query(() => String)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  adminOnlyData(): string {
+    return "This data is accessible only to admins.";
+  }
+
   @Mutation(() => UserOutput, { name: 'createUser' })
   async createUser(@Args('user') user: UserInput): Promise<UserOutput | null> {
     const dto = toUserDTO(user);
     const result = await this.createUserUseCase.execute(dto);
-    return transformUserDTOToGraphQL(result);
+    const res = transformUserDTOToGraphQL(result);
+    const token = this.authService.generateToken(dto);
+    res.token = token;
+    console.log("User created: " + res);
+    return res;
   }
 
   @Mutation(() => Boolean, { name: 'deleteUser' })

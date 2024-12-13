@@ -15,7 +15,7 @@ export class CartItemRepository implements ICartItemRepository {
     try {
       const { id, cart, product, ...cartItem } = item;
       const result = await prisma.cartItem.create({
-        data: cartItem,
+        data: cartItem, include: { product: true, cart: true }
       });
       return fromCartItemPrisma(result);
     } catch (error) {

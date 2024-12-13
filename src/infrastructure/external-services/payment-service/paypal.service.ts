@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as paypal from '@paypal/checkout-server-sdk';
-import { Currency } from 'src/domain/enums/currencies.enum';
+import { Currency } from '../../../domain/enums/currencies.enum';
 
 @Injectable()
 export class PayPalService {

@@ -8,8 +8,6 @@ import { ListAddressesByCountry } from '../../../application/use-cases/address.u
 import { ListAddressesByState } from '../../../application/use-cases/address.use-cases/list-addresses-by-state.use-case';
 import { ListAddressesByPostalCode } from '../../../application/use-cases/address.use-cases/list-addresses-by-postal-code.use-case';
 import { ListAddressesByUser } from '../../../application/use-cases/address.use-cases/list-addresses-by-user.use-case';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../../../infrastructure/external-services/auth/jwt-auth.guard';
 import { transformAddressDTOToGraphQL } from '../../../application/helper/utils/transformers';
 import { AddressOutput } from '../../../presentation/output/address.output';
 import { AddressInput } from '../../../presentation/input/address.input';

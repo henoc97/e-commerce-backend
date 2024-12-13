@@ -275,6 +275,7 @@ type UserOutput {
   password: String!
   name: String!
   role: String!
+  token: String
   profile: UserProfileOutput
   addresses: [AddressOutput!]
   orders: [OrderOutput!]
@@ -448,6 +449,8 @@ type Query {
   fetchUserProfilesByGender(gender: String!): [UserProfileOutput!]!
   findMatchingProfiles(criteria: UserProfileInput!): [UserProfileOutput!]!
   isPhoneInUse(phone: String!): Boolean!
+  getProfile: String!
+  adminOnlyData: String!
   getActiveCount: Float!
   getCountByRole(role: String!): Float!
   getDetailedInfo(userId: Float!): UserOutput!
