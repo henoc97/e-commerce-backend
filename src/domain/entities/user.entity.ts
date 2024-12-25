@@ -23,10 +23,28 @@ export class User {
   email: string;
 
   /** Password for the user account */
-  password: string;
+  password?: string;
 
   /** Optional name of the user */
-  name?: string;
+  name: string;
+
+  /** Indicates if the user's email is verified */
+  isEmailVerified: boolean;
+
+  /** Authentication provider (e.g., LOCAL, GOOGLE) */
+  authProvider: string;
+
+  /** Google ID if the user is authenticated via Google */
+  googleId?: string;
+
+  /** Date when the user was last logged in */
+  lastLogin?: Date;
+
+  /** Date when the user was created */
+  createdAt: Date;
+
+  /** Date when the user was last updated */
+  updatedAt: Date;
 
   /** Role of the user (e.g., CLIENT, ADMIN) */
   role: UserRole;
@@ -39,12 +57,6 @@ export class User {
 
   /** List of orders placed by the user */
   orders: Order[];
-
-  /** Date when the user was created */
-  createdAt: Date;
-
-  /** Date when the user was last updated */
-  updatedAt: Date;
 
   /** Vendor information if the user is a vendor */
   vendor: Vendor;
@@ -90,6 +102,7 @@ export class User {
    * @param subsites - Optional list of sub-sites associated with the user
    * @param userActivities - Optional list of user activities
    * @param auditLogs - Optional list of audit logs for the user
+   * @param isEmailVerified - Indicates if the user's email is verified
    */
   constructor(
     id: number,
@@ -103,6 +116,7 @@ export class User {
     updatedAt: Date,
     vendor: Vendor,
     carts: Cart[],
+    isEmailVerified: boolean,
     name?: string,
     reviews?: Review[],
     notifications?: Notification[],
@@ -129,5 +143,6 @@ export class User {
     this.subsites = subsites;
     this.userActivities = userActivities;
     this.auditLogs = auditLogs;
+    this.isEmailVerified = isEmailVerified;
   }
 }

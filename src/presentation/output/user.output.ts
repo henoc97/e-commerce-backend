@@ -34,8 +34,8 @@ export class UserOutput {
    * Password for the user account.
    * Should be handled securely and hashed in practice.
    */
-  @Field()
-  password: string;
+  @Field({ nullable: true })
+  password?: string;
 
   /**
    * Optional name of the user.

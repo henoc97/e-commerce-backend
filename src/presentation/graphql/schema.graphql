@@ -272,7 +272,7 @@ type UserActivityOutput {
 type UserOutput {
   id: Float!
   email: String!
-  password: String!
+  password: String
   name: String!
   role: String!
   token: String
@@ -312,6 +312,7 @@ type NewsletterSubscriptionOutput {
 
 type AuthResponse {
   access_token: String!
+  user: UserOutput
 }
 
 type Query {
@@ -501,6 +502,8 @@ type Mutation {
   updateAuditLog(id: Float!, AuditLogInput: AuditLogInput!): AuditLogOutput!
   login(auth: AuthInput!): AuthResponse!
   protectedResource: String!
+  googleAuth(token: String!): AuthResponse!
+  verifyGoogleToken(token: String!): String!
   clearCart(cartId: Float!): CartOutput!
   createCartItem(cartItem: CartItemInput!): CartItemOutput!
   deleteCartItem(id: Float!): Boolean!

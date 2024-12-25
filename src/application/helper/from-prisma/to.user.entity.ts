@@ -16,27 +16,25 @@ import { fromVendorPrisma } from './to.vendor.entity';
  * @param userPrisma - The userPrisma to convert.
  * @returns The user entity.
  */
-export function fromUserPrisma(userPrisma: any): User {
-  return new User(
-    userPrisma.id,
-    userPrisma.email,
-    userPrisma.password,
-    userPrisma.role,
-    userPrisma.profile ? fromUserProfilePrisma(userPrisma.profile) : undefined,
-    userPrisma.addresses?.map(fromAddressPrisma),
-    userPrisma.orders?.map(fromOrderPrisma),
-    userPrisma.createdAt,
-    userPrisma.updatedAt,
-    userPrisma.vendor ? fromVendorPrisma(userPrisma.vendor) : undefined,
-    userPrisma.carts?.map(fromCartPrisma),
-    userPrisma.name,
-    userPrisma.reviews?.map(fromReviewPrisma),
-    userPrisma.notifications?.map(fromNotificationPrisma,
-    ),
-    userPrisma.tickets?.map(fromTicketPrisma),
-    userPrisma.subsites?.map(fromSubsitePrisma),
-    userPrisma.userActivities?.map(fromUserActivityPrisma,
-    ),
-    userPrisma.auditLogs?.map(fromAuditLogPrisma),
-  );
+export function fromUserPrisma(prismaUser: any): User {
+  if (!prismaUser) return null;
+
+  return {
+    id: prismaUser.id,
+    email: prismaUser.email,
+    password: prismaUser.password,
+    name: prismaUser.name,
+    role: prismaUser.role,
+    isEmailVerified: prismaUser.isEmailVerified,
+    authProvider: prismaUser.authProvider,
+    googleId: prismaUser.googleId,
+    lastLogin: prismaUser.lastLogin,
+    profile: prismaUser.profile,
+    addresses: prismaUser.addresses || [],
+    orders: prismaUser.orders || [],
+    vendor: prismaUser.vendor || null,
+    carts: prismaUser.cart || [],
+    createdAt: prismaUser.createdAt,
+    updatedAt: prismaUser.updatedAt
+  };
 }

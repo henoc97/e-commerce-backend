@@ -74,12 +74,6 @@ export class UserRepository implements IUserRepository {
         orders,
         vendor,
         carts,
-        reviews,
-        notifications,
-        tickets,
-        subsites,
-        userActivities,
-        auditLogs,
         ...data
       } = updates;
       const result = await prisma.user.update({
@@ -168,8 +162,18 @@ export class UserRepository implements IUserRepository {
    */
   async getByEmail(email: string): Promise<User | null> {
     try {
-      const result = await prisma.user.findUnique({ where: { email } });
-      return fromUserPrisma(result);
+      const user = await prisma.user.findUnique({
+        where: { email },
+        include: {
+          profile: true,
+          addresses: true,
+          orders: true,
+          vendor: true,
+          cart: true
+        }
+      });
+
+      return fromUserPrisma(user);
     } catch (error) {
       console.error('Error fetching user by email:', error);
       throw new Error('Failed to fetch user by email.');

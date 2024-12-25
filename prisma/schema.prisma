@@ -126,24 +126,28 @@ enum AuditLogAction {
 
 // User Model: Represents users with roles like client, admin, or seller
 model User {
-  id           Int            @id @default(autoincrement())
-  email        String         @unique
-  password     String
-  name         String?
-  role         UserRole       @default(CLIENT)
-  profile      UserProfile?
-  addresses    Address[]
-  orders       Order[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  vendor       Vendor?
-  cart         Cart[]
-  review       Review[]
-  notification Notification[]
-  ticket       Ticket[]
-  subsite      Subsite[]
-  userActivity UserActivity[]
-  auditLog     AuditLog[]
+  id              Int            @id @default(autoincrement())
+  email           String         @unique
+  password        String?        // Optional car auth Google n'a pas de password
+  name            String
+  isEmailVerified Boolean        @default(false)
+  authProvider    String         @default("LOCAL") // "LOCAL" ou "GOOGLE"
+  googleId        String?        @unique
+  lastLogin       DateTime?
+  role            UserRole       @default(CLIENT)
+  profile         UserProfile?
+  addresses       Address[]
+  orders          Order[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  vendor          Vendor?
+  cart            Cart[]
+  review          Review[]
+  notification    Notification[]
+  ticket          Ticket[]
+  subsite         Subsite[]
+  userActivity    UserActivity[]
+  auditLog        AuditLog[]
 }
 
 // User Profile Model
