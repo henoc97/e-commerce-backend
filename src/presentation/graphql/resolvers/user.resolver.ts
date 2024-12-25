@@ -18,8 +18,6 @@ import { RemoveAddressFromUserUseCase } from '../../../application/use-cases/use
 // import { RemoveSubsiteFromUserUseCase } from '../../../application/use-cases/user.use-cases/remove-subsite-from-user.use-case';
 import { UpdateUserPasswordUseCase } from '../../../application/use-cases/user.use-cases/update-user-password.use-case';
 import { UpdateUser } from '../../../application/use-cases/user.use-cases/update-user.use-case';
-import { AddressDTO } from '../../../presentation/dtos/address.dto';
-import { UserDTO } from '../../../presentation/dtos/user.dto';
 import { UserRole } from '../../../domain/enums/user-role.enum';
 import { transformUserDTOToGraphQL } from '../../../application/helper/utils/transformers';
 import { AddressInput } from '../../../presentation/input/address.input';
@@ -27,10 +25,11 @@ import { UserOutput } from '../../../presentation/output/user.output';
 import { UserInput } from '../../../presentation/input/user.input';
 import { toUserDTO } from '../../../application/helper/to-dto/to.user.dto';
 import { AuthService } from '../../../infrastructure/external-services/auth/auth.service';
-import { JwtAuthGuard } from '../../../infrastructure/external-services/auth/jwt-auth.guard';
+import { GqlAuthGuard } from '../../../infrastructure/external-services/auth/gql-auth.guard';
 import { ForbiddenException, UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../../../infrastructure/external-services/auth/roles.guard';
 import { Roles } from '../../../infrastructure/external-services/auth/roles.decorator';
+import { stringify } from 'querystring';
 
 @Resolver(() => UserOutput)
 export class UserResolver {
@@ -94,26 +93,28 @@ export class UserResolver {
   // }
 
   @Query(() => String)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(GqlAuthGuard)
   getProfile(@Context('user') user): string {
     return `Hello, ${user.email}. Your ID is ${user.sub}.`;
   }
 
   @Query(() => String)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(GqlAuthGuard)
   @Roles(UserRole.ADMIN)
   adminOnlyData(): string {
     return "This data is accessible only to admins.";
   }
 
   @Mutation(() => UserOutput, { name: 'createUser' })
+  //(GqlAuthGuard)
   async createUser(@Args('user') user: UserInput): Promise<UserOutput | null> {
+    console.log('USER: ' + JSON.stringify(user));
     const dto = toUserDTO(user);
     const result = await this.createUserUseCase.execute(dto);
     const res = transformUserDTOToGraphQL(result);
-    const token = this.authService.generateToken(dto);
-    res.token = token;
-    console.log("User created: " + res);
+    // const token = this.authService.generateToken(dto);
+    // res.token = token;
+    console.log("User created: " + JSON.stringify(res));
     return res;
   }
 

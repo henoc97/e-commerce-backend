@@ -14,6 +14,7 @@ export class CreateCartItem {
   constructor(
     private readonly cartItemService: CartItemService,
     private readonly updateCart: UpdateCart,
+    private readonly fetchCartById: FetchCartById,
   ) { }
 
   /**
@@ -25,12 +26,13 @@ export class CreateCartItem {
     const cartItem = await this.cartItemService.createCartItem(cartItemDTO);
 
     if (cartItem) {
+      const cart = await this.fetchCartById.execute(cartItem.cartId);
       const data = {
         "totalPrice": cartItem.cart.totalPrice + cartItem.product.price * cartItem.quantity,
         "totalQuantity": cartItem.cart.totalQuantity + cartItem.quantity,
         "estimatedShippingCost": 0.0
       }
-      const cart: CartDTO = await this.updateCart.execute(cartItem.cart.id, data)
+      await this.updateCart.execute(cartItem.cart.id, data)
     }
     return toCartItemDTO(cartItem);
   }

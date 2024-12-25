@@ -29,7 +29,7 @@ export class AuditLogResolver {
     private readonly updateLog: UpdateLog,
   ) { }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Mutation(() => AuditLogOutput)
   async createAuditLog(@Args('AuditLogInput') input: AuditLogInput): Promise<AuditLogOutput> {
     const dto = toAuditLogDTO(input);
@@ -37,20 +37,20 @@ export class AuditLogResolver {
     return transformAuditLogDTOToGraphQL(result);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Mutation(() => Boolean)
   async deleteAuditLog(@Args('id') id: number): Promise<boolean> {
     return this.deleteLog.execute(id);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => AuditLogOutput, { nullable: true })
   async auditLogById(@Args('id') id: number): Promise<AuditLogOutput | null> {
     const result = await this.fetchLogById.execute(id);
     return transformAuditLogDTOToGraphQL(result);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AuditLogOutput])
   async auditLogsByAction(
     @Args('action') action: AuditLogAction,
@@ -59,7 +59,7 @@ export class AuditLogResolver {
     return result?.map(transformAuditLogDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AuditLogOutput])
   async auditLogsByDateRange(
     @Args('startDate') startDate: Date,
@@ -69,7 +69,7 @@ export class AuditLogResolver {
     return result?.map(transformAuditLogDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AuditLogOutput])
   async auditLogsByEntity(
     @Args('entity') entity: string,
@@ -79,7 +79,7 @@ export class AuditLogResolver {
     return result?.map(transformAuditLogDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AuditLogOutput])
   async auditLogsByUser(
     @Args('userId') userId: number,
@@ -88,14 +88,14 @@ export class AuditLogResolver {
     return result?.map(transformAuditLogDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AuditLogOutput])
   async recentAuditLogs(@Args('limit') limit: number): Promise<AuditLogOutput[]> {
     const result = await this.fetchRecentLogs.execute(limit);
     return result?.map(transformAuditLogDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Mutation(() => AuditLogOutput)
   async updateAuditLog(
     @Args('id') id: number,

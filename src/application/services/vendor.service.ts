@@ -166,10 +166,3 @@ export class VendorService {
     return await this.vendorRepository.getAll();
   }
 }
-
-
-let myMap = new Map();
-
-myMap.set('baahir', 'ina');
-
-console.log(myMap.get('baahir'));

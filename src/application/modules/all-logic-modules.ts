@@ -23,12 +23,11 @@ import { CartItemModule } from './cart-item.module';
 import { ProductVariantModule } from './product-variant.module';
 import { UserActivityModule } from './user-activity.module';
 import { UserModule } from './user.module';
-import { AuthModule } from '../../infrastructure/external-services/auth/auth.module';
 import { KafkaModule } from '../../infrastructure/external-services/kafka/kafka.module';
 import { MyGraphQLModule } from '../../presentation/graphql/graphql.module';
+import { AuthModule } from '../../infrastructure/external-services/auth/auth.module';
 
 const allLogicModules = [
-    AuthModule,
     AddressModule,
     AuditLogModule,
     CartItemModule,
@@ -55,7 +54,9 @@ const allLogicModules = [
     UserModule,
     VendorModule,
     // MyGraphQLModule,
-    KafkaModule
+    KafkaModule,
+    AuthModule
 ];
 
-export default allLogicModules; 
+export default allLogicModules;
+

@@ -26,21 +26,21 @@ export class AddressResolver {
     private readonly listAddressesByUser: ListAddressesByUser,
   ) { }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => AddressOutput, { nullable: true })
   async address(@Args('id') id: number): Promise<AddressOutput | null> {
     const result = await this.fetchAddressById.execute(id)
     return transformAddressDTOToGraphQL(result);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AddressOutput])
   async addressesByCity(@Args('city') city: string): Promise<AddressOutput[]> {
     const result = await this.listAddressesByCity.execute(city)
     return result?.map(transformAddressDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Mutation(() => AddressOutput)
   async createNewAddress(
     @Args('addressInput') addressInput: AddressInput,
@@ -49,7 +49,7 @@ export class AddressResolver {
     return transformAddressDTOToGraphQL(result);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Mutation(() => AddressOutput)
   async updateAddress(
     @Args('id') id: number,
@@ -59,13 +59,13 @@ export class AddressResolver {
     return transformAddressDTOToGraphQL(result);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Mutation(() => Boolean)
   async deleteAddress(@Args('id') id: number): Promise<boolean> {
     return this.removeAddressById.execute(id);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AddressOutput])
   async addressesByCountry(
     @Args('country') country: string,
@@ -74,14 +74,14 @@ export class AddressResolver {
     return result?.map(transformAddressDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AddressOutput])
   async addressesByState(@Args('state') state: string): Promise<AddressOutput[]> {
     const result = await this.listAddressesByState.execute(state);
     return result?.map(transformAddressDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AddressOutput])
   async addressesByPostalCode(
     @Args('postalCode') postalCode: string,
@@ -90,7 +90,7 @@ export class AddressResolver {
     return result?.map(transformAddressDTOToGraphQL);
   }
 
-  // @UseGuards(JwtAuthGuard)
+  // @UseGuards(GqlAuthGuard )
   @Query(() => [AddressOutput])
   async addressesByUser(@Args('userId') userId: number): Promise<AddressOutput[]> {
     const result = await this.listAddressesByUser.execute(userId);

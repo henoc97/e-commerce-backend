@@ -310,6 +310,10 @@ type NewsletterSubscriptionOutput {
   subscribedAt: DateTime
 }
 
+type AuthResponse {
+  access_token: String!
+}
+
 type Query {
   address(id: Float!): AddressOutput
   addressesByCity(city: String!): [AddressOutput!]!
@@ -495,10 +499,8 @@ type Mutation {
   createAuditLog(AuditLogInput: AuditLogInput!): AuditLogOutput!
   deleteAuditLog(id: Float!): Boolean!
   updateAuditLog(id: Float!, AuditLogInput: AuditLogInput!): AuditLogOutput!
-  login(username: String!, password: String!): String!
+  login(auth: AuthInput!): AuthResponse!
   protectedResource: String!
-  googleLogin(accessToken: String!): String!
-  facebookLogin(accessToken: String!): String!
   clearCart(cartId: Float!): CartOutput!
   createCartItem(cartItem: CartItemInput!): CartItemOutput!
   deleteCartItem(id: Float!): Boolean!
@@ -634,6 +636,11 @@ input AuditLogInput {
   entity: String!
   entityId: Float!
   changes: String
+}
+
+input AuthInput {
+  email: String!
+  password: String!
 }
 
 input CartItemInput {
