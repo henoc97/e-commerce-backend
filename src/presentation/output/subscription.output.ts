@@ -1,6 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { VendorOutput } from "./vendor.output";
 import { Type } from "class-transformer"
+import { Currency } from "../../domain/enums/currencies.enum";
 /**
  * Data Transfer Object for Subscription.
  * Used for validating and transforming subscription data in API requests and responses.
@@ -32,6 +33,10 @@ export class SubscriptionOutput {
    */
   @Field()
   price: number;
+
+  @Field()
+  currency: Currency;
+
 
   /**
    * Duration of the subscription in days.
@@ -75,6 +80,7 @@ export class SubscriptionOutput {
     id?: number,
     name?: string,
     price?: number,
+    currency?: Currency,
     duration?: number,
     description?: string,
     vendors: VendorOutput[] = [],
@@ -84,6 +90,7 @@ export class SubscriptionOutput {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.currency = currency;
     this.duration = duration;
     this.description = description;
     this.vendors = vendors;

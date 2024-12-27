@@ -5,9 +5,11 @@ import {
   IsNumber,
   IsDateString,
   ValidateNested,
+  IsEnum,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { VendorDTO } from './vendor.dto';
+import { Currency } from '../../domain/enums/currencies.enum';
 
 /**
  * Data Transfer Object for Subscription.
@@ -40,6 +42,9 @@ export class SubscriptionDTO {
    */
   @IsNumber()
   price: number;
+
+  @IsEnum(Currency)
+  currency: Currency;
 
   /**
    * Duration of the subscription in days.
@@ -84,6 +89,7 @@ export class SubscriptionDTO {
     id: number,
     name: string,
     price: number,
+    currency: Currency,
     duration: number,
     description?: string,
     vendors: VendorDTO[] = [],
@@ -93,6 +99,7 @@ export class SubscriptionDTO {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.currency = currency
     this.duration = duration;
     this.description = description;
     this.vendors = vendors;

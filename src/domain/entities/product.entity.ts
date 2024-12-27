@@ -7,6 +7,7 @@ import { ProductVariant } from './product-variant.entity';
 import { CartItem } from './cart-item.entity';
 import { Review } from './review.entity';
 import { OrderItem } from './order-item.enttity';
+import { Currency } from '../../domain/enums/currencies.enum';
 
 /**
  * Represents a product entity in the system.
@@ -31,6 +32,11 @@ export class Product {
    * The price of the product.
    */
   price: number;
+
+  /**
+   * The currency of the payment.
+   */
+  currency: Currency;
 
   /**
    * An array of promotions associated with the product.
@@ -133,6 +139,7 @@ export class Product {
     id: number,
     name: string,
     price: number,
+    currency: Currency,
     promotions: Promotion[] = [],
     category: Category,
     categoryId: number,
@@ -154,6 +161,7 @@ export class Product {
     this.name = name;
     this.description = description;
     this.price = price;
+    this.currency = currency;
     this.promotions = promotions;
     this.category = category;
     this.categoryId = categoryId;

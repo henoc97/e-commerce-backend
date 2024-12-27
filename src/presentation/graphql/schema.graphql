@@ -21,6 +21,7 @@ type SubscriptionOutput {
   name: String!
   description: String
   price: Float!
+  currency: String!
   duration: Float!
   vendors: [VendorOutput!]
   createdAt: DateTime
@@ -138,6 +139,7 @@ type ProductOutput {
   name: String!
   description: String
   price: Float!
+  currency: String!
   promotions: PromotionOutput
   category: CategoryOutput
   categoryId: Float!
@@ -379,7 +381,6 @@ type Query {
   fetchPaymentsByMethod(method: String!): [PaymentOutput!]!
   fetchPaymentsByOrderId(orderId: Float!): [PaymentOutput!]!
   fetchPaymentsByStatus(status: String!): [PaymentOutput!]!
-  fetchPaymentsGroupedByMethod: String!
   fetchTotalAmountByDateRange(startDate: DateTime!, endDate: DateTime!): Float!
   doesProductImageExist(productId: Float!, url: String!): Boolean!
   countProductImages(productId: Float!): Float!
@@ -756,6 +757,7 @@ input ProductInput {
   name: String!
   description: String
   price: Float!
+  currency: String!
   categoryId: Float!
   stock: Float!
   vendorId: Float!
@@ -776,6 +778,7 @@ input SubscriptionInput {
   name: String!
   description: String
   price: Float!
+  currency: String!
   duration: Float!
 }
 

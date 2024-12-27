@@ -9,6 +9,7 @@ import { CartItemOutput } from "./cart-item.output";
 import { OrderItemOutput } from "./order-item.output";
 import { ReviewOutput } from "./review.output";
 import { Type } from "class-transformer"
+import { Currency } from "../../domain/enums/currencies.enum";
 
 /**
  * Data Transfer Object for Product.
@@ -39,6 +40,9 @@ export class ProductOutput {
    */
   @Field()
   price: number;
+
+  @Field()
+  currency: Currency;
 
   /**
    * Optional array of promotions associated with the Product.
@@ -165,6 +169,7 @@ export class ProductOutput {
     id?: number,
     name?: string,
     price?: number,
+    currency?: Currency,
     promotions: PromotionOutput[] = [],
     category?: CategoryOutput,
     categoryId?: number,
@@ -185,6 +190,7 @@ export class ProductOutput {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.currency = currency
     this.promotions = promotions;
     this.category = category;
     this.categoryId = categoryId;

@@ -208,6 +208,7 @@ model Product {
   name        String
   description String?
   price       Float
+  currency    Currency
   promotions  Promotion[]
   category    Category         @relation(fields: [categoryId], references: [id])
   categoryId  Int
@@ -318,6 +319,7 @@ model Payment {
   amount     Float
   providerId String?
   metadata   Json?
+  currency   Currency
   createdAt  DateTime      @default(now())
 }
 
@@ -448,6 +450,7 @@ model Subscription {
   name        String
   description String?
   price       Float
+  currency    Currency
   duration    Int // Duration in days or months
   vendors     Vendor[] @relation("VendorSubscription")
   createdAt   DateTime @default(now())

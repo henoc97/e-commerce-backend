@@ -1,4 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
+import { Currency } from "../../domain/enums/currencies.enum";
 
 
 /**
@@ -30,6 +31,9 @@ export class ProductInput {
    */
   @Field()
   price: number;
+
+  @Field()
+  currency: Currency;
 
   /**
    * The ID of the category to which the Product belongs.

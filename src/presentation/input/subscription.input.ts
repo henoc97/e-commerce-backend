@@ -1,4 +1,5 @@
 import { InputType, Field } from "@nestjs/graphql";
+import { Currency } from "../../domain/enums/currencies.enum";
 
 /**
  * Input Type for Subscription.
@@ -31,6 +32,11 @@ export class SubscriptionInput {
    */
   @Field()
   price: number;
+
+  @Field()
+  currency: Currency;
+
+
 
   /**
    * Duration of the subscription in days.

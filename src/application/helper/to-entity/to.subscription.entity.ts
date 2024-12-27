@@ -14,6 +14,7 @@ export function fromSubscriptionDTO(
     subscriptionDTO.id,
     subscriptionDTO.name,
     subscriptionDTO.price,
+    subscriptionDTO.currency,
     subscriptionDTO.duration,
     subscriptionDTO.description,
     subscriptionDTO.vendors?.map((vendorDTO) => fromVendorDTO(vendorDTO)) || [],

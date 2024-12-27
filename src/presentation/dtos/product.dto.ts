@@ -5,6 +5,7 @@ import {
   IsNumber,
   ValidateNested,
   IsDateString,
+  IsEnum,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CategoryDTO } from './category.dto';
@@ -16,6 +17,7 @@ import { PromotionDTO } from './promotion.dto';
 import { ReviewDTO } from './review.dto';
 import { ShopDTO } from './shop.dto';
 import { VendorDTO } from './vendor.dto';
+import { Currency } from '../../domain/enums/currencies.enum';
 
 /**
  * Data Transfer Object for Product.
@@ -46,6 +48,9 @@ export class ProductDTO {
    */
   @IsNumber()
   price: number;
+
+  @IsEnum(Currency)
+  currency?: Currency;
 
   /**
    * Optional array of promotions associated with the Product.
@@ -180,6 +185,7 @@ export class ProductDTO {
     id: number,
     name: string,
     price: number,
+    currency: Currency,
     promotions: PromotionDTO[] = [],
     category: CategoryDTO,
     categoryId: number,
@@ -200,6 +206,7 @@ export class ProductDTO {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.currency = currency
     this.promotions = promotions;
     this.category = category;
     this.categoryId = categoryId;

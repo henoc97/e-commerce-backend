@@ -19,6 +19,7 @@ export function fromProductPrisma(productPrisma: any): Product {
     productPrisma.id,
     productPrisma.name,
     productPrisma.price,
+    productPrisma.currency,
     productPrisma.promotions?.map((p: any) => fromPromotionPrisma(p)),
     productPrisma.category
       ? fromCategoryPrisma(productPrisma.category)

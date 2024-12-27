@@ -21,7 +21,8 @@ export class PaymentRepository implements IPaymentRepository {
       });
       return fromPaymentPrisma(createdPayment);
     } catch (error) {
-      throw new Error(`Failed to create payment: ${error}`);
+      console.error('Failed to create payment:', error);
+      throw new Error(`Failed to create payment: ${error.message}`);
     }
   }
 

@@ -12,6 +12,8 @@ import { FetchPaymentsByOrderId } from '../use-cases/payment.use-cases/fetch-pay
 import { FetchMostRecentPaymentByOrderId } from '../use-cases/payment.use-cases/fetch-most-recent-payment-by-order-id.use-case';
 import { FetchTotalAmountByDateRange } from '../use-cases/payment.use-cases/fetch-total-amount-by-date-range.use-case';
 import { FetchPaymentsByDateRange } from '../use-cases/payment.use-cases/fetch-payments-by-date-range.use-case';
+import { PayPalService } from '../../infrastructure/external-services/payment-service/paypal.service';
+import { StripeService } from '../../infrastructure/external-services/payment-service/stripe.service';
 
 const paymentUseCases = [
   CreatePayment,
@@ -30,7 +32,8 @@ const paymentUseCases = [
 @Module({
   providers: [
     PaymentService,
-
+    StripeService,
+    PayPalService,
     {
       provide: 'IPaymentRepository',
       useClass: PaymentRepository,

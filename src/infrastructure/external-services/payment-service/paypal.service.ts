@@ -14,15 +14,15 @@ export class PayPalService {
     this.client = new paypal.core.PayPalHttpClient(environment);
   }
 
-  async createOrder() {
+  async createOrder(currency: Currency, amount: number) {
     const request = new paypal.orders.OrdersCreateRequest();
     request.requestBody({
       intent: 'CAPTURE',
       purchase_units: [
         {
           amount: {
-            currency_code: Currency.USD,
-            value: '100.00',
+            currency_code: currency,
+            value: amount,
           },
         },
       ],

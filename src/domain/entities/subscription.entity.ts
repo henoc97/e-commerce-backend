@@ -1,3 +1,4 @@
+import { Currency } from '../../domain/enums/currencies.enum';
 import { Vendor } from './vendor.entity';
 
 /**
@@ -26,6 +27,8 @@ export class Subscription {
    * Represents the cost associated with the subscription.
    */
   price: number;
+
+  currency: Currency;
 
   /**
    * Duration of the subscription in days.
@@ -66,6 +69,7 @@ export class Subscription {
     id: number,
     name: string,
     price: number,
+    currency: Currency,
     duration: number,
     description?: string,
     vendors: Vendor[] = [],
@@ -76,6 +80,7 @@ export class Subscription {
     this.name = name;
     this.description = description;
     this.price = price;
+    this.currency = currency;
     this.duration = duration;
     this.vendors = vendors;
     this.createdAt = createdAt;

@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsDate,
   ValidateNested,
+  IsBoolean,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { UserProfileDTO } from './user-profile.dto';
@@ -42,15 +43,41 @@ export class UserDTO {
    * Password for the user account.
    * Should be handled securely and hashed in practice.
    */
+  @IsOptional()
   @IsString()
-  password: string;
+  password?: string;
 
   /**
    * Optional name of the user.
    */
+  @IsString()
+  name: string;
+
+  /**
+   * Indicates whether the user's email is verified.
+   */
+  @IsBoolean()
+  isEmailVerified: boolean;
+
+  /**
+   * Authentication provider for the user.
+   */
+  @IsString()
+  authProvider: string;
+
+  /**
+   * Optional Google ID for the user.
+   */
   @IsOptional()
   @IsString()
-  name?: string;
+  googleId?: string;
+
+  /**
+   * Optional last login date for the user.
+   */
+  @IsOptional()
+  @IsDate()
+  lastLogin?: Date;
 
   /**
    * Role of the user (e.g., CLIENT, ADMIN).
@@ -167,6 +194,10 @@ export class UserDTO {
    * @param vendor - Vendor information if the user is a vendor.
    * @param carts - List of carts associated with the user.
    * @param name - Optional name of the user.
+   * @param isEmailVerified - Indicates whether the user's email is verified.
+   * @param authProvider - Authentication provider for the user.
+   * @param googleId - Optional Google ID for the user.
+   * @param lastLogin - Optional last login date for the user.
    * @param reviews - Optional list of reviews written by the user.
    * @param notifications - Optional list of notifications for the user.
    * @param tickets - Optional list of support tickets raised by the user.
@@ -186,7 +217,11 @@ export class UserDTO {
     updatedAt: Date,
     vendor: VendorDTO,
     carts: CartDTO[],
-    name?: string,
+    name: string,
+    isEmailVerified: boolean,
+    authProvider: string,
+    googleId?: string,
+    lastLogin?: Date,
     reviews?: ReviewDTO[],
     notifications?: NotificationDTO[],
     tickets?: TicketDTO[],
@@ -206,6 +241,10 @@ export class UserDTO {
     this.updatedAt = updatedAt;
     this.vendor = vendor;
     this.carts = carts;
+    this.isEmailVerified = isEmailVerified;
+    this.authProvider = authProvider;
+    this.googleId = googleId;
+    this.lastLogin = lastLogin;
     this.reviews = reviews;
     this.notifications = notifications;
     this.tickets = tickets;

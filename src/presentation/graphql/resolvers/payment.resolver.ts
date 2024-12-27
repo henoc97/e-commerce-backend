@@ -95,10 +95,10 @@ export class PaymentResolver {
     return result?.map(transformPaymentDTOToGraphQL);
   }
 
-  @Query(() => String)
-  async fetchPaymentsGroupedByMethod(): Promise<Map<string, PaymentOutput[]>> {
-    return this.fetchPaymentsGroupedByMethodUseCase.execute();
-  }
+  // @Query(() => String)
+  // async fetchPaymentsGroupedByMethod(): Promise<Map<string, PaymentOutput[]>> {
+  //   return this.fetchPaymentsGroupedByMethodUseCase.execute();
+  // }
 
   @Query(() => Number)
   async fetchTotalAmountByDateRange(

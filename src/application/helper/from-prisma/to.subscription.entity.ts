@@ -11,6 +11,7 @@ export function fromSubscriptionPrisma(subscriptionPrisma: any): Subscription {
     subscriptionPrisma.id,
     subscriptionPrisma.name,
     subscriptionPrisma.price,
+    subscriptionPrisma.currency,
     subscriptionPrisma.duration,
     subscriptionPrisma.description,
     subscriptionPrisma.vendors?.map((vendorPrisma: any) =>

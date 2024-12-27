@@ -22,6 +22,7 @@ export function fromProductDTO(
     productDTO.id,
     productDTO.name,
     productDTO.price,
+    productDTO.currency,
     productDTO.promotions?.map((p) => fromPromotionDTO(p)),
     productDTO.category ? fromCategoryDTO(productDTO.category) : undefined,
     productDTO.categoryId,

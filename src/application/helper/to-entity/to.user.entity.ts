@@ -1,4 +1,3 @@
-
 import { UserDTO } from "../../../presentation/dtos/user.dto";
 import { fromAddressDTO } from "./to.address.entity";
 import { fromAuditLogDTO } from "./to.audit-log.entity";
@@ -13,12 +12,6 @@ import { fromUserProfileDTO } from "./to.user-profile.entity";
 import { fromVendorDTO } from "./to.vendor.entity";
 import { User } from "../../../domain/entities/user.entity";
 
-
-/**
- * Converts a userDTO to a user entity.
- * @param userDTO - The userDTO to convert.
- * @returns The user entity.
- */
 export function fromUserDTO(userDTO: UserDTO | Partial<UserDTO>): User {
   return new User(
     userDTO.id,
@@ -32,16 +25,13 @@ export function fromUserDTO(userDTO: UserDTO | Partial<UserDTO>): User {
     userDTO.updatedAt,
     userDTO.vendor ? fromVendorDTO(userDTO.vendor) : undefined,
     userDTO.carts?.map(fromCartDTO),
+    userDTO.isEmailVerified || false,
     userDTO.name,
     userDTO.reviews?.map(fromReviewDTO),
-    userDTO.notifications?.map(
-      fromNotificationDTO,
-    ),
+    userDTO.notifications?.map(fromNotificationDTO),
     userDTO.tickets?.map(fromTicketDTO),
     userDTO.subsites?.map(fromSubsiteDTO),
-    userDTO.userActivities?.map(
-      fromUserActivityDTO,
-    ),
-    userDTO.auditLogs?.map(fromAuditLogDTO),
-  );
+    userDTO.userActivities?.map(fromUserActivityDTO),
+    userDTO.auditLogs?.map(fromAuditLogDTO)
+  )
 }

@@ -32,11 +32,15 @@ export function toUserDTO(user: any): UserDTO {
     user.vendor,
     user.carts?.map((cart: Cart) => toCartDTO(cart)),
     user.name,
+    user.isEmailVerified,
+    user.authProvider,
+    user.googleId,
+    user.lastLogin,
     user.reviews?.map((review: Review) => toReviewDTO(review)),
     user.notifications?.map((notification: Notification) => toNotificationDTO(notification)),
     user.tickets?.map((ticket: Ticket) => toTicketDTO(ticket)),
     user.subsites?.map((subsite: Ticket) => toSubsiteDTO(subsite)),
     user.userActivities?.map((userActivity: UserActivation) => toUserActivityDTO(userActivity)),
-    user.auditLogs?.map((auditLog: AuditLog) => toAuditLogDTO(auditLog)),
+    user.auditLogs?.map((auditLog: AuditLog) => toAuditLogDTO(auditLog))
   );
 }
